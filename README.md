@@ -1,11 +1,8 @@
 # 17zwd App 2017
 
-
 基于 React Native 开发的 17App.
 
-
-### 技术栈
-------
+## 技术栈
 
 * [React Native](http://facebook.github.io/react-native/docs/getting-started.html) | [中文网](http://reactnative.cn/)
 * [Redux](https://github.com/reactjs/redux) | [中文文档](http://cn.redux.js.org/)
@@ -16,8 +13,7 @@
 
 
 
-### 开发环境要求
-------
+## 开发环境要求
 
 * [React Native](http://facebook.github.io/react-native/docs/getting-started.html) 
 * [Typescript](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
@@ -26,8 +22,7 @@
 	* [Yarn](https://yarnpkg.com/lang/en/docs/install/)
 
 	
-### 项目初始化
-------
+## 项目初始化
 
 1. 克隆仓库 
 
@@ -58,9 +53,7 @@
 
 
 
-### 开发调试
-------
-
+## 开发调试
 
 编译业务层代码
 
@@ -94,8 +87,8 @@ $ ./app debug src
 
 > 施工中...
 
-### 目录结构
--
+## 目录结构
+
 
 > 施工中...
 
@@ -105,15 +98,14 @@ $ ./app debug src
 .
 ├── README.md
 ├── framework						# 框架层
-├── dist							# 
-├── src 							# 业务层
+├── dist						# 
+├── src 						# 业务层
 ├── ...                              
 └── ...   
 ```
 
 
-### 开发规范
-------
+## 开发规范
 
 [17App 开发规范](./doc/standard.md)
 
@@ -122,8 +114,7 @@ $ ./app debug src
 * [自定义图标](./doc/standard.md)
 
 
-### 常见问题
-------
+## 常见问题
 
 [传送门](./doc/FAQ.md)
 
