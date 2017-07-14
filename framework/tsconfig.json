@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "target": "es2015",
+        "module": "commonjs",
+        "declaration": false,
+        "noImplicitAny": true,
+        "removeComments": true,
+        "noEmitOnError": false,
+        "preserveConstEnums": true,
+        "noLib": false,
+        "sourceMap": false,
+        "experimentalDecorators": true,
+        "jsx": "react",
+        "pretty": true,
+        "listFiles": false,
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true
+    },
+    "include": [
+        "../typings/**/*",
+        "./**/*"
+    ]
+}

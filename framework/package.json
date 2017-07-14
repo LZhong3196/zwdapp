@@ -1,0 +1,11 @@
+{
+	"name": "summer",
+	"version": "0.0.2",
+	"description": "react-native framework",
+	"main": "index.js",
+	"typings": "index.d.ts",
+	"scripts": {},
+	"license": "ISC",
+	"devDependencies": {},
+	"dependencies": {}
+}

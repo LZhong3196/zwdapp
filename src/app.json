@@ -1,0 +1,11 @@
+{
+    "appName": "zwdapp",
+    "version": "0.1.0",
+    "routes" : "./router.ts",
+    "config" : "./config.json",
+    "PSD" : {
+        "density": 2,
+        "minDensity" : 1.76,
+        "maxDensity" : 2.5
+    }
+}
