@@ -1,11 +1,11 @@
 # 17zwd App 2017
---
+-
 
 基于 React Native 开发的 17App.
 
 
 ### 技术栈
---
+-
 * [React Native](http://facebook.github.io/react-native/docs/getting-started.html) | [中文网](http://reactnative.cn/)
 * [Redux](https://github.com/reactjs/redux) | [中文文档](http://cn.redux.js.org/)
 * [Typescript](https://www.typescriptlang.org/docs/home.html) | [中文文档](https://www.gitbook.com/book/zhongsp/typescript-handbook/details)
@@ -16,7 +16,7 @@
 
 
 ### 开发环境要求
---
+-
 
 * [React Native](http://facebook.github.io/react-native/docs/getting-started.html) 
 * [Typescript](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
@@ -26,28 +26,25 @@
 
 	
 ### 项目初始化
---
+-
 
 1. 克隆仓库 
 
 	```
-	$ git clone ...
-
+	$ git clone https://github.com/AMIBAFE/zwdapp.git
 	```
 
 2. 安装依赖模块 ( 使用`Yarn`安装 | 推荐 )
 
 	```
-	$ cd rn_17zwd 
+	$ cd zwdapp 
 	$ yarn install           
-	
 	```
 	使用 npm 安装依赖模块
 	
 	```
-	$ cd rn_17zwd 
+	$ cd zwdapp
 	$ npm install  
-	
 	```
 
 3. 编译 framework 模块
@@ -61,7 +58,7 @@
 
 
 ### 开发调试
---
+-
 
 
 编译业务层代码
@@ -81,7 +78,7 @@ $ ./app debug src
 
 * 通过 Xcode 启动 (推荐)
 
-	- 打开项目 >  引入项目目录中的 `rn_17zwd/ios/rn_17zwd.xcodeproj` 文件
+	- 打开项目 >  引入项目目录中的 `zwdapp/ios/zwdapp.xcodeproj` 文件
 	
 	- ▶︎ 运行模拟器 
 
@@ -97,7 +94,8 @@ $ ./app debug src
 > 施工中...
 
 ### 目录结构
---
+-
+
 > 施工中...
 
 [17App 项目目录结构]()
@@ -105,16 +103,17 @@ $ ./app debug src
 ```
 .
 ├── README.md
-├── framework									# 框架层
-├── dist										# 
-├── src 										# 业务层
+├── framework						# 框架层
+├── dist							# 
+├── src 							# 业务层
 ├── ...                              
 └── ...   
 ```
 
 
 ### 开发规范
---
+-
+
 [17App 开发规范](./doc/standard.md)
 
 > 施工中...
@@ -123,7 +122,8 @@ $ ./app debug src
 
 
 ### 常见问题
---
+-
+
 [传送门](./doc/FAQ.md)
 
 * [Cannot read property 'RNFSFileTypeRegular' of undefined]()
