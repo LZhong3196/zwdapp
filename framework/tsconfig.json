@@ -10,7 +10,7 @@
         "noLib": false,
         "sourceMap": false,
         "experimentalDecorators": true,
-        "jsx": "react",
+        "jsx": "react-native",
         "pretty": true,
         "listFiles": false,
         "moduleResolution": "node",

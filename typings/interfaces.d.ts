@@ -36,14 +36,6 @@ declare module 'react-native/Libraries/Components/ScrollResponder' {
     export let Mixin: any;
 }
 
-declare module  "react-native-redux-router" {
-    export let Router: any;
-    export let Route: any;
-    export let Schema: any;
-    export let Container: any;
-    export let Animations: any;
-    export let routerReducer: any;
-}
 
 declare module 'mockjs' {
     interface Map<T> {

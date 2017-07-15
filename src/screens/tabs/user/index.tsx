@@ -40,7 +40,7 @@ class UserScreen extends React.Component<any, any> {
     }
 
     render() {
-        const userInfo: any = AppStore.get("user.profile") || undefined;
+        const userInfo: any = AppStore.get("user.profile") || {};
 
         return (
             <Container style={styles.container}>
@@ -109,5 +109,5 @@ const mapStateToProps = (state: any) => ({
     user: state.get("user").toJS()
 });
 
-export default connect(mapStateToProps)(UserScreen)
+export default connect(mapStateToProps)(UserScreen);
 
