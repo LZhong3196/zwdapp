@@ -92,7 +92,7 @@ $ ./app debug src
 
 > 施工中...
 
-[17App 项目目录结构]()
+[17App 项目目录结构](./README.md)
 
 ```
 .
@@ -118,11 +118,13 @@ $ ./app debug src
 
 [传送门](./doc/FAQ.md)
 
-* [Cannot read property 'RNFSFileTypeRegular' of undefined]()
-* [Type Error: Network request failed]()
+* [../react-native/scripts/react-native-xcode.sh: No such file or directory](./doc/FAQ.md#react-nativescriptsreact-native-xcodesh-no-such-file-or-directory)
+* [./app debug src - compile error - 'native-base'](./doc/FAQ.md#compile-error---native-base-类型错误)
+* [Cannot read property 'RNFSFileTypeRegular' of undefined](./doc/FAQ.md#cannot-read-property-rnfsfiletyperegular-of-undefined)
+* [Type Error: Network request failed](./doc/FAQ.md#type-error-network-request-failed)
 * [接口修改无法更新](./doc/api.md)
-* [自定义图标库更新]()
-* [Cannot read resolve | find module "summer"](./doc/FAQ.md)
+* [自定义图标库更新](./doc/FAQ.md#自定义图标更新)
+* [Cannot read resolve | find module "summer"](./doc/FAQ.md#cannot-read-resolve--find-module-summer)
 * ...
 
-> 若问题列表或 [ISSUE]() 无法解决你的问题, 请将问题描述添加到 ISSUE 或联系相关开发人员
+> 若问题列表或 [ISSUES](./issues) 无法解决你的问题, 请将问题描述添加到 [ISSUES](./issues) 或联系相关开发人员
