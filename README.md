@@ -46,7 +46,7 @@
 3. 编译 framework 模块
 	
 	```
-	./app compile framework
+	$ ./app compile framework
 	```
 
 
@@ -111,7 +111,8 @@ $ ./app debug src
 
 > 施工中...
 
-* [自定义图标](./doc/standard.md)
+* [命名与编码规范](./doc/standard.md#项目相关命名规范)
+* [自定义图标](./doc/standard.md#自定义图标)
 
 
 ## 常见问题
