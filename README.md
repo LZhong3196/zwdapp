@@ -97,10 +97,10 @@ $ ./app debug src
 ├── devtools                    # 开发者命令行工具
 ├── dist                        # src层代码编译产出路径
 ├── doc                         # 项目文档
-├── framework						        # 框架层
+├── framework			# 框架层
 ├── ios                         # 
-├── node_modules						    # 依赖模块
-├── src 						            # 业务层
+├── node_modules		# 依赖模块
+├── src 		        # 业务层
 ├── typings                     # 自定义类型声明文件(d.ts)
 ├── index.android.js            # 安卓入口
 ├── index.ios.js                # ios入口
