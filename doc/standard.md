@@ -1,8 +1,39 @@
-### 开发规范
------
+# 开发规范
 
-- 引入第三方模块
+[Typescript coding guidelines](https://github.com/Microsoft/TypeScript/wiki/Coding-guidelines) | [Typescript 编码规范中文版](https://zhongsp.gitbooks.io/typescript-handbook/content/doc/wiki/coding_guidelines.html)
 
+#### 项目相关命名规范
+
+Component files:
+
+```
+src/screens/module-name-view
+- index.tsx
+- style.ts
+- ...
+- module-inner-component
+  - index.tsx
+  - style.ts
+  - ...
+```
+
+reducers `framework/reducers`
+
+```
+index.ts
+user.ts
+navigation.ts
+...
+```
+
+ActionTypes `framework/constants.ts`
+
+```
+export const ACTIONTYPES_DATA_UPDATE: string = "Data/UPDATE";
+export const ACTIONTYPES_NAVIGATION_BACK: string = "Navigation/BACK";
+```
+
+## 引入第三方模块
 
 ```
 $ yarn add [target-module] 
@@ -20,10 +51,8 @@ $ ./app generate [target-module]
 > 
 
 
---
-
-* 自定义图标
+## 自定义图标
 
 图标尺寸统一为 `四周边距为两个单位`
 
---
+
