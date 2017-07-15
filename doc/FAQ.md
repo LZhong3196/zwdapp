@@ -4,8 +4,8 @@
 ## Cannot read property 'RNFSFileTypeRegular' of undefined
 
 ```
-	yarn add react-native-fs || npm install react-native-fs --save
-	react-native link react-native-fs	
+$ yarn add react-native-fs || npm install react-native-fs --save
+$ react-native link react-native-fs	
 ```
 
 > ref - [itinance/react-native-fs](https://github.com/itinance/react-native-fs)
