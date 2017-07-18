@@ -14,7 +14,13 @@ export default class OrderScreen extends React.Component<any, any> {
     static navigationOptions = {
         title: Constants.ROUTES_ORDER,
         tabBarLabel: "采购单",
-        tabBarIcon: <TabBarIcon type="&#xe615;"/>
+        tabBarIcon: (options: any) => (
+            <TabBarIcon
+                type="&#xe615;"
+                color={options.tintColor}
+                size="md"
+                focused={options.focused} />
+        )
     };
 
     render() {

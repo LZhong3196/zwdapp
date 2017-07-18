@@ -1,9 +1,16 @@
 
-export const marketStyle: any = {
+export const styles: any = {
+    view: {
+        flex: 1
+    },
     container: {
         backgroundColor: "#FFF",
         marginLeft: 0,
-        paddingLeft: 8
+        paddingLeft: 8,
+        zIndex: 10
+    },
+    itemImage: {
+        backgroundColor: "#F5F5F5",
     },
     itemTitle: {
         fontSize: 16,
@@ -14,10 +21,11 @@ export const marketStyle: any = {
         backgroundColor: "#FFF",
         fontSize: 12
     },
-    searchBand: {
-        position: "absolute",
-        top: 0,
-        left: 0,
-        backgroundColor: "#FFF"
+    scrollToTop: {
+        backgroundColor: "#F85E3B",
+        // bottom: 40,
+        // right: 20
+        // height: 20,
+        // width: 20,
     }
 };

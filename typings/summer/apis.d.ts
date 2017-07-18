@@ -12,17 +12,17 @@ declare module "summer" {
                     msg?: string;
                 };
                 data?: {
-                    /** 头像 */
-                    avatar?: string;
+                    /** 淘宝账号(旺旺) */
+                    taobao_account?: string;
                     /** 生日 */
                     birthday?: string;
+                    id?: string;
                     /** 账号名 */
                     account?: string;
                     /** qq账号 */
                     qq?: string;
-                    /** 淘宝账号(旺旺) */
-                    taobao_account?: string;
-                    id?: string;
+                    /** 头像 */
+                    avatar?: string;
                     /** 真实姓名 */
                     name?: string;
                 };
@@ -33,18 +33,26 @@ declare module "summer" {
         /** 获取采购单列表 */
         export function getOrderList (
             data?:{
-                /** 城市(id) */
-                city?: string;
+                /** 请求信息 */
+                block_info?: {
+                    /** 当前列表请求index */
+                    index?: number;
+                    /** 每次请求返回的最大结果数量 */
+                    size?: number;
+                };
+                /** 采购单状态 */
+                status?: number;
             }
         ): Promise<{
                 data?: {
                     results?: {
+                        /** 城市 */
+                        city?: string;
+                        title?: string;
                         image?: string;
                         u_id?: string;
-                        /** dddd */
-                        intro?: string;
-                        title?: string;
-                        price?: number;
+                        /** 完成数量 */
+                        completed?: number;
                     }[];
                 };
                 meta?: {
@@ -52,20 +60,23 @@ declare module "summer" {
                     msg?: string;
                 };
             }>;
-        /** 获取采购单单条记录 */
-        export function getOrderItem (
+        /** 获取采购单信息 */
+        export function getOrderInfo (
             data?:{
-                id?: string;
+                u_id?: string;
             }
         ): Promise<{
-                data?: {
-                    title?: string;
-                    intro?: string;
-                    price?: number;
-                };
                 meta?: {
                     code?: number;
                     msg?: string;
+                };
+                data?: {
+                    results?: {
+                        /** 采购单内单条id */
+                        u_id?: string;
+                        /** 单条标题 */
+                        title?: string;
+                    }[];
                 };
             }>;
     }
@@ -74,32 +85,39 @@ declare module "summer" {
         /** 获取 店铺/档口 信息 */
         export function getShopList (
             data?:{
+                /** 请求信息 */
+                block_info?: {
+                    /** 当前列表请求index */
+                    index?: number;
+                    /** 每次请求返回的最大结果数量 */
+                    size?: number;
+                };
                 /** 城市(id) */
                 city?: string;
             }
         ): Promise<{
-                meta?: {
-                    code?: number;
-                    msg?: string;
-                };
                 data?: {
                     results?: {
                         /** 分类 */
                         category?: string;
+                        /** 档口名称 */
+                        title?: string;
+                        /** 提供服务 */
+                        service?: string[];
+                        price?: number;
+                        /** 主营 */
+                        main?: string;
+                        /** 档口简介 */
+                        description?: string;
                         /** 标签 */
                         tags?: string[];
                         image?: string;
                         u_id?: string;
-                        /** 档口简介 */
-                        description?: string;
-                        /** 提供服务 */
-                        service?: string[];
-                        /** 主营 */
-                        main?: string;
-                        /** 档口名称 */
-                        title?: string;
-                        price?: number;
                     }[];
+                };
+                meta?: {
+                    code?: number;
+                    msg?: string;
                 };
             }>;
         /** 获取店铺/档口信息 */
@@ -108,56 +126,63 @@ declare module "summer" {
                 id?: string;
             }
         ): Promise<{
+                data?: {
+                    /** 收藏 */
+                    fav?: boolean;
+                    /** 服务 */
+                    service?: string[];
+                    /** 联系方式 */
+                    contact?: string;
+                    /** 档口头像 */
+                    avatar?: string;
+                    /** banner图 */
+                    banner?: string;
+                    /** 档口名称 */
+                    title?: string;
+                    /** 淘宝账号(旺旺) */
+                    taobao_account?: string;
+                    /** 地区 */
+                    area?: string;
+                    /** 分类 */
+                    category?: string;
+                    /** 主营 */
+                    main?: string;
+                    u_id?: string;
+                    /** 二维码名片 */
+                    qr_code?: string;
+                    /** qq账号 */
+                    qq?: string;
+                };
                 meta?: {
                     code?: number;
                     msg?: string;
-                };
-                data?: {
-                    /** 地区 */
-                    area?: string;
-                    /** 档口名称 */
-                    title?: string;
-                    /** 分类 */
-                    category?: string;
-                    /** 淘宝账号(旺旺) */
-                    taobao_account?: string;
-                    /** qq账号 */
-                    qq?: string;
-                    /** 联系方式 */
-                    contact?: string;
-                    /** 二维码名片 */
-                    qr_code?: string;
-                    /** 收藏 */
-                    fav?: boolean;
-                    u_id?: string;
-                    /** 档口头像 */
-                    avatar?: string;
-                    /** 服务 */
-                    service?: string[];
-                    /** banner图 */
-                    banner?: string;
-                    /** 主营 */
-                    main?: string;
                 };
             }>;
         /** 获取 店铺/档口 商品 */
         export function getShopGoodsList (
             data?:{
+                /** 请求信息 */
+                block_info?: {
+                    /** 当前列表请求index */
+                    index?: number;
+                    /** 每次请求返回的最大结果数量 */
+                    size?: number;
+                };
                 u_id?: string;
             }
         ): Promise<{
                 data?: {
                     results?: {
-                        price?: number;
                         /** 宝贝名称 */
                         title?: string;
-                        image?: string;
+                        price?: number;
                         u_id?: string;
+                        image?: string;
                     }[];
                 };
                 meta?: {
-                    msg?: string;
                     code?: number;
+                    msg?: string;
                 };
             }>;
         /** 收藏档口/店铺 */
@@ -166,12 +191,12 @@ declare module "summer" {
                 u_id?: string;
             }
         ): Promise<{
+                data?: {
+
+                };
                 meta?: {
                     code?: number;
                     msg?: string;
-                };
-                data?: {
-
                 };
             }>;
         /** 移除收藏档口/店铺 */
@@ -197,21 +222,21 @@ declare module "summer" {
 
             }
         ): Promise<{
+                meta?: {
+                    msg?: string;
+                    code?: number;
+                };
                 data?: {
 
-                };
-                meta?: {
-                    code?: number;
-                    msg?: string;
                 };
             }>;
         /** 用户登录接口 */
         export function postLogin (
             data?:{
-                /** 密码 */
-                password?: string;
                 /** 账号 */
                 account?: string;
+                /** 密码 */
+                password?: string;
             }
         ): Promise<{
                 /** 返回数据 */
@@ -243,18 +268,18 @@ declare module "summer" {
         /** 注册新用户 */
         export function postRegister (
             data?:{
-                /** 注册手机号 */
-                mobile?: number;
                 /** 验证码 */
                 verification_code?: string;
+                /** 注册手机号 */
+                mobile?: number;
             }
         ): Promise<{
-                meta?: {
-                    msg?: string;
-                    code?: number;
-                };
                 data?: {
 
+                };
+                meta?: {
+                    code?: number;
+                    msg?: string;
                 };
             }>;
     }
@@ -273,41 +298,97 @@ declare module "summer" {
                 data?: {
                     /** 所属店铺/档口(id) */
                     shop?: string;
-                    /** 分类 */
-                    category?: string;
-                    /** 图片 */
-                    banner?: string[];
                     /** 地区 */
                     area?: string;
                     /** 价格 */
                     price?: number;
                     /** 收藏 */
                     fav?: boolean;
+                    /** 分类 */
+                    category?: string;
+                    /** 淘宝价格 */
+                    taobao_price?: number;
+                    /** 图片 */
+                    banner?: string[];
                     u_id?: string;
                     /** 档口名称 */
                     title?: string;
-                    /** 淘宝价格 */
-                    taobao_price?: number;
                 };
             }>;
         /** 获取  商品/宝贝 列表 */
         export function getGoodsList (
             data?:{
+                /** 请求信息 */
+                block_info?: {
+                    /** 每次请求返回的最大结果数量 */
+                    size?: number;
+                    /** 当前列表请求index */
+                    index?: number;
+                };
                 u_id?: string;
             }
         ): Promise<{
                 data?: {
                     results?: {
-                        u_id?: string;
                         image?: string;
                         price?: number;
                         /** 宝贝名称 */
                         title?: string;
+                        u_id?: string;
                     }[];
                 };
                 meta?: {
                     msg?: string;
                     code?: number;
+                };
+            }>;
+        /** 获取 商品/宝贝 图片 */
+        export function getGoodsImages (
+            data?:{
+                u_id?: string;
+                /** 请求信息 */
+                block_info?: {
+                    /** 当前列表请求index */
+                    index?: number;
+                    /** 每次请求返回的最大结果数量 */
+                    size?: number;
+                };
+            }
+        ): Promise<{
+                meta?: {
+                    msg?: string;
+                    code?: number;
+                };
+                data?: {
+                    results?: string[];
+                };
+            }>;
+        /** 收藏 商品/宝贝 */
+        export function postGoodsFavAdd (
+            data?:{
+                u_id?: string;
+            }
+        ): Promise<{
+                meta?: {
+                    msg?: string;
+                    code?: number;
+                };
+                data?: {
+
+                };
+            }>;
+        /** 移除收藏 商品/宝贝 */
+        export function postGoodsFavRemove (
+            data?:{
+                u_id?: string;
+            }
+        ): Promise<{
+                meta?: {
+                    code?: number;
+                    msg?: string;
+                };
+                data?: {
+
                 };
             }>;
     }

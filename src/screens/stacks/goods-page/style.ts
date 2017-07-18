@@ -8,11 +8,10 @@ export const styles: any = {
         right: 0
     },
     container: {
-        backgroundColor: "#BFBFBF",
+        backgroundColor: "#FFF",
     },
     bannerContainer: {
-        height: 300,
-        flex: 1,
+        flex: 2,
         position: "relative",
     },
     bannerImage: {
@@ -21,6 +20,9 @@ export const styles: any = {
         top: 0,
         right: 0,
         bottom: 0,
+    },
+    tabBar: {
+        backgroundColor: "transparent",
     },
     marketContainer: {
         position: "absolute",

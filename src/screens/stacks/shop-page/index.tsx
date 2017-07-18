@@ -1,6 +1,5 @@
 import * as React from "react";
 import * as Lodash from "lodash";
-import { NavigationActions } from "react-navigation";
 import { AppStore, AppNavigator, Constants, APIs, Widgets } from "summer";
 import { Image, View } from "react-native";
 import {
@@ -26,7 +25,7 @@ import { styles } from "./style";
 let { Icon } = Widgets;
 
 
-export default class ItemScreen extends React.Component<any, any> {
+export default class ShopPageScreen extends React.Component<any, any> {
     static navigationOptions = {
         headerBackTitle: "",
         headerStyle: styles.header
@@ -78,10 +77,17 @@ export default class ItemScreen extends React.Component<any, any> {
                                     small
                                     onPress={this.setFav}
                                     style={styles.favButtonContainer}>
-                                    <Icon 
-                                        type="&#xe616;"
-                                        color={!item.fav ? "#FFF" : "#1FC15C"}
-                                        size={16} />
+                                    {!item.fav ? (
+                                        <Icon
+                                            type="&#xe616;"
+                                            color="#FFF"
+                                            size={16} />
+                                    ) : (
+                                        <Icon
+                                            type="&#xe62e;"
+                                            color="#1FC15C"
+                                            size={16} />
+                                    )}
                                     <Text style={styles.favButtonText}>{!item.fav ? "关注" : "已关注"}</Text>
                                 </Button>
                             </Row>

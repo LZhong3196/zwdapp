@@ -7,6 +7,7 @@ import marketReducers from "./market";
 import orderReducers from "./order";
 import notificationReducers from "./notification";
 import searchReducers from "./search";
+import goodsReducers from "./goods";
 
 const appReducers: Redux.Reducer<any> = ReduxImmutbale.combineReducers({
     nav: navigationReducers,
@@ -15,7 +16,8 @@ const appReducers: Redux.Reducer<any> = ReduxImmutbale.combineReducers({
     market: marketReducers,
     order: orderReducers,
     notification: notificationReducers,
-    search: searchReducers
+    search: searchReducers,
+    goods: goodsReducers
 });
 
 export default appReducers;

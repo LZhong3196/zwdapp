@@ -1,5 +1,6 @@
 import * as React from "react";
 import {
+    View,
     Text
 } from "react-native";
 
@@ -11,26 +12,47 @@ const sizeMap: any = {
 
 export interface TabBarIconProps {
     type: string;
+    color?: string;
+    focused?: boolean;
     size?: "xs" | "md" | "lg" | number;
+    activeColor?: string;
+    style?: any;
 }
 
 export default class TabBarIcon extends React.Component<TabBarIconProps, any> {
     static defaultProps = {
         size: "md",
-        color: "#000"
+        color: "#BFBFBF",
+        focused: false,
+        activeColor: "#F85E3B",
     };
 
+
+
     render() {
-        const { type, size } = this.props;
+        const {
+            type,
+            size,
+            focused,
+            color,
+            activeColor,
+            style,
+            ...restProps
+        } = this.props;
         const fontSize: number = typeof size === "string" ? sizeMap[size] : size;
+
         const TextIconStyle: any = {
+            ...style,
             fontSize,
             fontFamily: "iconfont",
-            flexDirection: "row"
+            flexDirection: "row",
+            color: focused ? activeColor : color
         };
 
         return (
-            <Text style={TextIconStyle}>{type}</Text>
+            <Text style={TextIconStyle}  {...restProps}>
+                {type}
+            </Text>
         );
     }
 }

@@ -1,9 +1,6 @@
 import * as React from "react";
 import {
-    StyleSheet,
-    View,
-    Text,
-    Button
+    View
 } from "react-native";
 import { TabNavigator } from "react-navigation";
 import { Constants } from "summer";
@@ -32,17 +29,17 @@ const AppTabNavigator = TabNavigator({
         screen: UserScreen
     }
 }, {
-    tabBarOptions: {
-        activeTintColor: "#F85E3B",
-        activeBackgroundColor: "#FFFFFF",
-        inactiveTintColor: "#B5B5B5",
-        inactiveBackgroundColor: "#FFFFFF",
-        labelStyle: {
-            marginBottom: 5
-        }
-    },
-    swipeEnabled: true
-});
+        tabBarOptions: {
+            activeTintColor: "#F85E3B",
+            activeBackgroundColor: "#FFFFFF",
+            inactiveTintColor: "#5C5C5C",
+            inactiveBackgroundColor: "#FFFFFF",
+            labelStyle: {
+                marginBottom: 5
+            }
+        },
+        swipeEnabled: true
+    });
 
 export default class MainScreen extends React.Component<any, any> {
     static navigationOptions = {

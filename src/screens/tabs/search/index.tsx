@@ -13,7 +13,13 @@ export default class SearchScreen extends React.Component<any, any> {
     static navigationOptions = {
         title: Constants.ROUTES_SEARCH,
         tabBarLabel: "搜款式",
-        tabBarIcon: <TabBarIcon type="&#xe656;"/>
+        tabBarIcon: (options: any) => (
+            <TabBarIcon
+                type="&#xe656;"
+                color={options.tintColor}
+                size="md"
+                focused={options.focused} />
+        )
     };
 
     render() {

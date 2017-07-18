@@ -2,7 +2,7 @@ import * as React from "react";
 import * as Lodash from "lodash";
 import { NavigationActions } from "react-navigation";
 import { AppStore, AppNavigator, Constants, APIs, Widgets } from "summer";
-import { Image, View } from "react-native";
+import { } from "react-native";
 import {
     Button,
     Text,
@@ -26,18 +26,31 @@ export default class GoodsList extends React.Component<any, any> {
     render() {
         const list: any = AppStore.get("market.goods") || [];
         return (
-            <Grid>
+            <Grid style={styles.goodsListContainer}>
                 {!!list.length ?
                     list.map((item: any, index: number) => (
-                        <Col key={index} style={styles.goodsCardContainer}>
-                            <Card>
+                        <Col
+                            key={index}
+                            style={styles.goodsCardContainer}>
+                            <Card
+                                onTouchEnd={() => {
+                                    AppStore.dispatch({
+                                        type: Constants.ACTIONTYPES_NAVIGATION_TO,
+                                        meta: {
+                                            routeName: Constants.ROUTES_GOODS,
+                                            params: {
+                                                id: item.u_id
+                                            }
+                                        }
+                                    });
+                                }}>
                                 <CardItem
                                     cardBody
-                                    onPress={() => this.openGoodsPage(item.id)}>
+                                    style={styles.cardItem}>
                                     <Thumbnail
                                         square
                                         style={styles.goodsImage}
-                                        source={{ uri: item.image || "" }} />
+                                        source={{ uri: item.image }} />
                                 </CardItem>
                                 <CardItem cardBody>
                                     <Text style={styles.goodsTitle}>
@@ -61,7 +74,7 @@ export default class GoodsList extends React.Component<any, any> {
         AppStore.dispatch({
             type: Constants.ACTIONTYPES_NAVIGATION_TO,
             meta: {
-                routeName: Constants.ROUTES_ITEM,
+                routeName: Constants.ROUTES_GOODS,
                 params: {
                     id: id
                 }

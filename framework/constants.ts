@@ -25,6 +25,8 @@ export const ACTIONTYPES_MARKET_UPDATE: string = "Market/UPDATE";
 /** Action type - ORDER */
 export const ACTIONTYPES_ORDER_UPDATE: string = "Order/UPDATE";
 /** Action type - SEARCH */
+export const ACTIONTYPES_GOODS_UPDATE: string = "Goods/UPDATE";
+/** Action type - SEARCH */
 export const ACTIONTYPES_SEARCH_UPDATE: string = "Search/UPDATE";
 /** Action type - NOTIFICATION */
 export const ACTIONTYPES_NOTIFICATION_UPDATE: string = "Notification/UPDATE";
@@ -51,6 +53,6 @@ export const ROUTES_LOGIN: string = "Login";
 /** ROUTES - Stacks - 店铺详情页 */
 export const ROUTES_SHOP: string = "Shop";
 /** ROUTES - Stacks - 宝贝详情页 */
-export const ROUTES_ITEM: string = "Item";
+export const ROUTES_GOODS: string = "Goods";
 /** ROUTES - Stacks - 宝贝列表页 */
 export const ROUTES_GOODS_LIST: string = "GoodsList";

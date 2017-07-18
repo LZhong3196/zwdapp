@@ -20,7 +20,7 @@ export interface IconProps {
 export default class Icon extends React.Component<IconProps, any> {
     static defaultProps = {
         size: "md",
-        color: "#000",
+        color: "#F85E3B",
         style: {}
     };
 

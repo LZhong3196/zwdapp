@@ -32,7 +32,13 @@ class UserScreen extends React.Component<any, any> {
         headerTitle: "个人中心",
         headerStyle: styles.header,
         tabBarLabel: "我的",
-        tabBarIcon: <TabBarIcon type="&#xe600;" />
+        tabBarIcon: (options: any) => (
+            <TabBarIcon
+                type="&#xe600;"
+                color={options.tintColor}
+                size="md"
+                focused={options.focused} />
+        )
     };
 
     componentWillMount() {
