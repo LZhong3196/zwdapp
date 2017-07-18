@@ -59,4 +59,4 @@ fastlane/screenshots
 .vscode
 .cache
 dist/
-typings/summer
+# typings/summer
