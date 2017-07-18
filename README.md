@@ -93,12 +93,12 @@ $ ./app debug src
 
 ```
 .
-├── android                     #
+├── android                    
 ├── devtools                    # 开发者命令行工具
 ├── dist                        # src层代码编译产出路径
 ├── doc                         # 项目文档
 ├── framework			# 框架层
-├── ios                         # 
+├── ios                         
 ├── node_modules		# 依赖模块
 ├── src 		        # 业务层
 ├── typings                     # 自定义类型声明文件(d.ts)
@@ -106,7 +106,7 @@ $ ./app debug src
 ├── index.ios.js                # ios入口
 ├── package.json                # 包配置文件
 ├── tslint.json                 # tslint配置
-├── README.md                   # 
+├── README.md                   
 └── ...   
 ```
 
