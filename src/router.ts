@@ -11,5 +11,16 @@ export const routeConfigMap = {
 };
 
 export const stackConfig: any = {
+    transitionConfig: () => ({
+        screenInterpolator(sceneProps: any) {
+            const { position, scene } = sceneProps;
+            const { index } = scene;
 
+            const opacity = position.interpolate({
+                inputRange: [index - 1, index, index + 1],
+                outputRange: [0, 1, 0]
+            });
+            return { opacity };
+        }
+    }),
 };

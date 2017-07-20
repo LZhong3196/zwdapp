@@ -38,7 +38,10 @@ const AppTabNavigator = TabNavigator({
                 marginBottom: 5
             }
         },
-        swipeEnabled: true
+        tabBarPosition: "bottom",
+        lazy: true,
+        animationEnabled: false,
+        backBehavior: "none",
     });
 
 export default class MainScreen extends React.Component<any, any> {
