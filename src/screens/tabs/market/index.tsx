@@ -4,7 +4,8 @@ import { NavigationActions } from "react-navigation";
 import {
     FlatList,
     View,
-    RefreshControl
+    RefreshControl,
+    StatusBar
 } from "react-native";
 import RefreshList, { RefreshState } from "../../../components/refresh-list";
 import ScrollToTop from "../../../components/scroll-to-top";
@@ -55,6 +56,7 @@ class ListHeader extends React.PureComponent<any, any> {
 
 class MarketScreen extends React.Component<any, any> {
     private flatList: any;
+    private listView: any;
 
     static navigationOptions = {
         title: Constants.ROUTES_MARKET,
@@ -62,8 +64,7 @@ class MarketScreen extends React.Component<any, any> {
         tabBarIcon: (options: any) => (
             <TabBarIcon
                 type="&#xe61e;"
-                color={options.tintColor}
-                size="md"
+                activeType="&#xe605;"
                 focused={options.focused} />
         )
     };

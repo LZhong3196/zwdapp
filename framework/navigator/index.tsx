@@ -47,7 +47,7 @@ export default class Navigator {
                             dispatch: options.dispatch,
                             state: options.nav
                         } as any)
-                    }/>
+                    } />
             );
         };
         return connect(mapStateToProps)(AppWithNavigationState);

@@ -73,8 +73,13 @@ export default class Store {
 
     public get<T>(keys: string): T {
         let keyPath: Array<any> = keys.trim().split(".");
-        let data = this.appStore.getState();
-        return !!keyPath.length && !!data.getIn(keyPath) ? data.getIn(keyPath).toJS() : undefined;
+        let data: any = this.appStore.getState().getIn(keyPath);
+
+        try {
+            data = data.toJS();
+        }
+        catch (e) { }
+        return data;
     }
 
     public dispatch(action: StoreAction) {

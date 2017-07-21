@@ -72,4 +72,9 @@ native-base默认下载的 `d.ts` 文件未能与api同步更新
 $ ./app compile framework
 ```
 
+## ./app generate - SyntaxError: Unexpected token import
 
+> [Microsoft/dts-gen](https://github.com/Microsoft/dts-gen)
+ 暂未支持 es6   
+
+如果是较为简单的组件, 可尝试将模块转换成 es5 后再执行该指令

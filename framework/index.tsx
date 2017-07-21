@@ -11,7 +11,8 @@ import * as Constants from "./constants";
 import * as Decorators from "./decorators/index";
 import Store from "./store/index";
 import Navigator from "./navigator/index";
-import * as navigationReducers from "./reducers/navigation";
+import { setNavigator } from "./reducers/navigation";
+import { setStore } from "./libs/extra";
 
 export interface AppOptions {
 	appName: string;
@@ -61,8 +62,9 @@ let AppNavigator: Navigator;
 
 export function setup(options: AppOptions) {
 	AppNavigator = new Navigator(options.router);
-	navigationReducers.setNavigator(AppNavigator.appNavigator);
+	setNavigator(AppNavigator.appNavigator);
 	const AppWithNavigationState = AppNavigator.createApp();
+	setStore(AppStore);
 
 	class App extends React.Component<any, any> {
 		constructor(props: any, context: any) {

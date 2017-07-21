@@ -53,7 +53,6 @@ export default class GoodsPageScreen extends React.Component<any, any> {
         const item: any = AppStore.get(`goods.goods.${id}`) || {};
 
         const cover: string = !!item.banner ? item.banner[0] : undefined;
-        
         return (
             <Container>
                 <Content style={styles.container}>

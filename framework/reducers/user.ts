@@ -8,7 +8,12 @@ export default function userReducers(state: State = initialState, action: StoreA
     let nextState: State;
     switch (action.type) {
         case ACTIONTYPES_USER_UPDATE: {
-            nextState = state.setIn( action.meta.storeKey.split("."), Immutable.fromJS(action.payload) );
+            if (!action.meta || !action.meta.storeKey) {
+                nextState = Immutable.fromJS(action.payload);
+            }
+            else {
+                nextState = state.setIn(action.meta.storeKey.split("."), Immutable.fromJS(action.payload));
+            }
             break;
         }
     }

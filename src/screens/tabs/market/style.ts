@@ -1,28 +1,38 @@
+import { Widgets } from "summer";
+let {
+    color_background,
+    color_base,
+    color_theme,
+    font_family_base,
+    font_size_base,
+    font_size_heading
+} = Widgets.theme;
+
 
 export const styles: any = {
     view: {
         flex: 1
     },
     container: {
-        backgroundColor: "#FFF",
+        backgroundColor: color_background,
         marginLeft: 0,
         paddingLeft: 8,
         zIndex: 10
     },
     itemImage: {
-        backgroundColor: "#F5F5F5",
+        backgroundColor: color_base,
     },
     itemTitle: {
-        fontSize: 16,
-        backgroundColor: "#FFF",
+        fontSize: font_size_heading,
+        backgroundColor: color_background,
         color: "#000"
     },
     itemIntro: {
-        backgroundColor: "#FFF",
-        fontSize: 12
+        backgroundColor: color_background,
+        fontSize: font_size_base
     },
     scrollToTop: {
-        backgroundColor: "#F85E3B",
+        backgroundColor: color_theme,
         // bottom: 40,
         // right: 20
         // height: 20,

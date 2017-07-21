@@ -37,10 +37,10 @@ class HomeScreen extends React.Component<any, any> {
         tabBarIcon: (options: any) => (
             <TabBarIcon
                 type="&#xe6d9;"
-                color={options.tintColor}
-                size="md"
+                activeType="&#xe603;"
                 focused={options.focused} />
         )
+
     };
     constructor(props: any, context: any) {
         super(props, context);

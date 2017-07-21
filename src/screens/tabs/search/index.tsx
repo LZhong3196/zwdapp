@@ -26,11 +26,12 @@ class SearchScreen extends React.Component<any, any> {
         tabBarLabel: "搜款式",
         tabBarIcon: (options: any) => (
             <TabBarIcon
-                type="&#xe656;"
-                color={options.tintColor}
-                size="md"
+                type="&#xe620;"
+                activeType="&#xe608;"
+                size={options.focused ? "lg" : "md"}
                 focused={options.focused} />
-        )
+        ),
+      
     };
 
     constructor(props: any, context: any) {
