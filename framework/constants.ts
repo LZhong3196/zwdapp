@@ -56,3 +56,17 @@ export const ROUTES_SHOP: string = "Shop";
 export const ROUTES_GOODS: string = "Goods";
 /** ROUTES - Stacks - 宝贝列表页 */
 export const ROUTES_GOODS_LIST: string = "GoodsList";
+
+
+/** ROUTES - Stacks - 用户设置 */
+export const ROUTES_SETTING: string = "Setting";
+
+
+/** Request 请求失败 - 用户未登录 */
+export const REQUEST_ERROR_UNAUTH: number = 1;
+/** Request 请求失败 - 网络错误 */
+export const REQUEST_ERROR_NETERROR: number = 2;
+/** Request 请求失败 - 设备处于离线状态 */
+export const REQUEST_ERROR_NETINFO_NONE: number = 3;
+/** Request 请求失败 - 未知错误 */
+export const REQUEST_ERROR_UNKNOW: number = 10000;

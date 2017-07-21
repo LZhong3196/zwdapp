@@ -17,8 +17,7 @@ export default class OrderScreen extends React.Component<any, any> {
         tabBarIcon: (options: any) => (
             <TabBarIcon
                 type="&#xe615;"
-                color={options.tintColor}
-                size="md"
+                activeType="&#xe6c8;"
                 focused={options.focused} />
         )
     };

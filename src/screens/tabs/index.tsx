@@ -3,7 +3,7 @@ import {
     View
 } from "react-native";
 import { TabNavigator } from "react-navigation";
-import { Constants } from "summer";
+import { Constants, Widgets } from "summer";
 
 import HomeScreen from "./home";
 import MarketScreen from "./market";
@@ -11,6 +11,7 @@ import SearchScreen from "./search";
 import OrderScreen from "./order";
 import UserScreen from "./user";
 
+let { theme } = Widgets;
 
 const AppTabNavigator = TabNavigator({
     Home: {
@@ -29,21 +30,22 @@ const AppTabNavigator = TabNavigator({
         screen: UserScreen
     }
 }, {
-        tabBarOptions: {
-            activeTintColor: "#F85E3B",
-            activeBackgroundColor: "#FFFFFF",
-            inactiveTintColor: "#5C5C5C",
-            inactiveBackgroundColor: "#FFFFFF",
-            labelStyle: {
-                marginBottom: 5
-            }
-        },
-        swipeEnabled: true
-    });
+    tabBarOptions: {
+        activeTintColor: theme.color_theme,
+        activeBackgroundColor: theme.color_background,
+        inactiveTintColor: theme.color_base,
+        inactiveBackgroundColor: theme.color_background,
+        labelStyle: {
+            marginBottom: 5
+        }
+    },
+    swipeEnabled: true
+});
+
 
 export default class MainScreen extends React.Component<any, any> {
     static navigationOptions = {
-        header: null as any,
+        header: null as any
     };
     render() {
         return (

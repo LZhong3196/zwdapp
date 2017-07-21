@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Lodash from "lodash";
 import { AppStore, AppNavigator, Constants, APIs, Widgets } from "summer";
-import { Image, View } from "react-native";
+import { Image, View, StatusBar } from "react-native";
 import {
     Button,
     Text,
@@ -48,9 +48,10 @@ export default class ShopPageScreen extends React.Component<any, any> {
         const item: any = AppStore.get(`market.shop.${id}`) || {};
         return (
             <Container>
+                <StatusBar barStyle="light-content" />
                 <Content style={styles.container}>
                     <View style={styles.bannerContainer}>
-                        <Image source={{ uri: item.banner || "" }} style={styles.bannerImage} />
+                        <Image source={{ uri: item.banner }} style={styles.bannerImage} />
                         <Grid style={styles.marketContainer}>
                             <Row size={3}>
                                 <Thumbnail

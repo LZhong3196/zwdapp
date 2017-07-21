@@ -2,9 +2,18 @@ interface HashMap<T> {
     [key: string]: T;
 }
 
+interface navigationOptions {
+    routeName: string,
+    key?: string,
+}
+
+interface storeKey {
+    storeKey: string,
+}
+
 interface StoreAction {
     type: string,
-    meta?: any,
+    meta?: navigationOptions | storeKey | any,
     error?: boolean,
     payload?: Object
 }

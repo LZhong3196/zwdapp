@@ -2,11 +2,12 @@
  *  Networking utils powered by @author lion
  */
 import * as MockJS from "mockjs";
-import { NetInfo } from "react-native";
 import * as RFS from "react-native-fs";
 
 import * as RAP from "./rap";
 import * as Constants from "../constants";
+
+import { resolveError, getToken, isNetworkConnected } from "./extra";
 
 const IS_DEV = (global as any).__DEV__;
 const IS_DEBUG = (global as any).__DEBUG__;
@@ -50,7 +51,8 @@ export default async function request(
         method: "GET",
         headers: {
             "Accept": "application/json",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": getToken()
         },
         body: data ? JSON.stringify(data) : null
     }, options);
@@ -58,11 +60,12 @@ export default async function request(
     if (/^GET|HEAD$/i.test(options.method)) {
         delete options.body;
         if (data) {
-            console.log(data);
             const paramStr = dataToParamStr(data);
             url += (url.indexOf("?") > -1 ? "&" : "?") + paramStr;
         }
     }
+
+
 
     const originMethod = options.method.toLocaleLowerCase();
     const originUrl = url;
@@ -95,15 +98,20 @@ export default async function request(
     }
     let res: any = null;
     let isFromRAPCache: boolean;
+
     try {
         res = await _fetch(url, options);
     } catch (e) {
-        if (!isFromRAP) {
+        let isConnected = await isNetworkConnected();
+        if (!isConnected) {
+            e.code = Constants.REQUEST_ERROR_NETINFO_NONE;
+        }
+
+        if (resolveError(e)) {
             throw e;
         }
 
-        let isConnected = await NetInfo.isConnected.fetch();
-        if (1 || isConnected) {
+        if (!isFromRAP) {
             throw e;
         }
 

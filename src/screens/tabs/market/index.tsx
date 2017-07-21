@@ -4,7 +4,8 @@ import { NavigationActions } from "react-navigation";
 import {
     FlatList,
     View,
-    RefreshControl
+    RefreshControl,
+    StatusBar
 } from "react-native";
 import { APIs, Widgets, AppStore, Constants } from "summer";
 import {
@@ -59,8 +60,7 @@ class MarketScreen extends React.Component<any, any> {
         tabBarIcon: (options: any) => (
             <TabBarIcon
                 type="&#xe61e;"
-                color={options.tintColor}
-                size="md"
+                activeType="&#xe605;"
                 focused={options.focused} />
         )
     };
@@ -85,10 +85,9 @@ class MarketScreen extends React.Component<any, any> {
                 refreshing={this.state.loading}
                 onRefresh={this.onRefresh} />
         );
-
-
         return (
             <View style={styles.view}>
+                <StatusBar />
                 <FlatList
                     ref={(component: any) => this.flatList = component}
                     data={data}
@@ -139,6 +138,10 @@ class MarketScreen extends React.Component<any, any> {
                 </Fab>
             </View>
         );
+    }
+
+    setStatusBar = () => {
+        StatusBar.setBarStyle("light-content");
     }
 
     scrollToTop = () => {
