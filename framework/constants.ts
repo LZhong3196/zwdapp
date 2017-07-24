@@ -20,6 +20,8 @@ export const ACTIONTYPES_USER_UPDATE: string = "User/UPDATE";
 
 /** Action type - DATA */
 export const ACTIONTYPES_DATA_UPDATE: string = "Data/UPDATE";
+/** Action type - HOME */
+export const ACTIONTYPES_HOME_UPDATE: string = "Home/UPDATE";
 /** Action type - MARKET */
 export const ACTIONTYPES_MARKET_UPDATE: string = "Market/UPDATE";
 /** Action type - ORDER */

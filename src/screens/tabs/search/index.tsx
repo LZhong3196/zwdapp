@@ -21,6 +21,7 @@ import { connect } from "react-redux";
 let { TabBarIcon } = Widgets;
 
 class SearchScreen extends React.Component<any, any> {
+    private listView: any;
     static navigationOptions = {
         title: Constants.ROUTES_SEARCH,
         tabBarLabel: "搜款式",
@@ -36,7 +37,7 @@ class SearchScreen extends React.Component<any, any> {
     constructor(props: any, context: any) {
         super(props, context);
         this.state = {
-            isShowSide: true,
+            isShowSide: true, /**切换列表布局*/
             blockIndex: 0,
             loading: false
         };
@@ -47,7 +48,7 @@ class SearchScreen extends React.Component<any, any> {
     }
 
     render() {
-        const data: any = AppStore.get("market.list") || [];
+        const data: any = AppStore.get("search.list") || [];
         return (
             <View style={ styles.container }>
                 <Header searchBar rounded>
@@ -79,7 +80,7 @@ class SearchScreen extends React.Component<any, any> {
                     source={{ uri: "https://unsplash.it/200/300/?blur" }}
                 />
                 <View style={styles.goodsDetail}>
-                    <Text style={styles.title}>{item.description}</Text>
+                    <Text style={styles.title}>{item.title}</Text>
                     <Text style={styles.redFont}>￥{item.price}</Text>
                     <Text style={styles.share}>...</Text>
                 </View>
@@ -91,7 +92,7 @@ class SearchScreen extends React.Component<any, any> {
         this.state.loading = false;
         this.setState(this.state);
         try {
-            const res: any = await APIs.market.getShopList({
+            const res: any = await APIs.search.getGoodsList({
                 block_info: {
                     index: blockIndex
                 }
@@ -100,7 +101,7 @@ class SearchScreen extends React.Component<any, any> {
                 /** no more data */
                 return;
             }
-            let list: any = AppStore.get("market.list") || [];
+            let list: any = AppStore.get("search.list") || [];
             let newList: any = [];
             if (isRefresh) {
                 newList = res.data.results;
@@ -109,7 +110,7 @@ class SearchScreen extends React.Component<any, any> {
                 newList = [...list, ...res.data.results];
             }
             AppStore.dispatch({
-                type: Constants.ACTIONTYPES_MARKET_UPDATE,
+                type: Constants.ACTIONTYPES_SEARCH_UPDATE,
                 meta: {
                     storeKey: "list",
                 },
@@ -133,7 +134,7 @@ class SearchScreen extends React.Component<any, any> {
 }
 
 const mapStateToProps = (state: any) => ({
-    data: state.get("market").toJS(),
+    data: state.get("search").toJS(),
     user: state.get("user").toJS()
 });
 

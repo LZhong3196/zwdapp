@@ -55,7 +55,7 @@ class ListHeader extends React.PureComponent<any, any> {
 
 class MarketScreen extends React.Component<any, any> {
     private flatList: any;
-
+    private listView: any;
     static navigationOptions = {
         title: Constants.ROUTES_MARKET,
         tabBarLabel: "逛市场",

@@ -1,15 +1,14 @@
-//
-//  Created by Liu Jinyong on 17/4/5.
-//  Copyright © 2016年 Liu Jinyong. All rights reserved.
-//
-//  @flow
-//  Github:
-//  https://github.com/huanxsd/react-native-refresh-list-view
-
 import React, { PureComponent } from "react";
 import { View, Text, StyleSheet, RefreshControl, FlatList, ActivityIndicator, TouchableOpacity } from "react-native";
 
-export const RefreshState = {
+interface RefreshState {
+    Idle: string;
+    Refreshing: string;
+    NoMoreData: string;
+    Failure: string;
+}
+
+export const RefreshState: RefreshState = {
     Idle: "Idle",
     Refreshing: "Refreshing",
     NoMoreData: "NoMoreData",
@@ -19,18 +18,22 @@ export const RefreshState = {
 let debug = false;
 
 class RefreshListView extends PureComponent<any, any> {
-
+    private listRef: any;
     props: {
-        onHeaderRefresh: () => void,
-        onFooterRefresh: () => void,
+        onHeaderRefresh: any,
+        onFooterRefresh: any,
         footerRefreshingText?: string,
         footerFailureText?: string,
         footerNoMoreDataText?: string,
+        renderItem: any,
+        data: any,
+        key?: any,
+        numColumns?: any,
     };
 
     state: {
-        headerState: RefreshState,
-        footerState: RefreshState,
+        headerState: string,
+        footerState: string,
     };
 
     static defaultProps = {
@@ -48,7 +51,7 @@ class RefreshListView extends PureComponent<any, any> {
         };
     }
 
-    startHeaderRefreshing() {
+    startHeaderRefreshing = () => {
         debug && console.log("startHeaderRefreshing");
 
         this.setState({ headerState: RefreshState.Refreshing });
@@ -58,7 +61,7 @@ class RefreshListView extends PureComponent<any, any> {
         }
     }
 
-    startFooterRefreshing() {
+    startFooterRefreshing = () => {
         debug && console.log("startFooterRefreshing");
 
         this.setState({ footerState: RefreshState.Refreshing });
@@ -68,8 +71,8 @@ class RefreshListView extends PureComponent<any, any> {
         }
     }
 
-    shouldStartHeaderRefreshing() {
-        debug && console.log("shouldStartHeaderRefreshing")
+    shouldStartHeaderRefreshing = () => {
+        debug && console.log("shouldStartHeaderRefreshing");
 
         if (this.state.headerState === RefreshState.Refreshing ||
             this.state.footerState === RefreshState.Refreshing) {
@@ -79,7 +82,7 @@ class RefreshListView extends PureComponent<any, any> {
         return true;
     }
 
-    shouldStartFooterRefreshing() {
+    shouldStartFooterRefreshing = () => {
         debug && console.log("shouldStartFooterRefreshing");
 
         if (this.state.headerState === RefreshState.Refreshing ||
@@ -97,7 +100,7 @@ class RefreshListView extends PureComponent<any, any> {
         return true;
     }
 
-    endRefreshing(refreshState: RefreshState) {
+    endRefreshing = (refreshState: string) => {
         debug && console.log("endRefreshing");
 
         if (refreshState === RefreshState.Refreshing) {
@@ -114,21 +117,21 @@ class RefreshListView extends PureComponent<any, any> {
         });
     }
 
-    headerState() {
-        return self.state.headerState;
+    headerState = () => {
+        return this.state.headerState;
     }
 
-    footerState() {
-        return self.state.footerState;
+    footerState = () => {
+        return this.state.footerState;
     }
 
-    onHeaderRefresh() {
+    onHeaderRefresh = () => {
         if (this.shouldStartHeaderRefreshing()) {
             this.startHeaderRefreshing();
         }
     }
 
-    onEndReached(info: any) {
+    onEndReached = (info: any) => {
         debug && console.log("onEndReached   " + info.distanceFromEnd);
 
         if (this.shouldStartFooterRefreshing()) {
@@ -136,23 +139,18 @@ class RefreshListView extends PureComponent<any, any> {
         }
     }
 
-    keyExtractor(item: any, index: number){
-        return index;
-    }
-
     render() {
         return (
             <FlatList
                 { ...this.props }
                 onEndReachedThreshold={0.3}
-                onEndReached={ (info) => this.onEndReached(info) }
-                onRefresh={ () => this.onHeaderRefresh() }
+                onEndReached={ (info: any) => this.onEndReached(info) }
+                onRefresh={ this.onHeaderRefresh }
                 refreshing={ this.state.headerState === RefreshState.Refreshing }
-                ListFooterComponent={() => this.renderFooter()}
-                keyExtractor={this.keyExtractor}
+                ListFooterComponent={ this.renderFooter }
                 showsVerticalScrollIndicator={ false }
                 removeClippedSubviews={ false }
-                ref={ (ref) => { this.listRef = ref } }
+                ref={ (ref: any) => { this.listRef = ref; } }
             />
         );
     }
@@ -161,7 +159,7 @@ class RefreshListView extends PureComponent<any, any> {
         this.listRef.scrollToOffset({ y: 0 });
     }
 
-    renderFooter() {
+    renderFooter = () => {
         let footer = null;
 
         switch (this.state.footerState) {
@@ -169,7 +167,7 @@ class RefreshListView extends PureComponent<any, any> {
                 <TouchableOpacity
                     style={styles.footerContainer}
                 >
-                </TouchableOpacity>
+                </TouchableOpacity>;
                 break;
             case RefreshState.Failure: {
                 footer =
@@ -180,7 +178,7 @@ class RefreshListView extends PureComponent<any, any> {
                         <Text style={styles.footerText}>
                             {this.props.footerFailureText}
                         </Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity>;
                 break;
             }
             case RefreshState.Refreshing: {
@@ -190,7 +188,7 @@ class RefreshListView extends PureComponent<any, any> {
                         <Text style={[styles.footerText, { marginLeft: 7 }]}>
                             {this.props.footerRefreshingText}
                         </Text>
-                    </View>
+                    </View>;
                 break;
             }
             case RefreshState.NoMoreData: {
@@ -199,7 +197,7 @@ class RefreshListView extends PureComponent<any, any> {
                         <Text style={styles.footerText}>
                             {this.props.footerNoMoreDataText}
                         </Text>
-                    </View>
+                    </View>;
                 break;
             }
         }

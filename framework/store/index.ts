@@ -34,6 +34,7 @@ export type State = ImmutableMap<{
     nav?: any;
     user?: any;
     data?: any;
+    home?: any;
     market?: any;
     order?: any;
     notification?: any;
@@ -51,6 +52,7 @@ export const initialState: State = Immutable.fromJS({
     },
     user: {},
     data: {},
+    home: {},
     market: {},
     order: {},
     notification: {},
