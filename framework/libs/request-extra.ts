@@ -1,7 +1,5 @@
 import {
-    Alert,
-    Platform,
-    NetInfo
+    Alert
 } from "react-native";
 import {
     REQUEST_ERROR_UNAUTH,
@@ -12,6 +10,7 @@ import {
 } from "./../constants";
 import Store from "./../store/index";
 
+
 let appStore: Store;
 
 export function setStore(instance: Store) {
@@ -21,18 +20,6 @@ export function setStore(instance: Store) {
     return appStore;
 }
 
-export function isNetworkConnected() {
-    if (Platform.OS === "ios") {
-        return new Promise((resolve: any) => {
-            const handleFirstConnectivityChangeIOS = (isConnected: boolean) => {
-                NetInfo.isConnected.removeEventListener("change", handleFirstConnectivityChangeIOS);
-                resolve(isConnected);
-            };
-            NetInfo.isConnected.addEventListener("change", handleFirstConnectivityChangeIOS);
-        });
-    }
-    return NetInfo.isConnected.fetch();
-}
 
 /** Request error handler */
 export function resolveError(error: any): boolean {

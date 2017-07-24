@@ -9,10 +9,11 @@ import * as Utils from "./utils/index";
 import * as Cacher from "./cacher/cacher";
 import * as Constants from "./constants";
 import * as Decorators from "./decorators/index";
+import * as Networking from "./libs/networking";
 import Store from "./store/index";
 import Navigator from "./navigator/index";
-import { setNavigator } from "./reducers/navigation";
-import { setStore } from "./libs/extra";
+import * as navigationReducer from "./reducers/navigation";
+import * as requestExtra from "./libs/request-extra";
 
 export interface AppOptions {
 	appName: string;
@@ -61,10 +62,11 @@ let AppStore: Store = new Store();
 let AppNavigator: Navigator;
 
 export function setup(options: AppOptions) {
+	/** Set store instance */
+	requestExtra.setStore(AppStore);
 	AppNavigator = new Navigator(options.router);
-	setNavigator(AppNavigator.appNavigator);
+	navigationReducer.setNavigator(AppNavigator.appNavigator);
 	const AppWithNavigationState = AppNavigator.createApp();
-	setStore(AppStore);
 
 	class App extends React.Component<any, any> {
 		constructor(props: any, context: any) {
@@ -81,6 +83,7 @@ export function setup(options: AppOptions) {
 	}
 
 	AppRegistry.registerComponent(options.appName, () => App);
+
 	module.exports.APIs = initAPIs(options);
 
 	// return App;
@@ -93,5 +96,6 @@ export {
 	AppStore,
 	AppNavigator,
 	Cacher,
-	Constants
+	Constants,
+	Networking
 };

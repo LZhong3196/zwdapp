@@ -2,6 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import * as ReactNavigation from "react-navigation";
 import { addNavigationHelpers, StackNavigator } from "react-navigation";
+import { Root } from "native-base";
 
 type appNavigationOptions = {
     dispatch: any;
@@ -41,13 +42,15 @@ export default class Navigator {
 
         const AppWithNavigationState = (options: appNavigationOptions) => {
             return (
-                <this.appNavigator
-                    navigation={
-                        addNavigationHelpers({
-                            dispatch: options.dispatch,
-                            state: options.nav
-                        } as any)
-                    } />
+                <Root>
+                    <this.appNavigator
+                        navigation={
+                            addNavigationHelpers({
+                                dispatch: options.dispatch,
+                                state: options.nav
+                            } as any)
+                        } />
+                </Root>
             );
         };
         return connect(mapStateToProps)(AppWithNavigationState);

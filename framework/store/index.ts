@@ -3,13 +3,14 @@ import {
     Store as ReduxStore,
     createStore,
     applyMiddleware,
-    compose as ReduxCompose
+    compose
 } from "redux";
 import reduxThunk from "redux-thunk";
 import { createLogger } from "redux-logger";
 import { AsyncStorage } from "react-native";
 import { persistStore, autoRehydrate } from "redux-persist-immutable";
 import { PERSIST_STORE_WHITE_LIST, ROUTES_MAIN } from "./../constants";
+import { initConnectivityInfo } from "./../libs/networking";
 
 import appReducer from "./../reducers/index";
 
@@ -59,7 +60,6 @@ export const initialState: State = Immutable.fromJS({
 });
 
 
-
 export default class Store {
     private appStore: Redux.Store<any>;
 
@@ -92,20 +92,26 @@ export default class Store {
             logger
         ];
 
-        const enhancer: any = ReduxCompose(
+        const enhancer: any = compose(
             applyMiddleware(...middlewares),
             autoRehydrate()
             // devtools
         );
-        const store = createStore( appReducer, initialState, enhancer );
+
+        const store: Redux.Store<any> = createStore( appReducer, initialState, enhancer );
+
+        const rehydrationCompleted: any = compose(
+            initConnectivityInfo(store)
+        );
+
+        persistStore(store, {
+            whitelist: PERSIST_STORE_WHITE_LIST,
+            storage: AsyncStorage
+        }, rehydrationCompleted);
 
         if (isDebuggingInChrome) {
             (window as any).store = store;
         }
-        persistStore(store, {
-            whitelist: PERSIST_STORE_WHITE_LIST,
-            storage: AsyncStorage
-        });
         return store;
 
     }

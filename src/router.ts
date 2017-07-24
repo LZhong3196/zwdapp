@@ -1,8 +1,8 @@
 import { Constants } from "summer";
-import LoginScreen from "./screens/stacks/login";
+import LoginScreen from "./screens/stacks/user/login";
 import ShopPageScreen from "./screens/stacks/shop-page";
 import GoodsPageScreen from "./screens/stacks/goods-page";
-import SettingScreen from "./screens/stacks/setting";
+import SettingScreen from "./screens/stacks/user/setting";
 import MainScreen from "./screens/tabs";
 
 let {

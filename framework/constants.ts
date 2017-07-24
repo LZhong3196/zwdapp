@@ -4,10 +4,12 @@ import { PixelRatio } from "react-native";
 export const DEVICE_DENSITY = PixelRatio.get();
 
 
-/** Persist store whitelist - 持久化数据白名单 */
+/** Persist store whitelist - 持久化数据白名单 | 与state对应 */
 export const PERSIST_STORE_WHITE_LIST: Array<string> = [
     "user"
 ];
+
+/** -------  ACTION TYPES DEFINITION   ------- */
 
 /** Action type - Navigation */
 export const ACTIONTYPES_LOGGED_IN: string = "Navigation/LOGGED_IN";
@@ -32,6 +34,7 @@ export const ACTIONTYPES_SEARCH_UPDATE: string = "Search/UPDATE";
 export const ACTIONTYPES_NOTIFICATION_UPDATE: string = "Notification/UPDATE";
 
 
+/** -------  NAVIGATION ROUTES DEFINITION   ------- */
 
 /** ROUTES - MainScreen - tabs screens */
 /** ROUTES - tab - 主页 */
@@ -62,6 +65,9 @@ export const ROUTES_GOODS_LIST: string = "GoodsList";
 export const ROUTES_SETTING: string = "Setting";
 
 
+
+/** -------  REQUEST ERROR STATUS DEFINITION   ------- */
+
 /** Request 请求失败 - 用户未登录 */
 export const REQUEST_ERROR_UNAUTH: number = 1;
 /** Request 请求失败 - 网络错误 */
@@ -70,3 +76,6 @@ export const REQUEST_ERROR_NETERROR: number = 2;
 export const REQUEST_ERROR_NETINFO_NONE: number = 3;
 /** Request 请求失败 - 未知错误 */
 export const REQUEST_ERROR_UNKNOW: number = 10000;
+
+
+

@@ -21,6 +21,7 @@
             "check-open-brace",
             "check-whitespace"
         ],
+        "prefer-object-spread": true,
         "quotemark": [
             true,
             "double"

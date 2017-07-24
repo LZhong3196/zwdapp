@@ -7,7 +7,8 @@ import * as RFS from "react-native-fs";
 import * as RAP from "./rap";
 import * as Constants from "../constants";
 
-import { resolveError, getToken, isNetworkConnected } from "./extra";
+import { resolveError, getToken } from "./request-extra";
+import { isNetworkConnected } from "./networking";
 
 const IS_DEV = (global as any).__DEV__;
 const IS_DEBUG = (global as any).__DEBUG__;

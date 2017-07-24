@@ -18,9 +18,10 @@ import {
     Right,
     List,
     ListItem,
-    Separator,
+    Toast
 } from "native-base";
 import { Col, Row, Grid } from "react-native-easy-grid";
+import ConnectivityControl from "./connectivity-control";
 import { styles } from "./style";
 let { Icon, theme } = Widgets;
 
@@ -67,7 +68,7 @@ class SettingScreen extends React.Component<any, any> {
                             <Text>仅wifi下开启大图</Text>
                         </Left>
                         <Right>
-                            <Switch value={true}/>
+                            <ConnectivityControl />
                         </Right>
                     </ListItem>
                     <ListItem style={styles.listItem}>
@@ -130,16 +131,8 @@ class SettingScreen extends React.Component<any, any> {
         Alert.alert(
             "提示",
             "是否退出登录",
-            [
-                {
-                    text: "取消"
-                },
-                {
-                    text: "确认",
-                    onPress: this.handleLogout
-                }
-            ]
-        )
+            [ { text: "取消" }, { text: "确认", onPress: this.handleLogout } ]
+        );
     }
 
     handleLogout = () => {
@@ -148,9 +141,9 @@ class SettingScreen extends React.Component<any, any> {
         }
         catch (e) {
         }
+
         const user: any = AppStore.get("user");
         const account: any = user.account;
-
         const userState: any = {
             ...user,
             profile: {},
