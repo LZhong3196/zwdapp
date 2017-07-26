@@ -102,7 +102,7 @@ export default class Store {
         const store: Redux.Store<any> = createStore( appReducer, initialState, enhancer );
 
         const rehydrationCompleted: any = compose(
-            initConnectivityInfo(store)
+            initConnectivityInfo
         );
 
         persistStore(store, {
