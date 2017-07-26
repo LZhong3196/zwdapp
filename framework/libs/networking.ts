@@ -2,7 +2,6 @@ import {
     Platform,
     NetInfo
 } from "react-native";
-import Store from "./../store/index";
 
 const IS_DEV = (global as any).__DEV__;
 const IS_DEBUG = (global as any).__DEBUG__;
@@ -36,16 +35,20 @@ export function removeConnectivityListener() {
 }
 
 
-export function initConnectivityInfo() {
-    let appStore: Store = Store.instance;
-    let connectLimit: boolean = !!appStore.get("user.setting.connect_limit");
+export function initConnectivityInfo(store: Redux.Store<any>) {
+    return () => {
+        let connectLimit: boolean = false;
+        try {
+            connectLimit = store.getState().getIn(["user", "setting", "connect_limit"]);
+        }
+        catch (e) { }
+        (global as any).__CONNECT_LIMIT__ = connectLimit;
+        NetInfo.fetch().then((reach: any) => {
+            (global as any).__NETINFO__ = reach;
+        });
 
-    (global as any).__CONNECT_LIMIT__ = connectLimit;
-    NetInfo.fetch().then((reach: any) => {
-        (global as any).__NETINFO__ = reach;
-    });
-
-    if (connectLimit) {
-        addConnectivityListener();
-    }
+        if (connectLimit) {
+            addConnectivityListener();
+        }
+    };
 }
