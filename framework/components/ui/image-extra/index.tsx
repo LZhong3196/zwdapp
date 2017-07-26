@@ -1,3 +1,4 @@
+/** TODO - image cache */
 import * as React from "react";
 import {
     Image,
@@ -5,6 +6,11 @@ import {
     ImageURISource
 } from "react-native";
 
+const IS_DEV = (global as any).__DEV__;
+const IS_DEBUG = (global as any).__DEBUG__;
+const NETINFO = (global as any).__NETINFO__;
+const CONNECT_LIMIT = (global as any).__CONNECT_LIMIT__;
+const isDebugging: boolean = IS_DEBUG || IS_DEV;
 
 const qualityMap: Dictionary<string> = {
     XXXS: "60x60",
@@ -20,6 +26,7 @@ const qualityMap: Dictionary<string> = {
 };
 
 export interface ImageExtraProps extends ImageProperties {
+    source: ImageURISource;
     qualityControl?:
     "60x60"
     | "80x80" | "100x100" | "120x120" | "160x160" | "180x180"
@@ -31,16 +38,14 @@ export interface ImageExtraProps extends ImageProperties {
 export default class ImageExtra extends React.Component<ImageExtraProps, any> {
     static defaultProps = {
         qualityControl: ""
-    }
+    };
 
     constructor(props: ImageExtraProps, context: any) {
         super(props, context);
-
     }
 
     render() {
-        const connectivityLimited: boolean = !!(global as any).__CONNECT_LIMIT__ && (global as any).__NETINFO__ !== "WIFI";
-
+        const connectivityLimited: boolean = !!CONNECT_LIMIT && NETINFO !== "WIFI";
         const {
             qualityControl,
             source,
@@ -50,9 +55,15 @@ export default class ImageExtra extends React.Component<ImageExtraProps, any> {
         const quality: string = qualityMap[qualityControl] || qualityControl;
         const onResponse: boolean = connectivityLimited && !!quality;
 
-        let imageSource: ImageURISource | ImageURISource[] = onResponse ? {
+        let uriResponse: string = undefined;
+        if (!!source.uri) {
+            const splashReg: RegExp = /\/(\d{3,4})/g;
+            uriResponse = isDebugging ? source.uri.replace(splashReg, `/100`) : `${source.uri}_${quality}.jpg`;
+        }
+
+        let imageSource: ImageURISource = onResponse ? {
             ...source,
-            uri: `${source}_${quality}.jpg`
+            uri: uriResponse
         } : source;
 
         return (

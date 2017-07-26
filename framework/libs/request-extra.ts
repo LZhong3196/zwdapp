@@ -11,21 +11,12 @@ import {
 import Store from "./../store/index";
 
 
-let appStore: Store;
-
-export function setStore(instance: Store) {
-    if (!appStore) {
-        appStore = instance;
-    }
-    return appStore;
-}
-
-
 /** Request error handler */
 export function resolveError(error: any): boolean {
     if (!error.code) {
         return false;
     }
+    let appStore: Store = Store.instance;
     switch (error.code) {
         case REQUEST_ERROR_UNAUTH: {
             appStore.dispatch({
@@ -41,11 +32,7 @@ export function resolveError(error: any): boolean {
             Alert.alert(
                 "提示",
                 "当前未连接网络",
-                [
-                    {
-                        text: "知道了"
-                    }
-                ]
+                [ { text: "知道了" } ]
             )
             break;
         }
@@ -57,6 +44,7 @@ export function resolveError(error: any): boolean {
 
 
 export function getToken(): string {
+    let appStore: Store = Store.instance;
     if (!appStore) {
         return "";
     }

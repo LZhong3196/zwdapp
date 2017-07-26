@@ -2,7 +2,6 @@ import * as React from "react";
 import {
     Text
 } from "react-native";
-import * as Lodash from "lodash";
 
 const sizeMap: any = {
     "xs": 18 as number,
@@ -32,12 +31,13 @@ export default class Icon extends React.Component<IconProps, any> {
             style
         } = this.props;
         const fontSize: number = typeof size === "string" ? sizeMap[size] : size;
-        const TextIconStyle: any = Lodash.assign({
+        const TextIconStyle: any = {
             fontSize,
             color: color,
             fontFamily: "iconfont",
-            flexDirection: "row"
-        }, style);
+            flexDirection: "row",
+            ...style
+        };
 
         return (
             <Text style={TextIconStyle}>{type}</Text>

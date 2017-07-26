@@ -647,7 +647,11 @@ declare module 'native-base@2.2.0' {
 		interface Segment extends ReactNative.TextProperties {}
 
 		interface StyleProvider {
-			style?: any;
+			style?: ReactNative.ViewStyle;
+		}
+
+		interface Root extends ReactNative.ViewProperties {
+			style?: ReactNative.ViewStyle;
 		}
 	}
 
@@ -925,4 +929,7 @@ declare module 'native-base@2.2.0' {
 			duration?: number;
 		}): void;
 	}
+
+	export class Root extends React.Component<NativeBase.Root, any> {}
+
 }

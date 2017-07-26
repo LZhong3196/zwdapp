@@ -14,7 +14,7 @@ import { initConnectivityInfo } from "./../libs/networking";
 
 import appReducer from "./../reducers/index";
 
-const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;
+const isDebuggingInChrome = (global as any).__DEV__ && !!window.navigator.userAgent;
 
 const logger: Redux.Middleware = createLogger({
     predicate: (getState, action) => isDebuggingInChrome,
@@ -61,6 +61,7 @@ export const initialState: State = Immutable.fromJS({
 
 
 export default class Store {
+    static instance: Store;
     private appStore: Redux.Store<any>;
 
     constructor() {

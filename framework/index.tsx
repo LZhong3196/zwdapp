@@ -12,8 +12,6 @@ import * as Decorators from "./decorators/index";
 import * as Networking from "./libs/networking";
 import Store from "./store/index";
 import Navigator from "./navigator/index";
-import * as navigationReducer from "./reducers/navigation";
-import * as requestExtra from "./libs/request-extra";
 
 export interface AppOptions {
 	appName: string;
@@ -62,10 +60,16 @@ let AppStore: Store = new Store();
 let AppNavigator: Navigator;
 
 export function setup(options: AppOptions) {
-	/** Set store instance */
-	requestExtra.setStore(AppStore);
+	if (!Store.instance) {
+		Store.instance = AppStore;
+	}
+
 	AppNavigator = new Navigator(options.router);
-	navigationReducer.setNavigator(AppNavigator.appNavigator);
+
+	if (!Navigator.navigatorInstance) {
+		Navigator.navigatorInstance = AppNavigator.appNavigator;
+	}
+
 	const AppWithNavigationState = AppNavigator.createApp();
 
 	class App extends React.Component<any, any> {
@@ -74,9 +78,12 @@ export function setup(options: AppOptions) {
 		}
 
 		render() {
+			let Root = Widgets.Root;
 			return (
 				<Provider store={AppStore.store}>
-					<AppWithNavigationState />
+					<Root>
+						<AppWithNavigationState />
+					</Root>
 				</Provider>
 			);
 		}
@@ -85,8 +92,6 @@ export function setup(options: AppOptions) {
 	AppRegistry.registerComponent(options.appName, () => App);
 
 	module.exports.APIs = initAPIs(options);
-
-	// return App;
 }
 
 export {

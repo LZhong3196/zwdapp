@@ -14,7 +14,7 @@ import {
 import { Row, Grid } from "react-native-easy-grid";
 import { styles } from "./style";
 
-let { Icon } = Widgets;
+let { Icon, Toast } = Widgets;
 
 
 const accountLimit: number = 22;
@@ -129,6 +129,12 @@ class EditForm extends React.Component<any, any> {
                 isLoggedIn: true,
                 ...data
             };
+
+            Toast.show({
+                text: "登录成功",
+                duration: 500,
+                position: "top"
+            });
 
             AppStore.dispatch({
                 type: Constants.ACTIONTYPES_USER_UPDATE,

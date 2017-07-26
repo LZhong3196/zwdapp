@@ -3,7 +3,8 @@ import {
     Image,
     StatusBar,
     Switch,
-    Alert
+    Alert,
+    StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
 import { NavigationActions } from "react-navigation";
@@ -18,12 +19,11 @@ import {
     Right,
     List,
     ListItem,
-    Toast
 } from "native-base";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import ConnectivityControl from "./connectivity-control";
 import { styles } from "./style";
-let { Icon, theme } = Widgets;
+let { Icon, theme, Toast } = Widgets;
 
 class SettingScreen extends React.Component<any, any> {
     static navigationOptions = {
@@ -77,7 +77,7 @@ class SettingScreen extends React.Component<any, any> {
                         </Left>
                         <Right>
                             <Text style={styles.cacheInfo}>
-                                11MB 
+                                11MB
                                 <Icon
                                     type="&#xea54;"
                                     color={theme.color_base}
@@ -98,7 +98,7 @@ class SettingScreen extends React.Component<any, any> {
                             <Text>分享17客户端</Text>
                         </Left>
                         <Right>
-                             <Icon type="&#xea54;" color={theme.color_base} size="xs" /> 
+                            <Icon type="&#xea54;" color={theme.color_base} size="xs" />
                         </Right>
                     </ListItem>
                 </List>
@@ -124,14 +124,15 @@ class SettingScreen extends React.Component<any, any> {
                 routeName: Constants.ROUTES_LOGIN,
                 key: Constants.ROUTES_LOGIN,
             }
-        })
+        });
+
     }
 
     onLogoutConfirm = () => {
         Alert.alert(
             "提示",
             "是否退出登录",
-            [ { text: "取消" }, { text: "确认", onPress: this.handleLogout } ]
+            [{ text: "取消" }, { text: "确认", onPress: this.handleLogout }]
         );
     }
 
@@ -153,7 +154,10 @@ class SettingScreen extends React.Component<any, any> {
                 token: ""
             }
         };
-
+        Toast.show({
+            text: "已退出登录",
+            duration: 1000
+        });
         AppStore.dispatch({
             type: Constants.ACTIONTYPES_NAVIGATION_BACK,
         });
@@ -170,3 +174,5 @@ const mapStateToProps = (state: any) => ({
 });
 
 export default connect(mapStateToProps)(SettingScreen);
+
+

@@ -9,18 +9,12 @@ import {
     ACTIONTYPES_NAVIGATION_BACK,
     ROUTES_LOGIN
 } from "./../constants";
+import Navigator from "./../navigator/index";
 
-let navigator: ReactNavigation.NavigationContainer;
-
-export function setNavigator(instance: ReactNavigation.NavigationContainer) {
-    if (!navigator) {
-        navigator = instance;
-    }
-    return navigator;
-}
 
 function navigationReducers(state: State = initialState, action: StoreAction): State {
     let nextState: State;
+    let navigator: ReactNavigation.NavigationContainer = Navigator.navigatorInstance;
     switch (action.type) {
         case ACTIONTYPES_LOGGED_IN: {
             nextState = state.merge(navigator.router.getStateForAction(

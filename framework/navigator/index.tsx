@@ -2,7 +2,6 @@ import * as React from "react";
 import { connect } from "react-redux";
 import * as ReactNavigation from "react-navigation";
 import { addNavigationHelpers, StackNavigator } from "react-navigation";
-import { Root } from "native-base";
 
 type appNavigationOptions = {
     dispatch: any;
@@ -17,6 +16,7 @@ export type routerConfigs = {
 export default class Navigator {
     public appName: string;
     public appNavigator: ReactNavigation.NavigationContainer;
+    static navigatorInstance: ReactNavigation.NavigationContainer;
 
     constructor(configs: routerConfigs) {
         this.appNavigator = StackNavigator(configs.routeConfigMap, configs.stackConfig);
@@ -26,15 +26,6 @@ export default class Navigator {
         return this.appNavigator;
     }
 
-    // public to() {
-
-    // }
-
-    // public back(){
-
-    // }
-
-
     createApp() {
         const mapStateToProps = (state: any) => ({
             nav: state.get("nav").toJS()
@@ -42,15 +33,13 @@ export default class Navigator {
 
         const AppWithNavigationState = (options: appNavigationOptions) => {
             return (
-                <Root>
-                    <this.appNavigator
-                        navigation={
-                            addNavigationHelpers({
-                                dispatch: options.dispatch,
-                                state: options.nav
-                            } as any)
-                        } />
-                </Root>
+                <this.appNavigator
+                    navigation={
+                        addNavigationHelpers({
+                            dispatch: options.dispatch,
+                            state: options.nav
+                        } as any)
+                    } />
             );
         };
         return connect(mapStateToProps)(AppWithNavigationState);
