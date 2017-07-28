@@ -1,6 +1,6 @@
 import * as React from "react";
 import { } from "react-native";
-import { AppStore, Constants, APIs, Widgets } from "summer";
+import { AppStore, Constants, APIs, Widgets, Decorators } from "summer";
 import {
     Container,
     Content,
@@ -118,6 +118,7 @@ class EditForm extends React.Component<any, any> {
             return;
         }
 
+        Toast.loading();
         const data: any = {
             account: this.state.account.trim(),
             password: this.state.password.trim()
@@ -129,13 +130,9 @@ class EditForm extends React.Component<any, any> {
                 isLoggedIn: true,
                 ...data
             };
-
-            Toast.show({
-                text: "登录成功",
-                duration: 500,
-                position: "top"
+            Toast.success({
+                text: "已登录"
             });
-
             AppStore.dispatch({
                 type: Constants.ACTIONTYPES_USER_UPDATE,
                 meta: {

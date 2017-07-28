@@ -87,6 +87,8 @@ $ ./app debug src
 
 > 施工中...
 
+#### [命令帮助手册](./doc/dev.md)
+
 ## 目录结构
 
 [17App 项目目录结构](./doc/structure.md)
@@ -119,6 +121,9 @@ $ ./app debug src
 * [命名与编码规范](./doc/standard.md#项目相关命名规范)
 * [自定义图标](./doc/standard.md#自定义图标)
 
+## 开发手册
+
+#### [API传送门](./doc/api.md)
 
 ## 常见问题
 

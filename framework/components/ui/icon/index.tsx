@@ -1,6 +1,7 @@
 import * as React from "react";
 import {
-    Text
+    Text,
+    Platform
 } from "react-native";
 
 const sizeMap: any = {
@@ -36,11 +37,26 @@ export default class Icon extends React.Component<IconProps, any> {
             color: color,
             fontFamily: "iconfont",
             flexDirection: "row",
+            textAlignVertical: "center",
+            marginBottom: this.getMarginBottom(style, fontSize),
             ...style
         };
-
+        let unicode: string = this.unicodeParser(type);
         return (
-            <Text style={TextIconStyle}>{type}</Text>
+            <Text style={TextIconStyle}>{unicode}</Text>
         );
     }
+
+    getMarginBottom = (style: any = {}, fontSize: number): number => {
+        /** set text align veritical center */
+        if (Platform.OS !== "ios") {
+            return style.marginBottom || style.margin;
+        }
+        let bottom: number = style.marginBottom || style.margin || 0;
+        return bottom - (fontSize / 8);
+    }
+
+    unicodeParser = (value: string): string => {
+        return value.length > 1 ? `${String.fromCharCode(parseInt(value.replace(/(&#x)|;/g, ""), 16))}` : value;
+    };
 }

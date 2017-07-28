@@ -136,9 +136,12 @@ class SettingScreen extends React.Component<any, any> {
         );
     }
 
-    handleLogout = () => {
+    handleLogout = async () => {
         try {
-            let res: any = APIs.account.getLogout({});
+            Toast.show({
+                text: "处理中"
+            });
+            let res: any = await APIs.account.getLogout({});
         }
         catch (e) {
         }
@@ -154,10 +157,7 @@ class SettingScreen extends React.Component<any, any> {
                 token: ""
             }
         };
-        Toast.show({
-            text: "已退出登录",
-            duration: 1000
-        });
+
         AppStore.dispatch({
             type: Constants.ACTIONTYPES_NAVIGATION_BACK,
         });

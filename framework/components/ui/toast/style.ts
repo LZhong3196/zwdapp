@@ -1,18 +1,27 @@
 import { Platform } from "react-native";
+import {
+    font_size_base,
+    font_size_caption_sm,
+    color_background,
+    overlay_color,
+    v_spacing_md,
+    icon_size_lg
+} from "./../theme/index";
 
 export const style: any = {
     toast: {
-        backgroundColor: "rgba(0,0,0,0.8)",
+        backgroundColor: overlay_color,
         borderRadius: Platform.OS === "ios" ? 5 : 0,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: 10,
-        minHeight: 50,
+        paddingHorizontal: 15,
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center"
     },
     text: {
-        color: "#fff",
-        flex: 1
+        color: color_background,
+        textAlign: "center",
+        fontSize: font_size_caption_sm,
+        marginBottom: v_spacing_md
     },
     button: {
         backgroundColor: "transparent",
@@ -20,6 +29,11 @@ export const style: any = {
         elevation: 0,
     },
     buttonText: {
-        fontSize: 14
+        fontSize: font_size_base
+    },
+    icon: {
+        fontSize: icon_size_lg,
+        color: color_background,
+        margin: v_spacing_md,
     }
 };

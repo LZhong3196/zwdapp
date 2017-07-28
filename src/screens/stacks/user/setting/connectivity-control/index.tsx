@@ -2,9 +2,10 @@ import * as React from "react";
 import {
     Switch
 } from "react-native";
-import { AppStore, Constants, Networking } from "summer";
+import { AppStore, Constants, Networking, Widgets } from "summer";
 import * as Immutable from "immutable";
 
+let { Toast } = Widgets;
 
 export default class ConnectivityControl extends React.Component<any, any> {
     render() {
@@ -31,5 +32,9 @@ export default class ConnectivityControl extends React.Component<any, any> {
         else {
             Networking.removeConnectivityListener();
         }
+        Toast.success({
+            text: "设置成功"
+        });
+
     }
 }

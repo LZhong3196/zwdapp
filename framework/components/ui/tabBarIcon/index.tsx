@@ -29,8 +29,6 @@ export default class TabBarIcon extends React.Component<TabBarIconProps, any> {
         focused: false,
     };
 
-
-
     render() {
         const {
             type,
@@ -51,11 +49,14 @@ export default class TabBarIcon extends React.Component<TabBarIconProps, any> {
             flexDirection: "row",
             color: focused ? activeColor : color
         };
-
+        let unicode: string = this.unicodeParser(focused ? activeType : type);
         return (
             <Text style={TextIconStyle}  {...restProps}>
-                {focused ? activeType : type}
+                {unicode}
             </Text>
         );
     }
+    unicodeParser = (value: string): string => {
+        return value.length > 1 ? `${String.fromCharCode(parseInt(value.replace(/(&#x)|;/g, ""), 16))}` : value;
+    };
 }

@@ -1,7 +1,4 @@
 import {
-    Alert
-} from "react-native";
-import {
     REQUEST_ERROR_UNAUTH,
     REQUEST_ERROR_NETERROR,
     REQUEST_ERROR_NETINFO_NONE,
@@ -9,7 +6,7 @@ import {
     ROUTES_LOGIN
 } from "./../constants";
 import Store from "./../store/index";
-
+import { Toast } from "./../components/index";
 
 /** Request error handler */
 export function resolveError(error: any): boolean {
@@ -29,11 +26,9 @@ export function resolveError(error: any): boolean {
             break;
         }
         case REQUEST_ERROR_NETINFO_NONE: {
-            Alert.alert(
-                "提示",
-                "当前未连接网络",
-                [ { text: "知道了" } ]
-            )
+            Toast.info({
+                text: "当前未连接网络"
+            });
             break;
         }
         default: return false;

@@ -17,7 +17,7 @@ const RAP_MODEL_CACHE_DIR = RFS.CachesDirectoryPath;
 export interface RequestOptions {
     method?: "GET" | "POST" | "PATCH" | "DELETE";
     headers?: HashMap<any>;
-    JSONParser?: (res: any) =>  any;
+    JSONParser?: (res: any) => any;
     body?: any;
 }
 
@@ -32,7 +32,7 @@ async function _fetch(url: string, options: RequestOptions) {
     const resText = await res.text();
     const resJSON = (options.JSONParser || defaultJSONPaser)(resText);
 
-    if (resJSON.meta && resJSON.meta.code != 0) {
+    if (resJSON.meta && resJSON.meta.code !== 0) {
         throw new ResponseError(resJSON.meta.code, resJSON.meta.msg);
     }
 
@@ -103,7 +103,7 @@ export default async function request(
     try {
         res = await _fetch(url, options);
     } catch (e) {
-        let isConnected = await isNetworkConnected();
+        let isConnected = isNetworkConnected();
         if (!isConnected) {
             e.code = Constants.REQUEST_ERROR_NETINFO_NONE;
         }
