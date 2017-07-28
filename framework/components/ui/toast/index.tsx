@@ -25,22 +25,6 @@ const alignItemMap: Dictionary<string> = {
     bottom: "flex-end"
 };
 
-interface ToastProps extends ViewProperties {
-    type?: "loading" | "success" | "warning" | "danger";
-}
-
-class Toast extends React.Component<ToastProps, any> {
-    private root: any;
-    render() {
-        return (
-            <View
-                ref={(component: any) => this.root = component}
-                {...this.props}>
-            </View>
-        );
-    }
-}
-
 export type ToastConfiguration = {
     /** 提示文字 */
     text?: string;
@@ -210,9 +194,8 @@ export class ToastContainer extends React.Component<ViewProperties, any> {
         const spinnerVisible: boolean = type === "loading" && !icon;
         return modalVisible ? (
             <Animated.View style={this.getToastStyle()}>
-                <Toast
-                    style={{ ...toastStyle.toast, ...style }}
-                    type={type}>
+                <View
+                    style={{ ...toastStyle.toast, ...style }}>
                     {spinnerVisible && <Spinner style={{ height: 50 }} size="small" color="#EFEFF4" />}
                     {icon && <Icon style={toastStyle.icon} { ...icon} />}
                     {text && <Text style={{ ...toastStyle.text, ...textStyle }}>
@@ -226,7 +209,7 @@ export class ToastContainer extends React.Component<ViewProperties, any> {
                                 {buttonText}
                             </Text>
                         </Button>}
-                </Toast>
+                </View>
             </Animated.View>
         ) : null;
     }
