@@ -11,10 +11,11 @@ import {
     Text,
     Button,
     Left,
-    Right
+    Right,
+    View
 } from "native-base";
-import { Row, Grid } from "react-native-easy-grid";
-import { styles } from "./style";
+import { Row, Grid, Col } from "react-native-easy-grid";
+import { styles, thirdParty } from "./style";
 
 let { Icon, Toast } = Widgets;
 
@@ -51,20 +52,21 @@ class EditForm extends React.Component<any, any> {
         } = this.state;
         return (
             <Form style={styles.formContainer}>
-                <Item regular style={{...styles.inputItem, ...styles.firstItem}}>
-                    <Icon type="&#xe600;" color="#BFBFBF"/>
+                <Item regular style={{ ...styles.inputItem, ...styles.firstItem }}>
+                    <Icon type="&#xe600;" color="#BFBFBF" />
                     <Input
                         placeholder="请输入用户名/手机号"
                         value={account}
                         placeholderTextColor="#BDBDBE"
                         onChangeText={this.onAccountChange} />
                     <Icon
-                        type="&#xe60a;"
+                        type="&#xe60b;"
+                        color="#EEE"
                         style={styles.resetButton}
-                        onPress={this.resetAccountValue}/>
+                        onPress={this.resetAccountValue} />
                 </Item>
-                <Item regular style={{...styles.inputItem, ...styles.lastItem}}>
-                    <Icon type="&#xe68d;" color="#BFBFBF"/>
+                <Item regular style={{ ...styles.inputItem, ...styles.lastItem }}>
+                    <Icon type="&#xe68d;" color="#BFBFBF" />
                     <Input
                         placeholder="请输入密码"
                         value={password}
@@ -72,9 +74,10 @@ class EditForm extends React.Component<any, any> {
                         placeholderTextColor="#BDBDBE"
                         onChangeText={this.onPasswordChange} />
                     <Icon
-                        type="&#xe60a;"
+                        type="&#xe60b;"
+                        color="#EEE"
                         style={styles.resetButton}
-                        onPress={this.resetPasswordValue}/>
+                        onPress={this.resetPasswordValue} />
                 </Item>
                 <Button
                     block
@@ -84,10 +87,18 @@ class EditForm extends React.Component<any, any> {
                 </Button>
                 <Item style={styles.helpItemContainer}>
                     <Left>
-                        <Text style={styles.helpItem}>注册账号</Text>
+                        <Text
+                            onPress={this.register}
+                            style={styles.helpItem}>
+                            注册账号
+                        </Text>
                     </Left>
                     <Right>
-                        <Text style={styles.helpItem}>忘记密码</Text>
+                        <Text
+                            onPress={this.retrievePassword}
+                            style={styles.helpItem}>
+                            忘记密码
+                        </Text>
                     </Right>
                 </Item>
             </Form>
@@ -169,15 +180,58 @@ class EditForm extends React.Component<any, any> {
     }
 
     register = () => {
-
-    }
+        AppStore.dispatch({
+            type: Constants.ACTIONTYPES_NAVIGATION_TO,
+            meta: {
+                routeName: Constants.ROUTES_IDENTIFICATION,
+                params: {
+                    header: "注册",
+                    next: Constants.ROUTES_REGISTER,
+                }
+            }
+        });
+    };
 
     retrievePassword = () => {
-
-    }
-
+        AppStore.dispatch({
+            type: Constants.ACTIONTYPES_NAVIGATION_TO,
+            meta: {
+                routeName: Constants.ROUTES_IDENTIFICATION,
+                params: {
+                    header: "修改密码",
+                    next: Constants.ROUTES_RETRIEVE_PASSWORD,
+                }
+            }
+        });
+    };
 }
 
+
+class ThirdParty extends React.Component<any, any> {
+    render() {
+        return (
+            <View style={thirdParty.container}>
+                <Item style={thirdParty.titleContainer}>
+                    <Text style={thirdParty.title}>快速登录</Text>
+                </Item>
+                <Item style={thirdParty.optionContainer}>
+                    <Col style={thirdParty.optionItem}>
+                        <Icon type="&#xe639;" color="#00C806" size={32} style={thirdParty.itemIcon} />
+                        <Text style={thirdParty.optionText}>微信登录</Text>
+                    </Col>
+                    <Col style={thirdParty.optionItem}>
+                        <Icon type="&#xe60c;" color="#4BBAEA" size={32} style={thirdParty.itemIcon} />
+                        <Text style={thirdParty.optionText}>QQ登录</Text>
+                    </Col>
+                    <Col style={thirdParty.optionItem}>
+                        <Icon type="&#xe696;" size={32} style={thirdParty.itemIcon} />
+                        <Text style={thirdParty.optionText}>旺旺登录</Text>
+                    </Col>
+                </Item>
+            </View>
+        );
+    }
+}
 
 export default class LoginScreen extends React.Component<any, any> {
     static navigationOptions = {
@@ -188,11 +242,12 @@ export default class LoginScreen extends React.Component<any, any> {
             <Grid style={styles.container}>
                 <Image
                     source={require("./images/header.png")}
-                    style={styles.backgroundImage}/>
-                <Row size={4} >
+                    style={styles.backgroundImage} />
+                <Row size={3} >
                     <EditForm />
                 </Row>
-                <Row size={1}>
+                <Row size={2}>
+                    <ThirdParty />
                 </Row>
             </Grid>
         );

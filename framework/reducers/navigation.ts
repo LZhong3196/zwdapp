@@ -39,7 +39,7 @@ function navigationReducers(state: State = initialState, action: StoreAction): S
             nextState = state.merge(navigator.router.getStateForAction(
                 NavigationActions.navigate({
                     routeName: action.meta.routeName,
-                    key: action.meta.key || action.meta.routeName,
+                    key: action.meta.routeName,
                     params: action.meta.params
                 } as any),
                 state.toJS()

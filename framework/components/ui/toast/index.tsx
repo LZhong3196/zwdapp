@@ -69,7 +69,9 @@ export class ToastContainer extends React.Component<ViewProperties, any> {
         this.instance.showToast({
             icon: {
                 ...config.icon,
-                type: "&#xea55;"
+                type: "&#xea55;",
+                size: 30,
+                color: "#FFF"
             },
             duration: 800,
             ...config
@@ -79,7 +81,9 @@ export class ToastContainer extends React.Component<ViewProperties, any> {
         this.instance.showToast({
             icon: {
                 ...config.icon,
-                type: "&#xe62f;"
+                type: "&#xe62f;",
+                size: 30,
+                color: "#FFF"
             },
             duration: 800,
             ...config
@@ -89,7 +93,9 @@ export class ToastContainer extends React.Component<ViewProperties, any> {
         this.instance.showToast({
             icon: {
                 ...config.icon,
-                type: "&#xe60a;"
+                type: "&#xe60a;",
+                size: 30,
+                color: "#FFF"
             },
             duration: 800,
             ...config
