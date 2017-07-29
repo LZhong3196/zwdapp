@@ -63,7 +63,12 @@ export const ROUTES_GOODS_LIST: string = "GoodsList";
 
 /** ROUTES - Stacks - 用户设置 */
 export const ROUTES_SETTING: string = "Setting";
-
+/** ROUTES - Stacks - 用户注册 */
+export const ROUTES_REGISTER: string = "Register";
+/** ROUTES - Stacks - 用户找回密码 */
+export const ROUTES_RETRIEVE_PASSWORD: string = "RetrievePassword";
+/** ROUTES - Stacks - 用户短信验证 */
+export const ROUTES_IDENTIFICATION: string = "Identification";
 
 
 /** -------  REQUEST ERROR STATUS DEFINITION   ------- */

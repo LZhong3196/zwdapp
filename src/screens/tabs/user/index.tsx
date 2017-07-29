@@ -103,9 +103,7 @@ class UserScreen extends React.Component<any, any> {
                                 </Text>
                                 </Body>
                                 <Right style={headerStyle.titleRight}>
-                                    <Button transparent onPress={this.handleSetting}>
-                                        <Icon type="&#xe619;" color={theme.color_background} />
-                                    </Button>
+                                    <Icon type="&#xe619;" color={theme.color_background} onPress={this.handleSetting} />
                                 </Right>
                             </Row>
                             <Row style={headerStyle.caption}>

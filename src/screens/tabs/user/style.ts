@@ -5,7 +5,8 @@ let {
     color_base,
     font_size_base,
     font_size_caption,
-    font_size_heading
+    font_size_heading,
+    h_spacing_lg
 } = Widgets.theme;
 
 
@@ -71,7 +72,7 @@ export const headerStyle: any = {
     },
     titleRight: {
         position: "absolute",
-        right: 0,
+        right: h_spacing_lg,
     },
     caption: {
         padding: 20,

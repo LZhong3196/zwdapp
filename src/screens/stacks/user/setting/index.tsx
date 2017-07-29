@@ -138,7 +138,7 @@ class SettingScreen extends React.Component<any, any> {
 
     handleLogout = async () => {
         try {
-            Toast.show({
+            Toast.loading({
                 text: "处理中"
             });
             let res: any = await APIs.account.getLogout({});

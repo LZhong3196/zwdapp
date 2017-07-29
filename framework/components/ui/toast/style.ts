@@ -15,13 +15,13 @@ export const style: any = {
         paddingHorizontal: 15,
         flexDirection: "column",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        padding: v_spacing_md
     },
     text: {
         color: color_background,
         textAlign: "center",
-        fontSize: font_size_caption_sm,
-        marginBottom: v_spacing_md
+        fontSize: font_size_base,
     },
     button: {
         backgroundColor: "transparent",

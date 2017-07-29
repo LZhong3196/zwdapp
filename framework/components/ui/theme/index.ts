@@ -2,6 +2,7 @@
 export const color_theme: string = "#FF2A00";
 export const color_base: string = "#5C5C5C";
 export const color_background: string = "#FFFFFF";
+export const color_grey: string = "#BFBFBF";
 export const color_primary: string = "#3F51B5";
 export const color_info: string = "#3F57D3";
 export const color_success: string = "#5cb85c";

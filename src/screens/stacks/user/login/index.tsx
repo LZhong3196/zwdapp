@@ -1,5 +1,5 @@
 import * as React from "react";
-import { } from "react-native";
+import { Image } from "react-native";
 import { AppStore, Constants, APIs, Widgets, Decorators } from "summer";
 import {
     Container,
@@ -9,7 +9,9 @@ import {
     Input,
     Label,
     Text,
-    Button
+    Button,
+    Left,
+    Right
 } from "native-base";
 import { Row, Grid } from "react-native-easy-grid";
 import { styles } from "./style";
@@ -21,6 +23,7 @@ const accountLimit: number = 22;
 const passwordLimit: number = 22;
 
 class EditForm extends React.Component<any, any> {
+
     constructor(props: any, context: any) {
         super(props, context);
         this.state = {
@@ -48,62 +51,65 @@ class EditForm extends React.Component<any, any> {
         } = this.state;
         return (
             <Form style={styles.formContainer}>
-                <Item rounded last>
+                <Item regular style={{...styles.inputItem, ...styles.firstItem}}>
                     <Icon type="&#xe600;" color="#BFBFBF"/>
                     <Input
-                        style={styles.accountInput}
                         placeholder="请输入用户名/手机号"
                         value={account}
+                        placeholderTextColor="#BDBDBE"
                         onChangeText={this.onAccountChange} />
+                    <Icon
+                        type="&#xe60a;"
+                        style={styles.resetButton}
+                        onPress={this.resetAccountValue}/>
                 </Item>
-                <Item>
-                    <Text style={styles.errorInfo}>
-                        {accountError || ""}
-                    </Text>
-                </Item>
-                <Item rounded last>
+                <Item regular style={{...styles.inputItem, ...styles.lastItem}}>
                     <Icon type="&#xe68d;" color="#BFBFBF"/>
                     <Input
-                        style={styles.passwordInput}
                         placeholder="请输入密码"
                         value={password}
+                        secureTextEntry
+                        placeholderTextColor="#BDBDBE"
                         onChangeText={this.onPasswordChange} />
-                </Item>
-                <Item>
-                    <Text style={styles.errorInfo}>
-                        {passwordError || ""}
-                    </Text>
+                    <Icon
+                        type="&#xe60a;"
+                        style={styles.resetButton}
+                        onPress={this.resetPasswordValue}/>
                 </Item>
                 <Button
                     block
-                    rounded
                     onPress={this.onSubmit}
                     style={styles.loginButton}>
                     <Text>登录</Text>
                 </Button>
+                <Item style={styles.helpItemContainer}>
+                    <Left>
+                        <Text style={styles.helpItem}>注册账号</Text>
+                    </Left>
+                    <Right>
+                        <Text style={styles.helpItem}>忘记密码</Text>
+                    </Right>
+                </Item>
             </Form>
         );
     }
 
+    resetAccountValue = () => {
+        this.state.account = undefined;
+        this.setState(this.state);
+    }
+
+    resetPasswordValue = () => {
+        this.state.password = undefined;
+        this.setState(this.state);
+    }
+
     onAccountChange = (value: any) => {
-        if (value.length > accountLimit) {
-            this.setState({
-                accountError: `账号名长度请小于 ${accountLimit} 个字节`
-            });
-            return;
-        }
         this.state.account = value;
-        this.state.accountError = undefined;
         this.setState(this.state);
     }
 
     onPasswordChange = (value: any) => {
-        if (value.length > passwordLimit) {
-            this.setState({
-                accountError: `密码长度请小于 ${passwordLimit} 个字节`
-            });
-            return;
-        }
         this.state.password = value;
         this.setState(this.state);
     }
@@ -111,10 +117,16 @@ class EditForm extends React.Component<any, any> {
     onSubmit = async () => {
         if (!this.state.account) {
             /** error */
+            Toast.show({
+                text: "请输入账号"
+            });
             return;
         }
 
         if (!this.state.password) {
+            Toast.show({
+                text: "请输入密码"
+            });
             return;
         }
 
@@ -155,6 +167,15 @@ class EditForm extends React.Component<any, any> {
             /** 登录失败 error */
         }
     }
+
+    register = () => {
+
+    }
+
+    retrievePassword = () => {
+
+    }
+
 }
 
 
@@ -165,6 +186,9 @@ export default class LoginScreen extends React.Component<any, any> {
     render() {
         return (
             <Grid style={styles.container}>
+                <Image
+                    source={require("./images/header.png")}
+                    style={styles.backgroundImage}/>
                 <Row size={4} >
                     <EditForm />
                 </Row>
@@ -173,6 +197,5 @@ export default class LoginScreen extends React.Component<any, any> {
             </Grid>
         );
     }
-
 }
 

@@ -32,7 +32,7 @@ export type ToastConfiguration = {
     textStyle?: ViewStyleProp;
     /** 按钮文字 */
     buttonText?: string;
-    /** 持续时间 - 设为 -1 时将不消失 | default - 1000  */
+    /** 持续时间 - 设为 -1 时将不消失 | default - 800  */
     duration?: number;
     /** 自定义的Icon */
     icon?: {
@@ -52,7 +52,7 @@ export type ToastConfiguration = {
     /** 回调按钮样式 */
     buttonStyle?: ViewStyleProp;
     /** 隐藏蒙层 default - false */
-    maskHidden?: boolean;
+    // maskHidden?: boolean;
 };
 
 export class ToastContainer extends React.Component<ViewProperties, any> {
@@ -62,7 +62,7 @@ export class ToastContainer extends React.Component<ViewProperties, any> {
     };
     static loading(config: ToastConfiguration = {}) {
         this.instance.showToast({
-            duration: config.duration || 5000
+            type: "loading"
         });
     };
     static success(config: ToastConfiguration = {}) {
@@ -136,7 +136,7 @@ export class ToastContainer extends React.Component<ViewProperties, any> {
             modalVisible: true,
             text: config.text,
             buttonText: config.buttonText,
-            type: config.type || "loading",
+            type: config.type,
             position: config.position ? config.position : "center",
             supportedOrientations: config.supportedOrientations,
             style: config.style,
@@ -144,7 +144,7 @@ export class ToastContainer extends React.Component<ViewProperties, any> {
             buttonStyle: config.buttonStyle,
             textStyle: config.textStyle,
             icon: config.icon,
-            maskHidden: !!config.maskHidden
+            // maskHidden: !!config.maskHidden
         });
 
         if (config.duration !== -1) {
@@ -196,7 +196,7 @@ export class ToastContainer extends React.Component<ViewProperties, any> {
             <Animated.View style={this.getToastStyle()}>
                 <View
                     style={{ ...toastStyle.toast, ...style }}>
-                    {spinnerVisible && <Spinner style={{ height: 50 }} size="small" color="#EFEFF4" />}
+                    {spinnerVisible && <Spinner style={{ height: 50, marginHorizontal: 15 }} size="small" color="#EFEFF4" />}
                     {icon && <Icon style={toastStyle.icon} { ...icon} />}
                     {text && <Text style={{ ...toastStyle.text, ...textStyle }}>
                         {text}

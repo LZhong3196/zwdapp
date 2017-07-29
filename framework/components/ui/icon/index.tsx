@@ -15,13 +15,14 @@ export interface IconProps {
     size?: 'xxs' | 'xs' | 'md' | 'lg' | number;
     color?: string;
     style?: any;
+    onPress?: (e?: any) => void;
 }
 
 export default class Icon extends React.Component<IconProps, any> {
     static defaultProps = {
         size: "md",
         color: "#F85E3B",
-        style: {}
+        style: {},
     };
 
     render() {
@@ -29,7 +30,8 @@ export default class Icon extends React.Component<IconProps, any> {
             type,
             size,
             color,
-            style
+            style,
+            onPress
         } = this.props;
         const fontSize: number = typeof size === "string" ? sizeMap[size] : size;
         const TextIconStyle: any = {
@@ -42,8 +44,13 @@ export default class Icon extends React.Component<IconProps, any> {
             ...style
         };
         let unicode: string = this.unicodeParser(type);
-        return (
-            <Text style={TextIconStyle}>{unicode}</Text>
+        return !!onPress ? (
+            <Text
+                onPress={(e?: any) => onPress && onPress(e)}
+                style={TextIconStyle}>{unicode}
+            </Text>
+        ) : (
+            <Text style={TextIconStyle}>{unicode} </Text>
         );
     }
 
