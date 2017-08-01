@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Lodash from "lodash";
-import { AppStore, AppNavigator, Constants, APIs, Widgets } from "summer";
+import { AppStore, Constants, APIs, Widgets } from "summer";
 import {
     Image,
     View,

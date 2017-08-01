@@ -627,6 +627,7 @@ declare module 'native-base@2.2.0' {
 			secureTextEntry?: boolean;
 			success?: boolean;
 			last?: boolean;
+			style?: ReactNative.ViewStyle;
 		}
 
 		interface Form {

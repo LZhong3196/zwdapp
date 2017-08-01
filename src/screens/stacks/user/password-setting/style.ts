@@ -8,11 +8,7 @@ let {
     border_width_sm,
     icon_size_xs,
     color_grey,
-    color_base,
     h_spacing_sm,
-    font_size_caption_sm,
-    font_size_display_lg,
-    font_size_display_xl
 } = Widgets.theme;
 export const styles: any = {
     header: {

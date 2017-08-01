@@ -19,6 +19,7 @@ import {
     Right,
     List,
     ListItem,
+    Thumbnail
 } from "native-base";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import ConnectivityControl from "./connectivity-control";
@@ -39,19 +40,28 @@ class SettingScreen extends React.Component<any, any> {
     }
 
     render() {
-        const account: any = AppStore.get("user.account") || {};
+        const user: any = AppStore.get("user") || {};
+        const account = user.account || {};
+        const profile = user.profile || {};
 
         return (
             <Container>
                 <StatusBar barStyle="default" />
                 <List style={styles.listContainer}>
+                    <ListItem>
+                        <Thumbnail size={80} source={{ uri: profile.avatar }} />
+                        <Body>
+                            <Text>{profile.account || "未登录"}</Text>
+                            <Text note>{`真实姓名: ${profile.name || "未设置"}`}</Text>
+                        </Body>
+                        <Right>
+                            <Icon type="&#xea54;" color={theme.color_base} size="xs" />
+                        </Right>
+                    </ListItem>
                     <ListItem style={styles.listItem}>
                         <Left>
                             <Text>联系我们</Text>
                         </Left>
-                        <Right>
-                            <Icon type="&#xea54;" color={theme.color_base} size="xs" />
-                        </Right>
                     </ListItem>
                     <ListItem style={{ ...styles.listItem, ...styles.lastItem }}>
                         <Left>

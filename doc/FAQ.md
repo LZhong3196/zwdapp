@@ -74,9 +74,30 @@ native-base默认下载的 `d.ts` 文件未能与api同步更新
 $ ./app compile framework
 ```
 
-## ./app generate - SyntaxError: Unexpected token import
+## 依赖模块类型声明 | ./app generate 指令失败相关 
+
+- ./app generate - SyntaxError: Unexpected token import
 
 > [Microsoft/dts-gen](https://github.com/Microsoft/dts-gen)
  暂未支持 es6   
+ 
+若依赖模块未提供 类型声明文件或 `dts-gen` 生成失败, 请在 `typings/interface.d.ts` 文件下手动添加模块声明
+
+#### Example
+添加 `react-native-camera` 模块声明
+
+```
+typings/interface.d.ts
+
+...
+...
+declare module "react-native-camera" {
+    export class Camera {}
+    export class [...] {}
+}
+
+```
+
+> 具体声明请根据模块文档或依赖需求进行定义
 
 

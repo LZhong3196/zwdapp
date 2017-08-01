@@ -13,6 +13,7 @@ import * as Networking from "./libs/networking";
 import Store from "./store/index";
 import Navigator from "./navigator/index";
 
+
 export interface AppOptions {
 	appName: string;
 	version: string;
@@ -57,21 +58,17 @@ function initAPIs(options: AppOptions) {
 }
 
 let AppStore: Store = new Store();
-let AppNavigator: Navigator;
 
 export function setup(options: AppOptions) {
 	if (!Store.instance) {
 		Store.instance = AppStore;
 	}
-
-	AppNavigator = new Navigator(options.router);
-
+	let AppNavigator: Navigator = new Navigator(options.router);
 	if (!Navigator.navigatorInstance) {
 		Navigator.navigatorInstance = AppNavigator.appNavigator;
 	}
 
 	const AppWithNavigationState = AppNavigator.createApp();
-
 	class App extends React.Component<any, any> {
 		constructor(props: any, context: any) {
 			super(props, context);
@@ -90,7 +87,6 @@ export function setup(options: AppOptions) {
 	}
 
 	AppRegistry.registerComponent(options.appName, () => App);
-
 	module.exports.APIs = initAPIs(options);
 }
 
@@ -99,7 +95,6 @@ export {
 	Utils,
 	Decorators,
 	AppStore,
-	AppNavigator,
 	Cacher,
 	Constants,
 	Networking

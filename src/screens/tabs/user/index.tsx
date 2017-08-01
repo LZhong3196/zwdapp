@@ -97,11 +97,13 @@ class UserScreen extends React.Component<any, any> {
                                 <Image source={bannerImageSource} style={styles.backgroundImage} />
                             </Row>
                             <Row style={headerStyle.title}>
-                                <Body>
-                                    <Text style={headerStyle.titleText}>
-                                        个人中心
-                                </Text>
-                                </Body>
+                                <Left style={headerStyle.titleLeft}>
+                                    <Text
+                                        onPress={this.handleProfileSetting}
+                                        style={headerStyle.titleLeftText}>
+                                        设置
+                                    </Text>
+                                </Left>
                                 <Right style={headerStyle.titleRight}>
                                     <Icon type="&#xe619;" color={theme.color_background} onPress={this.handleSetting} />
                                 </Right>
@@ -217,6 +219,16 @@ class UserScreen extends React.Component<any, any> {
     }
 
     handleSetting = () => {
+        AppStore.dispatch({
+            type: Constants.ACTIONTYPES_NAVIGATION_TO,
+            meta: {
+                routeName: Constants.ROUTES_SETTING,
+                key: Constants.ROUTES_SETTING
+            }
+        } as any);
+    }
+
+    handleProfileSetting = () => {
         AppStore.dispatch({
             type: Constants.ACTIONTYPES_NAVIGATION_TO,
             meta: {

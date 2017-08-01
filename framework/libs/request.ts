@@ -66,8 +66,6 @@ export default async function request(
         }
     }
 
-
-
     const originMethod = options.method.toLocaleLowerCase();
     const originUrl = url;
     url = fixMethodParam(url, originMethod);
@@ -108,22 +106,38 @@ export default async function request(
             e.code = Constants.REQUEST_ERROR_NETINFO_NONE;
         }
 
-        if (resolveError(e)) {
-            throw e;
-        }
+        let resolveResult: any = await resolveError(e);
 
-        if (!isFromRAP) {
-            throw e;
+        if (e.code === Constants.REQUEST_ERROR_UNAUTH) {
+            try {
+                res = await _fetch(url, {
+                    ...options,
+                    headers: {
+                        ...options.headers,
+                        "Authorization": resolveResult
+                    }
+                });
+            }
+            catch (e) {
+                if (e.code !== Constants.REQUEST_ERROR_UNAUTH) {
+                    await resolveError(e);
+                }
+                throw e;
+            }
         }
-
-        try {
-            let key = getRAPModelCacheKey(url, originMethod);
-            res = JSON.parse(await RFS.readFile(key));
-            console.log(JSON.stringify(res));
-            isFromRAPCache = true;
-            console.log(`get "${url}" rap model from local cache.`);
-        } catch (e2) {
-            throw e;
+        else {
+            if (!isFromRAP) {
+                throw e;
+            }
+            try {
+                let key = getRAPModelCacheKey(url, originMethod);
+                res = JSON.parse(await RFS.readFile(key));
+                console.log(JSON.stringify(res));
+                isFromRAPCache = true;
+                console.log(`get "${url}" rap model from local cache.`);
+            } catch (e2) {
+                throw e;
+            }
         }
     }
 

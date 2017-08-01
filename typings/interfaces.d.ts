@@ -13,6 +13,9 @@ interface StoreAction {
         key?: string,
         /** 传递给目标路由的参数 - For navigation action */
         params?: any,
+
+        /** 往回跳到指定页的上一个路由 | default - 跳到主页Main */
+        resetRouteName?: string,
     },
     error?: boolean,
     payload?: Object

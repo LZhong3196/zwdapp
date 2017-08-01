@@ -1,5 +1,5 @@
 /** Theme stylesheet variables extends from antd-mobile */
-export const color_theme: string = "#FF2A00";
+export const color_theme: string = "#FF5E29";
 export const color_base: string = "#5C5C5C";
 export const color_background: string = "#FFFFFF";
 export const color_grey: string = "#BFBFBF";

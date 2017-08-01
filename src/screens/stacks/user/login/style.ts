@@ -64,7 +64,6 @@ export const styles: any = {
         marginBottom: h_spacing_md
     },
     resetButton: {
-        color: color_grey,
         fontSize: icon_size_xs
     },
     helpItemContainer: {

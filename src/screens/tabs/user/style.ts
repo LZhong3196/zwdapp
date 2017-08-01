@@ -73,6 +73,14 @@ export const headerStyle: any = {
         right: 0,
         height: 80,
     },
+    titleLeft: {
+        position: "absolute",
+        left: h_spacing_lg
+    },
+    titleLeftText: {
+        color: color_background,
+        fontSize: font_size_caption
+    },
     titleText: {
         color: color_background,
         textAlign: "center"
@@ -124,7 +132,8 @@ export const menuStyle: any = {
     item: {
         paddingBottom: v_spacing_xl,
         height: 60,
-        width: "20%"
+        width: "20%",
+        justifyContent: "center"
     },
     itemText: {
         fontSize: font_size_caption_sm,

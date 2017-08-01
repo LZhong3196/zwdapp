@@ -2,6 +2,14 @@
 
 ## 命令行参数
 
+项目开发调试常用指令:
+
+```
+$ ./app debug src				# 编译 src 业务层代码, 实时编译Typescript
+$ ./app compile framework		# 编译打包 framework 框架层代码
+$./app generate [module]		# 获取 | 生成目标模块的类型生命文件
+```
+
 以下为在命令行中使用 `./app` 进行调试开发的指令帮助:
 
 ```

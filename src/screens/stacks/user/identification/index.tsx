@@ -8,16 +8,26 @@ import {
     Button,
     Input
 } from "native-base";
-import { Widgets, APIs } from "summer";
-let { Icon, Toast } = Widgets;
+import { Widgets, APIs, AppStore, Constants } from "summer";
+let { Icon, Toast, theme } = Widgets;
 
 import { styles } from "./style";
 
+const CodeType: Dictionary<number> = {
+    [Constants.ROUTES_REGISTER]: 0,
+    [Constants.ROUTES_RESET_PASSWORD]: 1
+};
+
 export default class IdentificationScreen extends React.Component<any, any> {
     static navigationOptions = (navigation: any) => ({
-        title: navigation.navigation.state.params.header || "",
+        title: navigation.navigation.state.params.nextRoute === Constants.ROUTES_REGISTER ? "注册" : "忘记密码",
         headerStyle: styles.header
     })
+
+    private timer: number = 0;
+    private duration: number = 60;
+    private unmount: boolean = false;
+
     constructor(props: any, context: any) {
         super(props, context);
         this.state = {
@@ -25,8 +35,12 @@ export default class IdentificationScreen extends React.Component<any, any> {
             code: undefined,
             mobileValid: false,
             codeValid: false,
-            duration: 0
+            seconds: 0
         };
+    }
+
+    componentWillUnmount() {
+        this.unmount = true;
     }
 
     render() {
@@ -35,40 +49,42 @@ export default class IdentificationScreen extends React.Component<any, any> {
             mobile,
             codeValid,
             mobileValid,
-            duration
+            seconds
         } = this.state;
+        const codeDisable: boolean = !mobileValid || !!seconds;
+        const submitDisable: boolean = !mobileValid || !codeValid;
         return (
             <Container style={styles.container}>
                 <Item regular style={styles.item}>
-                    <Icon type="&#xe622;" color="#BFBFBF" />
+                    <Icon type="&#xe622;" color={theme.color_grey} />
                     <Input
                         placeholder="请输入手机号"
                         value={mobile}
                         style={styles.input}
-                        placeholderTextColor="#BDBDBE"
+                        placeholderTextColor={theme.color_grey}
                         onChangeText={this.onMobileValueChange} />
                     <Right>
                         <Button
-                            disabled={!mobileValid}
+                            disabled={codeDisable}
                             onPress={this.getIdentificationCode}
-                            style={styles.button}>
-                            <Text>{!duration ? `获取验证码` : `${duration} 秒`}</Text>
+                            style={!codeDisable ? styles.button : styles.buttonDisable}>
+                            <Text style={styles.timerInfo}>{!seconds ? `获取验证码` : `${seconds} 秒`}</Text>
                         </Button>
                     </Right>
                 </Item>
                 <Item regular style={{ ...styles.item, ...styles.lastItem }}>
-                    <Icon type="&#xe68d;" color="#BFBFBF" />
+                    <Icon type="&#xe68d;" color={theme.color_grey} />
                     <Input
                         placeholder="请输入验证码"
                         value={code}
                         style={styles.input}
-                        placeholderTextColor="#BDBDBE"
+                        placeholderTextColor={theme.color_grey}
                         onChangeText={this.onCodeChange} />
                 </Item>
                 <Button
                     block
-                    disabled={!mobileValid || !codeValid}
-                    style={styles.button}
+                    disabled={submitDisable}
+                    style={!submitDisable ? styles.button : styles.buttonDisable}
                     onPress={this.onSubmit}>
                     <Text>下一步</Text>
                 </Button>
@@ -80,15 +96,20 @@ export default class IdentificationScreen extends React.Component<any, any> {
         this.state.mobile = value;
         this.state.mobileValid = /^1\d{10}$/.test(value);
         this.setState(this.state);
-    };
+    }
 
     onCodeChange = (value: any) => {
+        /** todo - 校验规则 */
         this.state.code = value;
         this.state.codeValid = !!value.length;
         this.setState(this.state);
     }
 
     getIdentificationCode = async () => {
+        this.setState({
+            seconds: this.duration
+        });
+        this.countDown();
         try {
             const res: any = await APIs.account.getIdentificationCode({
                 mobile: this.state.mobile
@@ -99,24 +120,58 @@ export default class IdentificationScreen extends React.Component<any, any> {
         }
     }
 
+    countDown = () => {
+        this.timer = setInterval(() => {
+            if (this.unmount) return;
+            this.setState({
+                seconds: this.state.seconds - 1
+            });
+            if (!this.state.seconds) {
+                clearInterval(this.timer);
+                this.setState({
+                    seconds: 0
+                });
+            }
+        }, 1000);
+    }
+
     onSubmit = async () => {
         Toast.loading();
+        let nextRoute: string = this.props.navigation.state.params.nextRoute;
         try {
             const res: any = await APIs.account.postIdentificationCode({
-                code: this.state.code
+                code: this.state.code,
+                type: CodeType[nextRoute]
             });
             if (!!res.data.status) {
                 Toast.info({
-                    text: "验证码验证失败, 请重试"
+                    text: "验证码验证失败, 请重试",
+                    duration: 2500
                 });
             }
             else {
                 Toast.success({
                     text: "验证成功"
                 });
+                if (nextRoute === Constants.ROUTES_REGISTER) {
+                    AppStore.dispatch({
+                        type: Constants.ACTIONTYPES_USER_UPDATE,
+                        meta: {
+                            storeKey: "account"
+                        },
+                        payload: {
+                            account: this.state.mobile
+                        }
+                    });
+                }
+                AppStore.dispatch({
+                    type: Constants.ACTIONTYPES_NAVIGATION_TO,
+                    meta: {
+                        routeName: nextRoute
+                    }
+                });
             }
         }
         catch (e) { }
     }
-
 }

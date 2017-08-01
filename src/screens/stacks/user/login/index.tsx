@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Image } from "react-native";
+import { connect } from "react-redux";
 import { AppStore, Constants, APIs, Widgets, Decorators } from "summer";
 import {
     Container,
@@ -17,7 +18,7 @@ import {
 import { Row, Grid, Col } from "react-native-easy-grid";
 import { styles, thirdParty } from "./style";
 
-let { Icon, Toast } = Widgets;
+let { Icon, Toast, theme } = Widgets;
 
 
 const accountLimit: number = 22;
@@ -43,6 +44,16 @@ class EditForm extends React.Component<any, any> {
         });
     }
 
+    componentWillReceiveProps(nextProps: any) {
+        const accountInfo: any = AppStore.get("user.account") || {};
+        if (accountInfo.account !== this.state.account || accountInfo.password !== this.state.password) {
+            this.setState({
+                account: accountInfo.account,
+                password: accountInfo.password
+            });
+        }
+    }
+
     render() {
         const {
             account,
@@ -59,11 +70,11 @@ class EditForm extends React.Component<any, any> {
                         value={account}
                         placeholderTextColor="#BDBDBE"
                         onChangeText={this.onAccountChange} />
-                    <Icon
+                    {!!account ? <Icon
                         type="&#xe60b;"
-                        color="#EEE"
+                        color={theme.color_grey}
                         style={styles.resetButton}
-                        onPress={this.resetAccountValue} />
+                        onPress={this.resetAccountValue} /> : null}
                 </Item>
                 <Item regular style={{ ...styles.inputItem, ...styles.lastItem }}>
                     <Icon type="&#xe68d;" color="#BFBFBF" />
@@ -73,11 +84,11 @@ class EditForm extends React.Component<any, any> {
                         secureTextEntry
                         placeholderTextColor="#BDBDBE"
                         onChangeText={this.onPasswordChange} />
-                    <Icon
+                    {!!password ? <Icon
                         type="&#xe60b;"
-                        color="#EEE"
+                        color={theme.color_grey}
                         style={styles.resetButton}
-                        onPress={this.resetPasswordValue} />
+                        onPress={this.resetPasswordValue} /> : null}
                 </Item>
                 <Button
                     block
@@ -156,7 +167,7 @@ class EditForm extends React.Component<any, any> {
             Toast.success({
                 text: "已登录"
             });
-            AppStore.dispatch({
+            let actionres = AppStore.dispatch({
                 type: Constants.ACTIONTYPES_USER_UPDATE,
                 meta: {
                     storeKey: "account",
@@ -165,19 +176,39 @@ class EditForm extends React.Component<any, any> {
             });
             AppStore.dispatch({ type: Constants.ACTIONTYPES_LOGGED_IN });
 
-            const profileRes: any = await APIs.user.getUserInfo({});
-            AppStore.dispatch({
-                type: Constants.ACTIONTYPES_USER_UPDATE,
-                meta: {
-                    storeKey: "profile",
-                },
-                payload: profileRes.data
-            });
+            this.resolveAuthTodo();
+            this.updateProfile();
         }
         catch (e) {
             /** 登录失败 error */
         }
     }
+
+    resolveAuthTodo = () => {
+        if (!!AppStore.get("data.resolveTodo")) {
+            const token: string = AppStore.get(("user.account.token"));
+            let resolveTodo: any = AppStore.get("data.resolveTodo");
+            let res = resolveTodo(token);
+            AppStore.dispatch({
+                type: Constants.ACTIONTYPES_DATA_UPDATE,
+                meta: {
+                    storeKey: "resolveTodo"
+                },
+                payload: ""
+            });
+        }
+    }
+
+    updateProfile = async () => {
+        const profileRes: any = await APIs.user.getUserInfo({});
+        AppStore.dispatch({
+            type: Constants.ACTIONTYPES_USER_UPDATE,
+            meta: {
+                storeKey: "profile",
+            },
+            payload: profileRes.data
+        });
+    };
 
     register = () => {
         AppStore.dispatch({
@@ -185,8 +216,7 @@ class EditForm extends React.Component<any, any> {
             meta: {
                 routeName: Constants.ROUTES_IDENTIFICATION,
                 params: {
-                    header: "注册",
-                    next: Constants.ROUTES_REGISTER,
+                    nextRoute: Constants.ROUTES_REGISTER,
                 }
             }
         });
@@ -198,12 +228,12 @@ class EditForm extends React.Component<any, any> {
             meta: {
                 routeName: Constants.ROUTES_IDENTIFICATION,
                 params: {
-                    header: "修改密码",
-                    next: Constants.ROUTES_RETRIEVE_PASSWORD,
+                    nextRoute: Constants.ROUTES_RESET_PASSWORD,
                 }
             }
         });
     };
+
 }
 
 
@@ -233,7 +263,7 @@ class ThirdParty extends React.Component<any, any> {
     }
 }
 
-export default class LoginScreen extends React.Component<any, any> {
+class LoginScreen extends React.Component<any, any> {
     static navigationOptions = {
         headerStyle: styles.header
     };
@@ -254,3 +284,8 @@ export default class LoginScreen extends React.Component<any, any> {
     }
 }
 
+const mapStateToProps = (state: any) => ({
+    user: state.get("user").toJS()
+});
+
+export default connect(mapStateToProps)(LoginScreen);

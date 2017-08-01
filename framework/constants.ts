@@ -16,6 +16,7 @@ export const ACTIONTYPES_LOGGED_IN: string = "Navigation/LOGGED_IN";
 export const ACTIONTYPES_LOGGED_OUT: string = "Navigation/LOGGED_OUT";
 export const ACTIONTYPES_NAVIGATION_TO: string = "Navigation/NAVIGATE";
 export const ACTIONTYPES_NAVIGATION_BACK: string = "Navigation/BACK";
+export const ACTIONTYPES_NAVIGATION_RESET: string = "Navigation/RESET";
 
 /** Action type - User */
 export const ACTIONTYPES_USER_UPDATE: string = "User/UPDATE";
@@ -52,6 +53,7 @@ export const ROUTES_USER: string = "User";
 /** ROUTES - Stacks - 主页 */
 export const ROUTES_MAIN: string = "Main";
 /** ROUTES - Stacks - 登录页 */
+
 export const ROUTES_LOGIN: string = "Login";
 /** ROUTES - Stacks - 店铺详情页 */
 export const ROUTES_SHOP: string = "Shop";
@@ -66,9 +68,11 @@ export const ROUTES_SETTING: string = "Setting";
 /** ROUTES - Stacks - 用户注册 */
 export const ROUTES_REGISTER: string = "Register";
 /** ROUTES - Stacks - 用户找回密码 */
-export const ROUTES_RETRIEVE_PASSWORD: string = "RetrievePassword";
+export const ROUTES_RESET_PASSWORD: string = "ResetPassword";
 /** ROUTES - Stacks - 用户短信验证 */
 export const ROUTES_IDENTIFICATION: string = "Identification";
+/** ROUTES - Stacks - 用户个人资料设置 */
+export const ROUTES_PROFILE: string = "Profile";
 
 
 /** -------  REQUEST ERROR STATUS DEFINITION   ------- */
