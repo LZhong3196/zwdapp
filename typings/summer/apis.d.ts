@@ -7,26 +7,26 @@ declare module "summer" {
 
             }
         ): Promise<{
-                data?: {
-                    /** 头像 */
-                    avatar?: string;
-                    /** 淘宝账号(旺旺) */
-                    taobao_account?: string;
-                    /** qq账号 */
-                    qq?: string;
-                    /** 生日 */
-                    birthday?: string;
-                    /** 真实姓名 */
-                    name?: string;
-                    id?: string;
-                    /** 账号名 */
-                    account?: string;
-                    /** 顶部简介背景 */
-                    banner?: string;
-                };
                 meta?: {
                     code?: number;
                     msg?: string;
+                };
+                data?: {
+                    /** 账号名 */
+                    account?: string;
+                    /** 生日 */
+                    birthday?: string;
+                    /** 淘宝账号(旺旺) */
+                    taobao_account?: string;
+                    /** 头像 */
+                    avatar?: string;
+                    id?: string;
+                    /** 顶部简介背景 */
+                    banner?: string;
+                    /** 真实姓名 */
+                    name?: string;
+                    /** qq账号 */
+                    qq?: string;
                 };
             }>;
     }
@@ -35,6 +35,8 @@ declare module "summer" {
         /** 获取采购单列表 */
         export function getOrderList (
             data?:{
+                /** 采购单状态 */
+                status?: number;
                 /** 请求信息 */
                 block_info?: {
                     /** 当前列表请求index */
@@ -42,16 +44,14 @@ declare module "summer" {
                     /** 每次请求返回的最大结果数量 */
                     size?: number;
                 };
-                /** 采购单状态 */
-                status?: number;
             }
         ): Promise<{
                 data?: {
                     results?: {
-                        u_id?: string;
                         image?: string;
                         /** 城市 */
                         city?: string;
+                        u_id?: string;
                         /** 完成数量 */
                         completed?: number;
                         title?: string;
@@ -68,17 +68,17 @@ declare module "summer" {
                 u_id?: string;
             }
         ): Promise<{
+                meta?: {
+                    code?: number;
+                    msg?: string;
+                };
                 data?: {
                     results?: {
-                        /** 采购单内单条id */
-                        u_id?: string;
                         /** 单条标题 */
                         title?: string;
+                        /** 采购单内单条id */
+                        u_id?: string;
                     }[];
-                };
-                meta?: {
-                    msg?: string;
-                    code?: number;
                 };
             }>;
     }
@@ -98,28 +98,28 @@ declare module "summer" {
                 city?: string;
             }
         ): Promise<{
-                meta?: {
-                    code?: number;
-                    msg?: string;
-                };
                 data?: {
                     results?: {
-                        /** 主营 */
-                        main?: string;
                         /** 分类 */
                         category?: string;
-                        /** 提供服务 */
-                        service?: string[];
-                        /** 档口名称 */
-                        title?: string;
-                        u_id?: string;
                         /** 档口简介 */
                         description?: string;
+                        u_id?: string;
+                        price?: number;
+                        /** 主营 */
+                        main?: string;
+                        /** 提供服务 */
+                        service?: string[];
                         image?: string;
+                        /** 档口名称 */
+                        title?: string;
                         /** 标签 */
                         tags?: string[];
-                        price?: number;
                     }[];
+                };
+                meta?: {
+                    msg?: string;
+                    code?: number;
                 };
             }>;
         /** 获取店铺/档口信息 */
@@ -129,35 +129,35 @@ declare module "summer" {
             }
         ): Promise<{
                 data?: {
-                    /** qq账号 */
-                    qq?: string;
-                    /** 收藏 */
-                    fav?: boolean;
-                    /** 淘宝账号(旺旺) */
-                    taobao_account?: string;
-                    /** 地区 */
-                    area?: string;
-                    /** 服务 */
-                    service?: string[];
                     /** 二维码名片 */
                     qr_code?: string;
-                    /** 分类 */
-                    category?: string;
+                    /** 收藏 */
+                    fav?: boolean;
+                    u_id?: string;
+                    /** qq账号 */
+                    qq?: string;
+                    /** 地区 */
+                    area?: string;
                     /** 档口名称 */
                     title?: string;
                     /** 主营 */
                     main?: string;
-                    /** banner图 */
-                    banner?: string;
-                    u_id?: string;
+                    /** 分类 */
+                    category?: string;
                     /** 档口头像 */
                     avatar?: string;
                     /** 联系方式 */
                     contact?: string;
+                    /** 淘宝账号(旺旺) */
+                    taobao_account?: string;
+                    /** 服务 */
+                    service?: string[];
+                    /** banner图 */
+                    banner?: string;
                 };
                 meta?: {
-                    code?: number;
                     msg?: string;
+                    code?: number;
                 };
             }>;
         /** 获取 店铺/档口 商品 */
@@ -165,10 +165,10 @@ declare module "summer" {
             data?:{
                 /** 请求信息 */
                 block_info?: {
-                    /** 当前列表请求index */
-                    index?: number;
                     /** 每次请求返回的最大结果数量 */
                     size?: number;
+                    /** 当前列表请求index */
+                    index?: number;
                 };
                 u_id?: string;
             }
@@ -179,11 +179,11 @@ declare module "summer" {
                 };
                 data?: {
                     results?: {
-                        image?: string;
                         price?: number;
                         /** 宝贝名称 */
                         title?: string;
                         u_id?: string;
+                        image?: string;
                     }[];
                 };
             }>;
@@ -194,8 +194,8 @@ declare module "summer" {
             }
         ): Promise<{
                 meta?: {
-                    code?: number;
                     msg?: string;
+                    code?: number;
                 };
                 data?: {
 
@@ -207,12 +207,12 @@ declare module "summer" {
                 u_id?: string;
             }
         ): Promise<{
-                meta?: {
-                    msg?: string;
-                    code?: number;
-                };
                 data?: {
 
+                };
+                meta?: {
+                    code?: number;
+                    msg?: string;
                 };
             }>;
     }
@@ -224,12 +224,12 @@ declare module "summer" {
 
             }
         ): Promise<{
-                data?: {
-
-                };
                 meta?: {
                     msg?: string;
                     code?: number;
+                };
+                data?: {
+
                 };
             }>;
         /** 用户登录接口 */
@@ -242,10 +242,10 @@ declare module "summer" {
             }
         ): Promise<{
                 meta?: {
-                    /** 返回信息 */
-                    msg?: string;
                     /** 状态码 */
                     code?: number;
+                    /** 返回信息 */
+                    msg?: string;
                 };
                 /** 返回数据 */
                 data?: {
@@ -272,8 +272,23 @@ declare module "summer" {
             data?:{
                 /** 注册手机号 */
                 mobile?: number;
-                /** 验证码 */
-                verification_code?: string;
+                /** 密码 */
+                password?: string;
+            }
+        ): Promise<{
+                meta?: {
+                    code?: number;
+                    msg?: string;
+                };
+                data?: {
+
+                };
+            }>;
+        /** 获取短信验证码 */
+        export function getIdentificationCode (
+            data?:{
+                /** 用户手机号码 */
+                mobile?: string;
             }
         ): Promise<{
                 data?: {
@@ -282,6 +297,24 @@ declare module "summer" {
                 meta?: {
                     code?: number;
                     msg?: string;
+                };
+            }>;
+        /** 提交短信验证码 */
+        export function postIdentificationCode (
+            data?:{
+                /** 验证码 */
+                code?: number;
+                /** 验证码类型(重设密码 注册) */
+                type?: number;
+            }
+        ): Promise<{
+                data?: {
+                    /** 验证结果(1: 成功, 0: 失败) */
+                    status?: number;
+                };
+                meta?: {
+                    msg?: string;
+                    code?: number;
                 };
             }>;
     }
@@ -293,30 +326,30 @@ declare module "summer" {
                 id?: string;
             }
         ): Promise<{
+                meta?: {
+                    msg?: string;
+                    code?: number;
+                };
                 data?: {
-                    /** 分类 */
-                    category?: string;
-                    /** 商品名称 */
-                    title?: string;
-                    /** 地区 */
-                    area?: string;
                     /** 所属店铺/档口名 */
                     shop_name?: string;
-                    /** 图片 */
-                    banner?: string[];
-                    /** 淘宝价格 */
-                    taobao_price?: number;
+                    /** 地区 */
+                    area?: string;
                     u_id?: string;
-                    /** 所属店铺/档口(id) */
-                    shop_id?: string;
-                    /** 价格 */
-                    price?: number;
+                    /** 分类 */
+                    category?: string;
                     /** 收藏 */
                     fav?: boolean;
-                };
-                meta?: {
-                    code?: number;
-                    msg?: string;
+                    /** 图片 */
+                    banner?: string[];
+                    /** 价格 */
+                    price?: number;
+                    /** 淘宝价格 */
+                    taobao_price?: number;
+                    /** 商品名称 */
+                    title?: string;
+                    /** 所属店铺/档口(id) */
+                    shop_id?: string;
                 };
             }>;
         /** 获取  商品/宝贝 列表 */
@@ -325,31 +358,30 @@ declare module "summer" {
                 u_id?: string;
                 /** 请求信息 */
                 block_info?: {
-                    /** 当前列表请求index */
-                    index?: number;
                     /** 每次请求返回的最大结果数量 */
                     size?: number;
+                    /** 当前列表请求index */
+                    index?: number;
                 };
             }
         ): Promise<{
                 meta?: {
-                    code?: number;
                     msg?: string;
+                    code?: number;
                 };
                 data?: {
                     results?: {
-                        u_id?: string;
+                        price?: number;
                         /** 宝贝名称 */
                         title?: string;
-                        price?: number;
                         image?: string;
+                        u_id?: string;
                     }[];
                 };
             }>;
         /** 获取 商品/宝贝 图片 */
         export function getGoodsImages (
             data?:{
-                u_id?: string;
                 /** 请求信息 */
                 block_info?: {
                     /** 当前列表请求index */
@@ -357,14 +389,15 @@ declare module "summer" {
                     /** 每次请求返回的最大结果数量 */
                     size?: number;
                 };
+                u_id?: string;
             }
         ): Promise<{
+                data?: {
+                    results?: string[];
+                };
                 meta?: {
                     code?: number;
                     msg?: string;
-                };
-                data?: {
-                    results?: string[];
                 };
             }>;
         /** 收藏 商品/宝贝 */
@@ -373,12 +406,12 @@ declare module "summer" {
                 u_id?: string;
             }
         ): Promise<{
-                meta?: {
-                    msg?: string;
-                    code?: number;
-                };
                 data?: {
 
+                };
+                meta?: {
+                    code?: number;
+                    msg?: string;
                 };
             }>;
         /** 移除收藏 商品/宝贝 */
@@ -387,12 +420,12 @@ declare module "summer" {
                 u_id?: string;
             }
         ): Promise<{
-                data?: {
-
-                };
                 meta?: {
                     msg?: string;
                     code?: number;
+                };
+                data?: {
+
                 };
             }>;
     }
@@ -405,38 +438,56 @@ declare module "summer" {
             }
         ): Promise<{
                 meta?: {
-                    msg?: string;
                     code?: number;
+                    msg?: string;
                 };
                 data?: {
-                    A2?: {
+                    A1?: {
+                        title?: string;
+                        category?: string;
+                        u_id?: string;
+                        image?: string;
+                        main?: string;
+                        price?: number;
+                        service?: string[];
+                        description?: string;
+                        tags?: string[];
+                    }[];
+                    A3?: {
+                        list?: {
+                            main?: string;
+                            tags?: string[];
+                            category?: string;
+                            image?: string;
+                            title?: string;
+                            u_id?: string;
+                            price?: number;
+                            description?: string;
+                            goods_id?: string;
+                            service?: string[];
+                        }[];
+                        header?: {
+                            image?: string;
+                            shop_id?: string;
+                        };
+                    };
+                    A5?: {
                         header?: {
                             image?: string;
                             shop_id?: string;
                         };
                         list?: {
-                            description?: string;
-                            main?: string;
                             u_id?: string;
-                            image?: string;
-                            tags?: string[];
-                            goods_id?: string;
-                            price?: number;
-                            service?: string[];
                             title?: string;
+                            service?: string[];
+                            price?: number;
+                            goods_id?: string;
                             category?: string;
+                            tags?: string[];
+                            main?: string;
+                            image?: string;
+                            description?: string;
                         }[];
-                    };
-                    A1?: {
-                        description?: string;
-                        image?: string;
-                        tags?: string[];
-                        title?: string;
-                        main?: string;
-                        service?: string[];
-                        u_id?: string;
-                        category?: string;
-                        price?: number;
                     }[];
                     A4?: {
                         header?: {
@@ -444,35 +495,35 @@ declare module "summer" {
                             shop_id?: string;
                         };
                         list?: {
-                            u_id?: string;
-                            service?: string[];
-                            main?: string;
-                            description?: string;
-                            title?: string;
                             goods_id?: string;
                             category?: string;
-                            price?: number;
-                            image?: string;
+                            title?: string;
                             tags?: string[];
+                            price?: number;
+                            service?: string[];
+                            description?: string;
+                            image?: string;
+                            main?: string;
+                            u_id?: string;
                         }[];
                     };
-                    A3?: {
-                        list?: {
-                            service?: string[];
-                            goods_id?: string;
-                            tags?: string[];
-                            image?: string;
-                            category?: string;
-                            u_id?: string;
-                            main?: string;
-                            price?: number;
-                            title?: string;
-                            description?: string;
-                        }[];
+                    A2?: {
                         header?: {
                             shop_id?: string;
                             image?: string;
                         };
+                        list?: {
+                            goods_id?: string;
+                            description?: string;
+                            service?: string[];
+                            category?: string;
+                            main?: string;
+                            price?: number;
+                            title?: string;
+                            tags?: string[];
+                            image?: string;
+                            u_id?: string;
+                        }[];
                     };
                 };
             }>;
@@ -486,23 +537,23 @@ declare module "summer" {
                 city?: string;
                 /** 请求信息 */
                 block_info?: {
-                    /** 当前列表请求index */
-                    index?: number;
                     /** 每次请求返回的最大结果数量 */
                     size?: number;
+                    /** 当前列表请求index */
+                    index?: number;
                 };
             }
         ): Promise<{
                 meta?: {
-                    msg?: string;
                     code?: number;
+                    msg?: string;
                 };
                 data?: {
                     results?: {
-                        title?: string;
                         price?: number;
-                        u_id?: string;
                         image?: string;
+                        u_id?: string;
+                        title?: string;
                     }[];
                 };
             }>;

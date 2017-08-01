@@ -52,5 +52,23 @@ export const styles: any = {
         width: 250,
         height: 400,
         marginLeft: 10
+    },
+    advertListContainer: {
+        marginTop: 10,
+        height: 600,
+        flexDirection: "row",
+        flexWrap: "wrap"
+    },
+    advertListItem: {
+        width: "50%",
+        height: 300,
+        padding: 5
+    },
+    advertListImage: {
+        width: "100%",
+        height: 200
+    },
+    price: {
+        color: "red"
     }
 };

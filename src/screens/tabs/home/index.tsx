@@ -22,10 +22,13 @@ import {
     Header,
     Fab,
     Icon as BaseIcon,
-    Button
+    Button,
+    Card,
+    CardItem
 } from "native-base";
 import * as Swiper from "react-native-swiper";
 import HomeNav from "./home-nav";
+import {func} from "prop-types";
 
 @Decorators.pureRender()
 class HomeScreen extends React.Component<any, any> {
@@ -94,10 +97,46 @@ class HomeScreen extends React.Component<any, any> {
             />
         </TouchableWithoutFeedback>
     )
+    createAdvertList = (item: any, index: number) => {
+        const createList = (item: any, index: number) => {
+            return (
+                <TouchableWithoutFeedback
+                    key={ index }
+                    onPress={ () => this.openGoodsPage(item.goods_id) }
+                >
+                    <View
+                        style={ styles.advertListItem }
+                    >
+                        <Image
+                            style={ styles.advertListImage }
+                            source={{ uri: item.image }}
+                        />
+                        <Text>{ item.title }</Text>
+                        <Text style={ styles.price }>¥ { item.price }</Text>
+                    </View>
+                </TouchableWithoutFeedback>
+            );
+        };
+        return (
+        <View key={ index }>
+            <TouchableWithoutFeedback
+                onPress={ () => this.openShopPage(item.header.shop_id) }
+            >
+                <Image
+                    style={ styles.headerImage }
+                    source={{ uri: item.header.image }}
+                />
+            </TouchableWithoutFeedback>
+            <View style={ styles.advertListContainer }>
+                { item.list.map(createList) }
+            </View>
+        </View>
+        );
+    }
     render() {
         const initAdevert = { header: { image: "https://unsplash.it/g/200/300", shop_id: "0" }, list: [] };
         const advertList: any = AppStore.get("home.advert") || {};
-        const { A1 = [], A2 = initAdevert, A3 = initAdevert, A4 = initAdevert } = advertList;
+        const { A1 = [], A2 = initAdevert, A3 = initAdevert, A4 = initAdevert, A5= [] } = advertList;
         A3.list.length = 6;
         return (
             <Container>
@@ -187,6 +226,7 @@ class HomeScreen extends React.Component<any, any> {
                     >
                         { A4.list.map(this.createDailyNewList) }
                     </ScrollView>
+                    { A5.map(this.createAdvertList) }
                 </ScrollView>
             </Container>
         );
