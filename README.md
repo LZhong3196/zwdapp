@@ -133,7 +133,7 @@ $ ./app debug src
 * [接口修改无法更新](./doc/api.md)
 * [自定义图标库更新](./doc/FAQ.md#自定义图标更新)
 * [Cannot read resolve | find module "summer"](./doc/FAQ.md#cannot-read-resolve--find-module-summer)
-* [依赖模块类型声明 | ./app generate 指令失败相关](./doc/FAQ.md#依赖模块类型声明 | ./app generate 指令失败相关)
+* [依赖模块类型声明 | ./app generate 指令失败相关](./doc/FAQ.md#依赖模块类型声明--app-generate-指令失败相关)
 * ...
 
 > 若问题列表或 [ISSUES](./issues) 无法解决你的问题, 请将问题描述添加到 [ISSUES](./issues) 或联系相关开发人员
