@@ -3,7 +3,9 @@
 
 ## 导航器
 基于 [React Navigation](https://reactnavigation.org/docs/intro/)
+
 StackNavigator - 通过 `Action` 进行路由控制
+
 ActionConfig
 
 | 参数 | 类型 | 必需 | 说明 |
@@ -104,7 +106,6 @@ class MyComponent extends Component {
 ### Icon
 
 
-
 ## 装饰器
 
 ### pureRender
@@ -127,6 +128,12 @@ class MyPureRender extends Component {
 
 ```
 
+> 注意: 使用pureRender装饰的组件, 请确保其内部没有直接修改state的赋值语句, 否则可能影响正常使用
+
+Example: 
+`
+this.state.value = newValue;
+`
 
 ## 接口工具使用
 
