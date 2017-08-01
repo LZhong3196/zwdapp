@@ -9,10 +9,10 @@ import * as Utils from "./utils/index";
 import * as Cacher from "./cacher/cacher";
 import * as Constants from "./constants";
 import * as Decorators from "./decorators/index";
+import * as Networking from "./libs/networking";
 import Store from "./store/index";
 import Navigator from "./navigator/index";
-import { setNavigator } from "./reducers/navigation";
-import { setStore } from "./libs/extra";
+
 
 export interface AppOptions {
 	appName: string;
@@ -58,23 +58,29 @@ function initAPIs(options: AppOptions) {
 }
 
 let AppStore: Store = new Store();
-let AppNavigator: Navigator;
 
 export function setup(options: AppOptions) {
-	AppNavigator = new Navigator(options.router);
-	setNavigator(AppNavigator.appNavigator);
-	const AppWithNavigationState = AppNavigator.createApp();
-	setStore(AppStore);
+	if (!Store.instance) {
+		Store.instance = AppStore;
+	}
+	let AppNavigator: Navigator = new Navigator(options.router);
+	if (!Navigator.navigatorInstance) {
+		Navigator.navigatorInstance = AppNavigator.appNavigator;
+	}
 
+	const AppWithNavigationState = AppNavigator.createApp();
 	class App extends React.Component<any, any> {
 		constructor(props: any, context: any) {
 			super(props, context);
 		}
 
 		render() {
+			let Root = Widgets.Root;
 			return (
 				<Provider store={AppStore.store}>
-					<AppWithNavigationState />
+					<Root>
+						<AppWithNavigationState />
+					</Root>
 				</Provider>
 			);
 		}
@@ -82,8 +88,6 @@ export function setup(options: AppOptions) {
 
 	AppRegistry.registerComponent(options.appName, () => App);
 	module.exports.APIs = initAPIs(options);
-
-	// return App;
 }
 
 export {
@@ -91,7 +95,7 @@ export {
 	Utils,
 	Decorators,
 	AppStore,
-	AppNavigator,
 	Cacher,
-	Constants
+	Constants,
+	Networking
 };

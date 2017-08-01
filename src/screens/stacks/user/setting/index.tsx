@@ -3,7 +3,8 @@ import {
     Image,
     StatusBar,
     Switch,
-    Alert
+    Alert,
+    StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
 import { NavigationActions } from "react-navigation";
@@ -18,11 +19,12 @@ import {
     Right,
     List,
     ListItem,
-    Separator,
+    Thumbnail
 } from "native-base";
 import { Col, Row, Grid } from "react-native-easy-grid";
+import ConnectivityControl from "./connectivity-control";
 import { styles } from "./style";
-let { Icon, theme } = Widgets;
+let { Icon, theme, Toast } = Widgets;
 
 class SettingScreen extends React.Component<any, any> {
     static navigationOptions = {
@@ -38,19 +40,28 @@ class SettingScreen extends React.Component<any, any> {
     }
 
     render() {
-        const account: any = AppStore.get("user.account") || {};
+        const user: any = AppStore.get("user") || {};
+        const account = user.account || {};
+        const profile = user.profile || {};
 
         return (
             <Container>
                 <StatusBar barStyle="default" />
                 <List style={styles.listContainer}>
+                    <ListItem>
+                        <Thumbnail size={80} source={{ uri: profile.avatar }} />
+                        <Body>
+                            <Text>{profile.account || "未登录"}</Text>
+                            <Text note>{`真实姓名: ${profile.name || "未设置"}`}</Text>
+                        </Body>
+                        <Right>
+                            <Icon type="&#xea54;" color={theme.color_base} size="xs" />
+                        </Right>
+                    </ListItem>
                     <ListItem style={styles.listItem}>
                         <Left>
                             <Text>联系我们</Text>
                         </Left>
-                        <Right>
-                            <Icon type="&#xea54;" color={theme.color_base} size="xs" />
-                        </Right>
                     </ListItem>
                     <ListItem style={{ ...styles.listItem, ...styles.lastItem }}>
                         <Left>
@@ -67,7 +78,7 @@ class SettingScreen extends React.Component<any, any> {
                             <Text>仅wifi下开启大图</Text>
                         </Left>
                         <Right>
-                            <Switch value={true}/>
+                            <ConnectivityControl />
                         </Right>
                     </ListItem>
                     <ListItem style={styles.listItem}>
@@ -76,7 +87,7 @@ class SettingScreen extends React.Component<any, any> {
                         </Left>
                         <Right>
                             <Text style={styles.cacheInfo}>
-                                11MB 
+                                11MB
                                 <Icon
                                     type="&#xea54;"
                                     color={theme.color_base}
@@ -97,7 +108,7 @@ class SettingScreen extends React.Component<any, any> {
                             <Text>分享17客户端</Text>
                         </Left>
                         <Right>
-                             <Icon type="&#xea54;" color={theme.color_base} size="xs" /> 
+                            <Icon type="&#xea54;" color={theme.color_base} size="xs" />
                         </Right>
                     </ListItem>
                 </List>
@@ -123,34 +134,30 @@ class SettingScreen extends React.Component<any, any> {
                 routeName: Constants.ROUTES_LOGIN,
                 key: Constants.ROUTES_LOGIN,
             }
-        })
+        });
+
     }
 
     onLogoutConfirm = () => {
         Alert.alert(
             "提示",
             "是否退出登录",
-            [
-                {
-                    text: "取消"
-                },
-                {
-                    text: "确认",
-                    onPress: this.handleLogout
-                }
-            ]
-        )
+            [{ text: "取消" }, { text: "确认", onPress: this.handleLogout }]
+        );
     }
 
-    handleLogout = () => {
+    handleLogout = async () => {
         try {
-            let res: any = APIs.account.getLogout({});
+            Toast.loading({
+                text: "处理中"
+            });
+            let res: any = await APIs.account.getLogout({});
         }
         catch (e) {
         }
+
         const user: any = AppStore.get("user");
         const account: any = user.account;
-
         const userState: any = {
             ...user,
             profile: {},
@@ -177,3 +184,5 @@ const mapStateToProps = (state: any) => ({
 });
 
 export default connect(mapStateToProps)(SettingScreen);
+
+

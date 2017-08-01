@@ -137,7 +137,6 @@ class HomeScreen extends React.Component<any, any> {
         const initAdevert = { header: { image: "https://unsplash.it/g/200/300", shop_id: "0" }, list: [] };
         const advertList: any = AppStore.get("home.advert") || {};
         const { A1 = [], A2 = initAdevert, A3 = initAdevert, A4 = initAdevert, A5= [] } = advertList;
-        A3.list.length = 6;
         return (
             <Container>
                 <Header searchBar rounded>
@@ -271,8 +270,10 @@ class HomeScreen extends React.Component<any, any> {
         });
     }
 
-    fetchAdvert = async (isRefresh?: boolean) => {
-        this.setState(this.state);
+    fetchAdvert = async () => {
+        this.setState({
+            loading: false
+        });
         try {
             const res: any = await APIs.home.getAdvertList();
             AppStore.dispatch({
@@ -290,8 +291,7 @@ class HomeScreen extends React.Component<any, any> {
 }
 
 const mapStateToProps = (state: any) => ({
-    user: state.get("user").toJS(),
-    home: state.get("home").toJS()
+    user: state.get("user").toJS()
 });
 
 export default connect(mapStateToProps)(HomeScreen);

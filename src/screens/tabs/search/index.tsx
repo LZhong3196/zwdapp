@@ -151,7 +151,6 @@ class SearchScreen extends React.Component<any, any> {
 }
 
 const mapStateToProps = (state: any) => ({
-    data: state.get("search").toJS(),
     user: state.get("user").toJS()
 });
 

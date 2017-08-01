@@ -5,7 +5,15 @@ let {
     color_base,
     font_size_base,
     font_size_caption,
-    font_size_heading
+    font_size_heading,
+    h_spacing_lg,
+    font_size_display_md,
+    border_width_lg,
+    v_spacing_md,
+    v_spacing_xl,
+    h_spacing_md,
+    font_size_caption_sm,
+    font_size_display_lg
 } = Widgets.theme;
 
 
@@ -38,7 +46,7 @@ export const styles: any = {
 
 export const headerStyle: any = {
     container: {
-        height: 180,
+        height: 170,
     },
     background: {
         position: "absolute",
@@ -65,16 +73,24 @@ export const headerStyle: any = {
         right: 0,
         height: 80,
     },
+    titleLeft: {
+        position: "absolute",
+        left: h_spacing_lg
+    },
+    titleLeftText: {
+        color: color_background,
+        fontSize: font_size_caption
+    },
     titleText: {
         color: color_background,
         textAlign: "center"
     },
     titleRight: {
         position: "absolute",
-        right: 0,
+        right: h_spacing_lg,
     },
     caption: {
-        padding: 20,
+        padding: v_spacing_xl,
         paddingTop: 80,
         justifyContent: "center",
         alignItems: "center"
@@ -83,41 +99,44 @@ export const headerStyle: any = {
         width: 70
     },
     avatar: {
-        borderWidth: 2,
+        borderWidth: border_width_lg,
         borderColor: color_background
     },
     userName: {
         color: color_background,
-        fontSize: 22,
+        fontSize: font_size_display_md,
         backgroundColor: "transparent",
     }
 };
 
 export const menuStyle: any = {
     container: {
-        paddingVertical: 15,
+        paddingVertical: v_spacing_md,
         width: "100%",
-        justifyContent: "space-between",
+        justifyContent: "flex-start",
+        alignItems: "center",
         backgroundColor: color_background,
-        height: 90
+        height: 80,
     },
     title: {
         width: "100%",
         backgroundColor: "#EFEFF5",
-        paddingLeft: 10,
+        paddingLeft: h_spacing_md,
         height: 26
     },
     titleText: {
-        fontSize: 13,
+        fontSize: font_size_caption_sm,
         color: "#B5B5B5",
-        lineHeight: 24
+        lineHeight: font_size_display_lg
     },
     item: {
-        paddingBottom: 20,
+        paddingBottom: v_spacing_xl,
         height: 60,
+        width: "20%",
+        justifyContent: "center"
     },
     itemText: {
-        fontSize: 12,
+        fontSize: font_size_caption_sm,
         color: color_base,
         position: "absolute",
         bottom: 0,

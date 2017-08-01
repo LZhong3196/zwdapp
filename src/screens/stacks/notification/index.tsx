@@ -66,7 +66,6 @@ class NotificationScreen extends React.Component<any, any> {
 }
 
 const mapStateToProps = (state: any) => ({
-    data: state.get("notification").toJS(),
     user: state.get("user").toJS()
 });
 

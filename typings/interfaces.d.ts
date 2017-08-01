@@ -2,18 +2,21 @@ interface HashMap<T> {
     [key: string]: T;
 }
 
-interface navigationOptions {
-    routeName: string,
-    key?: string,
-}
-
-interface storeKey {
-    storeKey: string,
-}
-
 interface StoreAction {
     type: string,
-    meta?: navigationOptions | storeKey | any,
+    meta?: {
+        /** 目标state的key值 - For data action    */
+        storeKey?: string,
+        /** 目标路由 - For navigation action */
+        routeName?: string,
+        /** 目标路由key | 建议与[routeName]一致 - For navigation action */
+        key?: string,
+        /** 传递给目标路由的参数 - For navigation action */
+        params?: any,
+
+        /** 往回跳到指定页的上一个路由 | default - 跳到主页Main */
+        resetRouteName?: string,
+    },
     error?: boolean,
     payload?: Object
 }
@@ -50,7 +53,7 @@ declare module 'mockjs' {
     interface Map<T> {
         [key: string]: T
     }
-    
+
     export function mock(template: Map<any>): any;
     export function mock(rulr: RegExp, template: Map<any>): any;
     export function mock(rulr: RegExp, rtype: string, template: Map<any>): any;
@@ -75,12 +78,12 @@ declare module "react-native-linear-gradient" {
 
 declare module "react-native-menu" {
     import { Component } from 'react';
-    
-    export default class Menu extends Component<any, any> {}
-    export class MenuContext extends Component<any, any> {}
-    export class MenuOptions extends Component<any, any> {}
-    export class MenuOption extends Component<any, any> {}
-    export class MenuTrigger extends Component<any, any> {}
+
+    export default class Menu extends Component<any, any> { }
+    export class MenuContext extends Component<any, any> { }
+    export class MenuOptions extends Component<any, any> { }
+    export class MenuOption extends Component<any, any> { }
+    export class MenuTrigger extends Component<any, any> { }
 }
 
 declare module "child_process" {
@@ -91,7 +94,7 @@ declare module "child_process" {
 
 declare module "events" {
     export class EventEmitter {
-        
+
     }
 }
 
@@ -99,11 +102,16 @@ declare module "stream" {
     export class Readable {
 
     }
-    
+
     export class Writable {
 
     }
 }
 
+declare module "react-native-camera" {
+    export class Camera {
+
+    }
+}
 
 declare let module: any;

@@ -39,6 +39,8 @@ App Transport Security Settings
 Fonts provided by application
 	item 0 | Array | icon/iconfont.ttf
 ```
+
+> 如果图标文件更新时, Xcode模拟器处于运行状态, 需要进行 rebuild 才能更新图标
 	
 
 ## ../react-native/scripts/react-native-xcode.sh: No such file or directory
@@ -58,8 +60,8 @@ Fonts provided by application
 native-base默认下载的 `d.ts` 文件未能与api同步更新
 
 解决方法: 
-* 按编译的错误提示手动修改 './node_modules/native-base/index.d.ts'
-* 联系相关人员获取可用的 'index.d.ts' 文件
+* 将 `/typings/third-party` 中的 `native-base.d.ts` 复制到 `/node_modules/native-base/index.d.ts` 中
+> 复制时请将 `declare module 'native-base@2.2.0'` 修改为 `declare module 'native-base'`
 
 
 ##  Cannot read resolve | find module "summer"
@@ -72,9 +74,30 @@ native-base默认下载的 `d.ts` 文件未能与api同步更新
 $ ./app compile framework
 ```
 
-## ./app generate - SyntaxError: Unexpected token import
+## 依赖模块类型声明 | ./app generate 指令失败相关 
+
+- ./app generate - SyntaxError: Unexpected token import
 
 > [Microsoft/dts-gen](https://github.com/Microsoft/dts-gen)
  暂未支持 es6   
+ 
+若依赖模块未提供 类型声明文件或 `dts-gen` 生成失败, 请在 `typings/interface.d.ts` 文件下手动添加模块声明
 
-如果是较为简单的组件, 可尝试将模块转换成 es5 后再执行该指令
+#### Example
+添加 `react-native-camera` 模块声明
+
+```
+typings/interface.d.ts
+
+...
+...
+declare module "react-native-camera" {
+    export class Camera {}
+    export class [...] {}
+}
+
+```
+
+> 具体声明请根据模块文档或依赖需求进行定义
+
+

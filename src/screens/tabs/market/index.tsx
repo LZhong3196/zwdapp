@@ -196,7 +196,6 @@ class MarketScreen extends React.Component<any, any> {
 }
 
 const mapStateToProps = (state: any) => ({
-    data: state.get("market").toJS(),
     user: state.get("user").toJS()
 });
 

@@ -3,17 +3,18 @@ import {
     Store as ReduxStore,
     createStore,
     applyMiddleware,
-    compose as ReduxCompose
+    compose
 } from "redux";
 import reduxThunk from "redux-thunk";
 import { createLogger } from "redux-logger";
 import { AsyncStorage } from "react-native";
 import { persistStore, autoRehydrate } from "redux-persist-immutable";
 import { PERSIST_STORE_WHITE_LIST, ROUTES_MAIN } from "./../constants";
+import { initConnectivityInfo } from "./../libs/networking";
 
 import appReducer from "./../reducers/index";
 
-const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;
+const isDebuggingInChrome = (global as any).__DEV__ && !!window.navigator.userAgent;
 
 const logger: Redux.Middleware = createLogger({
     predicate: (getState, action) => isDebuggingInChrome,
@@ -34,12 +35,6 @@ export type State = ImmutableMap<{
     nav?: any;
     user?: any;
     data?: any;
-    home?: any;
-    market?: any;
-    order?: any;
-    notification?: any;
-    search?: any;
-    goods?: any;
 }>;
 
 export const initialState: State = Immutable.fromJS({
@@ -51,18 +46,12 @@ export const initialState: State = Immutable.fromJS({
         }]
     },
     user: {},
-    data: {},
-    home: {},
-    market: {},
-    order: {},
-    notification: {},
-    search: {},
-    goods: {}
+    data: {}
 });
 
 
-
 export default class Store {
+    static instance: Store;
     private appStore: Redux.Store<any>;
 
     constructor() {
@@ -94,20 +83,26 @@ export default class Store {
             logger
         ];
 
-        const enhancer: any = ReduxCompose(
+        const enhancer: any = compose(
             applyMiddleware(...middlewares),
             autoRehydrate()
             // devtools
         );
-        const store = createStore( appReducer, initialState, enhancer );
+
+        const store: Redux.Store<any> = createStore( appReducer, initialState, enhancer );
+
+        const rehydrationCompleted: any = compose(
+            initConnectivityInfo
+        );
+
+        persistStore(store, {
+            whitelist: PERSIST_STORE_WHITE_LIST,
+            storage: AsyncStorage
+        }, rehydrationCompleted);
 
         if (isDebuggingInChrome) {
             (window as any).store = store;
         }
-        persistStore(store, {
-            whitelist: PERSIST_STORE_WHITE_LIST,
-            storage: AsyncStorage
-        });
         return store;
 
     }

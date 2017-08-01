@@ -27,7 +27,7 @@ import {
 } from "native-base";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { styles, headerStyle, menuStyle } from "./style";
-let { TabBarIcon, Icon, theme } = Widgets;
+let { TabBarIcon, Icon, Toast, theme } = Widgets;
 
 
 /** replace  */
@@ -35,6 +35,7 @@ const headerBgStatic = require("./images/header.png");
 const backgroundImageStatic = require("./images/background.png");
 
 class UserScreen extends React.Component<any, any> {
+    private unmount: boolean = false;
     static navigationOptions = {
         title: "个人中心",
         tabBarLabel: "我的",
@@ -55,6 +56,10 @@ class UserScreen extends React.Component<any, any> {
 
     componentWillMount() {
         this.fetchUserInfo();
+    }
+
+    componentWillUnmount() {
+        this.unmount = true;
     }
 
     render() {
@@ -92,15 +97,15 @@ class UserScreen extends React.Component<any, any> {
                                 <Image source={bannerImageSource} style={styles.backgroundImage} />
                             </Row>
                             <Row style={headerStyle.title}>
-                                <Body>
-                                    <Text style={headerStyle.titleText}>
-                                        个人中心
-                                </Text>
-                                </Body>
+                                <Left style={headerStyle.titleLeft}>
+                                    <Text
+                                        onPress={this.handleProfileSetting}
+                                        style={headerStyle.titleLeftText}>
+                                        设置
+                                    </Text>
+                                </Left>
                                 <Right style={headerStyle.titleRight}>
-                                    <Button transparent onPress={this.handleSetting}>
-                                        <Icon type="&#xe619;" color={theme.color_background} />
-                                    </Button>
+                                    <Icon type="&#xe619;" color={theme.color_background} onPress={this.handleSetting} />
                                 </Right>
                             </Row>
                             <Row style={headerStyle.caption}>
@@ -190,7 +195,10 @@ class UserScreen extends React.Component<any, any> {
                             <Text style={menuStyle.titleText}>帮助咨询</Text>
                         </Row>
                         <Row style={menuStyle.container}>
-                            <Button transparent style={menuStyle.item}>
+                            <Button
+                                onPress={this.showToast}
+                                transparent
+                                style={menuStyle.item}>
                                 <Icon
                                     type="&#xe604;"
                                     size={40}
@@ -204,9 +212,23 @@ class UserScreen extends React.Component<any, any> {
         );
     }
 
-
+    showToast = () => {
+        Toast.show({
+            text: "处理中"
+        });
+    }
 
     handleSetting = () => {
+        AppStore.dispatch({
+            type: Constants.ACTIONTYPES_NAVIGATION_TO,
+            meta: {
+                routeName: Constants.ROUTES_SETTING,
+                key: Constants.ROUTES_SETTING
+            }
+        } as any);
+    }
+
+    handleProfileSetting = () => {
         AppStore.dispatch({
             type: Constants.ACTIONTYPES_NAVIGATION_TO,
             meta: {
@@ -233,7 +255,11 @@ class UserScreen extends React.Component<any, any> {
             this.setState(this.state);
         }
         catch (e) {
-
+            if (this.unmount) {
+                return;
+            }
+            this.state.loading = false;
+            this.setState(this.state);
         }
     }
 }

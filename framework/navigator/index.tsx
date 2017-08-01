@@ -16,6 +16,7 @@ export type routerConfigs = {
 export default class Navigator {
     public appName: string;
     public appNavigator: ReactNavigation.NavigationContainer;
+    static navigatorInstance: ReactNavigation.NavigationContainer;
 
     constructor(configs: routerConfigs) {
         this.appNavigator = StackNavigator(configs.routeConfigMap, configs.stackConfig);
@@ -24,15 +25,6 @@ export default class Navigator {
     public get navigator(): ReactNavigation.NavigationContainer {
         return this.appNavigator;
     }
-
-    // public to() {
-
-    // }
-
-    // public back(){
-
-    // }
-
 
     createApp() {
         const mapStateToProps = (state: any) => ({

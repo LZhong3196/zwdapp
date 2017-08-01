@@ -7,7 +7,8 @@ import * as RFS from "react-native-fs";
 import * as RAP from "./rap";
 import * as Constants from "../constants";
 
-import { resolveError, getToken, isNetworkConnected } from "./extra";
+import { resolveError, getToken } from "./request-extra";
+import { isNetworkConnected } from "./networking";
 
 const IS_DEV = (global as any).__DEV__;
 const IS_DEBUG = (global as any).__DEBUG__;
@@ -16,7 +17,7 @@ const RAP_MODEL_CACHE_DIR = RFS.CachesDirectoryPath;
 export interface RequestOptions {
     method?: "GET" | "POST" | "PATCH" | "DELETE";
     headers?: HashMap<any>;
-    JSONParser?: (res: any) =>  any;
+    JSONParser?: (res: any) => any;
     body?: any;
 }
 
@@ -31,7 +32,7 @@ async function _fetch(url: string, options: RequestOptions) {
     const resText = await res.text();
     const resJSON = (options.JSONParser || defaultJSONPaser)(resText);
 
-    if (resJSON.meta && resJSON.meta.code != 0) {
+    if (resJSON.meta && resJSON.meta.code !== 0) {
         throw new ResponseError(resJSON.meta.code, resJSON.meta.msg);
     }
 
@@ -64,8 +65,6 @@ export default async function request(
             url += (url.indexOf("?") > -1 ? "&" : "?") + paramStr;
         }
     }
-
-
 
     const originMethod = options.method.toLocaleLowerCase();
     const originUrl = url;
@@ -102,27 +101,43 @@ export default async function request(
     try {
         res = await _fetch(url, options);
     } catch (e) {
-        let isConnected = await isNetworkConnected();
+        let isConnected = isNetworkConnected();
         if (!isConnected) {
             e.code = Constants.REQUEST_ERROR_NETINFO_NONE;
         }
 
-        if (resolveError(e)) {
-            throw e;
-        }
+        let resolveResult: any = await resolveError(e);
 
-        if (!isFromRAP) {
-            throw e;
+        if (e.code === Constants.REQUEST_ERROR_UNAUTH) {
+            try {
+                res = await _fetch(url, {
+                    ...options,
+                    headers: {
+                        ...options.headers,
+                        "Authorization": resolveResult
+                    }
+                });
+            }
+            catch (e) {
+                if (e.code !== Constants.REQUEST_ERROR_UNAUTH) {
+                    await resolveError(e);
+                }
+                throw e;
+            }
         }
-
-        try {
-            let key = getRAPModelCacheKey(url, originMethod);
-            res = JSON.parse(await RFS.readFile(key));
-            console.log(JSON.stringify(res));
-            isFromRAPCache = true;
-            console.log(`get "${url}" rap model from local cache.`);
-        } catch (e2) {
-            throw e;
+        else {
+            if (!isFromRAP) {
+                throw e;
+            }
+            try {
+                let key = getRAPModelCacheKey(url, originMethod);
+                res = JSON.parse(await RFS.readFile(key));
+                console.log(JSON.stringify(res));
+                isFromRAPCache = true;
+                console.log(`get "${url}" rap model from local cache.`);
+            } catch (e2) {
+                throw e;
+            }
         }
     }
 
