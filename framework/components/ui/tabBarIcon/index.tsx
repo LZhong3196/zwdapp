@@ -3,6 +3,7 @@ import {
     View,
     Text
 } from "react-native";
+import * as variables from "./../theme/index";
 
 const sizeMap: any = {
     "xs": 18 as number,
@@ -12,19 +13,20 @@ const sizeMap: any = {
 
 export interface TabBarIconProps {
     type: string;
-    color?: string;
     focused?: boolean;
+    color?: string;
     size?: "xs" | "md" | "lg" | number;
     activeColor?: string;
+    activeType?: string;
     style?: any;
 }
 
 export default class TabBarIcon extends React.Component<TabBarIconProps, any> {
     static defaultProps = {
         size: "md",
-        color: "#BFBFBF",
+        color: variables.color_base,
+        activeColor: variables.color_theme,
         focused: false,
-        activeColor: "#F85E3B",
     };
 
 
@@ -36,6 +38,7 @@ export default class TabBarIcon extends React.Component<TabBarIconProps, any> {
             focused,
             color,
             activeColor,
+            activeType,
             style,
             ...restProps
         } = this.props;
@@ -51,7 +54,7 @@ export default class TabBarIcon extends React.Component<TabBarIconProps, any> {
 
         return (
             <Text style={TextIconStyle}  {...restProps}>
-                {type}
+                {focused ? activeType : type}
             </Text>
         );
     }

@@ -6,8 +6,9 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { styles } from "./style";
-import { AppStore, AppNavigator, Constants, Widgets } from "summer";
+import { AppStore, AppNavigator, Constants, Widgets, Decorators } from "summer";
 
+@Decorators.pureRender()
 class HomeNav extends PureComponent<any, any> {
     constructor(props: any, context: any) {
         super(props, context);
@@ -31,7 +32,7 @@ class HomeNav extends PureComponent<any, any> {
                 >
                     <Image
                         style={ styles.homeNavImage }
-                        source={ require("./HomeNavImage.jpg") }
+                        source={ require("./images/HomeNavImage.jpg") }
                     />
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback
@@ -39,7 +40,7 @@ class HomeNav extends PureComponent<any, any> {
                 >
                     <Image
                         style={ styles.homeNavImage }
-                        source={ require("./HomeNavImage.jpg") }
+                        source={ require("./images/HomeNavImage.jpg") }
                     />
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback
@@ -47,7 +48,7 @@ class HomeNav extends PureComponent<any, any> {
                 >
                     <Image
                         style={ styles.homeNavImage }
-                        source={ require("./HomeNavImage.jpg") }
+                        source={ require("./images/HomeNavImage.jpg") }
                     />
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback
@@ -55,7 +56,7 @@ class HomeNav extends PureComponent<any, any> {
                 >
                     <Image
                         style={ styles.homeNavImage }
-                        source={ require("./HomeNavImage.jpg") }
+                        source={ require("./images/HomeNavImage.jpg") }
                     />
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback
@@ -63,7 +64,7 @@ class HomeNav extends PureComponent<any, any> {
                 >
                     <Image
                         style={ styles.homeNavImage }
-                        source={ require("./HomeNavImage.jpg") }
+                        source={ require("./images/HomeNavImage.jpg") }
                     />
                 </TouchableWithoutFeedback>
             </ScrollView>

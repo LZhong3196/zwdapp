@@ -7,7 +7,12 @@ function notificationReducers(state: State = initialState, action: StoreAction):
     let nextState: State;
     switch (action.type) {
         case ACTIONTYPES_NOTIFICATION_UPDATE: {
-            nextState = state.setIn( action.meta.storeKey.split("."), Immutable.fromJS(action.payload) );
+            if (!action.meta || !action.meta.storeKey) {
+                nextState = Immutable.fromJS(action.payload);
+            }
+            else {
+                nextState = state.setIn(action.meta.storeKey.split("."), Immutable.fromJS(action.payload));
+            }
             break;
         }
     }

@@ -151,9 +151,11 @@ class RefreshListView extends PureComponent<any, any> {
                 showsVerticalScrollIndicator={ false }
                 removeClippedSubviews={ false }
                 ref={ (ref: any) => { this.listRef = ref; } }
+                keyExtractor={ this.keyExtractor }
             />
         );
     }
+    keyExtractor =  (item: any, index: any) => index;
 
     scrollToTop = () => {
         this.listRef.scrollToOffset({ y: 0 });
@@ -164,10 +166,11 @@ class RefreshListView extends PureComponent<any, any> {
 
         switch (this.state.footerState) {
             case RefreshState.Idle:
-                <TouchableOpacity
-                    style={styles.footerContainer}
-                >
-                </TouchableOpacity>;
+                footer =
+                    <TouchableOpacity
+                        style={styles.footerContainer}
+                    >
+                    </TouchableOpacity>;
                 break;
             case RefreshState.Failure: {
                 footer =
@@ -207,7 +210,7 @@ class RefreshListView extends PureComponent<any, any> {
 
 }
 
-// define your styles
+// footer styles
 const styles = StyleSheet.create({
     footerContainer: {
         flex: 1,

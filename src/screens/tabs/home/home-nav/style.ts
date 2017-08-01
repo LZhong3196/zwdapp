@@ -2,9 +2,7 @@
 export const styles: any = {
     navScroll: {
         backgroundColor: "#fff",
-        paddingTop: 10,
-        paddingBottom: 10,
-        paddingLeft: 10
+        padding: 10
     },
     homeNavImage: {
         width: 100,

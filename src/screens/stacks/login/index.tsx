@@ -1,6 +1,6 @@
 import * as React from "react";
 import { } from "react-native";
-import { AppStore, Constants, APIs } from "summer";
+import { AppStore, Constants, APIs, Widgets } from "summer";
 import {
     Container,
     Content,
@@ -14,12 +14,20 @@ import {
 import { Row, Grid } from "react-native-easy-grid";
 import { styles } from "./style";
 
+let { Icon } = Widgets;
+
+
+const accountLimit: number = 22;
+const passwordLimit: number = 22;
+
 class EditForm extends React.Component<any, any> {
     constructor(props: any, context: any) {
         super(props, context);
         this.state = {
             account: undefined,
-            password: undefined
+            password: undefined,
+            accountError: undefined,
+            passwordError: undefined
         };
     }
 
@@ -32,24 +40,45 @@ class EditForm extends React.Component<any, any> {
     }
 
     render() {
+        const {
+            account,
+            password,
+            accountError,
+            passwordError
+        } = this.state;
         return (
-            <Form >
-                <Item floatingLabel>
-                    <Label> 用户名 </Label>
+            <Form style={styles.formContainer}>
+                <Item rounded last>
+                    <Icon type="&#xe600;" color="#BFBFBF"/>
                     <Input
-                        value={this.state.account}
+                        style={styles.accountInput}
+                        placeholder="请输入用户名/手机号"
+                        value={account}
                         onChangeText={this.onAccountChange} />
                 </Item>
-                <Item floatingLabel last>
-                    <Label> 密码 </Label>
+                <Item>
+                    <Text style={styles.errorInfo}>
+                        {accountError || ""}
+                    </Text>
+                </Item>
+                <Item rounded last>
+                    <Icon type="&#xe68d;" color="#BFBFBF"/>
                     <Input
-                        value={this.state.password}
-                        onChangeText={this.onPasswordChange}/>
+                        style={styles.passwordInput}
+                        placeholder="请输入密码"
+                        value={password}
+                        onChangeText={this.onPasswordChange} />
+                </Item>
+                <Item>
+                    <Text style={styles.errorInfo}>
+                        {passwordError || ""}
+                    </Text>
                 </Item>
                 <Button
                     block
-                    warning
-                    onPress={this.onSubmit}>
+                    rounded
+                    onPress={this.onSubmit}
+                    style={styles.loginButton}>
                     <Text>登录</Text>
                 </Button>
             </Form>
@@ -57,11 +86,24 @@ class EditForm extends React.Component<any, any> {
     }
 
     onAccountChange = (value: any) => {
+        if (value.length > accountLimit) {
+            this.setState({
+                accountError: `账号名长度请小于 ${accountLimit} 个字节`
+            });
+            return;
+        }
         this.state.account = value;
+        this.state.accountError = undefined;
         this.setState(this.state);
     }
 
     onPasswordChange = (value: any) => {
+        if (value.length > passwordLimit) {
+            this.setState({
+                accountError: `密码长度请小于 ${passwordLimit} 个字节`
+            });
+            return;
+        }
         this.state.password = value;
         this.setState(this.state);
     }
@@ -79,17 +121,32 @@ class EditForm extends React.Component<any, any> {
         const data: any = {
             account: this.state.account.trim(),
             password: this.state.password.trim()
-        }
+        };
         try {
             const res: any = await APIs.account.postLogin(data);
+            let account: any = {
+                token: res.data.token,
+                isLoggedIn: true,
+                ...data
+            };
+
             AppStore.dispatch({
                 type: Constants.ACTIONTYPES_USER_UPDATE,
                 meta: {
                     storeKey: "account",
                 },
-                payload: data
+                payload: account
             });
             AppStore.dispatch({ type: Constants.ACTIONTYPES_LOGGED_IN });
+
+            const profileRes: any = await APIs.user.getUserInfo({});
+            AppStore.dispatch({
+                type: Constants.ACTIONTYPES_USER_UPDATE,
+                meta: {
+                    storeKey: "profile",
+                },
+                payload: profileRes.data
+            });
         }
         catch (e) {
             /** 登录失败 error */
@@ -104,15 +161,13 @@ export default class LoginScreen extends React.Component<any, any> {
     };
     render() {
         return (
-            <Container >
-                <Grid style={styles.container}>
-                    <Row style={styles.row}>
-                        <Content>
-                            <EditForm />
-                        </Content>
-                    </Row>
-                </Grid>
-            </Container>
+            <Grid style={styles.container}>
+                <Row size={4} >
+                    <EditForm />
+                </Row>
+                <Row size={1}>
+                </Row>
+            </Grid>
         );
     }
 

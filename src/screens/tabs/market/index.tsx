@@ -4,7 +4,8 @@ import { NavigationActions } from "react-navigation";
 import {
     FlatList,
     View,
-    RefreshControl
+    RefreshControl,
+    StatusBar
 } from "react-native";
 import RefreshList, { RefreshState } from "../../../components/refresh-list";
 import ScrollToTop from "../../../components/scroll-to-top";
@@ -31,7 +32,6 @@ type EndReachedInfo = {
     distanceFromEnd: number
 };
 
-
 class ListHeader extends React.PureComponent<any, any> {
     constructor(props: any, context: any) {
         super(props, context);
@@ -55,15 +55,13 @@ class ListHeader extends React.PureComponent<any, any> {
 
 class MarketScreen extends React.Component<any, any> {
     private flatList: any;
-    private listView: any;
     static navigationOptions = {
         title: Constants.ROUTES_MARKET,
         tabBarLabel: "逛市场",
         tabBarIcon: (options: any) => (
             <TabBarIcon
                 type="&#xe61e;"
-                color={options.tintColor}
-                size="md"
+                activeType="&#xe605;"
                 focused={options.focused} />
         )
     };
@@ -76,8 +74,8 @@ class MarketScreen extends React.Component<any, any> {
         };
     }
 
-    componentWillMount() {
-        this.fetchList(true);
+    componentDidMount() {
+        this.flatList.startHeaderRefreshing();
     }
 
     private renderRow= (info: any) => {
@@ -116,13 +114,13 @@ class MarketScreen extends React.Component<any, any> {
             <View style={styles.view}>
                 <ListHeader/>
                 <RefreshList
-                    ref={ (e) => this.listView = e }
+                    ref={ (e) => this.flatList = e }
                     data={ data }
                     renderItem={ this.renderRow }
                     onHeaderRefresh={ () => this.fetchList(true) }
                     onFooterRefresh={ () => this.fetchList(false) }
                 />
-                <ScrollToTop bindRef={ this.listView }/>
+                <ScrollToTop bindRef={ this.flatList }/>
             </View>
         );
     }
@@ -150,6 +148,8 @@ class MarketScreen extends React.Component<any, any> {
             });
             if (!res.data.results.length) {
                 /** no more data */
+                let footerState = RefreshState.NoMoreData;
+                this.flatList.endRefreshing(footerState);
                 return;
             }
             let list: any = AppStore.get("market.list") || [];
@@ -172,11 +172,7 @@ class MarketScreen extends React.Component<any, any> {
                 blockIndex: blockIndex
             });
             let footerState = RefreshState.Idle;
-            /** 测试已加载全部数据 */
-            if (newList.length > 50) {
-                footerState = RefreshState.NoMoreData;
-            }
-            this.listView.endRefreshing(footerState);
+            this.flatList.endRefreshing(footerState);
         }
         catch (e) {
 

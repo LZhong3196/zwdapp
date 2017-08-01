@@ -9,10 +9,20 @@ export const styles: any = {
     },
     container: {
         backgroundColor: "#FFF",
+    },
+    formContainer: {
+        width: "100%",
+        padding: 30,
         justifyContent: "center",
         alignItems: "center"
     },
-    row: {
-        padding: 6
+    loginButton: {
+        backgroundColor: "#F85E3B",
+    },
+    errorInfo: {
+        height: 20,
+        lineHeight: 20,
+        fontSize: 12,
+        color: "#F85E3B"
     }
 };

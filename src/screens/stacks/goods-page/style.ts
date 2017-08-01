@@ -1,3 +1,11 @@
+import { Widgets } from "summer";
+const {
+    color_theme,
+    color_base,
+    font_size_base,
+    color_background
+} = Widgets.theme;
+
 export const styles: any = {
     header: {
         position: "absolute",
@@ -7,66 +15,105 @@ export const styles: any = {
         left: 0,
         right: 0
     },
-    container: {
-        backgroundColor: "#FFF",
+    swiperImage: {
+        width: "100%",
+        height: 400
     },
-    bannerContainer: {
-        flex: 2,
-        position: "relative",
+    infoContainer: {
+        padding: 10,
+        backgroundColor: color_background
     },
-    bannerImage: {
-        position: "absolute",
-        left: 0,
-        top: 0,
-        right: 0,
-        bottom: 0,
+    leftContainer: {
+        flexGrow: 1,
+        flexShrink: 1
     },
-    tabBar: {
-        backgroundColor: "transparent",
+    rightContainer: {
+        width: 60
     },
-    marketContainer: {
-        position: "absolute",
-        top: 0,
-        left: 0,
-        bottom: 0,
-        right: 0,
-        backgroundColor: "rgba(0, 0, 0, .4)",
-        paddingTop: 100,
-        paddingBottom: 30,
-        justifyContent: "center",
-        alignItems: "center"
+    titleWrap: {
+        height: 40
     },
-    marketAvatar: {
-        backgroundColor: "#FFF",
-        borderWidth: 2,
-        borderColor: "#FFF"
+    goodsTitle: {
+        color: color_base,
+        fontSize: font_size_base
     },
-    marketTitle: {
-        backgroundColor: "transparent",
-        fontSize: 16,
-        color: "#FFF"
+    themeColor: {
+        color: color_theme
     },
-    marketCategory: {
-        backgroundColor: "transparent",
+    price: {
+        fontSize: 20,
+        color: color_theme
+    },
+    grayFont: {
+        color: color_base
+    },
+    tags: {
+        backgroundColor: "#fcdf2a",
+        height: 12,
+        marginTop: 10,
+        paddingLeft: 3,
+        paddingRight: 3
+    },
+    tagTitle: {
+        fontSize: 8,
+        color: "#fff",
+        fontWeight: "700",
+        lineHeight: 12
+    },
+    taobaoPrice: {
         fontSize: 12,
-        color: "#FFF"
+        color: "#a1a1a1"
     },
-    favButtonContainer: {
-        paddingVertical: 4,
-        paddingHorizontal: 10
+    shareButtonWrap: {
+        borderLeftWidth: 1,
+        borderLeftColor: "#a1a1a1",
+        height: 40
     },
-    favButtonText: {
+    moreIconWrap: {
+        justifyContent: "center",
+        paddingTop: 25
+    },
+    footerButtonText: {
         fontSize: 12
     },
-    cardBody: {
-        backgroundColor: "transparent",
+    addToOrder: {
+        backgroundColor: color_theme,
+        borderRadius: 0
     },
-    tabStyle: {
-        borderBottom: {
-
-        },
-        activeTextStyle: {
-            borderBottom: 4,
-        }
+    sendToTaobao: {
+        backgroundColor: "#aa8953",
+        borderRadius: 0
     },
-}
+    marketInfoContainer: {
+        marginTop: 10,
+        marginBottom: 10,
+        height: 100,
+        backgroundColor: color_background,
+        alignItems: "center"
+    },
+    marketImage: {
+        backgroundColor: color_base,
+        marginLeft: 10,
+        marginRight: 10
+    },
+    marketNameWrap: {
+        height: 20
+    },
+    marketArea: {
+        lineHeight: 16,
+        fontSize: 12,
+        color: "#828282"
+    },
+    toMarketButton: {
+        position: "absolute",
+        bottom: 10,
+        right: 10,
+        borderWidth: 1,
+        borderColor: "#a1a1a1",
+        height: 20
+    },
+    toMarketButtonText: {
+        color: "#a1a1a1",
+        fontSize: 10
+    }
+};
