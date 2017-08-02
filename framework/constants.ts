@@ -76,6 +76,8 @@ export const ROUTES_GOODS: string = "Goods";
 export const ROUTES_GOODS_LIST: string = "GoodsList";
 /** ROUTES - Stacks - 消息列表页 */
 export const ROUTES_NOTIFICATION_LIST: string = "Notification";
+/** ROUTES - Stacks - 消息列表页 */
+export const ROUTES_CHAT: string = "Notification";
 
 
 /** ROUTES - Stacks - 用户设置 */

@@ -30,8 +30,8 @@ import * as Swiper from "react-native-swiper";
 import HomeNav from "./home-nav";
 import {func} from "prop-types";
 
-@Decorators.pureRender()
-class HomeScreen extends React.Component<any, any> {
+@Decorators.connect("user")
+export default class HomeScreen extends React.Component<any, any> {
     static navigationOptions = {
         title: Constants.ROUTES_HOME,
         tabBarLabel: "首页",
@@ -134,9 +134,9 @@ class HomeScreen extends React.Component<any, any> {
         );
     }
     render() {
-        const initAdevert = { header: { image: "https://unsplash.it/g/200/300", shop_id: "0" }, list: [] };
+        const initAdevert = { header: { image: "https://unsplash.it/g/200/300", shop_id: "0" }, list: [] as any[] };
         const advertList: any = AppStore.get("home.advert") || {};
-        const { A1 = [], A2 = initAdevert, A3 = initAdevert, A4 = initAdevert, A5= [] } = advertList;
+        const { A1 = [] as any[], A2 = initAdevert, A3 = initAdevert, A4 = initAdevert, A5 = [] as any[] } = advertList;
         return (
             <Container>
                 <Header searchBar rounded>
@@ -289,9 +289,3 @@ class HomeScreen extends React.Component<any, any> {
         }
     }
 }
-
-const mapStateToProps = (state: any) => ({
-    user: state.get("user").toJS()
-});
-
-export default connect(mapStateToProps)(HomeScreen);

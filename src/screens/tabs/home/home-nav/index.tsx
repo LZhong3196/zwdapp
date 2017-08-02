@@ -6,7 +6,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { styles } from "./style";
-import { AppStore, AppNavigator, Constants, Widgets, Decorators } from "summer";
+import { AppStore, Constants, Widgets, Decorators } from "summer";
 
 @Decorators.pureRender()
 class HomeNav extends PureComponent<any, any> {

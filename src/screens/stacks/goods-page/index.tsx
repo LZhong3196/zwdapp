@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Lodash from "lodash";
-import { AppStore, AppNavigator, Constants, APIs, Widgets, Decorators } from "summer";
+import { AppStore, Constants, APIs, Widgets, Decorators } from "summer";
 import {
     StyleSheet,
     Image,
@@ -60,8 +60,7 @@ export default class GoodsPageScreen extends React.Component<any, any> {
                         autoplayTimeout={4}
                         height={400}
                         showsPagination={true}
-                        dotColor={"#fff"}
-                    >
+                        dotColor={"#fff"}>
                         { banner.map(this.createSwiperList) }
                     </Swiper>
                     <Grid style={ styles.infoContainer }>
