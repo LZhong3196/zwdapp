@@ -80,6 +80,13 @@
   dependencies:
     "@types/react-native" "*"
 
+"@types/react-native-swiper@^1.5.7":
+  version "1.5.7"
+  resolved "https://registry.npmjs.org/@types/react-native-swiper/-/react-native-swiper-1.5.7.tgz#b61d9d9f15f1e49c93569617d9dc2efaf2285750"
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "*"
+
 "@types/react-native@*", "@types/react-native@^0.44.12":
   version "0.44.19"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.44.19.tgz#e89317e953cfa6594f9c250b74248aa494ccc12f"
@@ -3409,6 +3416,10 @@ react-native-keyboard-aware-scroll-view@0.2.9:
   resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.2.9.tgz#2a1ae49cfae90a9665b21763c1f8bd03ed5fb92c"
   dependencies:
     react-timer-mixin "^0.13.3"
+
+react-native-swiper@^1.5.4:
+  version "1.5.4"
+  resolved "https://registry.npmjs.org/react-native-swiper/-/react-native-swiper-1.5.4.tgz#a85535b5374ef8d605a7a720e447ac46816ac448"
 
 react-native-tab-view@^0.0.65:
   version "0.0.65"

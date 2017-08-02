@@ -126,7 +126,7 @@ export default class ShopPageScreen extends React.Component<any, any> {
     setFav = async () => {
         const id: string = this.props.navigation.state.params.id;
         const item: any = AppStore.get(`market.shop.${id}`);
-        if(!id) return;
+        if (!id) return;
         let value: boolean = !!item.fav;
         try {
             let res: any;

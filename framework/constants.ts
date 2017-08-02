@@ -1,4 +1,15 @@
-import { PixelRatio } from "react-native";
+import { Dimensions, PixelRatio, Platform } from "react-native";
+
+let {height, width} = Dimensions.get("window");
+
+/** 当前设备系统是ios */
+export const ios = (Platform.OS === "ios");
+
+/** 当前设备屏幕高度 */
+export const SCREEN_HEIGHT = PixelRatio.get();
+
+/** 当前设备屏幕宽度 */
+export const SCREEN_WIDTH = PixelRatio.get();
 
 /** 当前设备像素密度 */
 export const DEVICE_DENSITY = PixelRatio.get();
@@ -23,6 +34,8 @@ export const ACTIONTYPES_USER_UPDATE: string = "User/UPDATE";
 
 /** Action type - DATA */
 export const ACTIONTYPES_DATA_UPDATE: string = "Data/UPDATE";
+/** Action type - HOME */
+export const ACTIONTYPES_HOME_UPDATE: string = "Home/UPDATE";
 /** Action type - MARKET */
 export const ACTIONTYPES_MARKET_UPDATE: string = "Market/UPDATE";
 /** Action type - ORDER */
@@ -61,6 +74,8 @@ export const ROUTES_SHOP: string = "Shop";
 export const ROUTES_GOODS: string = "Goods";
 /** ROUTES - Stacks - 宝贝列表页 */
 export const ROUTES_GOODS_LIST: string = "GoodsList";
+/** ROUTES - Stacks - 消息列表页 */
+export const ROUTES_NOTIFICATION_LIST: string = "Notification";
 
 
 /** ROUTES - Stacks - 用户设置 */

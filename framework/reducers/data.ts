@@ -3,6 +3,7 @@ import * as Immutable from "immutable";
 import { State, initialState } from "./../store/index";
 import {
     ACTIONTYPES_DATA_UPDATE,
+    ACTIONTYPES_HOME_UPDATE,
     ACTIONTYPES_MARKET_UPDATE,
     ACTIONTYPES_USER_UPDATE,
     ACTIONTYPES_NOTIFICATION_UPDATE,
@@ -15,6 +16,7 @@ export type AppReducerHandler = (state: State, action: StoreAction) => State;
 type ReducerConfigs = Dictionary<Array<string>>;
 
 const reducerConfigs: ReducerConfigs = {
+    home: [ ACTIONTYPES_HOME_UPDATE ],
     market: [ ACTIONTYPES_MARKET_UPDATE ],
     data: [ ACTIONTYPES_DATA_UPDATE ],
     order: [ ACTIONTYPES_ORDER_UPDATE ],
@@ -42,6 +44,6 @@ function combineDataReducers(reducerConfigs: ReducerConfigs) {
     return reducers;
 }
 
-const dataReducers: Dictionary<AppReducerHandler> = combineDataReducers(reducerConfigs);
+const   dataReducers: Dictionary<AppReducerHandler> = combineDataReducers(reducerConfigs);
 
 export default dataReducers;

@@ -30,17 +30,22 @@ const AppTabNavigator = TabNavigator({
         screen: UserScreen
     }
 }, {
-    tabBarOptions: {
-        activeTintColor: theme.color_theme,
-        activeBackgroundColor: theme.color_background,
-        inactiveTintColor: theme.color_base,
-        inactiveBackgroundColor: theme.color_background,
-        labelStyle: {
-            marginBottom: 5
-        }
-    },
-    swipeEnabled: true
-});
+        tabBarOptions: {
+            activeTintColor: theme.color_theme,
+            activeBackgroundColor: theme.color_background,
+            inactiveTintColor: theme.color_base,
+            inactiveBackgroundColor: theme.color_background,
+            labelStyle: {
+                marginBottom: 5
+            }
+        },
+        swipeEnabled: true,
+        tabBarPosition: "bottom",
+        lazy: true,
+        animationEnabled: false,
+        backBehavior: "none",
+    }
+);
 
 
 export default class MainScreen extends React.Component<any, any> {

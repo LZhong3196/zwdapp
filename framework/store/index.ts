@@ -35,11 +35,6 @@ export type State = ImmutableMap<{
     nav?: any;
     user?: any;
     data?: any;
-    market?: any;
-    order?: any;
-    notification?: any;
-    search?: any;
-    goods?: any;
 }>;
 
 export const initialState: State = Immutable.fromJS({
@@ -51,12 +46,7 @@ export const initialState: State = Immutable.fromJS({
         }]
     },
     user: {},
-    data: {},
-    market: {},
-    order: {},
-    notification: {},
-    search: {},
-    goods: {}
+    data: {}
 });
 
 

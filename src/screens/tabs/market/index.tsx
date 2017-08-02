@@ -7,6 +7,9 @@ import {
     StatusBar
 } from "react-native";
 import { APIs, Widgets, AppStore, Constants, Decorators } from "summer";
+import RefreshList, { RefreshState } from "../../../components/refresh-list";
+import ScrollToTop from "../../../components/scroll-to-top";
+let { TabBarIcon } = Widgets;
 import {
     ListItem,
     Thumbnail,
@@ -17,9 +20,10 @@ import {
     Left,
     Header,
     Fab,
+    Icon
 } from "native-base";
 
-let { TabBarIcon, Icon } = Widgets;
+
 
 import { styles } from "./style";
 
@@ -27,8 +31,7 @@ type EndReachedInfo = {
     distanceFromEnd: number
 };
 
-
-class ListHeader extends React.Component<any, any> {
+class ListHeader extends React.PureComponent<any, any> {
     constructor(props: any, context: any) {
         super(props, context);
         this.state = {
@@ -38,22 +41,20 @@ class ListHeader extends React.Component<any, any> {
 
     render() {
         return (
-            <Header>
-                <Left>
-
-                </Left>
-                <Body>
+            <Header searchBar rounded>
+                <Item>
+                    <Icon name="search"/>
                     <Input placeholder="请输入店铺名/档口号/旺旺号" />
-                </Body>
+                    <Icon name="md-expand"></Icon>
+                </Item>
             </Header>
-        )
+        );
     }
 }
 
 @Decorators.connect("user", "market")
 export default class MarketScreen extends React.Component<any, any> {
     private flatList: any;
-
     static navigationOptions = {
         title: Constants.ROUTES_MARKET,
         tabBarLabel: "逛市场",
@@ -73,81 +74,56 @@ export default class MarketScreen extends React.Component<any, any> {
         };
     }
 
-    componentWillMount() {
-        this.fetchList();
+    componentDidMount() {
+        this.flatList.startHeaderRefreshing();
+    }
+
+    private renderRow= (info: any) => {
+        const item: any = info.item;
+        return (
+            <ListItem
+                style={styles.container}
+                onPress={() => this.openShopPage(item.u_id)}>
+                <Thumbnail
+                    large
+                    square
+                    style={styles.itemImage}
+                    source={{ uri: item.image }}>
+                </Thumbnail>
+                <Body>
+                <Text style={styles.itemTitle}>
+                    {item.title}
+                </Text>
+                <Text style={styles.itemIntro}>
+                    {item.main}
+                </Text>
+                <Text style={styles.itemIntro}>
+                    {item.price}
+                </Text>
+                <Text style={styles.itemIntro}>
+                    {item.service}
+                </Text>
+                </Body>
+            </ListItem>
+        );
     }
 
     render() {
         const data: any = AppStore.get("market.list") || [];
-        const refreshControl = (
-            <RefreshControl
-                title="下拉刷新"
-                refreshing={this.state.loading}
-                onRefresh={this.onRefresh} />
-        );
         return (
             <View style={styles.view}>
-                <StatusBar />
-                <FlatList
-                    ref={(component: any) => this.flatList = component}
-                    data={data}
-                    ListHeaderComponent={ListHeader}
-                    getItemLayout={(data: any, index: number) => ({
-                        length: 134,
-                        offset: 134 * index,
-                        index
-                    })}
-                    keyExtractor={(item: any, index: number) => `${index}_${item.u_id}`}
-                    refreshControl={refreshControl}
-                    onEndReached={this.onEndReached}
-                    onEndReachedThreshold={0.05}
-                    renderItem={(info: any) => {
-                        const item: any = info.item;
-                        return (
-                            <ListItem
-                                style={styles.container}
-                                onPress={() => this.openShopPage(item.u_id)}>
-                                <Thumbnail
-                                    large
-                                    square
-                                    style={styles.itemImage}
-                                    source={{ uri: item.image }}>
-                                </Thumbnail>
-                                <Body>
-                                    <Text style={styles.itemTitle}>
-                                        {item.title}
-                                    </Text>
-                                    <Text style={styles.itemIntro}>
-                                        {item.main}
-                                    </Text>
-                                    <Text style={styles.itemIntro}>
-                                        {item.price}
-                                    </Text>
-                                    <Text style={styles.itemIntro}>
-                                        {item.service}
-                                    </Text>
-                                </Body>
-                            </ListItem>
-                        );
-                    }} />
-                <Fab
-                    position="bottomRight"
-                    style={styles.scrollToTop}
-                    onPress={this.scrollToTop}>
-                    <Icon type="&#xe60d;" color="#F85E3B" />
-                </Fab>
+                <ListHeader/>
+                <RefreshList
+                    ref={ (e) => this.flatList = e }
+                    data={ data }
+                    renderItem={ this.renderRow }
+                    onHeaderRefresh={ () => this.fetchList(true) }
+                    onFooterRefresh={ () => this.fetchList(false) }
+                />
+                <ScrollToTop bindRef={ this.flatList }/>
             </View>
         );
     }
-
-    setStatusBar = () => {
-        StatusBar.setBarStyle("light-content");
-    }
-
-    scrollToTop = () => {
-        this.flatList.scrollToOffset({ y: 0 });
-    }
-
     openShopPage = (id: string) => {
         AppStore.dispatch({
             type: Constants.ACTIONTYPES_NAVIGATION_TO,
@@ -160,22 +136,25 @@ export default class MarketScreen extends React.Component<any, any> {
         });
     }
 
-    fetchList = async () => {
-        this.state.loading = true;
+    fetchList = async (isRefresh?: boolean) => {
+        let blockIndex = isRefresh ? 0 : this.state.blockIndex + 1;
+        this.state.loading = false;
         this.setState(this.state);
         try {
             const res: any = await APIs.market.getShopList({
                 block_info: {
-                    index: this.state.blockIndex
+                    index: blockIndex
                 }
             });
             if (!res.data.results.length) {
                 /** no more data */
+                let footerState = RefreshState.NoMoreData;
+                this.flatList.endRefreshing(footerState);
                 return;
             }
             let list: any = AppStore.get("market.list") || [];
             let newList: any = [];
-            if (!this.state.blockIndex) {
+            if (isRefresh) {
                 newList = res.data.results;
             }
             else {
@@ -188,34 +167,32 @@ export default class MarketScreen extends React.Component<any, any> {
                 },
                 payload: newList
             });
-            this.state.loading = false;
-            this.setState(this.state);
+            this.setState({
+                loading: false,
+                blockIndex: blockIndex
+            });
+            let footerState = RefreshState.Idle;
+            this.flatList.endRefreshing(footerState);
         }
         catch (e) {
 
         }
     }
 
-
     onRefresh = () => {
         if (this.state.loading) {
             return;
         }
-        this.state.blockIndex = 0;
-        this.setState(this.state);
-        this.fetchList();
+        this.fetchList(true);
     }
 
     onEndReached = (info: EndReachedInfo) => {
         if (this.state.loading || this.state.blockIndex > 6) {
             return;
         }
-        this.state.blockIndex++;
-        this.setState(this.state);
-        this.fetchList();
+        this.fetchList(false);
     }
 
 }
-
 
 
