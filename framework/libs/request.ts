@@ -107,8 +107,7 @@ export default async function request(
         }
 
         let resolveResult: any = await resolveError(e);
-
-        if (e.code === Constants.REQUEST_ERROR_UNAUTH) {
+        if (e.code === Constants.REQUEST_ERROR_UNAUTH && !!resolveResult) {
             try {
                 res = await _fetch(url, {
                     ...options,

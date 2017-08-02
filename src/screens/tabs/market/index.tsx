@@ -1,5 +1,4 @@
 import * as React from "react";
-import { connect } from "react-redux";
 import { NavigationActions } from "react-navigation";
 import {
     FlatList,
@@ -7,7 +6,7 @@ import {
     RefreshControl,
     StatusBar
 } from "react-native";
-import { APIs, Widgets, AppStore, Constants } from "summer";
+import { APIs, Widgets, AppStore, Constants, Decorators } from "summer";
 import {
     ListItem,
     Thumbnail,
@@ -51,7 +50,8 @@ class ListHeader extends React.Component<any, any> {
     }
 }
 
-class MarketScreen extends React.Component<any, any> {
+@Decorators.connect("user", "market")
+export default class MarketScreen extends React.Component<any, any> {
     private flatList: any;
 
     static navigationOptions = {
@@ -217,10 +217,5 @@ class MarketScreen extends React.Component<any, any> {
 
 }
 
-const mapStateToProps = (state: any) => ({
-    data: state.get("market").toJS(),
-    user: state.get("user").toJS()
-});
 
-export default connect(mapStateToProps)(MarketScreen)
 

@@ -137,5 +137,27 @@ this.state.value = newValue;
 
 ## 接口工具使用
 
+基于 [Fetch API](https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API) 与 [ES2017 async/await](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/async_function)
+
+#### Usage
+
+```
+import { APIs } from "summer";
+
+fetchUserInfo = async () => {
+	try {
+		const res = APIs.user.getUserInfo({});
+		/** do something with res data */
+		...
+	}
+	catch (e) {
+		
+	}
+}
+```
+补充
+
+*	通常情况下, 无需添加提示请求错误的代码
+*  请求后涉及组件`state`修改相关请注意组件`unmount`的情况
 
 

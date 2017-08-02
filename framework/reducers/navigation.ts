@@ -17,6 +17,7 @@ import Navigator from "./../navigator/index";
 function navigationReducers(state: State = initialState, action: StoreAction): State {
     let nextState: State;
     let navigator: ReactNavigation.NavigationContainer = Navigator.navigatorInstance;
+
     switch (action.type) {
         case ACTIONTYPES_LOGGED_IN: {
             nextState = state.merge(navigator.router.getStateForAction(
@@ -37,15 +38,23 @@ function navigationReducers(state: State = initialState, action: StoreAction): S
             break;
         }
         case ACTIONTYPES_NAVIGATION_TO: {
-            nextState = state.merge(navigator.router.getStateForAction(
-                NavigationActions.navigate({
-                    routeName: action.meta.routeName,
-                    key: action.meta.routeName,
-                    params: action.meta.params
-                } as any),
-                state.toJS()
-            ));
-            break;
+            const { routeName, params } = action.meta;
+            const routes: Array<any> = state.toJS()!.routes;
+            const debounce: boolean = routeName === routes[routes.length - 1].routeName;
+            if (debounce) {
+                return state;
+            }
+            else {
+                nextState = state.merge(navigator.router.getStateForAction(
+                    NavigationActions.navigate({
+                        routeName: routeName,
+                        key: routeName,
+                        params: params
+                    } as any),
+                    state.toJS()
+                ));
+                break;
+            }
         }
         case ACTIONTYPES_NAVIGATION_BACK: {
             nextState = state.merge(navigator.router.getStateForAction(

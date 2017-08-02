@@ -73,6 +73,8 @@ export const ROUTES_RESET_PASSWORD: string = "ResetPassword";
 export const ROUTES_IDENTIFICATION: string = "Identification";
 /** ROUTES - Stacks - 用户个人资料设置 */
 export const ROUTES_PROFILE: string = "Profile";
+/** ROUTES - Stacks - 用户个人资料修改编辑页 */
+export const ROUTES_PROFILE_EDIT: string = "ProfileEdit";
 
 
 /** -------  REQUEST ERROR STATUS DEFINITION   ------- */

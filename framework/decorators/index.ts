@@ -1,5 +1,7 @@
-import pureRender from "./pure-render/pure-render";
+import pureRender from "./pure-render/index";
+import connect from "./connect/index";
 
 export {
-    pureRender
+    pureRender,
+    connect
 }

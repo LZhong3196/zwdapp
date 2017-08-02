@@ -5,9 +5,8 @@ import {
     Switch,
     Alert
 } from "react-native";
-import { connect } from "react-redux";
 import { NavigationActions } from "react-navigation";
-import { AppStore, Constants, Widgets, APIs } from "summer";
+import { AppStore, Constants, Widgets, APIs, Decorators } from "summer";
 import {
     Container,
     Content,
@@ -18,16 +17,18 @@ import {
     Right,
     List,
     ListItem,
-    Toast
+    Toast,
+    Thumbnail
 } from "native-base";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { styles } from "./style";
 let { Icon, theme } = Widgets;
 
-class SettingScreen extends React.Component<any, any> {
+@Decorators.connect("user")
+export default class ProfileScreen extends React.Component<any, any> {
     static navigationOptions = {
-        headerBackTitle: "",
-        headerTitle: "设置",
+        headerBackTitle: null as any,
+        headerTitle: "个人资料",
         headerStyle: styles.header
     };
 
@@ -38,101 +39,115 @@ class SettingScreen extends React.Component<any, any> {
     }
 
     render() {
-        const account: any = AppStore.get("user.account") || {};
+        const profile: any = AppStore.get("user.profile") || {};
 
         return (
             <Container>
                 <StatusBar barStyle="default" />
                 <List style={styles.listContainer}>
-                    <ListItem style={styles.listItem}>
+                    <ListItem>
                         <Left>
-                            <Text>联系我们</Text>
+                            <Text>头像</Text>
                         </Left>
-                        <Right>
+                        <Right style={styles.itemRight}>
+                            <Thumbnail style={{ backgroundColor: "#EFEFEF" }} source={{ uri: profile.avatar }} />
                             <Icon type="&#xea54;" color={theme.color_base} size="xs" />
                         </Right>
                     </ListItem>
-                    <ListItem style={{ ...styles.listItem, ...styles.lastItem }}>
+                    <ListItem
+                        style={styles.listItem}
+                        onPress={() => this.onItemEdit("name", profile.name)}>
                         <Left>
-                            <Text>关于17</Text>
+                            <Text>真实姓名</Text>
                         </Left>
-                        <Right>
+                        <Right style={styles.itemRight}>
+                            <Text style={styles.rightText}>{profile.name || "未设置"}</Text>
                             <Icon type="&#xea54;" color={theme.color_base} size="xs" />
                         </Right>
                     </ListItem>
-                </List>
-                <List style={styles.listContainer}>
-                    <ListItem style={styles.listItem}>
+                    <ListItem
+                        style={styles.listItem}
+                        onPress={() => this.onItemEdit("account", profile.account)}>
                         <Left>
-                            <Text>仅wifi下开启大图</Text>
+                            <Text>昵称</Text>
                         </Left>
-                        <Right>
-                            <Switch value={true}/>
-                        </Right>
-                    </ListItem>
-                    <ListItem style={styles.listItem}>
-                        <Left>
-                            <Text>清除缓存</Text>
-                        </Left>
-                        <Right>
-                            <Text style={styles.cacheInfo}>
-                                11MB 
-                                <Icon
-                                    type="&#xea54;"
-                                    color={theme.color_base}
-                                    size="xs" />
-                            </Text>
-                        </Right>
-                    </ListItem>
-                    <ListItem style={styles.listItem}>
-                        <Left>
-                            <Text>点评</Text>
-                        </Left>
-                        <Right>
+                        <Right style={styles.itemRight}>
+                            <Text style={styles.rightText}>{profile.account || "未设置"}</Text>
                             <Icon type="&#xea54;" color={theme.color_base} size="xs" />
                         </Right>
                     </ListItem>
-                    <ListItem style={{ ...styles.listItem, ...styles.lastItem }}>
+                    <ListItem style={{...styles.listItem, ...styles.lastItem}}>
                         <Left>
-                            <Text>分享17客户端</Text>
+                            <Text>我的二维码名片</Text>
                         </Left>
-                        <Right>
-                             <Icon type="&#xea54;" color={theme.color_base} size="xs" /> 
+                        <Right style={styles.itemRight}>
+                            <Icon type="&#xe685;" color={theme.color_base} size="xs" />
+                            <Icon type="&#xea54;" color={theme.color_base} size="xs" />
                         </Right>
                     </ListItem>
                 </List>
                 <List style={styles.listContainer}>
                     <ListItem
-                        onPress={!!account.isLoggedIn ? this.onLogoutConfirm : this.login}
-                        style={{ ...styles.listItem, ...styles.lastItem }}>
-                        <Body>
-                            <Text style={styles.logoutText}>
-                                {!!account.isLoggedIn ? "退出登录" : "去登录"}
-                            </Text>
-                        </Body>
+                        style={styles.listItem}
+                        onPress={() => this.onItemEdit("taobao_account", profile.taobao_account)}>
+                        <Left>
+                            <Text>旺旺</Text>
+                        </Left>
+                        <Right style={styles.itemRight}>
+                            <Text style={styles.rightText}>{profile.taobao_account || "未设置"}</Text>
+                            <Icon type="&#xea54;" color={theme.color_base} size="xs" />
+                        </Right>
+                    </ListItem>
+                    <ListItem
+                        onPress={() => this.onItemEdit("wechat", profile.wechat)}
+                        style={{...styles.listItem, ...styles.lastItem}}>
+                        <Left>
+                            <Text>微信</Text>
+                        </Left>
+                        <Right style={styles.itemRight}>
+                            <Text style={styles.rightText}>{profile.wechat || "未设置"}</Text>
+                            <Icon type="&#xea54;" color={theme.color_base} size="xs" />
+                        </Right>
+                    </ListItem>
+                    <ListItem
+                        onPress={() => this.onItemEdit("qq", profile.qq)}
+                        style={{...styles.listItem, ...styles.lastItem}}>
+                        <Left>
+                            <Text>QQ</Text>
+                        </Left>
+                        <Right style={styles.itemRight}>
+                            <Text style={styles.rightText}>{profile.qq || "未设置"}</Text>
+                            <Icon type="&#xea54;" color={theme.color_base} size="xs" />
+                        </Right>
+                    </ListItem>
+                </List>
+                <List style={styles.listContainer}>
+                    <ListItem style={{...styles.listItem, ...styles.lastItem}}>
+                        <Left>
+                            <Text>生日</Text>
+                        </Left>
+                        <Right style={styles.itemRight}>
+                            <Text style={styles.rightText}>{profile.birthday || "请选择日期"}</Text>
+                            <Icon type="&#xea54;" color={theme.color_base} size="xs" />
+                        </Right>
                     </ListItem>
                 </List>
             </Container>
         );
     }
 
-    login = () => {
+    onItemEdit = (key: string, value: any) => {
         AppStore.dispatch({
             type: Constants.ACTIONTYPES_NAVIGATION_TO,
             meta: {
-                routeName: Constants.ROUTES_LOGIN,
-                key: Constants.ROUTES_LOGIN,
+                routeName: Constants.ROUTES_PROFILE_EDIT,
+                params: {
+                    key: key,
+                    value: value
+                }
             }
         })
-    }
-
-    onLogoutConfirm = () => {
-        Alert.alert(
-            "提示",
-            "是否退出登录",
-            [ { text: "取消" }, { text: "确认", onPress: this.handleLogout } ]
-        );
-    }
+    };
 
     handleLogout = () => {
         try {
@@ -164,8 +179,3 @@ class SettingScreen extends React.Component<any, any> {
 
 }
 
-const mapStateToProps = (state: any) => ({
-    user: state.get("user").toJS()
-});
-
-export default connect(mapStateToProps)(SettingScreen);
