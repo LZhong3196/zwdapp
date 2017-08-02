@@ -5,7 +5,8 @@ import {
     ScrollView,
     RefreshControl,
     Image,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    TouchableOpacity
 } from "react-native";
 import { APIs, Widgets, AppStore, Constants, Decorators } from "summer";
 let { TabBarIcon, Icon } = Widgets;
@@ -146,12 +147,12 @@ class HomeScreen extends React.Component<any, any> {
                     <Item>
                         <BaseIcon name="search"/>
                         <Input placeholder="请输入店铺名/档口号/旺旺号" />
-                        <BaseIcon name="md-expand"/>
+                        <Button onPress={ this.openQRScanner }><BaseIcon name="md-expand"/></Button>
                     </Item>
-                    <Button small transparent
+                    <TouchableOpacity small transparent
                         onPress={ this.openNotificationListPage }>
                         <Icon type="&#xe62b;" />
-                    </Button>
+                    </TouchableOpacity>
                 </Header>
                 <ScrollView
                     style={ styles.view }
@@ -236,6 +237,16 @@ class HomeScreen extends React.Component<any, any> {
             return;
         }
         this.fetchAdvert();
+    }
+    openQRScanner = () => {
+        AppStore.dispatch({
+            type: Constants.ACTIONTYPES_NAVIGATION_TO,
+            meta: {
+                routeName: Constants.ROUTES_QRSCANNER,
+                params: {
+                }
+            }
+        });
     }
     openShopPage = (id: string) => {
         if (!id) return;
