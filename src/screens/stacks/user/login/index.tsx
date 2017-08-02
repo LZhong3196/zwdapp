@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Image } from "react-native";
-import { connect } from "react-redux";
 import { AppStore, Constants, APIs, Widgets, Decorators } from "summer";
 import {
     Container,
@@ -52,6 +51,10 @@ class EditForm extends React.Component<any, any> {
                 password: accountInfo.password
             });
         }
+    }
+
+    componentWillUnmount() {
+        this.handleAuthTodo(false);
     }
 
     render() {
@@ -176,7 +179,7 @@ class EditForm extends React.Component<any, any> {
             });
             AppStore.dispatch({ type: Constants.ACTIONTYPES_LOGGED_IN });
 
-            this.resolveAuthTodo();
+            this.handleAuthTodo(true);
             this.updateProfile();
         }
         catch (e) {
@@ -184,11 +187,11 @@ class EditForm extends React.Component<any, any> {
         }
     }
 
-    resolveAuthTodo = () => {
+    handleAuthTodo = (resolve: boolean) => {
         if (!!AppStore.get("data.resolveTodo")) {
             const token: string = AppStore.get(("user.account.token"));
             let resolveTodo: any = AppStore.get("data.resolveTodo");
-            let res = resolveTodo(token);
+            let res = resolveTodo(resolve && token);
             AppStore.dispatch({
                 type: Constants.ACTIONTYPES_DATA_UPDATE,
                 meta: {
@@ -263,7 +266,8 @@ class ThirdParty extends React.Component<any, any> {
     }
 }
 
-class LoginScreen extends React.Component<any, any> {
+@Decorators.connect("user")
+export default class LoginScreen extends React.Component<any, any> {
     static navigationOptions = {
         headerStyle: styles.header
     };
@@ -283,9 +287,3 @@ class LoginScreen extends React.Component<any, any> {
         );
     }
 }
-
-const mapStateToProps = (state: any) => ({
-    user: state.get("user").toJS()
-});
-
-export default connect(mapStateToProps)(LoginScreen);

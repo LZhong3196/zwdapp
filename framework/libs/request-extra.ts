@@ -39,10 +39,17 @@ export async function resolveError(error: any): Promise<any> {
             });
             break;
         }
-        default: break;
+        default: {
+            if (!!error.code && !!error.msg) {
+                Toast.info({
+                    text: error.msg
+                });
+            }
+            break;
+        }
     }
     return new Promise((resolve: Function) => {
-        resolve();
+        resolve(false);
     });
 };
 

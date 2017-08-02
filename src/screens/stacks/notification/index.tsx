@@ -53,15 +53,15 @@ class NotificationScreen extends React.Component<any, any> {
         );
     }
     openChatPage = (id: string) => {
-        AppStore.dispatch({
-            type: Constants.ACTIONTYPES_NAVIGATION_TO,
-            meta: {
-                routeName: Constants.ROUTES_CHAT,
-                params: {
-                    id: id
-                }
-            }
-        });
+        // AppStore.dispatch({
+        //     type: Constants.ACTIONTYPES_NAVIGATION_TO,
+        //     meta: {
+        //         routeName: Constants.ROUTES_CHAT,
+        //         params: {
+        //             id: id
+        //         }
+        //     }
+        // });
     }
 }
 

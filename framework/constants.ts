@@ -77,7 +77,7 @@ export const ROUTES_GOODS_LIST: string = "GoodsList";
 /** ROUTES - Stacks - 消息列表页 */
 export const ROUTES_NOTIFICATION_LIST: string = "Notification";
 /** ROUTES - Stacks - 消息列表页 */
-export const ROUTES_QRSCANNER: string = "QRScanner";
+export const ROUTES_CHAT: string = "Notification";
 
 
 /** ROUTES - Stacks - 用户设置 */
@@ -90,6 +90,8 @@ export const ROUTES_RESET_PASSWORD: string = "ResetPassword";
 export const ROUTES_IDENTIFICATION: string = "Identification";
 /** ROUTES - Stacks - 用户个人资料设置 */
 export const ROUTES_PROFILE: string = "Profile";
+/** ROUTES - Stacks - 用户个人资料修改编辑页 */
+export const ROUTES_PROFILE_EDIT: string = "ProfileEdit";
 
 
 /** -------  REQUEST ERROR STATUS DEFINITION   ------- */

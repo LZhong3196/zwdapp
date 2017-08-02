@@ -22,7 +22,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import GoodsList from "./goods-list";
 import { styles } from "./style";
 
-let { Icon } = Widgets;
+let { Icon, Toast } = Widgets;
 
 
 export default class ShopPageScreen extends React.Component<any, any> {

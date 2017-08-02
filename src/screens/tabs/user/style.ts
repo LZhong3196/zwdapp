@@ -71,7 +71,7 @@ export const headerStyle: any = {
         top: 0,
         left: 0,
         right: 0,
-        height: 80,
+        height: 80
     },
     titleLeft: {
         position: "absolute",
@@ -90,7 +90,7 @@ export const headerStyle: any = {
         right: h_spacing_lg,
     },
     caption: {
-        padding: v_spacing_xl,
+        padding: h_spacing_lg,
         paddingTop: 80,
         justifyContent: "center",
         alignItems: "center"

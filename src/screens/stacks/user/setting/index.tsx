@@ -6,9 +6,8 @@ import {
     Alert,
     StyleSheet
 } from "react-native";
-import { connect } from "react-redux";
 import { NavigationActions } from "react-navigation";
-import { AppStore, Constants, Widgets, APIs } from "summer";
+import { AppStore, Constants, Widgets, APIs, Decorators } from "summer";
 import {
     Container,
     Content,
@@ -26,7 +25,8 @@ import ConnectivityControl from "./connectivity-control";
 import { styles } from "./style";
 let { Icon, theme, Toast } = Widgets;
 
-class SettingScreen extends React.Component<any, any> {
+@Decorators.connect("user")
+export default class SettingScreen extends React.Component<any, any> {
     static navigationOptions = {
         headerBackTitle: "",
         headerTitle: "设置",
@@ -48,8 +48,8 @@ class SettingScreen extends React.Component<any, any> {
             <Container>
                 <StatusBar barStyle="default" />
                 <List style={styles.listContainer}>
-                    <ListItem>
-                        <Thumbnail size={80} source={{ uri: profile.avatar }} />
+                    <ListItem onPress={this.onProfileEdit}>
+                        <Thumbnail style={{ backgroundColor: "#EFEFEF" }} source={{ uri: profile.avatar }} />
                         <Body>
                             <Text>{profile.account || "未登录"}</Text>
                             <Text note>{`真实姓名: ${profile.name || "未设置"}`}</Text>
@@ -131,8 +131,16 @@ class SettingScreen extends React.Component<any, any> {
         AppStore.dispatch({
             type: Constants.ACTIONTYPES_NAVIGATION_TO,
             meta: {
-                routeName: Constants.ROUTES_LOGIN,
-                key: Constants.ROUTES_LOGIN,
+                routeName: Constants.ROUTES_LOGIN
+            }
+        });
+    }
+
+    onProfileEdit = () => {
+        AppStore.dispatch({
+            type: Constants.ACTIONTYPES_NAVIGATION_TO,
+            meta: {
+                routeName: Constants.ROUTES_PROFILE
             }
         });
 
@@ -176,13 +184,8 @@ class SettingScreen extends React.Component<any, any> {
             payload: userState
         });
     }
-
 }
 
-const mapStateToProps = (state: any) => ({
-    user: state.get("user").toJS()
-});
 
-export default connect(mapStateToProps)(SettingScreen);
 
 

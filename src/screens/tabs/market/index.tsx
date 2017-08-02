@@ -1,5 +1,4 @@
 import * as React from "react";
-import { connect } from "react-redux";
 import { NavigationActions } from "react-navigation";
 import {
     FlatList,
@@ -7,9 +6,9 @@ import {
     RefreshControl,
     StatusBar
 } from "react-native";
+import { APIs, Widgets, AppStore, Constants, Decorators } from "summer";
 import RefreshList, { RefreshState } from "../../../components/refresh-list";
 import ScrollToTop from "../../../components/scroll-to-top";
-import { APIs, Widgets, AppStore, Constants } from "summer";
 let { TabBarIcon } = Widgets;
 import {
     ListItem,
@@ -53,7 +52,8 @@ class ListHeader extends React.PureComponent<any, any> {
     }
 }
 
-class MarketScreen extends React.Component<any, any> {
+@Decorators.connect("user", "market")
+export default class MarketScreen extends React.Component<any, any> {
     private flatList: any;
     static navigationOptions = {
         title: Constants.ROUTES_MARKET,
@@ -195,9 +195,4 @@ class MarketScreen extends React.Component<any, any> {
 
 }
 
-const mapStateToProps = (state: any) => ({
-    user: state.get("user").toJS()
-});
-
-export default connect(mapStateToProps)(MarketScreen);
 

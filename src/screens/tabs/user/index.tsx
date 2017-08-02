@@ -6,12 +6,11 @@ import {
     RefreshControl,
     View
 } from "react-native";
-import { connect } from "react-redux";
 import { NavigationActions } from "react-navigation";
 import {
 
 } from "native-base";
-import { AppStore, Constants, Widgets, APIs } from "summer";
+import { AppStore, Constants, Widgets, APIs, Decorators } from "summer";
 import {
     Container,
     Content,
@@ -34,7 +33,8 @@ let { TabBarIcon, Icon, Toast, theme } = Widgets;
 const headerBgStatic = require("./images/header.png");
 const backgroundImageStatic = require("./images/background.png");
 
-class UserScreen extends React.Component<any, any> {
+@Decorators.connect( "user" )
+export default class UserScreen extends React.Component<any, any> {
     private unmount: boolean = false;
     static navigationOptions = {
         title: "个人中心",
@@ -105,7 +105,7 @@ class UserScreen extends React.Component<any, any> {
                                     </Text>
                                 </Left>
                                 <Right style={headerStyle.titleRight}>
-                                    <Icon type="&#xe619;" color={theme.color_background} onPress={this.handleSetting} />
+                                    <Icon type="&#xe613;" color={theme.color_background} onPress={this.handleSetting} />
                                 </Right>
                             </Row>
                             <Row style={headerStyle.caption}>
@@ -265,9 +265,5 @@ class UserScreen extends React.Component<any, any> {
 }
 
 
-const mapStateToProps = (state: any) => ({
-    user: state.get("user").toJS()
-});
 
-export default connect(mapStateToProps)(UserScreen);
 
