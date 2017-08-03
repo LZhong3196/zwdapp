@@ -8,11 +8,9 @@ var Path = require('path');
 var Promise = require("thenfail").Promise;
 var Chalk = require('chalk');
 var dtsGenerator = require('x-dts-generator').default;
-
+var moduleInit = require("../helpers/module-helper").moduleInit;
 var tsc = require("../helpers/tsc");
-
 var Constants = require("../constants");
-
 var moduleProcess = {};
 
 moduleProcess['framework'] = function(params, argv) {
@@ -53,9 +51,9 @@ moduleProcess['framework'] = function(params, argv) {
 module.exports = function compile(params, argv) {
     var otarget = params[0];
     var target = params[0];
-        var targetModuleProcess = null;
+    var targetModuleProcess = null;
     params = params.slice(1);
-   
+
     return Promise
         .then(() => {
             if (!target) {
@@ -67,8 +65,16 @@ module.exports = function compile(params, argv) {
             if (!moduleProcess[target]) {
                 throw new Error(`未知的编译目标模块: ${otarget}`);
             }
-            targetModuleProcess = moduleProcess[target](params, argv);
 
+            FS.access(Constants.FRAMEWORK_OUTPUT_DIR, error => {
+                if (!!error || argv.init) {
+                    moduleInit();
+                }
+            });
+
+        })
+        .then(() => {
+            targetModuleProcess = moduleProcess[target](params, argv);
             console.log(`${Chalk.blue('&')} 准备编译 ${Chalk.green(otarget)}`);
         })
         .then(() => targetModuleProcess.compile())

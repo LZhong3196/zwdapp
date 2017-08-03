@@ -33,8 +33,7 @@ export function removeConnectivityListener() {
 
 
 export function initConnectivityInfo() {
-    let appStore: Store = Store.instance;
-    let connectLimit: boolean = !!appStore.get("user.setting.connect_limit");
+    let connectLimit: boolean = !!Store.get("user.setting.connect_limit");
     (global as any).__CONNECT_LIMIT__ = connectLimit;
     NetInfo.fetch().then((reach: any) => {
         (global as any).__NETINFO__ = reach;
