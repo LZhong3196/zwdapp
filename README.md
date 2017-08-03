@@ -43,15 +43,6 @@
 	$ npm install  
 	```
 
-3. 编译 framework 模块
-	
-	```
-	$ ./app compile framework
-	```
-
-
-
-
 
 ## 开发调试
 

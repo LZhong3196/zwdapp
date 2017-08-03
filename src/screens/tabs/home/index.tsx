@@ -1,11 +1,11 @@
 import * as React from "react";
-import { connect } from "react-redux";
 import {
     View,
     ScrollView,
     RefreshControl,
     Image,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    TouchableOpacity
 } from "react-native";
 import { APIs, Widgets, AppStore, Constants, Decorators } from "summer";
 let { TabBarIcon, Icon } = Widgets;
@@ -26,11 +26,11 @@ import {
     Card,
     CardItem
 } from "native-base";
-import * as Swiper from "react-native-swiper";
+import Swiper from "react-native-swiper";
 import HomeNav from "./home-nav";
 import {func} from "prop-types";
 
-@Decorators.connect("user")
+@Decorators.connect("user", "home")
 export default class HomeScreen extends React.Component<any, any> {
     static navigationOptions = {
         title: Constants.ROUTES_HOME,
@@ -146,7 +146,7 @@ export default class HomeScreen extends React.Component<any, any> {
                     <Item>
                         <BaseIcon name="search"/>
                         <Input placeholder="请输入店铺名/档口号/旺旺号" />
-                        <BaseIcon name="md-expand"/>
+                        <TouchableOpacity onPress={ this.openQRScanner }><BaseIcon name="md-expand"/></TouchableOpacity>
                     </Item>
                     <Button small transparent
                         onPress={ this.openNotificationListPage }>
@@ -236,6 +236,16 @@ export default class HomeScreen extends React.Component<any, any> {
             return;
         }
         this.fetchAdvert();
+    }
+    openQRScanner = () => {
+        AppStore.dispatch({
+            type: Constants.ACTIONTYPES_NAVIGATION_TO,
+            meta: {
+                routeName: Constants.ROUTES_QRSCANNER,
+                params: {
+                }
+            }
+        });
     }
     openShopPage = (id: string) => {
         if (!id) return;
