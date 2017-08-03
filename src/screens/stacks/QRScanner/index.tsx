@@ -68,6 +68,7 @@ export default class QRscanner extends React.Component {
         }).start(() => this.scannerLineMove());
     }
     onScanResultReceived = (e: any) => {
+        /**TODO 不知道这里该做什么交互*/
         alert("Type: " + e.type + "\nData: " + e.data);
     }
 }

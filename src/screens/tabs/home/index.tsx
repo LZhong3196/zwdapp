@@ -8,7 +8,8 @@ import {
     TouchableOpacity
 } from "react-native";
 import { APIs, Widgets, AppStore, Constants, Decorators } from "summer";
-let { TabBarIcon, Icon } = Widgets;
+import { CachedImage } from "react-native-img-cache";
+let { TabBarIcon, Icon, ImageExtra } = Widgets;
 import { styles } from "./style";
 import {
     Container,
@@ -58,7 +59,7 @@ export default class HomeScreen extends React.Component<any, any> {
             key={ index }
             onPress={ () => this.openShopPage(item.url) }
         >
-            <Image
+            <ImageExtra
                 style={ styles.swiperItem }
                 source={{ uri: item.image }}
             />
@@ -69,7 +70,7 @@ export default class HomeScreen extends React.Component<any, any> {
             key={ index }
             onPress={ () => this.openGoodsPage(item.goods_id) }
         >
-            <Image
+            <ImageExtra
                 style={ styles.RecommendGoodsListImage }
                 source={{ uri: item.image }}
             />
@@ -80,7 +81,7 @@ export default class HomeScreen extends React.Component<any, any> {
             key={ index }
             onPress={ () => this.openGoodsPage(item.goods_id) }
         >
-            <Image
+            <ImageExtra
                 style={ styles.hotSellListImage }
                 source={{ uri: item.image }}
             />
@@ -91,7 +92,7 @@ export default class HomeScreen extends React.Component<any, any> {
             key={ index }
             onPress={ () => this.openGoodsPage(item.goods_id) }
         >
-            <Image
+            <ImageExtra
                 style={ styles.dailyNewListImage }
                 source={{ uri: item.image }}
             />
@@ -107,7 +108,7 @@ export default class HomeScreen extends React.Component<any, any> {
                     <View
                         style={ styles.advertListItem }
                     >
-                        <Image
+                        <ImageExtra
                             style={ styles.advertListImage }
                             source={{ uri: item.image }}
                         />
@@ -122,7 +123,7 @@ export default class HomeScreen extends React.Component<any, any> {
             <TouchableWithoutFeedback
                 onPress={ () => this.openShopPage(item.header.shop_id) }
             >
-                <Image
+                <ImageExtra
                     style={ styles.headerImage }
                     source={{ uri: item.header.image }}
                 />
@@ -185,7 +186,7 @@ export default class HomeScreen extends React.Component<any, any> {
                     <TouchableWithoutFeedback
                         onPress={ () => this.openShopPage(A2.header.shop_id) }
                     >
-                        <Image
+                        <ImageExtra
                             style={ styles.headerImage }
                             source={{ uri: A2.header.image }}
                         />
@@ -205,7 +206,7 @@ export default class HomeScreen extends React.Component<any, any> {
                     <TouchableWithoutFeedback
                         onPress={ () => this.openShopPage(A3.header.shop_id) }
                     >
-                        <Image
+                        <ImageExtra
                             style={ styles.headerImage }
                             source={{ uri: A3.header.image }}
                         />

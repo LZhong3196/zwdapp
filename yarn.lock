@@ -74,6 +74,10 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-native-fetch-blob@^0.10.1":
+  version "0.10.1"
+  resolved "https://registry.npmjs.org/@types/react-native-fetch-blob/-/react-native-fetch-blob-0.10.1.tgz#ad9009d4bc83005b75d06aa136343d915f6150a8"
+
 "@types/react-native-fs@^2.0.3":
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@types/react-native-fs/-/react-native-fs-2.0.3.tgz#d58446960cf9c099b5397b713de495bdf829b058"

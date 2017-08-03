@@ -9,7 +9,7 @@ import {
 import { APIs, Widgets, AppStore, Constants, Decorators } from "summer";
 import RefreshList, { RefreshState } from "../../../components/refresh-list";
 import ScrollToTop from "../../../components/scroll-to-top";
-let { TabBarIcon } = Widgets;
+let { TabBarIcon, ImageExtra } = Widgets;
 import {
     ListItem,
     Thumbnail,
