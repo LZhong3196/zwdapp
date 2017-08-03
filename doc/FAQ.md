@@ -2,8 +2,13 @@
 
 ## 初始化 - 依赖模块相关
 
-### compile error - 'native-base' 类型错误
+引入新模块或使用 Yarn 进行本地模块更新后, 首次编译需执行:
+```
+$ ./app debug src --init
+```
+---
 
+### compile error - 'native-base' 类型错误
 native-base默认下载的 `d.ts` 文件未能与api同步更新
 
 解决方法: 
@@ -11,7 +16,7 @@ native-base默认下载的 `d.ts` 文件未能与api同步更新
 * 将 `/typings/third-party` 中的 `native-base.d.ts` 复制到 `/node_modules/native-base/index.d.ts` 中
 > 复制时请将 `declare module 'native-base@2.2.0'` 修改为 `declare module 'native-base'`
 
--
+---
 
 ### "react-native-swiper" - Warning: React.createElement: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: undefined. 
 react-native-swiper 引入问题
@@ -33,8 +38,7 @@ export default Swiper
 
 > [Ref - leecade/react-native-swiper](https://github.com/leecade/react-native-swiper/blob/master/src/index.js#L93)
 
--
-
+---
 ###  Cannot read resolve | find module "summer"
 
 > 使用 Yarn 进行模块安装或依赖检查时, 会将编译生成的 framework 模块删除
@@ -45,9 +49,7 @@ export default Swiper
 $ ./app compile framework
 ```
 
--
-
-### 
+---
 
 ## Cannot read property 'RNFSFileTypeRegular' of undefined
 
