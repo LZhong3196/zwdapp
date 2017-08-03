@@ -57,11 +57,11 @@ function initAPIs(options: AppOptions) {
 	}
 }
 
-let AppStore: Store = new Store();
 
 export function setup(options: AppOptions) {
+	let appStore: Store = new Store();
 	if (!Store.instance) {
-		Store.instance = AppStore;
+		Store.instance = appStore;
 	}
 	let AppNavigator: Navigator = new Navigator(options.router);
 	if (!Navigator.navigatorInstance) {
@@ -77,7 +77,7 @@ export function setup(options: AppOptions) {
 		render() {
 			let Root = Widgets.Root;
 			return (
-				<Provider store={AppStore.store}>
+				<Provider store={appStore.store}>
 					<Root>
 						<AppWithNavigationState />
 					</Root>
@@ -94,8 +94,8 @@ export {
 	Widgets,
 	Utils,
 	Decorators,
-	AppStore,
 	Cacher,
 	Constants,
-	Networking
+	Networking,
+	Store as AppStore,
 };

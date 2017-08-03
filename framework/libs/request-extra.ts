@@ -12,11 +12,10 @@ import { Toast } from "./../components/index";
 
 /** Request error handler */
 export async function resolveError(error: any): Promise<any> {
-    let appStore: Store = Store.instance;
     switch (error.code) {
         case REQUEST_ERROR_UNAUTH: {
             /**  */
-            appStore.dispatch({
+            Store.dispatch({
                 type: ACTIONTYPES_NAVIGATION_TO,
                 meta: {
                     routeName: ROUTES_LOGIN,
@@ -24,7 +23,7 @@ export async function resolveError(error: any): Promise<any> {
                 }
             });
             return new Promise((resolve: Function) => {
-                appStore.dispatch({
+                Store.dispatch({
                     type: ACTIONTYPES_DATA_UPDATE,
                     meta: {
                         storeKey: "resolveTodo"
@@ -55,9 +54,5 @@ export async function resolveError(error: any): Promise<any> {
 
 
 export function getToken(): string {
-    let appStore: Store = Store.instance;
-    if (!appStore) {
-        return "";
-    }
-    return appStore.get("user.account.token") || "";
+    return Store.get("user.account.token") || "";
 }

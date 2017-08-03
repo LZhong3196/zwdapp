@@ -1,5 +1,53 @@
-## FAQ
+# FAQ
 
+## 初始化 - 依赖模块相关
+
+### compile error - 'native-base' 类型错误
+
+native-base默认下载的 `d.ts` 文件未能与api同步更新
+
+解决方法: 
+
+* 将 `/typings/third-party` 中的 `native-base.d.ts` 复制到 `/node_modules/native-base/index.d.ts` 中
+> 复制时请将 `declare module 'native-base@2.2.0'` 修改为 `declare module 'native-base'`
+
+-
+
+### "react-native-swiper" - Warning: React.createElement: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: undefined. 
+react-native-swiper 引入问题
+
+解决方法:
+
+* 打开 `node_modules/react-native-swiper/index.js`, 将
+
+```
+import Swiper from './src/'
+module.exports = Swiper
+```
+替换为
+
+```
+import Swiper from './src/'
+export default Swiper
+```
+
+> [Ref - leecade/react-native-swiper](https://github.com/leecade/react-native-swiper/blob/master/src/index.js#L93)
+
+-
+
+###  Cannot read resolve | find module "summer"
+
+> 使用 Yarn 进行模块安装或依赖检查时, 会将编译生成的 framework 模块删除
+
+解决方法 - 重新编译 framework
+
+```
+$ ./app compile framework
+```
+
+-
+
+### 
 
 ## Cannot read property 'RNFSFileTypeRegular' of undefined
 
@@ -53,26 +101,6 @@ Fonts provided by application
 * 将 `./node_modules/react-native/packager` 中的文件复制一份到 `scripts` 中, 重新运行 Xcode
 
 > [ref](https://github.com/facebook/react-native/issues/14935)
-
-
-## compile error - 'native-base' 类型错误
-
-native-base默认下载的 `d.ts` 文件未能与api同步更新
-
-解决方法: 
-* 将 `/typings/third-party` 中的 `native-base.d.ts` 复制到 `/node_modules/native-base/index.d.ts` 中
-> 复制时请将 `declare module 'native-base@2.2.0'` 修改为 `declare module 'native-base'`
-
-
-##  Cannot read resolve | find module "summer"
-
-> 使用 Yarn 进行模块安装或依赖检查时, 会将编译生成的 framework 模块删除
-
-解决方法 - 重新编译 framework
-
-```
-$ ./app compile framework
-```
 
 ## 依赖模块类型声明 | ./app generate 指令失败相关 
 

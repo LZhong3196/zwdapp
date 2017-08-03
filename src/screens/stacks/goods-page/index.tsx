@@ -23,12 +23,12 @@ import {
     FooterTab,
 } from "native-base";
 import { Col, Row, Grid } from "react-native-easy-grid";
-import * as Swiper from "react-native-swiper";
-
+import Swiper from "react-native-swiper";
 import { styles } from "./style";
 
 let { Icon } = Widgets;
 
+@Decorators.pureRender()
 export default class GoodsPageScreen extends React.Component<any, any> {
     static navigationOptions = {
         headerBackTitle: "",
@@ -60,7 +60,7 @@ export default class GoodsPageScreen extends React.Component<any, any> {
                         height={400}
                         showsPagination={true}
                         dotColor={"#fff"}>
-                        { banner.map(this.createSwiperList) }
+                        
                     </Swiper>
                     <Grid style={ styles.infoContainer }>
                         <Col style={ styles.leftContainer }>

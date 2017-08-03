@@ -54,6 +54,20 @@ export default class Store {
     static instance: Store;
     private appStore: Redux.Store<any>;
 
+    static get<T>(keys: string): T{
+        if (!this.instance) {
+            return undefined;
+        };
+        return this.instance.get(keys);
+    }
+
+    static dispatch(action: StoreAction) {
+        if (!this.instance) {
+            return;
+        }
+        this.instance.dispatch(action);
+    }
+
     constructor() {
         this.appStore = this.createAppStore();
     }
@@ -104,7 +118,6 @@ export default class Store {
             (window as any).store = store;
         }
         return store;
-
     }
 
 }

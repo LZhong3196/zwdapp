@@ -13,6 +13,7 @@ var Chalk = require('chalk');
 var Utils = require('../helpers/utils');
 var tsc = require('../helpers/tsc');
 var Command = require('../helpers/command');
+var compile = require("./compile");
 
 var filesSynchronizer = require('../helpers/files-synchronizer');
 var apiSynchronizer = require('../helpers/api-synchronizer');
@@ -86,6 +87,11 @@ module.exports = function(params, argv) {
     var tsconfigSynchronizer = null;
     
     return Promise
+        .then(() => {
+            if (!FS.existsSync(Constants.FRAMEWORK_OUTPUT_DIR) && target != "framework" || argv.init) {
+                return compile(["framework"], argv);
+            }
+        })
         .then(() => {
             if (target != 'framework') {
                 return debugApp(target, params);
