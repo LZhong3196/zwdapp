@@ -13,8 +13,15 @@ native-base默认下载的 `d.ts` 文件未能与api同步更新
 
 解决方法: 
 
-* 将 `/typings/third-party` 中的 `native-base.d.ts` 复制到 `/node_modules/native-base/index.d.ts` 中
-> 复制时请将 `declare module 'native-base@2.2.0'` 修改为 `declare module 'native-base'`
+* 根据 NativeBase 相关文档, 将声明更新到 `typings/third-party/native-base.d.ts`
+* 执行
+```
+$ ./app fix native-base
+```
+或
+```
+$ ./app debug src --init
+```
 
 ---
 
@@ -23,18 +30,16 @@ react-native-swiper 引入问题
 
 解决方法:
 
-* 打开 `node_modules/react-native-swiper/index.js`, 将
+* 执行
 
 ```
-import Swiper from './src/'
-module.exports = Swiper
+$ ./app debug src --init
 ```
-替换为
+或
+```
+$ ./app compile framework --init
+```
 
-```
-import Swiper from './src/'
-export default Swiper
-```
 
 > [Ref - leecade/react-native-swiper](https://github.com/leecade/react-native-swiper/blob/master/src/index.js#L93)
 
@@ -46,7 +51,11 @@ export default Swiper
 解决方法 - 重新编译 framework
 
 ```
-$ ./app compile framework
+$ ./app debug src --init
+```
+或
+```
+$ ./app compile framework --init
 ```
 
 ---
