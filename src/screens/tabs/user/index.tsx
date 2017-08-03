@@ -51,7 +51,7 @@ export default class UserScreen extends React.Component<any, any> {
         super(props, context);
         this.state = {
             loading: false
-        }
+        };
     }
 
     componentWillMount() {

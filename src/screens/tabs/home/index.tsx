@@ -1,5 +1,4 @@
 import * as React from "react";
-import { connect } from "react-redux";
 import {
     View,
     ScrollView,
@@ -31,7 +30,7 @@ import * as Swiper from "react-native-swiper";
 import HomeNav from "./home-nav";
 import {func} from "prop-types";
 
-@Decorators.connect("user")
+@Decorators.connect("user", "home")
 export default class HomeScreen extends React.Component<any, any> {
     static navigationOptions = {
         title: Constants.ROUTES_HOME,
@@ -147,12 +146,12 @@ export default class HomeScreen extends React.Component<any, any> {
                     <Item>
                         <BaseIcon name="search"/>
                         <Input placeholder="请输入店铺名/档口号/旺旺号" />
-                        <Button onPress={ this.openQRScanner }><BaseIcon name="md-expand"/></Button>
+                        <TouchableOpacity onPress={ this.openQRScanner }><BaseIcon name="md-expand"/></TouchableOpacity>
                     </Item>
-                    <TouchableOpacity small transparent
+                    <Button small transparent
                         onPress={ this.openNotificationListPage }>
                         <Icon type="&#xe62b;" />
-                    </TouchableOpacity>
+                    </Button>
                 </Header>
                 <ScrollView
                     style={ styles.view }

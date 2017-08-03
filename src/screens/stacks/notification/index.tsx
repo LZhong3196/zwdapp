@@ -21,7 +21,6 @@ import { styles } from "./style";
 
 let { Icon } = Widgets;
 
-@Decorators.pureRender()
 class NotificationScreen extends React.Component<any, any> {
     static navigationOptions = {
         headerStyle: styles.header,

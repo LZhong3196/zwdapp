@@ -1,7 +1,4 @@
 import * as React from "react";
-import {
-    View
-} from "react-native";
 import { TabNavigator } from "react-navigation";
 import { Constants, Widgets } from "summer";
 

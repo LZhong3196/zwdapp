@@ -22,7 +22,7 @@ import { connect } from "react-redux";
 
 let { TabBarIcon } = Widgets;
 
-@Decorators.pureRender()
+@Decorators.connect("user", "search")
 class SearchScreen extends React.Component<any, any> {
     private flatList: any;
     static navigationOptions = {

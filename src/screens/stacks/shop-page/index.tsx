@@ -24,7 +24,6 @@ import { styles } from "./style";
 
 let { Icon, Toast } = Widgets;
 
-
 export default class ShopPageScreen extends React.Component<any, any> {
     static navigationOptions = {
         headerBackTitle: "",

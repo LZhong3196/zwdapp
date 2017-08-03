@@ -29,7 +29,6 @@ import { styles } from "./style";
 
 let { Icon } = Widgets;
 
-@Decorators.pureRender()
 export default class GoodsPageScreen extends React.Component<any, any> {
     static navigationOptions = {
         headerBackTitle: "",
