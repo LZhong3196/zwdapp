@@ -52,7 +52,7 @@ export type ToastConfiguration = {
     /** 回调按钮样式 */
     buttonStyle?: ViewStyleProp;
     /** 隐藏蒙层 default - false */
-    // maskHidden?: boolean;
+    maskHidden?: boolean;
 };
 
 export class ToastContainer extends React.Component<ViewProperties, any> {
@@ -150,7 +150,7 @@ export class ToastContainer extends React.Component<ViewProperties, any> {
             buttonStyle: config.buttonStyle,
             textStyle: config.textStyle,
             icon: config.icon,
-            // maskHidden: !!config.maskHidden
+            maskHidden: !!config.maskHidden
         });
 
         if (config.duration !== -1) {
@@ -196,12 +196,20 @@ export class ToastContainer extends React.Component<ViewProperties, any> {
             style,
             buttonTextStyle,
             buttonStyle,
+            maskHidden
         } = this.state;
         const spinnerVisible: boolean = type === "loading" && !icon;
+
+        const containerStyle: any = {
+            ...toastStyle.toast,
+            ...style,
+            backgroundColor: maskHidden ? "transparent" : (toastStyle.toast.backgroundColor || style.backgroundColor)
+        };
+        
         return modalVisible ? (
             <Animated.View style={this.getToastStyle()}>
                 <View
-                    style={{ ...toastStyle.toast, ...style }}>
+                    style={containerStyle}>
                     {spinnerVisible && <Spinner style={{ height: 50, marginHorizontal: 15 }} size="small" color="#EFEFF4" />}
                     {icon && <Icon style={toastStyle.icon} { ...icon} />}
                     {text && <Text style={{ ...toastStyle.text, ...textStyle }}>

@@ -109,9 +109,8 @@ declare module "stream" {
 }
 
 declare module "react-native-camera" {
-    export class Camera {
-
-    }
+    import { Component } from 'react';
+    export default class Menu extends Component<any, any> { }
 }
 
 declare let module: any;

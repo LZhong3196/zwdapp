@@ -5,7 +5,6 @@ import {
     Switch,
     Alert
 } from "react-native";
-import { NavigationActions } from "react-navigation";
 import { AppStore, Constants, Widgets, APIs, Decorators } from "summer";
 import {
     Container,
@@ -18,11 +17,14 @@ import {
     List,
     ListItem,
     Toast,
-    Thumbnail
+    Thumbnail,
+    ActionSheet
 } from "native-base";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { styles } from "./style";
 let { Icon, theme } = Widgets;
+import { Picker as DatePicker} from "./datepicker";
+
 
 @Decorators.connect("user")
 export default class ProfileScreen extends React.Component<any, any> {
@@ -35,6 +37,7 @@ export default class ProfileScreen extends React.Component<any, any> {
     constructor(props: any, context: any) {
         super(props, context);
         this.state = {
+            date: undefined
         };
     }
 
@@ -56,7 +59,7 @@ export default class ProfileScreen extends React.Component<any, any> {
                     </ListItem>
                     <ListItem
                         style={styles.listItem}
-                        onPress={() => this.onItemEdit("name", profile.name)}>
+                        onPress={() => this.handleItemEdit("name", profile.name)}>
                         <Left>
                             <Text>真实姓名</Text>
                         </Left>
@@ -67,7 +70,7 @@ export default class ProfileScreen extends React.Component<any, any> {
                     </ListItem>
                     <ListItem
                         style={styles.listItem}
-                        onPress={() => this.onItemEdit("account", profile.account)}>
+                        onPress={() => this.handleItemEdit("account", profile.account)}>
                         <Left>
                             <Text>昵称</Text>
                         </Left>
@@ -89,7 +92,7 @@ export default class ProfileScreen extends React.Component<any, any> {
                 <List style={styles.listContainer}>
                     <ListItem
                         style={styles.listItem}
-                        onPress={() => this.onItemEdit("taobao_account", profile.taobao_account)}>
+                        onPress={() => this.handleItemEdit("taobao_account", profile.taobao_account)}>
                         <Left>
                             <Text>旺旺</Text>
                         </Left>
@@ -99,7 +102,7 @@ export default class ProfileScreen extends React.Component<any, any> {
                         </Right>
                     </ListItem>
                     <ListItem
-                        onPress={() => this.onItemEdit("wechat", profile.wechat)}
+                        onPress={() => this.handleItemEdit("wechat", profile.wechat)}
                         style={{...styles.listItem, ...styles.lastItem}}>
                         <Left>
                             <Text>微信</Text>
@@ -110,7 +113,7 @@ export default class ProfileScreen extends React.Component<any, any> {
                         </Right>
                     </ListItem>
                     <ListItem
-                        onPress={() => this.onItemEdit("qq", profile.qq)}
+                        onPress={() => this.handleItemEdit("qq", profile.qq)}
                         style={{...styles.listItem, ...styles.lastItem}}>
                         <Left>
                             <Text>QQ</Text>
@@ -127,7 +130,7 @@ export default class ProfileScreen extends React.Component<any, any> {
                             <Text>生日</Text>
                         </Left>
                         <Right style={styles.itemRight}>
-                            <Text style={styles.rightText}>{profile.birthday || "请选择日期"}</Text>
+                            <DatePicker value={profile.birthday} />                                
                             <Icon type="&#xea54;" color={theme.color_base} size="xs" />
                         </Right>
                     </ListItem>
@@ -136,7 +139,7 @@ export default class ProfileScreen extends React.Component<any, any> {
         );
     }
 
-    onItemEdit = (key: string, value: any) => {
+    handleItemEdit = (key: string, value: any) => {
         AppStore.dispatch({
             type: Constants.ACTIONTYPES_NAVIGATION_TO,
             meta: {
@@ -148,6 +151,8 @@ export default class ProfileScreen extends React.Component<any, any> {
             }
         })
     };
+
+
 
     handleLogout = () => {
         try {

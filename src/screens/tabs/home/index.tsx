@@ -26,7 +26,7 @@ import {
     Card,
     CardItem
 } from "native-base";
-import * as Swiper from "react-native-swiper";
+import Swiper from "react-native-swiper";
 import HomeNav from "./home-nav";
 import {func} from "prop-types";
 
