@@ -88,7 +88,7 @@ module.exports = function(params, argv) {
     
     return Promise
         .then(() => {
-            if (!FS.existsSync(Constants.FRAMEWORK_OUTPUT_DIR) && target != "framework" ) {
+            if (!FS.existsSync(Constants.FRAMEWORK_OUTPUT_DIR) && target != "framework" || argv.init) {
                 return compile(["framework"], argv);
             }
         })
