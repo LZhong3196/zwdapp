@@ -1,5 +1,5 @@
 # API
-> 缓慢施工中...相关疑问可参考现有代码实现或联系相关开发人员
+> 相关疑问可参考现有代码实现或联系相关开发人员
 
 ## Store - 数据处理
 业务层中用于处理应用状态(State)的操作接口
@@ -17,7 +17,7 @@ Store.update("user.profile.name", "Yuki");
 ```
 
 ### keys
-即 `stateKeys`, 应用状态中的数据存储结构对应键值. 可查看控制台中的打印信息
+即 `stateKeys`, 应用状态中的数据存储结构对应键值. 具体可查看控制台打印信息
 
 ### get()
 > `get<T>(keys: string): T | undefined`
@@ -31,9 +31,13 @@ Store.update("user.profile.name", "Yuki");
 
 #### 说明
 更新应用状态(State)中的对应数据.
-实质为发起一个更新数据的action - `Store.dispatch(action)`, 详细数据状态可查看控制台打印信息
+
+实质为发起一个更新数据的action `Store.dispatch(action)`, 具体可查看控制台打印信息
+
 
 > 补充: Store 依旧具有 `dispatch` 接口, 但已不建议用于处理 `数据更新` 和 `路由更新` 操作.
+
+
 
 ## Navigator - 导航器
 基于 [React Navigation](https://reactnavigation.org/docs/intro/)
@@ -79,6 +83,8 @@ Navigator.reset("Main");
 | --- | --- | --- | --- |
 | routeName | string | / | 目标路由 |
 | params | any | / | 传递给回退路由的参数 |
+
+
 
 
 ## Widgets - 通用组件
@@ -174,6 +180,8 @@ Example:
 `
 this.state.value = newValue;
 `
+
+
 
 ## APIs - 接口工具
 
