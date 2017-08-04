@@ -20,18 +20,17 @@ Store.update("user.profile.name", "Yuki");
 即 `stateKeys`, 应用状态中的数据存储结构对应键值. 可查看控制台中的打印信息
 
 ### get
-返回应用状态(State)中的对应数据.
 > `get<T>(keys: string): T | undefined`
 
 #### 说明
-暂无
+返回应用状态(State)中的对应数据.
 
 
 ### update
-更新应用状态(State)中的对应数据.
 > `update(keys: string, payload: Object)`
 
 #### 说明
+更新应用状态(State)中的对应数据.
 实质为发起一个更新数据的action - `Store.dispatch(action)`, 详细数据状态可查看控制台打印信息
 
 > 补充: Store 依旧具有 `dispatch` 接口, 但已不建议用于处理 `数据获取|更新` 和 `路由更新` 操作.
@@ -58,6 +57,7 @@ Navigator.reset("Main");
 ```
 ### to
 > `to(routeName: string, params?: any)`
+
 转入目标路由
 
 | 参数 | 类型 | 必需 | 说明 |
@@ -67,10 +67,12 @@ Navigator.reset("Main");
 
 ### back
 > `back()`
+
 回退至上一路由
 
 ### reset
 > `reset(routeName?: string, params?: any)`
+
 回退至目标路由
 
 | 参数 | 类型 | 必需 | 说明 |
@@ -119,21 +121,38 @@ class MyComponent extends Component {
 
 
 ### Icon
-
+...
 
 ## 装饰器
+
+### connect
+将 state 中的数据映射到目标组件
+
+使用
+```
+import { Decorators } from "summer";
+
+@Decorators.connect("user", "goods")
+class MyComponent extends Component {
+	render() {
+		return (
+			...
+		);
+	}
+}
+
+```
 
 ### pureRender
 
 使目标组件仅在 `props 或 state 发生变化` 时重新渲染
 
-#### 使用示例
-
+使用
 ```
 import { Decorators } from "summer";
 
 @Decorators.pureRender()
-class MyPureRender extends Component {
+class MyPureComponent extends Component {
 	render() {
 		return (
 			...
