@@ -7,7 +7,7 @@ import {
     TouchableWithoutFeedback,
     TouchableOpacity
 } from "react-native";
-import { APIs, Widgets, Store, Constants, Decorators } from "summer";
+import { APIs, Widgets, Store, Navigator, Constants, Decorators } from "summer";
 let { TabBarIcon, Icon, ImageExtra } = Widgets;
 import { styles } from "./style";
 import {
@@ -238,46 +238,18 @@ export default class HomeScreen extends React.Component<any, any> {
         this.fetchAdvert();
     }
     openQRScanner = () => {
-        Store.dispatch({
-            type: Constants.ACTIONTYPES_NAVIGATION_TO,
-            meta: {
-                routeName: Constants.ROUTES_QRSCANNER,
-                params: {
-                }
-            }
-        });
+        Navigator.to(Constants.ROUTES_SCANNER);
     }
     openShopPage = (id: string) => {
         if (!id) return;
-        Store.dispatch({
-            type: Constants.ACTIONTYPES_NAVIGATION_TO,
-            meta: {
-                routeName: Constants.ROUTES_SHOP,
-                params: {
-                    id: id
-                }
-            }
-        });
+        Navigator.to(Constants.ROUTES_SHOP, { id });
     }
     openGoodsPage = (id: string) => {
         if (!id) return;
-        Store.dispatch({
-            type: Constants.ACTIONTYPES_NAVIGATION_TO,
-            meta: {
-                routeName: Constants.ROUTES_GOODS,
-                params: {
-                    id: id
-                }
-            }
-        });
+        Navigator.to(Constants.ROUTES_GOODS, { id });
     }
     openNotificationListPage = () => {
-        Store.dispatch({
-            type: Constants.ACTIONTYPES_NAVIGATION_TO,
-            meta: {
-                routeName: Constants.ROUTES_NOTIFICATION_LIST,
-            }
-        });
+        Navigator.to(Constants.ROUTES_NOTIFICATION);
     }
 
     fetchAdvert = async () => {

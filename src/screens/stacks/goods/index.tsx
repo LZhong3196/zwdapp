@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Lodash from "lodash";
-import { Store, Constants, APIs, Widgets, Decorators } from "summer";
+import { Store, Constants, APIs, Widgets, Decorators, Navigator } from "summer";
 import {
     StyleSheet,
     Image,
@@ -48,7 +48,7 @@ export default class GoodsScreen extends React.Component<any, any> {
 
     render() {
         const id: string = this.props.navigation.state.params.id;
-        const item: any = Store.get(`goods.goods.${id}`) || {};
+        const item: any = Store.get(`goods.${id}`) || {};
         const banner: string[] = item.banner || [];
         return (
             <Container>
@@ -174,20 +174,12 @@ export default class GoodsScreen extends React.Component<any, any> {
         />
     )
     openShopPage = (id: string) => {
-        Store.dispatch({
-            type: Constants.ACTIONTYPES_NAVIGATION_TO,
-            meta: {
-                routeName: Constants.ROUTES_SHOP,
-                params: {
-                    id: id
-                }
-            }
-        });
+        Navigator.to(Constants.ROUTES_SHOP, { id });
     }
 
     setFav = async () => {
         const id: string = this.props.navigation.state.params.id;
-        const item: any = Store.get(`goods.goods.${id}`);
+        const item: any = Store.get(`goods.${id}`);
         if (!id) return;
         let value: boolean = !!item.fav;
         try {
