@@ -1,5 +1,5 @@
 import * as React from "react";
-import { AppStore, Constants, APIs, Widgets, Decorators } from "summer";
+import { Store, Constants, APIs, Widgets, Decorators } from "summer";
 import { View, Animated, Easing } from "react-native";
 import {
     Text,

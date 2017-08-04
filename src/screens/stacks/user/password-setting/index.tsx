@@ -7,7 +7,7 @@ import {
     Input,
     Button
 } from "native-base";
-import { AppStore, Constants, Widgets, APIs } from "summer";
+import { Store, Constants, Widgets, APIs, Navigator } from "summer";
 import { styles } from "./style";
 let { Icon, theme, Toast } = Widgets;
 
@@ -113,22 +113,13 @@ export default class PasswordSettingScreen extends React.Component<any, any> {
             Toast.success({
                 text: "修改成功"
             });
-            AppStore.dispatch({
-                type: Constants.ACTIONTYPES_NAVIGATION_RESET,
-                meta: {
-                    resetRouteName: Constants.ROUTES_LOGIN
-                }
-            });
-            let account: any = AppStore.get("user.account") || {};
-            AppStore.dispatch({
-                type: Constants.ACTIONTYPES_USER_UPDATE,
-                meta: {
-                    storeKey: "account"
-                },
-                payload: {
-                    ...account,
-                    password: this.state.password
-                }
+
+            Navigator.reset(Constants.ROUTES_LOGIN);
+
+            let account: any = Store.get("user.account") || {};
+            Store.update("user.account", {
+                ...account,
+                password: this.state.password
             });
         }
         catch (e) {

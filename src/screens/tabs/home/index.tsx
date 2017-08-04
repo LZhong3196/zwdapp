@@ -7,7 +7,7 @@ import {
     TouchableWithoutFeedback,
     TouchableOpacity
 } from "react-native";
-import { APIs, Widgets, AppStore, Constants, Decorators } from "summer";
+import { APIs, Widgets, Store, Constants, Decorators } from "summer";
 let { TabBarIcon, Icon } = Widgets;
 import { styles } from "./style";
 import {
@@ -135,7 +135,7 @@ export default class HomeScreen extends React.Component<any, any> {
     }
     render() {
         const initAdevert = { header: { image: "https://unsplash.it/g/200/300", shop_id: "0" }, list: [] as any[] };
-        const advertList: any = AppStore.get("home.advert") || {};
+        const advertList: any = Store.get("home.advert") || {};
         const { A1 = [] as any[], A2 = initAdevert, A3 = initAdevert, A4 = initAdevert, A5 = [] as any[] } = advertList;
         return (
             <Container>
@@ -238,7 +238,7 @@ export default class HomeScreen extends React.Component<any, any> {
         this.fetchAdvert();
     }
     openQRScanner = () => {
-        AppStore.dispatch({
+        Store.dispatch({
             type: Constants.ACTIONTYPES_NAVIGATION_TO,
             meta: {
                 routeName: Constants.ROUTES_QRSCANNER,
@@ -249,7 +249,7 @@ export default class HomeScreen extends React.Component<any, any> {
     }
     openShopPage = (id: string) => {
         if (!id) return;
-        AppStore.dispatch({
+        Store.dispatch({
             type: Constants.ACTIONTYPES_NAVIGATION_TO,
             meta: {
                 routeName: Constants.ROUTES_SHOP,
@@ -261,7 +261,7 @@ export default class HomeScreen extends React.Component<any, any> {
     }
     openGoodsPage = (id: string) => {
         if (!id) return;
-        AppStore.dispatch({
+        Store.dispatch({
             type: Constants.ACTIONTYPES_NAVIGATION_TO,
             meta: {
                 routeName: Constants.ROUTES_GOODS,
@@ -272,7 +272,7 @@ export default class HomeScreen extends React.Component<any, any> {
         });
     }
     openNotificationListPage = () => {
-        AppStore.dispatch({
+        Store.dispatch({
             type: Constants.ACTIONTYPES_NAVIGATION_TO,
             meta: {
                 routeName: Constants.ROUTES_NOTIFICATION_LIST,
@@ -286,7 +286,7 @@ export default class HomeScreen extends React.Component<any, any> {
         });
         try {
             const res: any = await APIs.home.getAdvertList();
-            AppStore.dispatch({
+            Store.dispatch({
                 type: Constants.ACTIONTYPES_HOME_UPDATE,
                 meta: {
                     storeKey: "advert",

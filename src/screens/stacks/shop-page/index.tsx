@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Lodash from "lodash";
-import { AppStore, Constants, APIs, Widgets } from "summer";
+import { Store, Constants, APIs, Widgets } from "summer";
 import { Image, View, StatusBar } from "react-native";
 import {
     Button,
@@ -44,7 +44,7 @@ export default class ShopPageScreen extends React.Component<any, any> {
 
     render() {
         const id: string = this.props.navigation.state.params.id;
-        const item: any = AppStore.get(`market.shop.${id}`) || {};
+        const item: any = Store.get(`market.shop.${id}`) || {};
         return (
             <Container>
                 <StatusBar barStyle="light-content" />
@@ -124,7 +124,7 @@ export default class ShopPageScreen extends React.Component<any, any> {
 
     setFav = async () => {
         const id: string = this.props.navigation.state.params.id;
-        const item: any = AppStore.get(`market.shop.${id}`);
+        const item: any = Store.get(`market.shop.${id}`);
         if (!id) return;
         let value: boolean = !!item.fav;
         try {
@@ -138,7 +138,7 @@ export default class ShopPageScreen extends React.Component<any, any> {
             let newItem: any = Lodash.assign({}, item, {
                 fav: !value
             });
-            AppStore.dispatch({
+            Store.dispatch({
                 type: Constants.ACTIONTYPES_MARKET_UPDATE,
                 meta: {
                     storeKey: `shop.${id}`,
@@ -155,7 +155,7 @@ export default class ShopPageScreen extends React.Component<any, any> {
         const id: string = this.props.navigation.state.params.id;
         try {
             const res: any = await APIs.market.getShopInfo({ id: id });
-            AppStore.dispatch({
+            Store.dispatch({
                 type: Constants.ACTIONTYPES_MARKET_UPDATE,
                 meta: {
                     storeKey: `shop.${id}`,
@@ -172,7 +172,7 @@ export default class ShopPageScreen extends React.Component<any, any> {
         const id: string = this.props.navigation.state.params.id;
         try {
             const res: any = await APIs.market.getShopGoodsList({ u_id: id });
-            AppStore.dispatch({
+            Store.dispatch({
                 type: Constants.ACTIONTYPES_MARKET_UPDATE,
                 meta: {
                     storeKey: "goods",

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Widgets, APIs, AppStore, Constants } from "summer";
+import { Widgets, APIs, Store, Constants } from "summer";
 import DatePicker from "react-native-datepicker";
 
 let { Toast, theme } = Widgets;
@@ -47,19 +47,13 @@ export class Picker extends React.Component<any, any> {
             Toast.loading({
                 maskHidden: true
             });
-            const profile: any = AppStore.get("user.profile");
+            const profile: any = Store.get("user.profile");
             let profileUpdate: any = {
                 ...profile,
                 birthday: value
             };
             let res: any = APIs.user.postUserInfo(profileUpdate);
-            AppStore.dispatch({
-                type: Constants.ACTIONTYPES_USER_UPDATE,
-                meta: {
-                    storeKey: "profile"
-                },
-                payload: profileUpdate
-            });
+            Store.update("user.profile", profileUpdate);
         }
         catch (e) {
 
