@@ -5,7 +5,7 @@ import {
     Switch,
     Alert
 } from "react-native";
-import { AppStore, Constants, Widgets, APIs, Decorators } from "summer";
+import { Store, Constants, Widgets, APIs, Decorators, Navigator } from "summer";
 import {
     Container,
     Content,
@@ -42,7 +42,7 @@ export default class ProfileScreen extends React.Component<any, any> {
     }
 
     render() {
-        const profile: any = AppStore.get("user.profile") || {};
+        const profile: any = Store.get("user.profile") || {};
 
         return (
             <Container>
@@ -140,16 +140,10 @@ export default class ProfileScreen extends React.Component<any, any> {
     }
 
     handleItemEdit = (key: string, value: any) => {
-        AppStore.dispatch({
-            type: Constants.ACTIONTYPES_NAVIGATION_TO,
-            meta: {
-                routeName: Constants.ROUTES_PROFILE_EDIT,
-                params: {
-                    key: key,
-                    value: value
-                }
-            }
-        })
+        Navigator.to(Constants.ROUTES_PROFILE_EDIT, {
+            key: key,
+            value: value
+        });
     };
 
 
@@ -161,7 +155,7 @@ export default class ProfileScreen extends React.Component<any, any> {
         catch (e) {
         }
 
-        const user: any = AppStore.get("user");
+        const user: any = Store.get("user");
         const account: any = user.account;
         const userState: any = {
             ...user,
@@ -172,14 +166,8 @@ export default class ProfileScreen extends React.Component<any, any> {
                 token: ""
             }
         };
-
-        AppStore.dispatch({
-            type: Constants.ACTIONTYPES_NAVIGATION_BACK,
-        });
-        AppStore.dispatch({
-            type: Constants.ACTIONTYPES_USER_UPDATE,
-            payload: userState
-        });
+        Navigator.back();
+        Store.update("user", userState);
     }
 
 }

@@ -97,5 +97,6 @@ export {
 	Cacher,
 	Constants,
 	Networking,
-	Store as AppStore,
+	Store,
+	Navigator
 };

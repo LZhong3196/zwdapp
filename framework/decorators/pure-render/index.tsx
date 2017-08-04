@@ -1,8 +1,10 @@
 import { is } from "immutable";
 
+const isDebuggingInChrome = (global as any).__DEV__ && !!window.navigator.userAgent;
+
 export default function pureRender(): ClassDecorator {
     return (DecoratorComponent: any) => {
-        if (DecoratorComponent.prototype.shouldComponentUpdate !== undefined) {
+        if (DecoratorComponent.prototype.shouldComponentUpdate !== undefined && isDebuggingInChrome) {
             const constructor: any = DecoratorComponent.prototype && DecoratorComponent.prototype.constructor;
             const componentName: string = DecoratorComponent.name
                 || constructor && constructor.name

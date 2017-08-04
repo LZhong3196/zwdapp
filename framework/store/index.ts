@@ -11,8 +11,8 @@ import { AsyncStorage } from "react-native";
 import { persistStore, autoRehydrate } from "redux-persist-immutable";
 import { PERSIST_STORE_WHITE_LIST, ROUTES_MAIN } from "./../constants";
 import { initConnectivityInfo } from "./../libs/networking";
-
 import appReducer from "./../reducers/index";
+import * as CONSTANTS from "./../constants";
 
 const isDebuggingInChrome = (global as any).__DEV__ && !!window.navigator.userAgent;
 
@@ -33,8 +33,6 @@ export interface ImmutableMap<T> extends Map<string, any> {
 
 export type State = ImmutableMap<{
     nav?: any;
-    user?: any;
-    data?: any;
 }>;
 
 export const initialState: State = Immutable.fromJS({
@@ -44,9 +42,7 @@ export const initialState: State = Immutable.fromJS({
             routeName: ROUTES_MAIN,
             key: ROUTES_MAIN
         }]
-    },
-    user: {},
-    data: {}
+    }
 });
 
 
@@ -59,6 +55,20 @@ export default class Store {
             return undefined;
         };
         return this.instance.get(keys);
+    }
+
+    static update(keys: string, payload: Object) {
+        const storeKeys: Array<string> = keys.split(".");
+        const storeKey: string = storeKeys.slice(1).join(".");
+        const appStore: Store = this.instance;
+        const actionType: string = `ACTIONTYPES_${storeKeys[0].toLocaleUpperCase()}_UPDATE`;
+        appStore.dispatch({
+            type: (CONSTANTS as any)[actionType],
+            meta: {
+                storeKey: storeKey
+            },
+            payload: payload
+        });
     }
 
     static dispatch(action: StoreAction) {

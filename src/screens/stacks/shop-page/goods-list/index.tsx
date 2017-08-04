@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Lodash from "lodash";
 import { NavigationActions } from "react-navigation";
-import { AppStore, Constants, APIs, Widgets } from "summer";
+import { Store, Constants, APIs, Widgets } from "summer";
 import { } from "react-native";
 import {
     Button,
@@ -24,7 +24,7 @@ export default class GoodsList extends React.Component<any, any> {
     }
 
     render() {
-        const list: any = AppStore.get("market.goods") || [];
+        const list: any = Store.get("market.goods") || [];
         return (
             <Grid style={styles.goodsListContainer}>
                 {!!list.length ?
@@ -34,7 +34,7 @@ export default class GoodsList extends React.Component<any, any> {
                             style={styles.goodsCardContainer}>
                             <Card
                                 onTouchEnd={() => {
-                                    AppStore.dispatch({
+                                    Store.dispatch({
                                         type: Constants.ACTIONTYPES_NAVIGATION_TO,
                                         meta: {
                                             routeName: Constants.ROUTES_GOODS,
@@ -71,7 +71,7 @@ export default class GoodsList extends React.Component<any, any> {
     }
 
     openGoodsPage = (id: string) => {
-        AppStore.dispatch({
+        Store.dispatch({
             type: Constants.ACTIONTYPES_NAVIGATION_TO,
             meta: {
                 routeName: Constants.ROUTES_GOODS,

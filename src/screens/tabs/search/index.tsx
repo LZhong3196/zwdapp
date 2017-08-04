@@ -16,7 +16,7 @@ import {
 } from "native-base";
 import RefreshList, { RefreshState } from "../../../components/refresh-list";
 import ScrollToTop from "../../../components/scroll-to-top";
-import { Constants, Widgets, AppStore, APIs, Decorators } from "summer";
+import { Constants, Widgets, Store, APIs, Decorators } from "summer";
 import { styles } from "./style";
 import { connect } from "react-redux";
 
@@ -51,7 +51,7 @@ class SearchScreen extends React.Component<any, any> {
     }
 
     render() {
-        const data: any = AppStore.get("search.list") || [];
+        const data: any = Store.get("search.list") || [];
         return (
             <View style={ styles.container }>
                 <Header searchBar rounded>
@@ -96,7 +96,7 @@ class SearchScreen extends React.Component<any, any> {
     }
 
     openGoodsPage = (id: string) => {
-        AppStore.dispatch({
+        Store.dispatch({
             type: Constants.ACTIONTYPES_NAVIGATION_TO,
             meta: {
                 routeName: Constants.ROUTES_GOODS,
@@ -122,7 +122,7 @@ class SearchScreen extends React.Component<any, any> {
                 this.flatList.endRefreshing(footerState);
                 return;
             }
-            let list: any = AppStore.get("search.list") || [];
+            let list: any = Store.get("search.list") || [];
             let newList: any = [];
             if (isRefresh) {
                 newList = res.data.results;
@@ -130,7 +130,7 @@ class SearchScreen extends React.Component<any, any> {
             else {
                 newList = [...list, ...res.data.results];
             }
-            AppStore.dispatch({
+            Store.dispatch({
                 type: Constants.ACTIONTYPES_SEARCH_UPDATE,
                 meta: {
                     storeKey: "list",
