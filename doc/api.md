@@ -19,21 +19,21 @@ Store.update("user.profile.name", "Yuki");
 ### keys
 即 `stateKeys`, 应用状态中的数据存储结构对应键值. 可查看控制台中的打印信息
 
-### get
+### get()
 > `get<T>(keys: string): T | undefined`
 
 #### 说明
 返回应用状态(State)中的对应数据.
 
 
-### update
+### update()
 > `update(keys: string, payload: Object)`
 
 #### 说明
 更新应用状态(State)中的对应数据.
 实质为发起一个更新数据的action - `Store.dispatch(action)`, 详细数据状态可查看控制台打印信息
 
-> 补充: Store 依旧具有 `dispatch` 接口, 但已不建议用于处理 `数据获取|更新` 和 `路由更新` 操作.
+> 补充: Store 依旧具有 `dispatch` 接口, 但已不建议用于处理 `数据更新` 和 `路由更新` 操作.
 
 ## Navigator - 导航器
 基于 [React Navigation](https://reactnavigation.org/docs/intro/)
@@ -55,7 +55,7 @@ Navigator.back();
 Navigator.reset("Main");
 
 ```
-### to
+### to()
 > `to(routeName: string, params?: any)`
 
 转入目标路由
@@ -65,12 +65,12 @@ Navigator.reset("Main");
 |  routeName | string | √ | 目标路由 |
 | params | any | / | 传递给下一路由的参数 |
 
-### back
+### back()
 > `back()`
 
 回退至上一路由
 
-### reset
+### reset()
 > `reset(routeName?: string, params?: any)`
 
 回退至目标路由
@@ -81,7 +81,7 @@ Navigator.reset("Main");
 | params | any | / | 传递给回退路由的参数 |
 
 
-## 通用组件
+## Widgets - 通用组件
 
 ### Toast
 
@@ -123,9 +123,11 @@ class MyComponent extends Component {
 ### Icon
 ...
 
-## 装饰器
+## Decorator - 装饰器
 
-### connect
+### connect()
+> `connect(...keys: Array<string>)`
+
 将 state 中的数据映射到目标组件
 
 使用
@@ -143,7 +145,11 @@ class MyComponent extends Component {
 
 ```
 
-### pureRender
+### keys
+即 `stateKeys`
+
+
+### pureRender()
 
 使目标组件仅在 `props 或 state 发生变化` 时重新渲染
 
@@ -169,7 +175,7 @@ Example:
 this.state.value = newValue;
 `
 
-## 接口工具使用
+## APIs - 接口工具
 
 基于 [Fetch API](https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API) 与 [ES2017 async/await](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/async_function)
 
