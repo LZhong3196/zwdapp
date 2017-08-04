@@ -1,9 +1,11 @@
 import * as React from "react";
 import {
+    ImageCache,
     CachedImage,
     CachedImageProps,
     CachedImageURISource
 } from "react-native-img-cache";
+import { Thumbnail } from "native-base";
 
 const IS_DEV = (global as any).__DEV__;
 const IS_DEBUG = (global as any).__DEBUG__;
@@ -70,3 +72,4 @@ export default class ImageExtra extends React.Component<ImageExtraProps, any> {
         );
     }
 }
+ImageCache.get().clear();

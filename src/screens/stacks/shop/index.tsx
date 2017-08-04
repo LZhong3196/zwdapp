@@ -24,7 +24,7 @@ import { styles } from "./style";
 
 let { Icon, Toast } = Widgets;
 
-export default class ShopPageScreen extends React.Component<any, any> {
+export default class ShopScreen extends React.Component<any, any> {
     static navigationOptions = {
         headerBackTitle: "",
         headerStyle: styles.header

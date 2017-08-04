@@ -28,8 +28,8 @@ import { styles } from "./style";
 
 let { Icon } = Widgets;
 
-@Decorators.pureRender()
-export default class GoodsPageScreen extends React.Component<any, any> {
+@Decorators.connect("user", "goods")
+export default class GoodsScreen extends React.Component<any, any> {
     static navigationOptions = {
         headerBackTitle: "",
         headerStyle: styles.header
@@ -60,7 +60,6 @@ export default class GoodsPageScreen extends React.Component<any, any> {
                         height={400}
                         showsPagination={true}
                         dotColor={"#fff"}>
-                        
                     </Swiper>
                     <Grid style={ styles.infoContainer }>
                         <Col style={ styles.leftContainer }>

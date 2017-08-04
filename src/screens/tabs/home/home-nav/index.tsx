@@ -1,23 +1,18 @@
-import { PureComponent } from "react";
+import * as React from "react";
 import {
     ScrollView,
-    TouchableWithoutFeedback,
+    TouchableOpacity,
     Image
 } from "react-native";
 import { connect } from "react-redux";
 import { styles } from "./style";
 import { AppStore, Constants, Widgets, Decorators } from "summer";
+const { ImageExtra } = Widgets;
 
 @Decorators.pureRender()
-class HomeNav extends PureComponent<any, any> {
+class HomeNav extends React.Component<any, any> {
     constructor(props: any, context: any) {
         super(props, context);
-        this.state = {
-            blockIndex: 0,
-            list: undefined,
-            loading: false,
-            advertData: {A1: [], A2: {}}
-        };
     }
 
     render() {
@@ -27,46 +22,46 @@ class HomeNav extends PureComponent<any, any> {
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
             >
-                <TouchableWithoutFeedback
+                <TouchableOpacity
                     onPress={ () => this.navTo("Login") }
                 >
-                    <Image
+                    <ImageExtra
                         style={ styles.homeNavImage }
                         source={ require("./images/HomeNavImage.jpg") }
                     />
-                </TouchableWithoutFeedback>
-                <TouchableWithoutFeedback
+                </TouchableOpacity>
+                <TouchableOpacity
                     onPress={ () => this.navTo("Login") }
                 >
-                    <Image
+                    <ImageExtra
                         style={ styles.homeNavImage }
                         source={ require("./images/HomeNavImage.jpg") }
                     />
-                </TouchableWithoutFeedback>
-                <TouchableWithoutFeedback
+                </TouchableOpacity>
+                <TouchableOpacity
                     onPress={ () => this.navTo("Login") }
                 >
-                    <Image
+                    <ImageExtra
                         style={ styles.homeNavImage }
                         source={ require("./images/HomeNavImage.jpg") }
                     />
-                </TouchableWithoutFeedback>
-                <TouchableWithoutFeedback
+                </TouchableOpacity>
+                <TouchableOpacity
                     onPress={ () => this.navTo("Login") }
                 >
-                    <Image
+                    <ImageExtra
                         style={ styles.homeNavImage }
                         source={ require("./images/HomeNavImage.jpg") }
                     />
-                </TouchableWithoutFeedback>
-                <TouchableWithoutFeedback
+                </TouchableOpacity>
+                <TouchableOpacity
                     onPress={ () => this.navTo("Login") }
                 >
-                    <Image
+                    <ImageExtra
                         style={ styles.homeNavImage }
                         source={ require("./images/HomeNavImage.jpg") }
                     />
-                </TouchableWithoutFeedback>
+                </TouchableOpacity>
             </ScrollView>
         );
     }
