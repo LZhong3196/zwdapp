@@ -20,11 +20,12 @@ import {
     Thumbnail,
     ActionSheet
 } from "native-base";
+import ImagePicker from "react-native-image-crop-picker";
 import { Col, Row, Grid } from "react-native-easy-grid";
+import { Picker as DatePicker } from "./datepicker";
 import { styles } from "./style";
-let { Icon, theme } = Widgets;
-import { Picker as DatePicker} from "./datepicker";
 
+let { Icon, theme } = Widgets;
 
 @Decorators.connect("user")
 export default class ProfileScreen extends React.Component<any, any> {
@@ -48,7 +49,7 @@ export default class ProfileScreen extends React.Component<any, any> {
             <Container>
                 <StatusBar barStyle="default" />
                 <List style={styles.listContainer}>
-                    <ListItem>
+                    <ListItem onPress={this.handleAvatarChange}>
                         <Left>
                             <Text>头像</Text>
                         </Left>
@@ -79,7 +80,7 @@ export default class ProfileScreen extends React.Component<any, any> {
                             <Icon type="&#xea54;" color={theme.color_base} size="xs" />
                         </Right>
                     </ListItem>
-                    <ListItem style={{...styles.listItem, ...styles.lastItem}}>
+                    <ListItem style={{ ...styles.listItem, ...styles.lastItem }}>
                         <Left>
                             <Text>我的二维码名片</Text>
                         </Left>
@@ -103,7 +104,7 @@ export default class ProfileScreen extends React.Component<any, any> {
                     </ListItem>
                     <ListItem
                         onPress={() => this.handleItemEdit("wechat", profile.wechat)}
-                        style={{...styles.listItem, ...styles.lastItem}}>
+                        style={{ ...styles.listItem, ...styles.lastItem }}>
                         <Left>
                             <Text>微信</Text>
                         </Left>
@@ -114,7 +115,7 @@ export default class ProfileScreen extends React.Component<any, any> {
                     </ListItem>
                     <ListItem
                         onPress={() => this.handleItemEdit("qq", profile.qq)}
-                        style={{...styles.listItem, ...styles.lastItem}}>
+                        style={{ ...styles.listItem, ...styles.lastItem }}>
                         <Left>
                             <Text>QQ</Text>
                         </Left>
@@ -125,12 +126,12 @@ export default class ProfileScreen extends React.Component<any, any> {
                     </ListItem>
                 </List>
                 <List style={styles.listContainer}>
-                    <ListItem style={{...styles.listItem, ...styles.lastItem}}>
+                    <ListItem style={{ ...styles.listItem, ...styles.lastItem }}>
                         <Left>
                             <Text>生日</Text>
                         </Left>
                         <Right style={styles.itemRight}>
-                            <DatePicker value={profile.birthday} />                                
+                            <DatePicker value={profile.birthday} />
                             <Icon type="&#xea54;" color={theme.color_base} size="xs" />
                         </Right>
                     </ListItem>
@@ -144,9 +145,48 @@ export default class ProfileScreen extends React.Component<any, any> {
             key: key,
             value: value
         });
-    };
+    }
 
+    handleAvatarChange = () => {
+        const options: Array<string> = ["拍照", "从相册选择", "取消"];
+        ActionSheet.show({
+            options: options,
+            cancelButtonIndex: options.length - 1,
+            destructiveButtonIndex: 4,
+            title: "修改头像"
+        },
+            (index: number) => {
+                switch (index) {
+                    case 0: {
+                        this.openCamera();
+                        break;
+                    }
+                    case 1: {
+                        this.openAlbum();
+                        break;
+                    }
+                    default: break;
+                }
+            });
+    }
 
+    openAlbum = () => {
+        ImagePicker.openPicker({
+            multiple: true
+        }).then(images => {
+            console.log(images);
+        });
+    }
+
+    openCamera = () => {
+        ImagePicker.openCamera({
+            width: 300,
+            height: 400,
+            cropping: true
+        }).then(image => {
+            console.log(image);
+        });
+    }
 
     handleLogout = () => {
         try {
