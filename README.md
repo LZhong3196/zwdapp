@@ -117,8 +117,9 @@ $ ./app debug src
 
 [传送门](./doc/FAQ.md)
 
+* [安装|更新依赖模块之后编译失败](./doc/FAQ.md#初始化---依赖模块相关)
 * [../react-native/scripts/react-native-xcode.sh: No such file or directory](./doc/FAQ.md#react-nativescriptsreact-native-xcodesh-no-such-file-or-directory)
-* [./app debug src 编译失败 -'native-base' 相关](./doc/FAQ.md#compile-error---native-base-类型错误)
+* ['native-base'组件使用提示类型错误](./doc/FAQ.md#compile-error---native-base-类型错误)
 * [Cannot read property 'RNFSFileTypeRegular' of undefined](./doc/FAQ.md#cannot-read-property-rnfsfiletyperegular-of-undefined)
 * [Type Error: Network request failed](./doc/FAQ.md#type-error-network-request-failed)
 * [接口修改无法更新](./doc/api.md)

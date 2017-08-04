@@ -37,14 +37,14 @@ export type ToastConfiguration = {
     /** 自定义的Icon */
     icon?: {
         type: string;
-        size?: 'xxs' | 'xs' | 'md' | 'lg' | number;
+        size?: "xxs" | "xs" | "md" | "lg" | number;
         color?: string;
         style?: any;
     };
     /** 显示的位置 */
-    position?: 'top' | 'bottom' | 'center';
+    position?: "top" | "bottom" | "center";
     /** 提示类型 */
-    type?: 'loading' | 'danger' | 'success' | 'warning';
+    type?: "loading" | "danger" | "success" | "warning";
     supportedOrientations?: any;
     style?: ViewStyleProp;
     /** 按钮文字样式 */

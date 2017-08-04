@@ -1,70 +1,93 @@
 # API
-> 缓慢施工中...相关疑问可参考现有代码实现或联系相关开发人员
+> 相关疑问可参考现有代码实现或联系相关开发人员
 
-## 导航器
+## Store - 数据处理
+业务层中用于处理应用状态(State)的操作接口
+
+使用
+```
+import { Store } from "summer";
+
+/** 获取用户资料 */
+const userProfile = Store.get("user.profile");
+
+/** 更新用户名称 */
+Store.update("user.profile.name", "Yuki");
+
+```
+
+### keys
+即 `stateKeys`, 应用状态中的数据存储结构对应键值. 具体可查看控制台打印信息
+
+### get()
+> `get<T>(keys: string): T | undefined`
+
+#### 说明
+返回应用状态(State)中的对应数据.
+
+
+### update()
+> `update(keys: string, payload: Object)`
+
+#### 说明
+更新应用状态(State)中的对应数据.
+
+实质为发起一个更新数据的action `Store.dispatch(action)`, 具体可查看控制台打印信息
+
+
+> 补充: Store 依旧具有 `dispatch` 接口, 但已不建议用于处理 `数据更新` 和 `路由更新` 操作.
+
+
+
+## Navigator - 导航器
 基于 [React Navigation](https://reactnavigation.org/docs/intro/)
 
-StackNavigator - 通过 `Action` 进行路由控制
+### StackNavigator
+用于更新 Stack 路由状态.
 
-ActionConfig
+使用
+```
+import { Navigator } from "summer";
+
+/** 跳转至登录页 */
+Navigator.to("Login");
+
+/** 返回上一页 */
+Navigator.back();
+
+/** 回退至主页 */
+Navigator.reset("Main");
+
+```
+### to()
+> `to(routeName: string, params?: any)`
+
+转入目标路由
 
 | 参数 | 类型 | 必需 | 说明 |
 | --- | --- | --- | --- |
-|  type | string | √ | 类型, 参见下方`navigationType` |
-|meta| object | / | 参数 |
+|  routeName | string | √ | 目标路由 |
+| params | any | / | 传递给下一路由的参数 |
 
-meta
+### back()
+> `back()`
 
-| 参数 | 类型 | 说明 |
-| --- | --- | --- |
-| routeName | string | 目标路由 |
-| params | any | 传递给目标路由的参数 |
-| resetRouteName | string | 回退至目标路由 |
+回退至上一路由
 
-`navigationType`
+### reset()
+> `reset(routeName?: string, params?: any)`
 
-* ACTIONTYPES_NAVIGATION_TO - 跳转到目标
-* ACTIONTYPES_NAVIGATION_BACK
-* ACTIONTYPES_NAVIGATION_RESET
+回退至目标路由
 
-#### Example - 进入宝贝详情页并传递当前宝贝的id值
-
-```
-import { AppStore, Constants } from "summer";
-
-AppStore.dispatch({
-	type: Constants.ACTIONTYPES_NAVIGATION_TO,
-		meta: {
-			routeName: Constants.ROUTES_GOODS,
-			params: {
-				id: id
-			}
-		}
-})
-            
-```
-
-#### 返回上一层
-
-```
-AppStore.dispatch({
-	type: ACTIONTYPES_NAVIGATION_BACK
-})
-```
-
-#### 返回指定路由 (多用于注册或重设密码)
-
-```
-AppStore.dispatch({
-	type: ACTIONTYPES_NAVIGATION_RESET,
-	meta: {
-		resetRouteName: ROUTES_LOGIN
-	}
-})
-```
+| 参数 | 类型 | 必需 | 说明 |
+| --- | --- | --- | --- |
+| routeName | string | / | 目标路由 |
+| params | any | / | 传递给回退路由的参数 |
 
 
-## 通用组件
+
+
+## Widgets - 通用组件
 
 ### Toast
 
@@ -104,21 +127,44 @@ class MyComponent extends Component {
 
 
 ### Icon
+...
+
+## Decorator - 装饰器
+
+### connect()
+> `connect(...keys: Array<string>)`
+
+将 state 中的数据映射到目标组件
+
+使用
+```
+import { Decorators } from "summer";
+
+@Decorators.connect("user", "goods")
+class MyComponent extends Component {
+	render() {
+		return (
+			...
+		);
+	}
+}
+
+```
+
+### keys
+即 `stateKeys`
 
 
-## 装饰器
-
-### pureRender
+### pureRender()
 
 使目标组件仅在 `props 或 state 发生变化` 时重新渲染
 
-#### 使用示例
-
+使用
 ```
 import { Decorators } from "summer";
 
 @Decorators.pureRender()
-class MyPureRender extends Component {
+class MyPureComponent extends Component {
 	render() {
 		return (
 			...
@@ -135,7 +181,9 @@ Example:
 this.state.value = newValue;
 `
 
-## 接口工具使用
+
+
+## APIs - 接口工具
 
 基于 [Fetch API](https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API) 与 [ES2017 async/await](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/async_function)
 
