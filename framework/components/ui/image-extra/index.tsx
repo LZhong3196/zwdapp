@@ -72,4 +72,3 @@ export default class ImageExtra extends React.Component<ImageExtraProps, any> {
         );
     }
 }
-ImageCache.get().clear();

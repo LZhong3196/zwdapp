@@ -48,7 +48,7 @@ export default class GoodsScreen extends React.Component<any, any> {
 
     render() {
         const id: string = this.props.navigation.state.params.id;
-        const item: any = Store.get(`goods.${id}`) || {};
+        const item: any = Store.get(`goods.goods.${id}`) || {};
         const banner: string[] = item.banner || [];
         return (
             <Container>
@@ -179,7 +179,7 @@ export default class GoodsScreen extends React.Component<any, any> {
 
     setFav = async () => {
         const id: string = this.props.navigation.state.params.id;
-        const item: any = Store.get(`goods.${id}`);
+        const item: any = Store.get(`goods..goods.${id}`);
         if (!id) return;
         let value: boolean = !!item.fav;
         try {

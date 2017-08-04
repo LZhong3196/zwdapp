@@ -55,6 +55,7 @@ export const initialState: State = Immutable.fromJS({
     goods: {},
     home: {},
     market: {},
+    search: {},
     notification: {},
     order: {},
 });

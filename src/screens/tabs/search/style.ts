@@ -1,4 +1,3 @@
-
 export const styles: any = {
     container: {
         flex: 1,
