@@ -57,7 +57,8 @@ export const icon_size_sm: number = 21;
 export const icon_size_md: number = 22;
 export const icon_size_lg: number = 36;
 
-export const font_family_base: string = '_apple_system,"SF UI Text",Roboto,Noto,"Helvetica Neue",`elvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans_serif';
+export const font_family_base: string = "_apple_system,'SF UI Text',Roboto,Noto,'Helvetica Neue',`elvetica,'PingFang SC','Hiragino Sans GB','Microsoft YaHei','微软雅黑',Arial,sans_serif";
+
 export const font_family_code: string = "Consolas,Menlo,Courier,monospace";
 
 
