@@ -8,7 +8,6 @@ import {
     ACTIONTYPES_USER_UPDATE,
     ACTIONTYPES_NOTIFICATION_UPDATE,
     ACTIONTYPES_ORDER_UPDATE,
-    ACTIONTYPES_SEARCH_UPDATE,
     ACTIONTYPES_GOODS_UPDATE
 } from "./../constants";
 
@@ -20,7 +19,6 @@ const reducerConfigs: ReducerConfigs = {
     market: [ ACTIONTYPES_MARKET_UPDATE ],
     data: [ ACTIONTYPES_DATA_UPDATE ],
     order: [ ACTIONTYPES_ORDER_UPDATE ],
-    search: [ ACTIONTYPES_SEARCH_UPDATE ],
     goods: [ ACTIONTYPES_GOODS_UPDATE ],
     notification: [ ACTIONTYPES_NOTIFICATION_UPDATE ]
 };
