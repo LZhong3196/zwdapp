@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Image } from "react-native";
-import { AppStore, Constants, APIs, Widgets, Decorators } from "summer";
+import { Store, Constants, APIs, Widgets, Decorators, Navigator } from "summer";
 import {
     Container,
     Content,
@@ -36,7 +36,7 @@ class EditForm extends React.Component<any, any> {
     }
 
     componentWillMount() {
-        const accountInfo: any = AppStore.get("user.account") || {};
+        const accountInfo: any = Store.get("user.account") || {};
         this.setState({
             account: accountInfo.account,
             password: accountInfo.password
@@ -44,7 +44,7 @@ class EditForm extends React.Component<any, any> {
     }
 
     componentWillReceiveProps(nextProps: any) {
-        const accountInfo: any = AppStore.get("user.account") || {};
+        const accountInfo: any = Store.get("user.account") || {};
         if (accountInfo.account !== this.state.account || accountInfo.password !== this.state.password) {
             this.setState({
                 account: accountInfo.account,
@@ -170,14 +170,8 @@ class EditForm extends React.Component<any, any> {
             Toast.success({
                 text: "已登录"
             });
-            let actionres = AppStore.dispatch({
-                type: Constants.ACTIONTYPES_USER_UPDATE,
-                meta: {
-                    storeKey: "account",
-                },
-                payload: account
-            });
-            AppStore.dispatch({ type: Constants.ACTIONTYPES_LOGGED_IN });
+            Store.update("user.account", account);
+            Store.dispatch({ type: Constants.ACTIONTYPES_LOGGED_IN });
 
             this.handleAuthTodo(true);
             this.updateProfile();
@@ -188,52 +182,28 @@ class EditForm extends React.Component<any, any> {
     }
 
     handleAuthTodo = (resolve: boolean) => {
-        if (!!AppStore.get("data.resolveTodo")) {
-            const token: string = AppStore.get(("user.account.token"));
-            let resolveTodo: any = AppStore.get("data.resolveTodo");
+        if (!!Store.get("data.resolveTodo")) {
+            const token: string = Store.get(("user.account.token"));
+            let resolveTodo: any = Store.get("data.resolveTodo");
             let res = resolveTodo(resolve && token);
-            AppStore.dispatch({
-                type: Constants.ACTIONTYPES_DATA_UPDATE,
-                meta: {
-                    storeKey: "resolveTodo"
-                },
-                payload: ""
-            });
+            Store.update("data.resolveTodo", "");
         }
     }
 
     updateProfile = async () => {
         const profileRes: any = await APIs.user.getUserInfo({});
-        AppStore.dispatch({
-            type: Constants.ACTIONTYPES_USER_UPDATE,
-            meta: {
-                storeKey: "profile",
-            },
-            payload: profileRes.data
-        });
+        Store.update("user.profile", profileRes.data);
     };
 
     register = () => {
-        AppStore.dispatch({
-            type: Constants.ACTIONTYPES_NAVIGATION_TO,
-            meta: {
-                routeName: Constants.ROUTES_IDENTIFICATION,
-                params: {
-                    nextRoute: Constants.ROUTES_REGISTER,
-                }
-            }
+        Navigator.to(Constants.ROUTES_IDENTIFICATION, {
+            nextRoute: Constants.ROUTES_REGISTER
         });
     };
 
     retrievePassword = () => {
-        AppStore.dispatch({
-            type: Constants.ACTIONTYPES_NAVIGATION_TO,
-            meta: {
-                routeName: Constants.ROUTES_IDENTIFICATION,
-                params: {
-                    nextRoute: Constants.ROUTES_RESET_PASSWORD,
-                }
-            }
+        Navigator.to(Constants.ROUTES_IDENTIFICATION, {
+            nextRoute: Constants.ROUTES_RESET_PASSWORD
         });
     };
 

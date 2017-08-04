@@ -30,9 +30,8 @@ function navigationReducers(state: State = initialState, action: StoreAction): S
             nextState = state.merge(navigator.router.getStateForAction(
                 NavigationActions.navigate({
                     routeName: ROUTES_LOGIN,
-                    key: ROUTES_LOGIN,
                     params: action.meta.params
-                } as any),
+                }),
                 state.toJS()
             ));
             break;
@@ -48,9 +47,8 @@ function navigationReducers(state: State = initialState, action: StoreAction): S
                 nextState = state.merge(navigator.router.getStateForAction(
                     NavigationActions.navigate({
                         routeName: routeName,
-                        key: routeName,
                         params: params
-                    } as any),
+                    }),
                     state.toJS()
                 ));
                 break;
@@ -69,14 +67,16 @@ function navigationReducers(state: State = initialState, action: StoreAction): S
             let resetIndex: number = 0;
             let newActions: Array<any> = [
                 NavigationActions.navigate({
-                    routeName: ROUTES_MAIN
+                    routeName: ROUTES_MAIN,
+                    params: action.meta.params
                 })
             ];
             if (resetRouteName !== ROUTES_MAIN) {
                 resetIndex = routes.indexOf(resetRouteName);
                 const resetRoutes: Array<string> = routes.slice(0, resetIndex + 1);
                 newActions = resetRoutes.map((routeName: string) => NavigationActions.navigate({
-                    routeName: routeName
+                    routeName: routeName,
+                    params: action.meta.params
                 }));
             }
             nextState = state.merge(navigator.router.getStateForAction(

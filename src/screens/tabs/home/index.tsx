@@ -4,10 +4,10 @@ import {
     ScrollView,
     RefreshControl,
     Image,
+    TouchableWithoutFeedback,
     TouchableOpacity
 } from "react-native";
-import { APIs, Widgets, AppStore, Constants, Decorators } from "summer";
-import { CachedImage } from "react-native-img-cache";
+import { APIs, Widgets, Store, Constants, Decorators } from "summer";
 let { TabBarIcon, Icon, ImageExtra } = Widgets;
 import { styles } from "./style";
 import {
@@ -54,7 +54,7 @@ export default class HomeScreen extends React.Component<any, any> {
     }
 
     createSwiperList = (item: any, index: number): any => (
-        <TouchableOpacity
+        <TouchableWithoutFeedback
             key={ index }
             onPress={ () => this.openShopPage(item.url) }
         >
@@ -62,10 +62,10 @@ export default class HomeScreen extends React.Component<any, any> {
                 style={ styles.swiperItem }
                 source={{ uri: item.image }}
             />
-        </TouchableOpacity>
+        </TouchableWithoutFeedback>
     )
     createRecommendGoodsList = (item: any, index: number) => (
-        <TouchableOpacity
+        <TouchableWithoutFeedback
             key={ index }
             onPress={ () => this.openGoodsPage(item.goods_id) }
         >
@@ -73,10 +73,10 @@ export default class HomeScreen extends React.Component<any, any> {
                 style={ styles.RecommendGoodsListImage }
                 source={{ uri: item.image }}
             />
-        </TouchableOpacity>
+        </TouchableWithoutFeedback>
     )
     createHotSellList = (item: any, index: number) => (
-        <TouchableOpacity
+        <TouchableWithoutFeedback
             key={ index }
             onPress={ () => this.openGoodsPage(item.goods_id) }
         >
@@ -84,10 +84,10 @@ export default class HomeScreen extends React.Component<any, any> {
                 style={ styles.hotSellListImage }
                 source={{ uri: item.image }}
             />
-        </TouchableOpacity>
+        </TouchableWithoutFeedback>
     )
     createDailyNewList = (item: any, index: number) => (
-        <TouchableOpacity
+        <TouchableWithoutFeedback
             key={ index }
             onPress={ () => this.openGoodsPage(item.goods_id) }
         >
@@ -95,12 +95,12 @@ export default class HomeScreen extends React.Component<any, any> {
                 style={ styles.dailyNewListImage }
                 source={{ uri: item.image }}
             />
-        </TouchableOpacity>
+        </TouchableWithoutFeedback>
     )
     createAdvertList = (item: any, index: number) => {
         const createList = (item: any, index: number) => {
             return (
-                <TouchableOpacity
+                <TouchableWithoutFeedback
                     key={ index }
                     onPress={ () => this.openGoodsPage(item.goods_id) }
                 >
@@ -114,19 +114,19 @@ export default class HomeScreen extends React.Component<any, any> {
                         <Text>{ item.title }</Text>
                         <Text style={ styles.price }>¥ { item.price }</Text>
                     </View>
-                </TouchableOpacity>
+                </TouchableWithoutFeedback>
             );
         };
         return (
         <View key={ index }>
-            <TouchableOpacity
+            <TouchableWithoutFeedback
                 onPress={ () => this.openShopPage(item.header.shop_id) }
             >
                 <ImageExtra
                     style={ styles.headerImage }
                     source={{ uri: item.header.image }}
                 />
-            </TouchableOpacity>
+            </TouchableWithoutFeedback>
             <View style={ styles.advertListContainer }>
                 { item.list.map(createList) }
             </View>
@@ -135,7 +135,7 @@ export default class HomeScreen extends React.Component<any, any> {
     }
     render() {
         const initAdevert = { header: { image: "https://unsplash.it/g/200/300", shop_id: "0" }, list: [] as any[] };
-        const advertList: any = AppStore.get("home.advert") || {};
+        const advertList: any = Store.get("home.advert") || {};
         const { A1 = [] as any[], A2 = initAdevert, A3 = initAdevert, A4 = initAdevert, A5 = [] as any[] } = advertList;
         return (
             <Container>
@@ -182,14 +182,14 @@ export default class HomeScreen extends React.Component<any, any> {
                         <Text> 推荐宝贝</Text>
                         <View style={ styles.titleLine }></View>
                     </View>
-                    <TouchableOpacity
+                    <TouchableWithoutFeedback
                         onPress={ () => this.openShopPage(A2.header.shop_id) }
                     >
                         <ImageExtra
                             style={ styles.headerImage }
                             source={{ uri: A2.header.image }}
                         />
-                    </TouchableOpacity>
+                    </TouchableWithoutFeedback>
                     <ScrollView
                         style={ styles.RecommendGoodsListScroll }
                         horizontal={true}
@@ -202,14 +202,14 @@ export default class HomeScreen extends React.Component<any, any> {
                         <Text> 精品热卖</Text>
                         <View style={ styles.titleLine }></View>
                     </View>
-                    <TouchableOpacity
+                    <TouchableWithoutFeedback
                         onPress={ () => this.openShopPage(A3.header.shop_id) }
                     >
                         <ImageExtra
                             style={ styles.headerImage }
                             source={{ uri: A3.header.image }}
                         />
-                    </TouchableOpacity>
+                    </TouchableWithoutFeedback>
                     <View style={ styles.hotSellListWrap }>
                         { A3.list.map(this.createHotSellList) }
                     </View>
@@ -238,7 +238,7 @@ export default class HomeScreen extends React.Component<any, any> {
         this.fetchAdvert();
     }
     openQRScanner = () => {
-        AppStore.dispatch({
+        Store.dispatch({
             type: Constants.ACTIONTYPES_NAVIGATION_TO,
             meta: {
                 routeName: Constants.ROUTES_QRSCANNER,
@@ -249,7 +249,7 @@ export default class HomeScreen extends React.Component<any, any> {
     }
     openShopPage = (id: string) => {
         if (!id) return;
-        AppStore.dispatch({
+        Store.dispatch({
             type: Constants.ACTIONTYPES_NAVIGATION_TO,
             meta: {
                 routeName: Constants.ROUTES_SHOP,
@@ -261,7 +261,7 @@ export default class HomeScreen extends React.Component<any, any> {
     }
     openGoodsPage = (id: string) => {
         if (!id) return;
-        AppStore.dispatch({
+        Store.dispatch({
             type: Constants.ACTIONTYPES_NAVIGATION_TO,
             meta: {
                 routeName: Constants.ROUTES_GOODS,
@@ -272,7 +272,7 @@ export default class HomeScreen extends React.Component<any, any> {
         });
     }
     openNotificationListPage = () => {
-        AppStore.dispatch({
+        Store.dispatch({
             type: Constants.ACTIONTYPES_NAVIGATION_TO,
             meta: {
                 routeName: Constants.ROUTES_NOTIFICATION_LIST,
@@ -286,7 +286,7 @@ export default class HomeScreen extends React.Component<any, any> {
         });
         try {
             const res: any = await APIs.home.getAdvertList();
-            AppStore.dispatch({
+            Store.dispatch({
                 type: Constants.ACTIONTYPES_HOME_UPDATE,
                 meta: {
                     storeKey: "advert",

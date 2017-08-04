@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Lodash from "lodash";
-import { AppStore, Constants, APIs, Widgets, Decorators } from "summer";
+import { Store, Constants, APIs, Widgets, Decorators } from "summer";
 import {
     StyleSheet,
     Image,
@@ -48,7 +48,7 @@ export default class GoodsScreen extends React.Component<any, any> {
 
     render() {
         const id: string = this.props.navigation.state.params.id;
-        const item: any = AppStore.get(`goods.goods.${id}`) || {};
+        const item: any = Store.get(`goods.goods.${id}`) || {};
         const banner: string[] = item.banner || [];
         return (
             <Container>
@@ -174,7 +174,7 @@ export default class GoodsScreen extends React.Component<any, any> {
         />
     )
     openShopPage = (id: string) => {
-        AppStore.dispatch({
+        Store.dispatch({
             type: Constants.ACTIONTYPES_NAVIGATION_TO,
             meta: {
                 routeName: Constants.ROUTES_SHOP,
@@ -187,7 +187,7 @@ export default class GoodsScreen extends React.Component<any, any> {
 
     setFav = async () => {
         const id: string = this.props.navigation.state.params.id;
-        const item: any = AppStore.get(`goods.goods.${id}`);
+        const item: any = Store.get(`goods.goods.${id}`);
         if (!id) return;
         let value: boolean = !!item.fav;
         try {
@@ -201,7 +201,7 @@ export default class GoodsScreen extends React.Component<any, any> {
             let newItem: any = Lodash.assign({}, item, {
                 fav: !value
             });
-            AppStore.dispatch({
+            Store.dispatch({
                 type: Constants.ACTIONTYPES_GOODS_UPDATE,
                 meta: {
                     storeKey: `goods.${id}`,
@@ -218,7 +218,7 @@ export default class GoodsScreen extends React.Component<any, any> {
         const id: string = this.props.navigation.state.params.id;
         try {
             const res: any = await APIs.goods.getGoodsInfo({ id: id });
-            AppStore.dispatch({
+            Store.dispatch({
                 type: Constants.ACTIONTYPES_GOODS_UPDATE,
                 meta: {
                     storeKey: `goods.${id}`,
@@ -235,7 +235,7 @@ export default class GoodsScreen extends React.Component<any, any> {
         const id: string = this.props.navigation.state.params.id;
         try {
             const res: any = await APIs.goods.getGoodsImages({ u_id: id });
-            AppStore.dispatch({
+            Store.dispatch({
                 type: Constants.ACTIONTYPES_GOODS_UPDATE,
                 meta: {
                     storeKey: `goods.${id}.image`,

@@ -1,18 +1,24 @@
-import * as React from "react";
+import { PureComponent } from "react";
 import {
     ScrollView,
-    TouchableOpacity,
+    TouchableWithoutFeedback,
     Image
 } from "react-native";
 import { connect } from "react-redux";
 import { styles } from "./style";
-import { AppStore, Constants, Widgets, Decorators } from "summer";
+import { Store, Constants, Widgets, Decorators } from "summer";
 const { ImageExtra } = Widgets;
 
 @Decorators.pureRender()
-class HomeNav extends React.Component<any, any> {
+class HomeNav extends PureComponent<any, any> {
     constructor(props: any, context: any) {
         super(props, context);
+        this.state = {
+            blockIndex: 0,
+            list: undefined,
+            loading: false,
+            advertData: {A1: [], A2: {}}
+        };
     }
 
     render() {
@@ -22,51 +28,51 @@ class HomeNav extends React.Component<any, any> {
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
             >
-                <TouchableOpacity
+                <TouchableWithoutFeedback
                     onPress={ () => this.navTo("Login") }
                 >
-                    <ImageExtra
+                    <Image
                         style={ styles.homeNavImage }
                         source={ require("./images/HomeNavImage.jpg") }
                     />
-                </TouchableOpacity>
-                <TouchableOpacity
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback
                     onPress={ () => this.navTo("Login") }
                 >
-                    <ImageExtra
+                    <Image
                         style={ styles.homeNavImage }
                         source={ require("./images/HomeNavImage.jpg") }
                     />
-                </TouchableOpacity>
-                <TouchableOpacity
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback
                     onPress={ () => this.navTo("Login") }
                 >
-                    <ImageExtra
+                    <Image
                         style={ styles.homeNavImage }
                         source={ require("./images/HomeNavImage.jpg") }
                     />
-                </TouchableOpacity>
-                <TouchableOpacity
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback
                     onPress={ () => this.navTo("Login") }
                 >
-                    <ImageExtra
+                    <Image
                         style={ styles.homeNavImage }
                         source={ require("./images/HomeNavImage.jpg") }
                     />
-                </TouchableOpacity>
-                <TouchableOpacity
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback
                     onPress={ () => this.navTo("Login") }
                 >
-                    <ImageExtra
+                    <Image
                         style={ styles.homeNavImage }
                         source={ require("./images/HomeNavImage.jpg") }
                     />
-                </TouchableOpacity>
+                </TouchableWithoutFeedback>
             </ScrollView>
         );
     }
     navTo = (target: string) => {
-        AppStore.dispatch({
+        Store.dispatch({
             type: Constants.ACTIONTYPES_LOGGED_OUT,
             meta: {
 

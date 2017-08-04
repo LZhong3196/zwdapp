@@ -7,7 +7,7 @@ import {
     StyleSheet
 } from "react-native";
 import { NavigationActions } from "react-navigation";
-import { AppStore, Constants, Widgets, APIs, Decorators } from "summer";
+import { Store, Constants, Widgets, APIs, Decorators, Navigator } from "summer";
 import {
     Container,
     Content,
@@ -40,7 +40,7 @@ export default class SettingScreen extends React.Component<any, any> {
     }
 
     render() {
-        const user: any = AppStore.get("user") || {};
+        const user: any = Store.get("user") || {};
         const account = user.account || {};
         const profile = user.profile || {};
 
@@ -128,22 +128,11 @@ export default class SettingScreen extends React.Component<any, any> {
     }
 
     login = () => {
-        AppStore.dispatch({
-            type: Constants.ACTIONTYPES_NAVIGATION_TO,
-            meta: {
-                routeName: Constants.ROUTES_LOGIN
-            }
-        });
+        Navigator.to(Constants.ROUTES_LOGIN);
     }
 
     onProfileEdit = () => {
-        AppStore.dispatch({
-            type: Constants.ACTIONTYPES_NAVIGATION_TO,
-            meta: {
-                routeName: Constants.ROUTES_PROFILE
-            }
-        });
-
+        Navigator.to(Constants.ROUTES_PROFILE);
     }
 
     onLogoutConfirm = () => {
@@ -164,7 +153,7 @@ export default class SettingScreen extends React.Component<any, any> {
         catch (e) {
         }
 
-        const user: any = AppStore.get("user");
+        const user: any = Store.get("user");
         const account: any = user.account;
         const userState: any = {
             ...user,
@@ -176,13 +165,8 @@ export default class SettingScreen extends React.Component<any, any> {
             }
         };
 
-        AppStore.dispatch({
-            type: Constants.ACTIONTYPES_NAVIGATION_BACK,
-        });
-        AppStore.dispatch({
-            type: Constants.ACTIONTYPES_USER_UPDATE,
-            payload: userState
-        });
+        Navigator.back();
+        Store.update("user", userState);
     }
 }
 

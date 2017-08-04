@@ -1,7 +1,7 @@
 import * as React from "react";
 import { TouchableWithoutFeedback } from "react-native";
 import { connect } from "react-redux";
-import { AppStore, Constants, APIs, Widgets, Decorators } from "summer";
+import { Store, Constants, APIs, Widgets, Decorators } from "summer";
 import {
     Container,
     Header,
@@ -52,7 +52,7 @@ class NotificationScreen extends React.Component<any, any> {
         );
     }
     openChatPage = (id: string) => {
-        // AppStore.dispatch({
+        // Store.dispatch({
         //     type: Constants.ACTIONTYPES_NAVIGATION_TO,
         //     meta: {
         //         routeName: Constants.ROUTES_CHAT,

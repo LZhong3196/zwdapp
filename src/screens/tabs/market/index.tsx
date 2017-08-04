@@ -6,7 +6,7 @@ import {
     RefreshControl,
     StatusBar
 } from "react-native";
-import { APIs, Widgets, AppStore, Constants, Decorators } from "summer";
+import { APIs, Widgets, Store, Constants, Decorators } from "summer";
 import RefreshList, { RefreshState } from "../../../components/refresh-list";
 import ScrollToTop from "../../../components/scroll-to-top";
 let { TabBarIcon, ImageExtra } = Widgets;
@@ -109,7 +109,7 @@ export default class MarketScreen extends React.Component<any, any> {
     }
 
     render() {
-        const data: any = AppStore.get("market.list") || [];
+        const data: any = Store.get("market.list") || [];
         return (
             <View style={styles.view}>
                 <ListHeader/>
@@ -125,7 +125,7 @@ export default class MarketScreen extends React.Component<any, any> {
         );
     }
     openShopPage = (id: string) => {
-        AppStore.dispatch({
+        Store.dispatch({
             type: Constants.ACTIONTYPES_NAVIGATION_TO,
             meta: {
                 routeName: Constants.ROUTES_SHOP,
@@ -152,7 +152,7 @@ export default class MarketScreen extends React.Component<any, any> {
                 this.flatList.endRefreshing(footerState);
                 return;
             }
-            let list: any = AppStore.get("market.list") || [];
+            let list: any = Store.get("market.list") || [];
             let newList: any = [];
             if (isRefresh) {
                 newList = res.data.results;
@@ -160,7 +160,7 @@ export default class MarketScreen extends React.Component<any, any> {
             else {
                 newList = [...list, ...res.data.results];
             }
-            AppStore.dispatch({
+            Store.dispatch({
                 type: Constants.ACTIONTYPES_MARKET_UPDATE,
                 meta: {
                     storeKey: "list",
