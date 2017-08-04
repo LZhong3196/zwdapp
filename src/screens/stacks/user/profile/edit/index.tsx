@@ -7,7 +7,7 @@ import {
     Input,
     Button
 } from "native-base";
-import { AppStore, Constants, Widgets, APIs } from "summer";
+import { Store, Constants, Widgets, APIs, Navigator } from "summer";
 import { styles } from "./style";
 let { Icon, theme, Toast } = Widgets;
 
@@ -104,7 +104,7 @@ export default class ProfileEditScreen extends React.Component<any, any> {
     onSubmit = async () => {
         Toast.loading();
         try {
-            let profile: any = AppStore.get("user.profile") || {};
+            let profile: any = Store.get("user.profile") || {};
             const key: string = this.props.navigation.state.params.key || undefined;
             const profileUpdate: any = {
                 ...profile,
@@ -114,16 +114,8 @@ export default class ProfileEditScreen extends React.Component<any, any> {
             Toast.success({
                 text: "修改成功"
             });
-            AppStore.dispatch({
-                type: Constants.ACTIONTYPES_NAVIGATION_BACK
-            });
-            AppStore.dispatch({
-                type: Constants.ACTIONTYPES_USER_UPDATE,
-                meta: {
-                    storeKey: "profile"
-                },
-                payload: profileUpdate
-            });
+            Navigator.back();
+            Store.update("user.profile", profileUpdate);
         }
         catch (e) {
         }

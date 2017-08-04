@@ -8,7 +8,7 @@ import {
     Button,
     Input
 } from "native-base";
-import { Widgets, APIs, AppStore, Constants } from "summer";
+import { Widgets, APIs, Store, Constants, Navigator } from "summer";
 let { Icon, Toast, theme } = Widgets;
 
 import { styles } from "./style";
@@ -154,22 +154,9 @@ export default class IdentificationScreen extends React.Component<any, any> {
                     text: "验证成功"
                 });
                 if (nextRoute === Constants.ROUTES_REGISTER) {
-                    AppStore.dispatch({
-                        type: Constants.ACTIONTYPES_USER_UPDATE,
-                        meta: {
-                            storeKey: "account"
-                        },
-                        payload: {
-                            account: this.state.mobile
-                        }
-                    });
+                    Store.update("user.account", this.state.mobile);
                 }
-                AppStore.dispatch({
-                    type: Constants.ACTIONTYPES_NAVIGATION_TO,
-                    meta: {
-                        routeName: nextRoute
-                    }
-                });
+                Navigator.to(nextRoute);
             }
         }
         catch (e) { }

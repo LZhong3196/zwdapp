@@ -6,7 +6,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { styles } from "./style";
-import { AppStore, Constants, Widgets, Decorators } from "summer";
+import { Store, Constants, Widgets, Decorators } from "summer";
 
 @Decorators.pureRender()
 class HomeNav extends PureComponent<any, any> {
@@ -71,7 +71,7 @@ class HomeNav extends PureComponent<any, any> {
         );
     }
     navTo = (target: string) => {
-        AppStore.dispatch({
+        Store.dispatch({
             type: Constants.ACTIONTYPES_LOGGED_OUT,
             meta: {
 

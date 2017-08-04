@@ -10,7 +10,7 @@ import { NavigationActions } from "react-navigation";
 import {
 
 } from "native-base";
-import { AppStore, Constants, Widgets, APIs, Decorators } from "summer";
+import { Store, Constants, Widgets, APIs, Decorators, Navigator } from "summer";
 import {
     Container,
     Content,
@@ -71,7 +71,7 @@ export default class UserScreen extends React.Component<any, any> {
                 refreshing={this.state.loading}
                 onRefresh={this.fetchUserInfo} />
         );
-        const userInfo: any = AppStore.get("user.profile") || {};
+        const userInfo: any = Store.get("user.profile") || {};
 
         const bannerImageSource: any = !!userInfo.banner ? {
             uri: userInfo.banner
@@ -219,23 +219,11 @@ export default class UserScreen extends React.Component<any, any> {
     }
 
     handleSetting = () => {
-        AppStore.dispatch({
-            type: Constants.ACTIONTYPES_NAVIGATION_TO,
-            meta: {
-                routeName: Constants.ROUTES_SETTING,
-                key: Constants.ROUTES_SETTING
-            }
-        } as any);
+        Navigator.to(Constants.ROUTES_SETTING);
     }
 
     handleProfileSetting = () => {
-        AppStore.dispatch({
-            type: Constants.ACTIONTYPES_NAVIGATION_TO,
-            meta: {
-                routeName: Constants.ROUTES_SETTING,
-                key: Constants.ROUTES_SETTING
-            }
-        } as any);
+        Navigator.to(Constants.ROUTES_SETTING);
     }
 
 
@@ -244,13 +232,7 @@ export default class UserScreen extends React.Component<any, any> {
         this.setState(this.state);
         try {
             const res: any = await APIs.user.getUserInfo({});
-            AppStore.dispatch({
-                type: Constants.ACTIONTYPES_USER_UPDATE,
-                meta: {
-                    storeKey: "profile",
-                },
-                payload: res.data
-            });
+            Store.update("user.profile", res.data);
             this.state.loading = false;
             this.setState(this.state);
         }

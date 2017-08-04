@@ -2,14 +2,14 @@ import * as React from "react";
 import {
     Switch
 } from "react-native";
-import { AppStore, Constants, Networking, Widgets } from "summer";
+import { Store, Constants, Networking, Widgets } from "summer";
 import * as Immutable from "immutable";
 
 let { Toast } = Widgets;
 
 export default class ConnectivityControl extends React.Component<any, any> {
     render() {
-        const value: boolean = !!AppStore.get("user.setting.connect_limit");
+        const value: boolean = !!Store.get("user.setting.connect_limit");
         return (
             <Switch
                 value={value}
@@ -18,13 +18,7 @@ export default class ConnectivityControl extends React.Component<any, any> {
     }
 
     handleValueChange = (value: boolean) => {
-        AppStore.dispatch({
-            type: Constants.ACTIONTYPES_USER_UPDATE,
-            meta: {
-                storeKey: "setting.connect_limit"
-            },
-            payload: value
-        });
+        Store.update("user.setting.connect_limit", value);
         (global as any).__CONNECT_LIMIT__ = value;
         if (value) {
             Networking.addConnectivityListener();
