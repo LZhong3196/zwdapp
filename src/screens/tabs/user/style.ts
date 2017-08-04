@@ -3,6 +3,7 @@ let {
     color_background,
     color_theme,
     color_base,
+    color_grey,
     font_size_base,
     font_size_caption,
     font_size_heading,
@@ -100,7 +101,8 @@ export const headerStyle: any = {
     },
     avatar: {
         borderWidth: border_width_lg,
-        borderColor: color_background
+        borderColor: color_background,
+        backgroundColor: color_background
     },
     userName: {
         color: color_background,
