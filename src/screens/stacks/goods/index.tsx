@@ -60,6 +60,7 @@ export default class GoodsScreen extends React.Component<any, any> {
                         height={400}
                         showsPagination={true}
                         dotColor={"#fff"}>
+                        { banner.map(this.createSwiperList) }
                     </Swiper>
                     <Grid style={ styles.infoContainer }>
                         <Col style={ styles.leftContainer }>
