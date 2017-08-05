@@ -4,12 +4,15 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "debug": "node --harmony ./devtools/index.js debug",
+    "debug": "node --harmony ./devtools/index.js debug src",
+    "debug-init": "node --harmony ./devtools/index.js debug src --init",
     "debug-framework": "node --harmony ./devtools/index.js debug framework",
     "compile-framework": "node --harmony ./devtools/index.js compile framework",
     "test": "jest",
     "clean": "rm -rf $TMPDIR/react-* && watchman watch-del-all && npm cache clean",
-    "newclear": "rm -rf $TMPDIR/react-* && watchman watch-del-all && rm -rf ios/build/ModuleCache/* && rm -rf node_modules/ && npm cache clean && npm i"
+    "newclear": "rm -rf $TMPDIR/react-* && watchman watch-del-all && rm -rf ios/build/ModuleCache/* && rm -rf node_modules/ && npm cache clean && npm i",
+    "rnd": "REACT_DEBUGGER='rndebugger-open --open --port 8081' npm start",
+    "postinstall": "rndebugger-open"
   },
   "dependencies": {
     "@expo/vector-icons": "5.0.0",
