@@ -16,7 +16,6 @@ import {
     Right,
     List,
     ListItem,
-    Toast,
     Thumbnail,
     ActionSheet
 } from "native-base";
@@ -25,7 +24,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import { Picker as DatePicker } from "./datepicker";
 import { styles } from "./style";
 
-let { Icon, theme } = Widgets;
+let { Icon, theme, Toast } = Widgets;
 
 @Decorators.connect("user")
 export default class ProfileScreen extends React.Component<any, any> {
@@ -170,22 +169,35 @@ export default class ProfileScreen extends React.Component<any, any> {
             });
     }
 
-    openAlbum = () => {
-        ImagePicker.openPicker({
-            multiple: true
-        }).then(images => {
-            console.log(images);
-        });
+    openAlbum = async () => {
+        try {
+            let source = await ImagePicker.openPicker({
+                width: 400,
+                height: 400,
+                cropping: true
+            }) as ImagePicker.Image;
+            console.log("%c image : ", "color: #4BBAEA", source);
+            Toast.loading({ duration: -1 });
+            let res: any = APIs.user.postUserInfo({
+            });
+            Toast.success();
+        }
+        catch (e) {
+
+        }
     }
 
-    openCamera = () => {
-        ImagePicker.openCamera({
-            width: 300,
-            height: 400,
-            cropping: true
-        }).then(image => {
-            console.log(image);
-        });
+    openCamera = async () => {
+        try {
+            let source = await ImagePicker.openCamera({
+                width: 300,
+                height: 400,
+                cropping: true
+            }) as ImagePicker.Image;
+        }
+        catch (e) {
+
+        }
     }
 
     handleLogout = () => {

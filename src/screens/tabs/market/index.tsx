@@ -6,10 +6,10 @@ import {
     RefreshControl,
     StatusBar
 } from "react-native";
-import { APIs, Widgets, Store, Constants, Decorators } from "summer";
+import { APIs, Widgets, Store, Navigator, Constants, Decorators } from "summer";
 import RefreshList, { RefreshState } from "../../../components/refresh-list";
 import ScrollToTop from "../../../components/scroll-to-top";
-let { TabBarIcon } = Widgets;
+let { TabBarIcon, ImageExtra } = Widgets;
 import {
     ListItem,
     Thumbnail,
@@ -125,15 +125,7 @@ export default class MarketScreen extends React.Component<any, any> {
         );
     }
     openShopPage = (id: string) => {
-        Store.dispatch({
-            type: Constants.ACTIONTYPES_NAVIGATION_TO,
-            meta: {
-                routeName: Constants.ROUTES_SHOP,
-                params: {
-                    id: id
-                }
-            }
-        });
+        Navigator.to(Constants.ROUTES_SHOP, { id });
     }
 
     fetchList = async (isRefresh?: boolean) => {

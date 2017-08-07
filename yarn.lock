@@ -74,6 +74,10 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-native-fetch-blob@^0.10.1":
+  version "0.10.1"
+  resolved "https://registry.npmjs.org/@types/react-native-fetch-blob/-/react-native-fetch-blob-0.10.1.tgz#ad9009d4bc83005b75d06aa136343d915f6150a8"
+
 "@types/react-native-fs@^2.0.3":
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@types/react-native-fs/-/react-native-fs-2.0.3.tgz#d58446960cf9c099b5397b713de495bdf829b058"
@@ -3522,6 +3526,10 @@ react-native-tab-view@^0.0.65:
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-0.0.65.tgz#b685ea3081ff7c96486cd997361026c407302c59"
   dependencies:
     prop-types "^15.5.8"
+
+react-native-uploader@^0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/react-native-uploader/-/react-native-uploader-0.0.10.tgz#ea46d23c5a8e83392aabc12443184c342245f607"
 
 react-native-vector-icons@4.1.1, react-native-vector-icons@~4.1.1:
   version "4.1.1"

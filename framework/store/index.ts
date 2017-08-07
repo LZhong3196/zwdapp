@@ -32,14 +32,7 @@ export interface ImmutableMap<T> extends Map<string, any> {
 }
 
 export type State = ImmutableMap<{
-    nav?: any;
-    user?: any;
-    data?: any;
-    goods?: any;
-    home?: any;
-    market?: any;
-    notification?: any;
-    order?: any;
+    [key: string]: any
 }>;
 
 export const initialState: State = Immutable.fromJS({
@@ -55,6 +48,7 @@ export const initialState: State = Immutable.fromJS({
     goods: {},
     home: {},
     market: {},
+    search: {},
     notification: {},
     order: {},
 });
@@ -71,7 +65,7 @@ export default class Store {
         return this.instance.get(keys);
     }
 
-    static update(keys: string, payload: Object) {
+    static update(keys: string, payload: any) {
         if (!this.instance) {
             return;
         };

@@ -6,10 +6,10 @@ let {height, width} = Dimensions.get("window");
 export const ios = (Platform.OS === "ios");
 
 /** 当前设备屏幕高度 */
-export const SCREEN_HEIGHT = PixelRatio.get();
+export const SCREEN_HEIGHT = height;
 
 /** 当前设备屏幕宽度 */
-export const SCREEN_WIDTH = PixelRatio.get();
+export const SCREEN_WIDTH = width;
 
 /** 当前设备像素密度 */
 export const DEVICE_DENSITY = PixelRatio.get();
@@ -75,11 +75,11 @@ export const ROUTES_GOODS: string = "Goods";
 /** ROUTES - Stacks - 宝贝列表页 */
 export const ROUTES_GOODS_LIST: string = "GoodsList";
 /** ROUTES - Stacks - 消息列表页 */
-export const ROUTES_NOTIFICATION_LIST: string = "Notification";
+export const ROUTES_NOTIFICATION: string = "Notification";
 /** ROUTES - Stacks - 消息详情页 */
 export const ROUTES_CHAT: string = "Notification";
 /** ROUTES - Stacks - 消息列表页 */
-export const ROUTES_QRSCANNER: string = "RQScanner";
+export const ROUTES_SCANNER: string = "Scanner";
 
 
 /** ROUTES - Stacks - 用户设置 */

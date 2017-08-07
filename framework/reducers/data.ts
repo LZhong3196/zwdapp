@@ -8,7 +8,8 @@ import {
     ACTIONTYPES_USER_UPDATE,
     ACTIONTYPES_NOTIFICATION_UPDATE,
     ACTIONTYPES_ORDER_UPDATE,
-    ACTIONTYPES_GOODS_UPDATE
+    ACTIONTYPES_GOODS_UPDATE,
+    ACTIONTYPES_SEARCH_UPDATE
 } from "./../constants";
 
 export type AppReducerHandler = (state: State, action: StoreAction) => State;
@@ -17,6 +18,7 @@ type ReducerConfigs = Dictionary<Array<string>>;
 const reducerConfigs: ReducerConfigs = {
     home: [ ACTIONTYPES_HOME_UPDATE ],
     market: [ ACTIONTYPES_MARKET_UPDATE ],
+    search: [ACTIONTYPES_SEARCH_UPDATE],
     data: [ ACTIONTYPES_DATA_UPDATE ],
     order: [ ACTIONTYPES_ORDER_UPDATE ],
     goods: [ ACTIONTYPES_GOODS_UPDATE ],

@@ -1,15 +1,14 @@
-/** TODO - image cache */
 import * as React from "react";
 import {
-    Image,
-    ImageProperties,
-    ImageURISource
-} from "react-native";
+    ImageCache,
+    CachedImage,
+    CachedImageProps,
+    CachedImageURISource
+} from "react-native-img-cache";
+import { Thumbnail } from "native-base";
 
 const IS_DEV = (global as any).__DEV__;
 const IS_DEBUG = (global as any).__DEBUG__;
-const NETINFO = (global as any).__NETINFO__;
-const CONNECT_LIMIT = (global as any).__CONNECT_LIMIT__;
 const isDebugging: boolean = IS_DEBUG || IS_DEV;
 
 const qualityMap: Dictionary<string> = {
@@ -25,8 +24,8 @@ const qualityMap: Dictionary<string> = {
     XXXXL: "400x400",
 };
 
-export interface ImageExtraProps extends ImageProperties {
-    source: ImageURISource;
+export interface ImageExtraProps extends CachedImageProps {
+    source: CachedImageURISource;
     qualityControl?:
     "60x60"
     | "80x80" | "100x100" | "120x120" | "160x160" | "180x180"
@@ -36,8 +35,10 @@ export interface ImageExtraProps extends ImageProperties {
 }
 
 export default class ImageExtra extends React.Component<ImageExtraProps, any> {
+    private NETINFO = (global as any).__NETINFO__;
+    private CONNECT_LIMIT = (global as any).__CONNECT_LIMIT__;
     static defaultProps = {
-        qualityControl: ""
+        qualityControl: "",
     };
 
     constructor(props: ImageExtraProps, context: any) {
@@ -45,7 +46,7 @@ export default class ImageExtra extends React.Component<ImageExtraProps, any> {
     }
 
     render() {
-        const connectivityLimited: boolean = !!CONNECT_LIMIT && NETINFO !== "WIFI";
+        const connectivityLimited: boolean = !!this.CONNECT_LIMIT && this.NETINFO !== "WIFI";
         const {
             qualityControl,
             source,
@@ -61,13 +62,13 @@ export default class ImageExtra extends React.Component<ImageExtraProps, any> {
             uriResponse = isDebugging ? source.uri.replace(splashReg, `/100`) : `${source.uri}_${quality}.jpg`;
         }
 
-        let imageSource: ImageURISource = onResponse ? {
+        let imageSource: CachedImageURISource = onResponse ? {
             ...source,
             uri: uriResponse
         } : source;
 
         return (
-            <Image source={imageSource} {...restProps} />
+            <CachedImage source={imageSource} {...restProps}/>
         );
     }
 }

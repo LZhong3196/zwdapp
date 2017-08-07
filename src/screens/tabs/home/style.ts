@@ -1,4 +1,5 @@
-
+import { Constants } from "summer";
+const { SCREEN_HEIGHT, SCREEN_WIDTH } = Constants;
 export const styles: any = {
     swiperItem: {
         width: "100%",
@@ -42,7 +43,7 @@ export const styles: any = {
         paddingTop: 10,
     },
     hotSellListImage: {
-        width: "33.33%",
+        width: SCREEN_WIDTH / 3,
         height: 200
     },
     dailyNewListScroll: {
@@ -60,7 +61,6 @@ export const styles: any = {
         flexWrap: "wrap"
     },
     advertListItem: {
-        width: "50%",
         height: 300,
         padding: 5
     },

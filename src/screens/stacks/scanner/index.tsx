@@ -8,7 +8,8 @@ import Camera from "react-native-camera";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { styles } from "./style";
 
-export default class QRscanner extends React.Component {
+@Decorators.connect("user")
+export default class ScannerScreen extends React.Component {
     static navigationOptions = {
         headerStyle: styles.header,
             title: <Text style={ styles.titleStyle }>扫描二维码</Text>
@@ -68,6 +69,7 @@ export default class QRscanner extends React.Component {
         }).start(() => this.scannerLineMove());
     }
     onScanResultReceived = (e: any) => {
+        /**TODO 不知道这里该做什么交互*/
         alert("Type: " + e.type + "\nData: " + e.data);
     }
 }

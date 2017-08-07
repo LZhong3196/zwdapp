@@ -6,11 +6,14 @@ export default function connect(...stateKeys: Array<string>): ClassDecorator {
         const mapStateToProps = (state: any) => {
             let stateMap: Dictionary<any> = {};
             stateKeys.forEach((key: string) => {
-                stateMap[key] = state.get(key)!.toJS();
+                stateMap[key] = state.get(key);
+                try {
+                    stateMap[key] = stateMap[key].toJS();
+                }
+                catch (e) { }
             });
             return stateMap;
         };
-
         return RRConnect(mapStateToProps)(DecoratorComponent) as any;
     };
 }

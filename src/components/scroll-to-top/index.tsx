@@ -10,7 +10,7 @@ import { styles } from "./style";
 export default class ScrollToTop extends PureComponent<any> {
     constructor(props: any) {
       super(props);
-      /** { props.bindRef } is a component's ref and it must has function scrollToTop*/
+      /** { props.bindRef } is a scroll component ref and it must has function scrollToTop*/
     }
     render() {
         return (

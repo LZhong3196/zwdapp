@@ -67,6 +67,7 @@ function filesSynchronizer() {
 
     function sync(path, type) {
         var filePath = Path.join(Constants.OUTPUT_DIR, path);
+        var androidAssetsPath = Path.join(Constants.ANDROID_SRC_DIR, path);
         switch (type) {
             case "copy":
                 return Promise
@@ -79,9 +80,31 @@ function filesSynchronizer() {
                             {
                                 clobber: true
                             }
-                        );
+                        )
+                    })
+                    .then(() => {
+                        if (/\assets\/fonts\/.*\.ttf$/.test(path)) {
+                            return Promise.invoke(
+                                FS.ensureDir,
+                                Path.dirname(androidAssetsPath)
+                            )
+                        }
+                        else {
+                            Promise.break;
+                        }
+                    })
+                    .then(() => {
+                        return Promise.invoke(
+                            FS.copy,
+                            Path.join(Constants.SOURCE_DIR, path),
+                            androidAssetsPath,
+                            {
+                                clobber: true
+                            }
+                        )
                     })
                     .fail(logException)
+                    .enclose()
                     ;
             case "remove":
                 return Promise
@@ -102,7 +125,7 @@ function filesSynchronizer() {
     }
 
     function logException(reason) {
-        var message = reason && (reason.stack || reason.message) || reason  || '未知错误';
+        var message = reason && (reason.stack || reason.message) || reason || '未知错误';
         console.error(Chalk.red(`✘ 发生出错:\n${message}`));
     }
 }
