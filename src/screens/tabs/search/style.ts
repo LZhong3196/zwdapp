@@ -1,18 +1,20 @@
-
+import { Constants } from "summer";
+const { SCREEN_WIDTH, SCREEN_HEIGHT } = Constants;
 export const styles: any = {
     container: {
         flex: 1,
-        flexWrap: 'wrap',
+        flexWrap: "wrap",
     },
     listItem: {
         padding: 10,
-        flexDirection: 'row',
-        backgroundColor: '#fff'
+        flexDirection: "row",
+        backgroundColor: "#fff"
     },
     listItemSide: {
         padding: 10,
-        width: '50%',
-        backgroundColor: '#fff'
+        width: SCREEN_WIDTH / 2,
+        height: 230,
+        backgroundColor: "#fff"
     },
     goodsPic: {
         width: 150,
@@ -22,26 +24,26 @@ export const styles: any = {
         flexShrink: 1,
         flexGrow: 1,
         paddingLeft: 10,
-        justifyContent: 'space-between',
+        justifyContent: "space-between",
     },
     titleWrap: {
-        flexDirection: 'row',
+        flexDirection: "row",
     },
     title: {
         fontSize: 16,
-        fontWeight: '600',
-        color: '#333'
+        fontWeight: "600",
+        color: "#333"
     },
     share: {
-        position: 'absolute',
+        position: "absolute",
         right: 0,
         bottom: 0,
     },
     redFont: {
-        color: 'red'
+        color: "red"
     },
     iconfont: {
-        fontFamily: 'iconfont',
+        fontFamily: "iconfont",
         lineHeight: 12
     }
 };

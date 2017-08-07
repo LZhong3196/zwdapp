@@ -4,7 +4,8 @@ import {
     View,
     Text,
     Button,
-    Image, TouchableWithoutFeedback
+    Image,
+    TouchableOpacity
 } from "react-native";
 import {
     Header,
@@ -16,14 +17,14 @@ import {
 } from "native-base";
 import RefreshList, { RefreshState } from "../../../components/refresh-list";
 import ScrollToTop from "../../../components/scroll-to-top";
-import { Constants, Widgets, Store, APIs, Decorators } from "summer";
+import { Constants, Widgets, Store, Navigator, APIs, Decorators } from "summer";
 import { styles } from "./style";
 import { connect } from "react-redux";
 
 let { TabBarIcon } = Widgets;
 
 @Decorators.connect("user", "search")
-class SearchScreen extends React.Component<any, any> {
+export default class SearchScreen extends React.Component<any, any> {
     private flatList: any;
     static navigationOptions = {
         title: Constants.ROUTES_SEARCH,
@@ -77,7 +78,7 @@ class SearchScreen extends React.Component<any, any> {
     private renderRow = (rowData: any) => {
         let item = rowData.item;
         return (
-            <TouchableWithoutFeedback
+            <TouchableOpacity
                 onPress={ () => this.openGoodsPage(item.goods_id) }>
                 <View style={this.state.isShowSide ? styles.listItemSide : styles.listItem}>
                     <Thumbnail
@@ -91,20 +92,12 @@ class SearchScreen extends React.Component<any, any> {
                         <Text style={styles.share}>...</Text>
                     </View>
                 </View>
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
         );
     }
 
     openGoodsPage = (id: string) => {
-        Store.dispatch({
-            type: Constants.ACTIONTYPES_NAVIGATION_TO,
-            meta: {
-                routeName: Constants.ROUTES_GOODS,
-                params: {
-                    id: id
-                }
-            }
-        });
+        Navigator.to(Constants.ROUTES_GOODS, { id });
     }
     fetchList = async (isRefresh?: boolean) => {
         let blockIndex = isRefresh ? 0 : this.state.blockIndex + 1;
@@ -149,9 +142,3 @@ class SearchScreen extends React.Component<any, any> {
         }
     }
 }
-
-const mapStateToProps = (state: any) => ({
-    user: state.get("user").toJS()
-});
-
-export default connect(mapStateToProps)(SearchScreen);

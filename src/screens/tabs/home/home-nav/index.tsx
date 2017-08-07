@@ -7,6 +7,7 @@ import {
 import { connect } from "react-redux";
 import { styles } from "./style";
 import { Store, Constants, Widgets, Decorators } from "summer";
+const { ImageExtra } = Widgets;
 
 @Decorators.pureRender()
 class HomeNav extends PureComponent<any, any> {

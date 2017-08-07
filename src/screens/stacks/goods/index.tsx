@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Lodash from "lodash";
-import { Store, Constants, APIs, Widgets, Decorators } from "summer";
+import { Store, Constants, APIs, Widgets, Decorators, Navigator } from "summer";
 import {
     StyleSheet,
     Image,
@@ -28,8 +28,8 @@ import { styles } from "./style";
 
 let { Icon } = Widgets;
 
-@Decorators.pureRender()
-export default class GoodsPageScreen extends React.Component<any, any> {
+@Decorators.connect("user", "goods")
+export default class GoodsScreen extends React.Component<any, any> {
     static navigationOptions = {
         headerBackTitle: "",
         headerStyle: styles.header
@@ -60,7 +60,7 @@ export default class GoodsPageScreen extends React.Component<any, any> {
                         height={400}
                         showsPagination={true}
                         dotColor={"#fff"}>
-                        
+                        { banner.map(this.createSwiperList) }
                     </Swiper>
                     <Grid style={ styles.infoContainer }>
                         <Col style={ styles.leftContainer }>
@@ -175,20 +175,12 @@ export default class GoodsPageScreen extends React.Component<any, any> {
         />
     )
     openShopPage = (id: string) => {
-        Store.dispatch({
-            type: Constants.ACTIONTYPES_NAVIGATION_TO,
-            meta: {
-                routeName: Constants.ROUTES_SHOP,
-                params: {
-                    id: id
-                }
-            }
-        });
+        Navigator.to(Constants.ROUTES_SHOP, { id });
     }
 
     setFav = async () => {
         const id: string = this.props.navigation.state.params.id;
-        const item: any = Store.get(`goods.goods.${id}`);
+        const item: any = Store.get(`goods..goods.${id}`);
         if (!id) return;
         let value: boolean = !!item.fav;
         try {

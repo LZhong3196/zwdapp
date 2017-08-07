@@ -9,11 +9,11 @@ import IdentificationScreen from "./screens/stacks/user/identification";
 import PasswordSettingScreen from "./screens/stacks/user/password-setting";
 
 /**  */
-import ShopPageScreen from "./screens/stacks/shop-page";
-import GoodsPageScreen from "./screens/stacks/goods-page";
+import ShopPageScreen from "./screens/stacks/shop";
+import GoodsPageScreen from "./screens/stacks/goods";
 import MainScreen from "./screens/tabs";
-import NotificationListScreen from "./screens/stacks/notification";
-import QRscanner from "./screens/stacks/QRScanner/index";
+import NotificationScreen from "./screens/stacks/notification";
+import ScannerScreen from "./screens/stacks/scanner/index";
 
 let {
     ROUTES_LOGIN,
@@ -26,8 +26,8 @@ let {
     ROUTES_GOODS,
     ROUTES_SHOP,
     ROUTES_SETTING,
-    ROUTES_NOTIFICATION_LIST,
-    ROUTES_QRSCANNER
+    ROUTES_NOTIFICATION,
+    ROUTES_SCANNER
 } = Constants;
 
 
@@ -43,8 +43,8 @@ export const routeConfigMap = {
     [ROUTES_SHOP]: { screen: ShopPageScreen },
     [ROUTES_GOODS]: { screen: GoodsPageScreen },
     [ROUTES_SETTING]: { screen: SettingScreen },
-    [ROUTES_NOTIFICATION_LIST]: { screen: NotificationListScreen },
-    [ROUTES_QRSCANNER]: { screen: QRscanner }
+    [ROUTES_NOTIFICATION]: { screen: NotificationScreen },
+    [ROUTES_SCANNER]: { screen: ScannerScreen }
 };
 
 export const stackConfig: any = {

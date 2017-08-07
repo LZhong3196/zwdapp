@@ -1,6 +1,5 @@
 import * as React from "react";
 import {
-    Image,
     StatusBar,
     ScrollView,
     RefreshControl,
@@ -26,7 +25,7 @@ import {
 } from "native-base";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { styles, headerStyle, menuStyle } from "./style";
-let { TabBarIcon, Icon, Toast, theme } = Widgets;
+let { TabBarIcon, Icon, Toast, theme, ImageExtra } = Widgets;
 
 
 /** replace  */
@@ -83,7 +82,7 @@ export default class UserScreen extends React.Component<any, any> {
 
         return (
             <View style={styles.view}>
-                <Image
+                <ImageExtra
                     source={backgroundImageSource}
                     style={styles.backgroundImage} />
                 <ScrollView
@@ -94,7 +93,7 @@ export default class UserScreen extends React.Component<any, any> {
                     <Grid style={styles.grid}>
                         <Row style={headerStyle.container} >
                             <Row style={headerStyle.background}>
-                                <Image source={bannerImageSource} style={styles.backgroundImage} />
+                                <ImageExtra source={bannerImageSource} style={styles.backgroundImage} />
                             </Row>
                             <Row style={headerStyle.title}>
                                 <Left style={headerStyle.titleLeft}>

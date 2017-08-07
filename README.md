@@ -73,7 +73,13 @@ $ ./app debug src
 	 $ npm start
 	 $ react-native run-ios
 	```
-	
+* 使用 [React Native Debugger](https://github.com/jhen0409/react-native-debugger) 进行调试
+
+	```
+	 $ npm run rnd
+	 $ react-native run-ios	
+	```
+
 #### Android
 
 > 施工中...
@@ -128,4 +134,4 @@ $ ./app debug src
 * [依赖模块类型声明 | ./app generate 指令失败相关](./doc/FAQ.md#依赖模块类型声明--app-generate-指令失败相关)
 * ...
 
-> 若问题列表或 [ISSUES](./issues) 无法解决你的问题, 请将问题描述添加到 [ISSUES](./issues) 或联系相关开发人员
+> 若问题列表或 [ISSUES](https://github.com/AMIBAFE/zwdapp/blob/master/issues) 无法解决你的问题, 请将问题描述添加到 [ISSUES](https://github.com/AMIBAFE/zwdapp/blob/master/issues) 或联系相关开发人员

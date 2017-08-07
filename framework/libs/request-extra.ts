@@ -9,7 +9,6 @@ import {
 import Store from "./../store/index";
 import { Toast } from "./../components/index";
 
-
 /** Request error handler */
 export async function resolveError(error: any): Promise<any> {
     switch (error.code) {
@@ -18,8 +17,7 @@ export async function resolveError(error: any): Promise<any> {
             Store.dispatch({
                 type: ACTIONTYPES_NAVIGATION_TO,
                 meta: {
-                    routeName: ROUTES_LOGIN,
-                    key: ROUTES_LOGIN,
+                    routeName: ROUTES_LOGIN
                 }
             });
             return new Promise((resolve: Function) => {

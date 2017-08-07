@@ -5,20 +5,17 @@ interface HashMap<T> {
 interface StoreAction {
     type: string,
     meta?: {
-        /** 目标state的key值 - For data action    */
+        /** Specify target state keys - For data action    */
         storeKey?: string,
-        /** 目标路由 - For navigation action */
+        /** Target route name - For navigation action */
         routeName?: string,
-        /** 目标路由key | 建议与[routeName]一致 - For navigation action */
-        key?: string,
-        /** 传递给目标路由的参数 - For navigation action */
+        /**  - For navigation action */
         params?: any,
-
         /** 往回跳到指定页的上一个路由 | default - 跳到主页Main */
         resetRouteName?: string,
     },
     error?: boolean,
-    payload?: Object
+    payload?: any
 }
 
 

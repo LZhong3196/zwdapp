@@ -13,4 +13,4 @@ export {
     theme,
     Root,
     Toast
-}
+};

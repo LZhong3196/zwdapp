@@ -27,7 +27,7 @@ Store.update("user.profile.name", "Yuki");
 
 
 ### update()
-> `update(keys: string, payload: Object)`
+> `update(keys: string, payload: any)`
 
 #### 说明
 更新应用状态(State)中的对应数据.
@@ -123,7 +123,7 @@ class MyComponent extends Component {
 * close()
 
 #### configValue
-> [传送门](./../framework/components/ui/toast/index.tsx)
+> [传送门](./../framework/components/ui/toast/index.tsx#L28)
 
 
 ### Icon
