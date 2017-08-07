@@ -32,6 +32,7 @@ const AppTabNavigator = TabNavigator({
             activeBackgroundColor: theme.color_background,
             inactiveTintColor: theme.color_base,
             inactiveBackgroundColor: theme.color_background,
+            showIcon: true,
             labelStyle: {
                 marginBottom: 5
             }

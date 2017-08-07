@@ -140,7 +140,7 @@ export default class HomeScreen extends React.Component<any, any> {
         return (
             <Container>
                 <Header searchBar rounded>
-                    <Button small transparent>
+                    <Button small transparent style={styles.headerBtnLeft}>
                         <Text>广州</Text><Icon type="&#xe61a;"/>
                     </Button>
                     <Item>
@@ -148,7 +148,7 @@ export default class HomeScreen extends React.Component<any, any> {
                         <Input placeholder="请输入店铺名/档口号/旺旺号" />
                         <TouchableOpacity onPress={ this.openQRScanner }><BaseIcon name="md-expand"/></TouchableOpacity>
                     </Item>
-                    <Button small transparent
+                    <Button small transparent style={styles.headerBtnRight}
                         onPress={ this.openNotificationListPage }>
                         <Icon type="&#xe62b;" />
                     </Button>
