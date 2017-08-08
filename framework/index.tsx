@@ -5,11 +5,11 @@ import { AppRegistry } from "react-native";
 
 import request from "./libs/request";
 import * as Widgets from "./components/index";
-import * as Utils from "./utils/index";
 import * as Cacher from "./cacher/cacher";
 import * as Constants from "./constants";
 import * as Decorators from "./decorators/index";
 import * as Networking from "./libs/networking";
+import * as ImageCache from "./libs/image-cache";
 import Store from "./store/index";
 import Navigator from "./navigator/index";
 
@@ -92,11 +92,11 @@ export function setup(options: AppOptions) {
 
 export {
 	Widgets,
-	Utils,
 	Decorators,
 	Cacher,
 	Constants,
 	Networking,
 	Store,
-	Navigator
+	Navigator,
+	ImageCache
 };

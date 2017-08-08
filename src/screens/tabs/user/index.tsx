@@ -54,7 +54,7 @@ export default class UserScreen extends React.Component<any, any> {
     }
 
     componentWillMount() {
-        this.fetchUserInfo();
+        // this.fetchUserInfo();
     }
 
     componentWillUnmount() {

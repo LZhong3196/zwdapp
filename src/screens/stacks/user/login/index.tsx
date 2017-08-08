@@ -19,7 +19,6 @@ import { styles, thirdParty } from "./style";
 
 let { Icon, Toast, theme } = Widgets;
 
-
 const accountLimit: number = 22;
 const passwordLimit: number = 22;
 
@@ -45,7 +44,8 @@ class EditForm extends React.Component<any, any> {
 
     componentWillReceiveProps(nextProps: any) {
         const accountInfo: any = Store.get("user.account") || {};
-        if (accountInfo.account !== this.state.account || accountInfo.password !== this.state.password) {
+        const shouldUpdate: boolean = accountInfo.account !== this.state.account || accountInfo.password !== this.state.password;
+        if (shouldUpdate) {
             this.setState({
                 account: accountInfo.account,
                 password: accountInfo.password
