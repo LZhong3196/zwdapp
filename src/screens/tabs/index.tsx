@@ -37,7 +37,7 @@ const AppTabNavigator = TabNavigator({
                 marginBottom: 5
             }
         },
-        swipeEnabled: true,
+        swipeEnabled: false,
         tabBarPosition: "bottom",
         lazy: true,
         animationEnabled: false,

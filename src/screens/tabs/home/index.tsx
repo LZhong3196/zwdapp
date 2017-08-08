@@ -47,10 +47,38 @@ export default class HomeScreen extends React.Component<any, any> {
         super(props, context);
         this.state = {
             loading: false,
+            showSwiper: false
         };
     }
     componentDidMount() {
         this.fetchAdvert();
+        setTimeout(()=> {
+            this.setState({
+                showSwiper: true
+            })
+        }, 0);
+    }
+
+    renderSwiper() {
+        const advertList: any = Store.get("home.advert") || {};
+        const { A1 = [] as any[]} = advertList;
+
+        if(this.state.showSwiper) {
+            return (<Swiper
+                showsButtons={ false }
+                autoplay={ true }
+                autoplayTimeout={ 4 }
+                height={ 150 }
+                showsPagination={ true }
+                dotColor={ "#fff" }
+                activeDotStyle={ styles.activeDotColor }
+            >
+                { A1.map(this.createSwiperList) }
+            </Swiper>
+            )
+        } else {
+            return <View style={{height: 150}}></View>
+        }
     }
 
     createSwiperList = (item: any, index: number): any => (
@@ -165,17 +193,7 @@ export default class HomeScreen extends React.Component<any, any> {
                         title="下拉刷新"
                     />}
                 >
-                    <Swiper
-                        showsButtons={false}
-                        autoplay={true}
-                        autoplayTimeout={4}
-                        height={150}
-                        showsPagination={true}
-                        dotColor={"#fff"}
-                        activeDotStyle={ styles.activeDotColor }
-                    >
-                        { A1.map(this.createSwiperList) }
-                    </Swiper>
+                   {this.renderSwiper()}
                     <HomeNav/>
                     <View style={ styles.title }>
                         <View style={ styles.titleLine }></View>
