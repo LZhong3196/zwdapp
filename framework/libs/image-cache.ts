@@ -3,7 +3,7 @@ import {
     ImageCache
 } from "react-native-img-cache";
 
-/** Return image cache size in bytes */
+/** Return image caches size in bytes */
 export async function getCacheSize(): Promise<number> {
     let cacheSize: number = 0;
     const imageCache: any = ImageCache.get();

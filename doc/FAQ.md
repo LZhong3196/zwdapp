@@ -24,6 +24,35 @@ $ ./app debug src --init
 ```
 
 ---
+### 依赖模块 d.ts 文件与引入版本不匹配
+解决场景: 
+依赖模块默认加载的 d.ts 文件落后于引入版本, 部分API调用编译失败
+
+解决方法: 
+
+* 将模块 d.ts 文件复制到 `typings/third-party/` 下, 并重命名为 `[target-module].d.ts`
+* 根据 模块 相关文档, 将对应接口的声明更新到 `typings/third-party/[target-module].d.ts`
+* 添加对应版本号到 d.ts 中的模块名 
+
+Example
+
+```
+declare module 'native-base'
+改为
+declare module 'native-base@2.2.0'
+```
+
+* 执行
+```
+$ ./app fix native-base
+```
+或
+```
+$ ./app debug src --init
+```
+
+
+---
 
 ### "react-native-swiper" - Warning: React.createElement: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: undefined. 
 react-native-swiper 引入问题
