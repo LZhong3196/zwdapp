@@ -4,7 +4,8 @@ import {
     StatusBar,
     Switch,
     Alert,
-    StyleSheet
+    StyleSheet,
+    View
 } from "react-native";
 import { NavigationActions } from "react-navigation";
 import { Store, Constants, Widgets, APIs, Decorators, Navigator } from "summer";
@@ -86,13 +87,15 @@ export default class SettingScreen extends React.Component<any, any> {
                             <Text>清除缓存</Text>
                         </Left>
                         <Right>
-                            <Text style={styles.cacheInfo}>
-                                11MB
+                            <View style={styles.rightInfo}>
+                                <Text style={ styles.cacheInfo }>
+                                    11MB
+                            </Text>
                                 <Icon
                                     type="&#xea54;"
-                                    color={theme.color_base}
+                                    color={ theme.color_base }
                                     size="xs" />
-                            </Text>
+                            </View>
                         </Right>
                     </ListItem>
                     <ListItem style={styles.listItem}>
