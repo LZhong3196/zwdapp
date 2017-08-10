@@ -16,6 +16,7 @@ import {
 } from "native-base";
 import { Row, Grid, Col } from "react-native-easy-grid";
 import { styles, thirdParty } from "./style";
+import Divider from '../../../../components/divider';
 
 let { Icon, Toast, theme } = Widgets;
 
@@ -214,9 +215,7 @@ class ThirdParty extends React.Component<any, any> {
     render() {
         return (
             <View style={thirdParty.container}>
-                <Item style={thirdParty.titleContainer}>
-                    <Text style={thirdParty.title}>快速登录</Text>
-                </Item>
+                <Divider title="快速登录" width={200}/>
                 <Item style={thirdParty.optionContainer}>
                     <Col style={thirdParty.optionItem}>
                         <Icon type="&#xe639;" color="#00C806" size={32} style={thirdParty.itemIcon} />
