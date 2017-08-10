@@ -87,7 +87,6 @@ export default class MarketScreen extends React.Component<any, any> {
                 <Thumbnail
                     large
                     square
-                    style={styles.itemImage}
                     source={{ uri: item.image }}>
                 </Thumbnail>
                 <Body>

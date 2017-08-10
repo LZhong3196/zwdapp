@@ -50,7 +50,7 @@ export default class SettingScreen extends React.Component<any, any> {
                 <StatusBar barStyle="default" />
                 <List style={styles.listContainer}>
                     <ListItem onPress={this.onProfileEdit}>
-                        <Thumbnail style={{ backgroundColor: "#EFEFEF" }} source={{ uri: profile.avatar }} />
+                        <Thumbnail source={{ uri: profile.avatar }} />
                         <Body>
                             <Text>{profile.account || "未登录"}</Text>
                             <Text note>{`真实姓名: ${profile.name || "未设置"}`}</Text>

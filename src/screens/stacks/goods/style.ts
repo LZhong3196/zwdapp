@@ -92,7 +92,6 @@ export const styles: any = {
         alignItems: "center"
     },
     marketImage: {
-        backgroundColor: color_base,
         marginLeft: 10,
         marginRight: 10
     },
