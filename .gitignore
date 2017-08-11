@@ -35,7 +35,6 @@ local.properties
 node_modules/
 npm-debug.log
 yarn-error.log
-!node_modules/native-base/index.d.ts
 
 # BUCK
 buck-out/
@@ -59,4 +58,4 @@ fastlane/screenshots
 .vscode
 .cache
 dist/
-typings/summer/**/*
+typings/summer/
