@@ -57,7 +57,7 @@ export const initialState: State = Immutable.fromJS({
     market: {},
     search: {},
     notification: {},
-    order: {},
+    order: {}
 });
 
 
@@ -68,14 +68,14 @@ export default class Store {
     static get<T>(keys: string): T{
         if (!this.instance) {
             return undefined;
-        };
+        }
         return this.instance.get(keys);
     }
 
     static update(keys: string, payload: Object) {
         if (!this.instance) {
             return;
-        };
+        }
         const storeKeys: Array<string> = keys.split(".");
         const storeKey: string = storeKeys.slice(1).join(".");
         const appStore: Store = this.instance;

@@ -2,7 +2,7 @@ import { Dimensions, PixelRatio, Platform } from "react-native";
 
 let {height, width} = Dimensions.get("window");
 
-/** 当前设备系统是ios */
+/** 当前设备系统是否是ios */
 export const ios = (Platform.OS === "ios");
 
 /** 当前设备屏幕高度 */
@@ -80,6 +80,8 @@ export const ROUTES_NOTIFICATION: string = "Notification";
 export const ROUTES_CHAT: string = "Notification";
 /** ROUTES - Stacks - 消息列表页 */
 export const ROUTES_SCANNER: string = "Scanner";
+/** ROUTES - Stacks - 条件搜索页 */
+export const ROUTES_FIELD_SEARCH: string = "FieldSearch";
 
 
 /** ROUTES - Stacks - 用户设置 */

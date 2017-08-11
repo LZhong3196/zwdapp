@@ -13,7 +13,8 @@ import ShopPageScreen from "./screens/stacks/shop";
 import GoodsPageScreen from "./screens/stacks/goods";
 import MainScreen from "./screens/tabs";
 import NotificationScreen from "./screens/stacks/notification";
-import ScannerScreen from "./screens/stacks/scanner/index";
+import ScannerScreen from "./screens/stacks/scanner";
+import FieldSearchScreen from "./screens/stacks/field-search";
 
 let {
     ROUTES_LOGIN,
@@ -27,11 +28,13 @@ let {
     ROUTES_SHOP,
     ROUTES_SETTING,
     ROUTES_NOTIFICATION,
-    ROUTES_SCANNER
+    ROUTES_SCANNER,
+    ROUTES_FIELD_SEARCH
 } = Constants;
 
 
 export const routeConfigMap = {
+    [ROUTES_MAIN]: { screen: MainScreen },
     [ROUTES_LOGIN]: { screen: LoginScreen },
     [ROUTES_SETTING]: { screen: SettingScreen },
     [ROUTES_PROFILE]: { screen: ProfileScreen },
@@ -39,12 +42,12 @@ export const routeConfigMap = {
     [ROUTES_PROFILE_EDIT]: { screen: ProfileEditScreen },
     [ROUTES_IDENTIFICATION]: { screen: IdentificationScreen },
     [ROUTES_RESET_PASSWORD]: { screen: PasswordSettingScreen },
-    [ROUTES_MAIN]: { screen: MainScreen },
     [ROUTES_SHOP]: { screen: ShopPageScreen },
     [ROUTES_GOODS]: { screen: GoodsPageScreen },
     [ROUTES_SETTING]: { screen: SettingScreen },
     [ROUTES_NOTIFICATION]: { screen: NotificationScreen },
-    [ROUTES_SCANNER]: { screen: ScannerScreen }
+    [ROUTES_SCANNER]: { screen: ScannerScreen },
+    [ROUTES_FIELD_SEARCH]: { screen: FieldSearchScreen }
 };
 
 export const stackConfig: any = {

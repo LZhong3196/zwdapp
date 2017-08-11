@@ -1,15 +1,12 @@
 import * as React from "react";
-import { NavigationActions } from "react-navigation";
 import {
-    FlatList,
-    View,
-    RefreshControl,
-    StatusBar
+    View
 } from "react-native";
 import { APIs, Widgets, Store, Navigator, Constants, Decorators } from "summer";
 import RefreshList, { RefreshState } from "../../../components/refresh-list";
 import ScrollToTop from "../../../components/scroll-to-top";
-let { TabBarIcon, ImageExtra } = Widgets;
+import SearchBar from "../../../components/search-bar";
+let { TabBarIcon } = Widgets;
 import {
     ListItem,
     Thumbnail,
@@ -17,44 +14,15 @@ import {
     Body,
     Input,
     Item,
-    Left,
     Header,
-    Fab,
     Icon
 } from "native-base";
-
-
-
 import { styles } from "./style";
-
-type EndReachedInfo = {
-    distanceFromEnd: number
-};
-
-class ListHeader extends React.PureComponent<any, any> {
-    constructor(props: any, context: any) {
-        super(props, context);
-        this.state = {
-
-        };
-    }
-
-    render() {
-        return (
-            <Header searchBar rounded>
-                <Item>
-                    <Icon name="search"/>
-                    <Input placeholder="请输入店铺名/档口号/旺旺号" />
-                    <Icon name="md-expand"></Icon>
-                </Item>
-            </Header>
-        );
-    }
-}
 
 @Decorators.connect("user", "market")
 export default class MarketScreen extends React.Component<any, any> {
     private flatList: any;
+    private scrollToTopButtom: any;
     static navigationOptions = {
         title: Constants.ROUTES_MARKET,
         tabBarLabel: "逛市场",
@@ -112,17 +80,22 @@ export default class MarketScreen extends React.Component<any, any> {
         const data: any = Store.get("market.list") || [];
         return (
             <View style={styles.view}>
-                <ListHeader/>
+                <SearchBar
+                    placeholder="请输入档口名/档口号/旺旺号"/>
                 <RefreshList
                     ref={ (e) => this.flatList = e }
                     data={ data }
                     renderItem={ this.renderRow }
                     onHeaderRefresh={ () => this.fetchList(true) }
                     onFooterRefresh={ () => this.fetchList(false) }
+                    onScrollTop={ this.flatlistScrollTop }
                 />
-                <ScrollToTop bindRef={ this.flatList }/>
+                <ScrollToTop ref={ (e) => this.scrollToTopButtom = e } bindRef={ this.flatList }/>
             </View>
         );
+    }
+    flatlistScrollTop = (scrollTop: boolean) => {
+        scrollTop ? this.scrollToTopButtom.hideButton() : this.scrollToTopButtom.showButton();
     }
     openShopPage = (id: string) => {
         Navigator.to(Constants.ROUTES_SHOP, { id });
@@ -176,13 +149,6 @@ export default class MarketScreen extends React.Component<any, any> {
             return;
         }
         this.fetchList(true);
-    }
-
-    onEndReached = (info: EndReachedInfo) => {
-        if (this.state.loading || this.state.blockIndex > 6) {
-            return;
-        }
-        this.fetchList(false);
     }
 
 }
