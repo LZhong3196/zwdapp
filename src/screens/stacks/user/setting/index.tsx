@@ -5,9 +5,10 @@ import {
     Switch,
     Alert,
     StyleSheet,
-    ViewProperties
+    ViewProperties,
+    LayoutAnimation
 } from "react-native";
-import { Store, Constants, Widgets, APIs, Decorators, Navigator, ImageCache } from "summer";
+import { Store, Constants, Widgets, APIs, Decorators, Navigator, ImageCache, Routes } from "summer";
 import {
     Container,
     Content,
@@ -67,7 +68,7 @@ class SettingItem extends React.Component<SettingItemProps, any> {
     }
 
     onPress = () => {
-        // Navigator.to(Constants.ROUTES_PROFILE_EDIT, {
+        // Navigator.to(Routes.ROUTES_PROFILE_EDIT, {
         //     name: this.props.name,
         //     value: this.props.value
         // });
@@ -204,11 +205,11 @@ export default class SettingScreen extends React.Component<any, any> {
     }
 
     login = () => {
-        Navigator.to(Constants.ROUTES_LOGIN);
+        Navigator.to(Routes.ROUTES_LOGIN);
     }
 
     onProfileEdit = () => {
-        Navigator.to(Constants.ROUTES_PROFILE);
+        Navigator.to(Routes.ROUTES_PROFILE);
     }
 
     onLogoutConfirm = () => {

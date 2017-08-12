@@ -4,6 +4,7 @@ import {
     StatusBar,
     Switch,
     Alert,
+    Platform,
     NativeModules,
     ViewProperties,
     DeviceEventEmitter
@@ -22,7 +23,7 @@ import {
     ActionSheet
 } from "native-base";
 import ImagePicker from "react-native-image-crop-picker";
-import { Store, Constants, Widgets, APIs, Decorators, Navigator } from "summer";
+import { Store, Constants, Widgets, APIs, Decorators, Navigator, Routes } from "summer";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { Picker as DatePicker } from "./datepicker";
 import { styles } from "./style";
@@ -47,32 +48,8 @@ class AvatarPicker extends React.Component<AvatarPickerProps, any> {
     }
 
 
-    componentDidMount() {
-        DeviceEventEmitter.addListener("RNUploaderProgress", this.updateProgress);
-    }
-
     componentWillUnmount() {
         this.unmount = true;
-        DeviceEventEmitter.removeListener("RNUploaderProgress", this.updateProgress);
-    }
-
-    updateProgress = (data: any) => {
-        let bytesWritten = data.totalBytesWritten;
-        let bytesTotal = data.totalBytesExpectedToWrite;
-        let progress = data.progress;
-        console.log("%c upload progress: ", "color: #007BFA", progress)
-        if (progress < 100) {
-            Toast.loading({
-                duration: -1,
-                text: `上传中...${progress}%`
-            });
-        }
-        else {
-            Toast.success({
-                text: "上传成功",
-                duration: 1000
-            });
-        }
     }
 
     render() {
@@ -116,55 +93,27 @@ class AvatarPicker extends React.Component<AvatarPickerProps, any> {
     }
 
     openAlbum = async () => {
+        const profile: any = Store.get("user.profile");
         try {
+            Toast.loading();
             let image = await ImagePicker.openPicker({
-                multiple: true,
-                includeBase64: true,
-                loadingLabelText: "加载中..."
-            }) as ImagePicker.Image[];
-            this.setState({
-                isUploading: true
+                loadingLabelText: "加载中...",
+                cropping: true,
+                width: 300,
+                height: 300,
+                compressImageMaxWidth: 300,
+                compressImageMaxHeight: 300
+            }) as ImagePicker.Image;
+            Toast.close();
+            let res: any = await APIs.user.uploadAvatar({
+                files: [{
+                    name: `avatar_${profile.account}`,
+                    filepath: image.data,
+                    filetype: image.mime,
+                    filename: `avatar_${profile.account}`
+                }],
+                params: { type: "avatar" }
             });
-            // let res: any = APIs.user.uploadAvatar({
-            //     files: [image]
-            // });
-            let files: Array<Object> = image.map((item: ImagePicker.Image, index: number) => {
-                return {
-                    name: `image_${index}`,
-                    filepath: item.data,
-                    filetype: item.mime
-                }
-            });
-            let opts = {
-                url: "http://rap.qmin91.com/mockjs/16/apis/upload-avatar?_method=post",
-                files: files,
-                method: "POST",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "multipart/form-data"
-                }
-            };
-            RNUploader.upload(opts, (error: any, response: any) => {
-                console.log("%c error: ", "color: #FFC435", error);
-                console.log("%c response: ", "color: #FF61A3", response);
-                if (error) {
-                    Toast.error({
-                        text: "上传失败"
-                    });
-                }
-                else {
-                    Toast.success({
-                        text: "上传成功"
-                    })
-                }
-                if (!this.unmount) {
-                    this.setState({
-                        isUploading: false
-                    });
-                }
-            });
-
-            Toast.success();
         }
         catch (e) {
             Toast.close();
@@ -227,7 +176,7 @@ class ProfileItem extends React.Component<ProfileItemProps, any> {
     }
 
     handleEdit = () => {
-        Navigator.to(Constants.ROUTES_PROFILE_EDIT, {
+        Navigator.to(Routes.ROUTES_PROFILE_EDIT, {
             name: this.props.name,
             value: this.props.value
         });

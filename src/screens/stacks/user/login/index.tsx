@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Image } from "react-native";
-import { Store, Constants, APIs, Widgets, Decorators, Navigator } from "summer";
+import { Store, Constants, APIs, Widgets, Decorators, Navigator, Routes } from "summer";
 import {
     Container,
     Content,
@@ -196,14 +196,14 @@ class EditForm extends React.Component<any, any> {
     };
 
     register = () => {
-        Navigator.to(Constants.ROUTES_IDENTIFICATION, {
-            nextRoute: Constants.ROUTES_REGISTER
+        Navigator.to(Routes.ROUTES_IDENTIFICATION, {
+            nextRoute: Routes.ROUTES_REGISTER
         });
     };
 
     retrievePassword = () => {
-        Navigator.to(Constants.ROUTES_IDENTIFICATION, {
-            nextRoute: Constants.ROUTES_RESET_PASSWORD
+        Navigator.to(Routes.ROUTES_IDENTIFICATION, {
+            nextRoute: Routes.ROUTES_RESET_PASSWORD
         });
     };
 

@@ -17,7 +17,7 @@ import {
 } from "native-base";
 import RefreshList, { RefreshState } from "../../../components/refresh-list";
 import ScrollToTop from "../../../components/scroll-to-top";
-import { Constants, Widgets, Store, Navigator, APIs, Decorators } from "summer";
+import { Constants, Widgets, Store, Navigator, APIs, Decorators, Routes } from "summer";
 import { styles } from "./style";
 import { connect } from "react-redux";
 
@@ -27,7 +27,7 @@ let { TabBarIcon } = Widgets;
 export default class SearchScreen extends React.Component<any, any> {
     private flatList: any;
     static navigationOptions = {
-        title: Constants.ROUTES_SEARCH,
+        title: "ROUTES_SEARCH",
         tabBarLabel: "搜款式",
         tabBarIcon: (options: any) => (
             <TabBarIcon
@@ -97,7 +97,7 @@ export default class SearchScreen extends React.Component<any, any> {
     }
 
     openGoodsPage = (id: string) => {
-        Navigator.to(Constants.ROUTES_GOODS, { id });
+        Navigator.to(Routes.ROUTES_GOODS, { id });
     }
     fetchList = async (isRefresh?: boolean) => {
         let blockIndex = isRefresh ? 0 : this.state.blockIndex + 1;

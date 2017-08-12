@@ -6,7 +6,7 @@ import {
     RefreshControl,
     StatusBar
 } from "react-native";
-import { APIs, Widgets, Store, Navigator, Constants, Decorators } from "summer";
+import { APIs, Widgets, Store, Navigator, Constants, Decorators, Routes } from "summer";
 import RefreshList, { RefreshState } from "../../../components/refresh-list";
 import ScrollToTop from "../../../components/scroll-to-top";
 let { TabBarIcon, ImageExtra } = Widgets;
@@ -56,7 +56,7 @@ class ListHeader extends React.PureComponent<any, any> {
 export default class MarketScreen extends React.Component<any, any> {
     private flatList: any;
     static navigationOptions = {
-        title: Constants.ROUTES_MARKET,
+        title: "Routes.ROUTES_MARKET",
         tabBarLabel: "逛市场",
         tabBarIcon: (options: any) => (
             <TabBarIcon
@@ -125,7 +125,7 @@ export default class MarketScreen extends React.Component<any, any> {
         );
     }
     openShopPage = (id: string) => {
-        Navigator.to(Constants.ROUTES_SHOP, { id });
+        Navigator.to(Routes.ROUTES_SHOP, { id });
     }
 
     fetchList = async (isRefresh?: boolean) => {
