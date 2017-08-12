@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Store, Constants, APIs, Widgets, Decorators, Navigator } from "summer";
-import { TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View, TextInput } from "react-native";
 import {
     Text,
     Container,
@@ -8,34 +8,22 @@ import {
     Content,
     List,
     ListItem,
-    Item,
-    Input,
     Button,
     Icon as BaseIcon
 } from "native-base";
 import { styles } from "./style";
 const { Icon } = Widgets;
 
-@Decorators.connect("user", "search")
-export default class FiledSearchScreen extends React.Component {
+@Decorators.connect("user", "search", "data")
+export default class FiledSearchScreen extends React.Component<any, any> {
     static navigationOptions = {
-        header:
-            <Header searchBar rounded>
-                <Button transparent
-                    onPress={
-                        Navigator.back
-                    }>
-                    <Icon type="&#xea53;"/>
-                </Button>
-                <Item>
-                    <BaseIcon name="search"/>
-                    <Input
-                        placeholder="请输入店铺名/档口号/旺旺号"/>
-                </Item>
-            </Header>
+        header: null as any
     };
-    constructor(props: any) {
+    constructor(props: any, context: any) {
         super(props);
+        this.state = {
+            filed: ""
+        };
     }
     componentDidMount() {
         this.getHotSearchList();
@@ -48,43 +36,89 @@ export default class FiledSearchScreen extends React.Component {
             <ListItem
                 key={i}>
                 <TouchableOpacity
-                    onPress={() => alert(i)}>
+                    onPress={() => this.historyFiledPress(item)}>
                     <Text>{item}</Text>
                 </TouchableOpacity>
             </ListItem>
-
     )
     renderFooter = () => {
-
+        return (
+            <TouchableOpacity
+               onPress={this.clearHistorySearch}>
+                <View style={styles.clearSearchHistory}>
+                    <Text>清除历史记录</Text>
+                </View>
+            </TouchableOpacity>
+        );
     }
     render() {
-        let data: any[] = ["男装", "女装", "连衣裙"];
+        const data: any[] = Store.get("data.search.historyList") || [];
+        /**历史搜索应该添加入持久化名单*/
         const hotSearchList: any[] = Store.get("data.search.hotSearchList") || [];
         return (
             <Container>
+                <Header style={styles.header}>
+                    <TouchableOpacity
+                        onPress={Navigator.back}>
+                        <Icon type="&#xea53;"/>
+                    </TouchableOpacity>
+                    <View style={ styles.inputWrap }>
+                        <View style={styles.searchSelect}>
+                            <Text>宝贝</Text>
+                            <Icon type="&#xe61a;"/>
+                        </View>
+                        <TextInput
+                            value={this.state.filed}
+                            style={ styles.input }
+                            underlineColorAndroid="transparent"
+                            onChangeText={this.textChange}/>
+                    </View>
+                    <Button style={styles.searchButton}
+                            onPress={ () => this.search(this.state.filed) }>
+                        <Text>搜索</Text>
+                    </Button>
+                </Header>
                 <View style={ styles.hotSearch }>
                     <View style={ styles.hotSearchTitle }>
-                        <Text><Icon type="&#xe729;"/>热门搜索</Text>
+                        <Text><Icon type="&#xe729;" style={styles.titleIcon}/>热门搜索</Text>
                     </View>
                     <View style={ styles.hotSearchList }>
                         {hotSearchList.map(this.createHotList)}
                     </View>
                 </View>
                 <View>
-                    <Text><Icon type="&#xe620;"/>历史搜索</Text>
+                    <Text><Icon type="&#xe620;" style={styles.titleIcon}/>历史搜索</Text>
                 </View>
                 <Content>
                     <List
                         dataArray={ data }
                         renderRow={this.renderHistorySearchRow}
+                        renderFooter={this.renderFooter}
                     />
                 </Content>
             </Container>
         );
     }
+    textChange = (text: string) => {
+        this.setState({
+           filed: text
+        });
+    }
+    clearHistorySearch = () => {
+        Store.update("data.search.historyList", []);
+    }
+    historyFiledPress= (filed: string) => {
+        this.setState({
+            filed
+        });
+    }
     search = (filed: string) => {
+        if (!filed) return;
         Store.update("data.search.searchField", filed);
+        const historyList: string[] = Store.get("data.search.historyList") || [];
+        Store.update("data.search.historyList", [ ...new Set(historyList.concat([filed])) ]);
         Navigator.to(Constants.ROUTES_SEARCH);
+        /**TODO 从stack页跳转到具体tab页路由实现*/
     }
     getHotSearchList = async () => {
         try {

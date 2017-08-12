@@ -17,7 +17,8 @@ export const DEVICE_DENSITY = PixelRatio.get();
 
 /** Persist store whitelist - 持久化数据白名单 | 与state对应 */
 export const PERSIST_STORE_WHITE_LIST: Array<string> = [
-    "user"
+    "user",
+    "data"
 ];
 
 /** -------  ACTION TYPES DEFINITION   ------- */
