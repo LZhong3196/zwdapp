@@ -97,9 +97,17 @@ import NewScreen from "./screens/../new-screen";
 export const routeConfigMap: HashMap<any> = {
 	...
 	...
-    "ROUTES_NEW_SCREEN": { screen: NewScreen }
+	"ROUTES_NEW_SCREEN": { screen: NewScreen }
 };
 
+```
+* 编译 `src` 模块(debug 状态下无需重启)
+* 引用
+
+```
+import { Routes } from "summer";
+
+Routes.ROUTES_NEW_SCREEN;
 ```
 
 
