@@ -84,7 +84,23 @@ Navigator.reset("Main");
 | routeName | string | / | 目标路由 |
 | params | any | / | 传递给回退路由的参数 |
 
+### 创建一个新路由
 
+* 创建页面组件 `NewScreen.tsx`
+* 以 `ROUTES_[NEW_ROUTE_NAME]` 为模板, 在 `src/router.ts` 中间设置路由名称
+
+```
+...
+import NewScreen from "./screens/../new-screen";
+
+...
+export const routeConfigMap: HashMap<any> = {
+	...
+	...
+    "ROUTES_NEW_SCREEN": { screen: NewScreen }
+};
+
+```
 
 
 ## Widgets - 通用组件
