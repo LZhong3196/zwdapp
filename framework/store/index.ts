@@ -11,12 +11,7 @@ import { AsyncStorage } from "react-native";
 import { persistStore, autoRehydrate } from "redux-persist-immutable";
 import {
     PERSIST_STORE_WHITE_LIST,
-    ROUTES_MAIN,
-    ROUTES_HOME,
-    ROUTES_MARKET,
-    ROUTES_SEARCH,
-    ROUTES_ORDER,
-    ROUTES_PROFILE
+    ROUTES_MAIN
 } from "./../constants";
 import { initConnectivityInfo } from "./../libs/networking";
 import appReducer from "./../reducers/index";
