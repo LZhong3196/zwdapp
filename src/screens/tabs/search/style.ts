@@ -1,9 +1,15 @@
-import { Constants } from "summer";
+import { Constants, Widgets } from "summer";
 const { SCREEN_WIDTH, SCREEN_HEIGHT } = Constants;
+const { theme: {
+    color_base
+} } = Widgets;
 export const styles: any = {
     container: {
         flex: 1,
         flexWrap: "wrap",
+    },
+    headerRightButton: {
+      color: color_base
     },
     listItem: {
         padding: 10,

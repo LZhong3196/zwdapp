@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { View, Text, StyleSheet, RefreshControl, FlatList, ActivityIndicator, TouchableOpacity } from "react-native";
 
-interface RefreshState {
+export interface RefreshState {
     Idle: string;
     Refreshing: string;
     NoMoreData: string;
@@ -15,21 +15,21 @@ export const RefreshState: RefreshState = {
     Failure: "Failure"
 };
 
-let debug = false;
+export interface RefreshListProps {
+    onHeaderRefresh(): void;
+    onFooterRefresh(): void;
+    footerRefreshingText?: string;
+    footerFailureText?: string;
+    footerNoMoreDataText?: string;
+    renderItem: any;
+    data: any;
+    key?: any;
+    numColumns?: any;
+    onScrollTop?: (scrollTop: boolean) => void;
+}
 
-class RefreshListView extends PureComponent<any, any> {
+class RefreshListView extends PureComponent<RefreshListProps, any> {
     private listRef: any;
-    props: {
-        onHeaderRefresh: any,
-        onFooterRefresh: any,
-        footerRefreshingText?: string,
-        footerFailureText?: string,
-        footerNoMoreDataText?: string,
-        renderItem: any,
-        data: any,
-        key?: any,
-        numColumns?: any,
-    };
 
     state: {
         headerState: string,
@@ -42,9 +42,8 @@ class RefreshListView extends PureComponent<any, any> {
         footerNoMoreDataText: "已加载全部数据"
     };
 
-    constructor(props: any) {
-        super(props);
-
+    constructor(props: RefreshListProps, context: any) {
+        super(props, context);
         this.state = {
             headerState: RefreshState.Idle,
             footerState: RefreshState.Idle,
@@ -52,7 +51,6 @@ class RefreshListView extends PureComponent<any, any> {
     }
 
     startHeaderRefreshing = () => {
-        debug && console.log("startHeaderRefreshing");
 
         this.setState({ headerState: RefreshState.Refreshing });
 
@@ -62,7 +60,6 @@ class RefreshListView extends PureComponent<any, any> {
     }
 
     startFooterRefreshing = () => {
-        debug && console.log("startFooterRefreshing");
 
         this.setState({ footerState: RefreshState.Refreshing });
 
@@ -72,7 +69,6 @@ class RefreshListView extends PureComponent<any, any> {
     }
 
     shouldStartHeaderRefreshing = () => {
-        debug && console.log("shouldStartHeaderRefreshing");
 
         if (this.state.headerState === RefreshState.Refreshing ||
             this.state.footerState === RefreshState.Refreshing) {
@@ -83,7 +79,6 @@ class RefreshListView extends PureComponent<any, any> {
     }
 
     shouldStartFooterRefreshing = () => {
-        debug && console.log("shouldStartFooterRefreshing");
 
         if (this.state.headerState === RefreshState.Refreshing ||
             this.state.footerState === RefreshState.Refreshing) {
@@ -101,7 +96,6 @@ class RefreshListView extends PureComponent<any, any> {
     }
 
     endRefreshing = (refreshState: string) => {
-        debug && console.log("endRefreshing");
 
         if (refreshState === RefreshState.Refreshing) {
             return;
@@ -132,8 +126,6 @@ class RefreshListView extends PureComponent<any, any> {
     }
 
     onEndReached = (info: any) => {
-        debug && console.log("onEndReached   " + info.distanceFromEnd);
-
         if (this.shouldStartFooterRefreshing()) {
             this.startFooterRefreshing();
         }
@@ -152,8 +144,18 @@ class RefreshListView extends PureComponent<any, any> {
                 removeClippedSubviews={ false }
                 ref={ (ref: any) => { this.listRef = ref; } }
                 keyExtractor={ this.keyExtractor }
+                onViewableItemsChanged={this.onViewableItemsChanged}
             />
         );
+    }
+    onViewableItemsChanged = (info: any) => {
+        const firstViewableItem: any = info.viewableItems[0];
+        if (!!this.props.onScrollTop && !!firstViewableItem && firstViewableItem.index === 0) {
+            this.props.onScrollTop(true);
+        }
+        if (!!this.props.onScrollTop && !!firstViewableItem && firstViewableItem.index !== 0) {
+            this.props.onScrollTop(false);
+        }
     }
     keyExtractor =  (item: any, index: any) => index;
 

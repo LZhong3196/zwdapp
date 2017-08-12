@@ -7,33 +7,22 @@ import {
     TouchableWithoutFeedback,
     TouchableOpacity
 } from "react-native";
-import { APIs, Widgets, Store, Navigator, Constants, Decorators } from "summer";
-let { TabBarIcon, Icon, ImageExtra } = Widgets;
+import { APIs, Widgets, Store, Navigator, Constants, Decorators, Routes } from "summer";
+let { TabBarIcon, Icon, ImageExtra, theme: {color_base} } = Widgets;
 import { styles } from "./style";
 import {
     Container,
-    Thumbnail,
     Text,
-    Body,
-    Input,
-    Item,
-    Left,
-    Right,
-    Header,
-    Fab,
-    Icon as BaseIcon,
-    Button,
-    Card,
-    CardItem
+    Icon as BaseIcon
 } from "native-base";
 import Swiper from "react-native-swiper";
 import HomeNav from "./home-nav";
-import {func} from "prop-types";
+import SearchHeader from "../../../components/search-bar";
 
-@Decorators.connect("user", "home")
+@Decorators.connect("user", "home", "data")
 export default class HomeScreen extends React.Component<any, any> {
     static navigationOptions = {
-        title: Constants.ROUTES_HOME,
+        title: "Routes.ROUTES_HOME",
         tabBarLabel: "首页",
         tabBarIcon: (options: any) => (
             <TabBarIcon
@@ -86,7 +75,7 @@ export default class HomeScreen extends React.Component<any, any> {
             key={ index }
             onPress={ () => this.openShopPage(item.url) }
         >
-            <ImageExtra
+            <ImageExtra qualityControl="XL"
                 style={ styles.swiperItem }
                 source={{ uri: item.image }}
             />
@@ -97,7 +86,7 @@ export default class HomeScreen extends React.Component<any, any> {
             key={ index }
             onPress={ () => this.openGoodsPage(item.goods_id) }
         >
-            <ImageExtra
+            <ImageExtra qualityControl="XL"
                 style={ styles.RecommendGoodsListImage }
                 source={{ uri: item.image }}
             />
@@ -108,7 +97,7 @@ export default class HomeScreen extends React.Component<any, any> {
             key={ index }
             onPress={ () => this.openGoodsPage(item.goods_id) }
         >
-            <ImageExtra
+            <ImageExtra qualityControl="XL"
                 style={ styles.hotSellListImage }
                 source={{ uri: item.image }}
             />
@@ -119,7 +108,7 @@ export default class HomeScreen extends React.Component<any, any> {
             key={ index }
             onPress={ () => this.openGoodsPage(item.goods_id) }
         >
-            <ImageExtra
+            <ImageExtra qualityControl="XL"
                 style={ styles.dailyNewListImage }
                 source={{ uri: item.image }}
             />
@@ -135,7 +124,7 @@ export default class HomeScreen extends React.Component<any, any> {
                     <View
                         style={ styles.advertListItem }
                     >
-                        <ImageExtra
+                        <ImageExtra qualityControl="XL"
                             style={ styles.advertListImage }
                             source={{ uri: item.image }}
                         />
@@ -150,7 +139,7 @@ export default class HomeScreen extends React.Component<any, any> {
             <TouchableWithoutFeedback
                 onPress={ () => this.openShopPage(item.header.shop_id) }
             >
-                <ImageExtra
+                <ImageExtra qualityControl="XL"
                     style={ styles.headerImage }
                     source={{ uri: item.header.image }}
                 />
@@ -167,20 +156,15 @@ export default class HomeScreen extends React.Component<any, any> {
         const { A1 = [] as any[], A2 = initAdevert, A3 = initAdevert, A4 = initAdevert, A5 = [] as any[] } = advertList;
         return (
             <Container>
-                <Header searchBar rounded>
-                    <Button small transparent style={styles.headerBtnLeft}>
-                        <Text>广州</Text><Icon type="&#xe61a;"/>
-                    </Button>
-                    <Item>
-                        <BaseIcon name="search"/>
-                        <Input placeholder="请输入店铺名/档口号/旺旺号" />
-                        <TouchableOpacity onPress={ this.openQRScanner }><BaseIcon name="md-expand"/></TouchableOpacity>
-                    </Item>
-                    <Button small transparent style={styles.headerBtnRight}
-                        onPress={ this.openNotificationListPage }>
-                        <Icon type="&#xe62b;" />
-                    </Button>
-                </Header>
+                <SearchHeader
+                    placeholder="搜索当季爆款"
+                    rightButton={
+                        <TouchableOpacity
+                            onPress={ this.openNotificationListPage }>
+                            <Icon color={color_base} type="&#xe601;"/>
+                        </TouchableOpacity>
+                    }
+                />
                 <ScrollView
                     style={ styles.view }
                     removeClippedSubviews={ false }
@@ -203,7 +187,7 @@ export default class HomeScreen extends React.Component<any, any> {
                     <TouchableWithoutFeedback
                         onPress={ () => this.openShopPage(A2.header.shop_id) }
                     >
-                        <ImageExtra
+                        <ImageExtra qualityControl="XL"
                             style={ styles.headerImage }
                             source={{ uri: A2.header.image }}
                         />
@@ -223,7 +207,7 @@ export default class HomeScreen extends React.Component<any, any> {
                     <TouchableWithoutFeedback
                         onPress={ () => this.openShopPage(A3.header.shop_id) }
                     >
-                        <ImageExtra
+                        <ImageExtra qualityControl="XL"
                             style={ styles.headerImage }
                             source={{ uri: A3.header.image }}
                         />
@@ -256,33 +240,26 @@ export default class HomeScreen extends React.Component<any, any> {
         this.fetchAdvert();
     }
     openQRScanner = () => {
-        Navigator.to(Constants.ROUTES_SCANNER);
+        Navigator.to(Routes.ROUTES_SCANNER);
     }
     openShopPage = (id: string) => {
         if (!id) return;
-        Navigator.to(Constants.ROUTES_SHOP, { id });
+        Navigator.to(Routes.ROUTES_SHOP, { id });
     }
     openGoodsPage = (id: string) => {
         if (!id) return;
-        Navigator.to(Constants.ROUTES_GOODS, { id });
+        Navigator.to(Routes.ROUTES_GOODS, { id });
     }
     openNotificationListPage = () => {
-        Navigator.to(Constants.ROUTES_NOTIFICATION);
+        Navigator.to(Routes.ROUTES_NOTIFICATION);
     }
-
     fetchAdvert = async () => {
         this.setState({
             loading: false
         });
         try {
             const res: any = await APIs.home.getAdvertList();
-            Store.dispatch({
-                type: Constants.ACTIONTYPES_HOME_UPDATE,
-                meta: {
-                    storeKey: "advert",
-                },
-                payload: res.data
-            });
+            Store.update("home.advert", res.data);
         }
         catch (e) {
 

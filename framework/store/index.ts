@@ -9,7 +9,10 @@ import reduxThunk from "redux-thunk";
 import { createLogger } from "redux-logger";
 import { AsyncStorage } from "react-native";
 import { persistStore, autoRehydrate } from "redux-persist-immutable";
-import { PERSIST_STORE_WHITE_LIST, ROUTES_MAIN } from "./../constants";
+import {
+    PERSIST_STORE_WHITE_LIST,
+    ROUTES_MAIN
+} from "./../constants";
 import { initConnectivityInfo } from "./../libs/networking";
 import appReducer from "./../reducers/index";
 import * as CONSTANTS from "./../constants";
@@ -50,7 +53,7 @@ export const initialState: State = Immutable.fromJS({
     market: {},
     search: {},
     notification: {},
-    order: {},
+    order: {}
 });
 
 
@@ -61,14 +64,14 @@ export default class Store {
     static get<T>(keys: string): T{
         if (!this.instance) {
             return undefined;
-        };
+        }
         return this.instance.get(keys);
     }
 
     static update(keys: string, payload: any) {
         if (!this.instance) {
             return;
-        };
+        }
         const storeKeys: Array<string> = keys.split(".");
         const storeKey: string = storeKeys.slice(1).join(".");
         const appStore: Store = this.instance;
@@ -140,6 +143,5 @@ export default class Store {
         }
         return store;
     }
-
 }
 

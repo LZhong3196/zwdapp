@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Lodash from "lodash";
 import { NavigationActions } from "react-navigation";
-import { Store, Constants, APIs, Widgets } from "summer";
+import { Store, Constants, APIs, Widgets, Routes } from "summer";
 import { } from "react-native";
 import {
     Button,
@@ -37,7 +37,7 @@ export default class GoodsList extends React.Component<any, any> {
                                     Store.dispatch({
                                         type: Constants.ACTIONTYPES_NAVIGATION_TO,
                                         meta: {
-                                            routeName: Constants.ROUTES_GOODS,
+                                            routeName: Routes.ROUTES_GOODS,
                                             params: {
                                                 id: item.u_id
                                             }
@@ -74,7 +74,7 @@ export default class GoodsList extends React.Component<any, any> {
         Store.dispatch({
             type: Constants.ACTIONTYPES_NAVIGATION_TO,
             meta: {
-                routeName: Constants.ROUTES_GOODS,
+                routeName: Routes.ROUTES_GOODS,
                 params: {
                     id: id
                 }

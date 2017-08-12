@@ -9,7 +9,7 @@ exports.FRAMEWORK_DIR          = Path.join(exports.CWD, 'framework');
 exports.NODE_MODULES_DIR       = Path.join(exports.CWD, 'node_modules');
 exports.SUMMER_TYPINGS_DIR     = Path.join(exports.CWD, '/typings/summer');
 exports.APP_ENTRY              = Path.join(exports.SOURCE_DIR, 'app.json');
-exports.DTS_OUTPUT_DIR         = Path.join(exports.NODE_MODULES_DIR, 'typings');
+exports.DTS_OUTPUT_DIR         = Path.join(exports.CWD, 'typings');
 exports.FRAMEWORK_OUTPUT_DIR   = Path.join(exports.NODE_MODULES_DIR, 'summer');
 exports.ANDROID_SRC_DIR        = Path.join(exports.CWD, 'android/app/src/main');
 
