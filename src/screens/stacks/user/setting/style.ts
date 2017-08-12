@@ -32,5 +32,10 @@ export const styles: any = {
     },
     cacheInfo: {
         color: color_base,
+    },
+    rightInfo: {
+        flexDirection: 'row',
+        justifyContent:'flex-end',
+        alignItems: 'center'
     }
 }

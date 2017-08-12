@@ -35,8 +35,22 @@ export default class GoodsScreen extends React.Component<any, any> {
         headerStyle: styles.header
     };
 
+    constructor(props:any) {
+        super(props);
+
+        this.state = {
+            showSwiper: false
+        }
+    }
+
     componentWillMount() {
         this.fetchData();
+
+        setTimeout(()=> {
+            this.setState({
+                showSwiper: true
+            })
+        }, 1000);
     }
 
     componentWillReceiveProps(nextProps: any) {
@@ -53,15 +67,7 @@ export default class GoodsScreen extends React.Component<any, any> {
         return (
             <Container>
                 <Content>
-                    <Swiper
-                        showsButtons={false}
-                        autoplay={true}
-                        autoplayTimeout={4}
-                        height={400}
-                        showsPagination={true}
-                        dotColor={"#fff"}>
-                        { banner.map(this.createSwiperList) }
-                    </Swiper>
+                    {this.renderSwiper(banner)}
                     <Grid style={ styles.infoContainer }>
                         <Col style={ styles.leftContainer }>
                             <Row style={ styles.titleWrap }><Text style={ styles.goodsTitle }>{ item.title }</Text></Row>
@@ -165,6 +171,23 @@ export default class GoodsScreen extends React.Component<any, any> {
                     <Text style={ styles.footerButtonText }>关注</Text>
                 </Button>
             );
+        }
+    }
+    renderSwiper(banner:string[]) {
+        if(this.state.showSwiper) {
+            return(
+                <Swiper
+                        showsButtons={false}
+                        autoplay={true}
+                        autoplayTimeout={4}
+                        height={400}
+                        showsPagination={true}
+                        dotColor={"#fff"}>
+                        { banner.map(this.createSwiperList) }
+                    </Swiper>
+            )
+        } else {
+            return <View style={{height: 400}}></View>
         }
     }
     createSwiperList = (image: string, index: number) => (

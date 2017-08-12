@@ -70,7 +70,7 @@ export default class Icon extends React.Component<IconProps, any> {
                         style={TextIconStyle}>{unicode}
                     </Text>
                 ) : (
-                    <Text style={TextIconStyle}>{unicode} </Text>
+                    <Text style={TextIconStyle}>{unicode}</Text>
                 )}
             </View>
         );
