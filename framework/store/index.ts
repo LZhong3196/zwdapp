@@ -9,7 +9,15 @@ import reduxThunk from "redux-thunk";
 import { createLogger } from "redux-logger";
 import { AsyncStorage } from "react-native";
 import { persistStore, autoRehydrate } from "redux-persist-immutable";
-import { PERSIST_STORE_WHITE_LIST, ROUTES_MAIN } from "./../constants";
+import {
+    PERSIST_STORE_WHITE_LIST,
+    ROUTES_MAIN,
+    ROUTES_HOME,
+    ROUTES_MARKET,
+    ROUTES_SEARCH,
+    ROUTES_ORDER,
+    ROUTES_PROFILE
+} from "./../constants";
 import { initConnectivityInfo } from "./../libs/networking";
 import appReducer from "./../reducers/index";
 import * as CONSTANTS from "./../constants";
@@ -140,6 +148,5 @@ export default class Store {
         }
         return store;
     }
-
 }
 

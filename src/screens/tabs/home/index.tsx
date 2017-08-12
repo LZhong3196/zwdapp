@@ -13,17 +13,13 @@ import { styles } from "./style";
 import {
     Container,
     Text,
-    Input,
-    Item,
-    Header,
-    Icon as BaseIcon,
-    Button,
+    Icon as BaseIcon
 } from "native-base";
 import Swiper from "react-native-swiper";
 import HomeNav from "./home-nav";
 import SearchHeader from "../../../components/search-bar";
 
-@Decorators.connect("user", "home")
+@Decorators.connect("user", "home", "data")
 export default class HomeScreen extends React.Component<any, any> {
     static navigationOptions = {
         title: Constants.ROUTES_HOME,

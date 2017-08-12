@@ -33,7 +33,7 @@ class HomeNav extends PureComponent<any, any> {
                 >
                     <Image
                         style={ styles.homeNavImage }
-                        source={ require("./images/HomeNavImage.jpg") }
+                        source={ require("./images/newStyle.png") }
                     />
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback
@@ -41,7 +41,7 @@ class HomeNav extends PureComponent<any, any> {
                 >
                     <Image
                         style={ styles.homeNavImage }
-                        source={ require("./images/HomeNavImage.jpg") }
+                        source={ require("./images/newStyle.png") }
                     />
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback
@@ -49,7 +49,7 @@ class HomeNav extends PureComponent<any, any> {
                 >
                     <Image
                         style={ styles.homeNavImage }
-                        source={ require("./images/HomeNavImage.jpg") }
+                        source={ require("./images/newStyle.png") }
                     />
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback
@@ -57,7 +57,7 @@ class HomeNav extends PureComponent<any, any> {
                 >
                     <Image
                         style={ styles.homeNavImage }
-                        source={ require("./images/HomeNavImage.jpg") }
+                        source={ require("./images/newStyle.png") }
                     />
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback
@@ -65,7 +65,7 @@ class HomeNav extends PureComponent<any, any> {
                 >
                     <Image
                         style={ styles.homeNavImage }
-                        source={ require("./images/HomeNavImage.jpg") }
+                        source={ require("./images/newStyle.png") }
                     />
                 </TouchableWithoutFeedback>
             </ScrollView>

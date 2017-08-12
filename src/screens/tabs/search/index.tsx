@@ -24,7 +24,7 @@ import { connect } from "react-redux";
 
 let { TabBarIcon } = Widgets;
 
-@Decorators.connect("user", "search")
+@Decorators.connect("user", "search", "data.city.currentCity")
 export default class SearchScreen extends React.Component<any, any> {
     private flatList: any;
     private scrollToTopButtom: any;
