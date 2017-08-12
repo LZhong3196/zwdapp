@@ -17,17 +17,19 @@ import {
 } from "native-base";
 import RefreshList, { RefreshState } from "../../../components/refresh-list";
 import ScrollToTop from "../../../components/scroll-to-top";
-import { Constants, Widgets, Store, Navigator, APIs, Decorators } from "summer";
+import SearchBar from "../../../components/search-bar";
+import { Constants, Widgets, Store, Navigator, APIs, Decorators, Routes } from "summer";
 import { styles } from "./style";
 import { connect } from "react-redux";
 
 let { TabBarIcon } = Widgets;
 
-@Decorators.connect("user", "search")
+@Decorators.connect("user", "search", "data.city.currentCity")
 export default class SearchScreen extends React.Component<any, any> {
     private flatList: any;
+    private scrollToTopButtom: any;
     static navigationOptions = {
-        title: Constants.ROUTES_SEARCH,
+        title: "ROUTES_SEARCH",
         tabBarLabel: "搜款式",
         tabBarIcon: (options: any) => (
             <TabBarIcon
@@ -50,31 +52,6 @@ export default class SearchScreen extends React.Component<any, any> {
     componentDidMount() {
         this.flatList.startHeaderRefreshing();
     }
-
-    render() {
-        const data: any = Store.get("search.list") || [];
-        return (
-            <View style={ styles.container }>
-                <Header searchBar rounded>
-                    <Item>
-                        <Icon name="search"/>
-                        <Input placeholder="请输入店铺名/档口号/旺旺号" />
-                        <Icon name="md-expand"></Icon>
-                    </Item>
-                </Header>
-                <RefreshList
-                    key={this.state.isShowSide ? 1 : 2}
-                    ref={ (e) => this.flatList = e }
-                    data={ data }
-                    renderItem={ this.renderRow }
-                    onHeaderRefresh={ () => this.fetchList(true) }
-                    onFooterRefresh={ () => this.fetchList(false) }
-                    numColumns={this.state.isShowSide ? 2 : 1}
-                />
-                <ScrollToTop bindRef={ this.flatList }/>
-            </View>
-        );
-    }
     private renderRow = (rowData: any) => {
         let item = rowData.item;
         return (
@@ -96,8 +73,38 @@ export default class SearchScreen extends React.Component<any, any> {
         );
     }
 
+    render() {
+        const data: any = Store.get("search.list") || [];
+        return (
+            <View style={ styles.container }>
+                <SearchBar
+                    placeholder="搜索当季爆款"
+                    rightButton={
+                        <Text style={styles.headerRightButton} onPress={this.openClassification}>分类</Text>
+                    }/>
+                <RefreshList
+                    key={this.state.isShowSide ? 1 : 2}
+                    ref={ (e) => this.flatList = e }
+                    data={ data }
+                    renderItem={ this.renderRow }
+                    onHeaderRefresh={ () => this.fetchList(true) }
+                    onFooterRefresh={ () => this.fetchList(false) }
+                    numColumns={this.state.isShowSide ? 2 : 1}
+                    onScrollTop={this.flatListScrollTop}
+                />
+                <ScrollToTop ref={ (e) => this.scrollToTopButtom = e } bindRef={ this.flatList }/>
+            </View>
+        );
+    }
+    flatListScrollTop = (scrollTop: boolean) => {
+        scrollTop ? this.scrollToTopButtom.hideButton() : this.scrollToTopButtom.showButton();
+    }
+
     openGoodsPage = (id: string) => {
-        Navigator.to(Constants.ROUTES_GOODS, { id });
+        Navigator.to(Routes.ROUTES_GOODS, { id });
+    }
+    openClassification = () => {
+
     }
     fetchList = async (isRefresh?: boolean) => {
         let blockIndex = isRefresh ? 0 : this.state.blockIndex + 1;

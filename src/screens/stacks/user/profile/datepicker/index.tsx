@@ -31,7 +31,7 @@ export class Picker extends React.Component<any, any> {
                         color: theme.color_base
                     },
                     btnTextConfirm: {
-                        color: theme.color_theme
+                        color: "#007BFA"
                     }
                 }}
                 onDateChange={(value: string) => this.onSubmit(value) }

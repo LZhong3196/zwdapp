@@ -6,10 +6,7 @@ import {
     View
 } from "react-native";
 import { NavigationActions } from "react-navigation";
-import {
-
-} from "native-base";
-import { Store, Constants, Widgets, APIs, Decorators, Navigator } from "summer";
+import { Store, Constants, Widgets, APIs, Decorators, Navigator, Routes } from "summer";
 import {
     Container,
     Content,
@@ -54,7 +51,7 @@ export default class UserScreen extends React.Component<any, any> {
     }
 
     componentWillMount() {
-        this.fetchUserInfo();
+        // this.fetchUserInfo();
     }
 
     componentWillUnmount() {
@@ -217,11 +214,11 @@ export default class UserScreen extends React.Component<any, any> {
     }
 
     handleSetting = () => {
-        Navigator.to(Constants.ROUTES_SETTING);
+        Navigator.to(Routes.ROUTES_SETTING);
     }
 
     handleProfileSetting = () => {
-        Navigator.to(Constants.ROUTES_SETTING);
+        Navigator.to(Routes.ROUTES_SETTING);
     }
 
 
@@ -231,16 +228,15 @@ export default class UserScreen extends React.Component<any, any> {
         try {
             const res: any = await APIs.user.getUserInfo({});
             Store.update("user.profile", res.data);
-            this.state.loading = false;
-            this.setState(this.state);
         }
         catch (e) {
             if (this.unmount) {
                 return;
             }
-            this.state.loading = false;
-            this.setState(this.state);
         }
+        this.setState({
+            loading: false
+        });
     }
 }
 

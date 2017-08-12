@@ -29,7 +29,6 @@ function apiSynchronizer(appConfig) {
 
     (function() {
         var next = arguments.callee;
-
         parseRAPModel()
             .then(apiMap => {
                 if (!apiMap) {

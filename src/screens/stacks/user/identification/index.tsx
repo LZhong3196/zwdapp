@@ -8,19 +8,19 @@ import {
     Button,
     Input
 } from "native-base";
-import { Widgets, APIs, Store, Constants, Navigator } from "summer";
+import { Widgets, APIs, Store, Constants, Navigator, Routes } from "summer";
 let { Icon, Toast, theme } = Widgets;
 
 import { styles } from "./style";
 
 const CodeType: Dictionary<number> = {
-    [Constants.ROUTES_REGISTER]: 0,
-    [Constants.ROUTES_RESET_PASSWORD]: 1
+    [Routes.ROUTES_REGISTER]: 0,
+    [Routes.ROUTES_RESET_PASSWORD]: 1
 };
 
 export default class IdentificationScreen extends React.Component<any, any> {
     static navigationOptions = (navigation: any) => ({
-        title: navigation.navigation.state.params.nextRoute === Constants.ROUTES_REGISTER ? "注册" : "忘记密码",
+        title: navigation.navigation.state.params.nextRoute === Routes.ROUTES_REGISTER ? "注册" : "忘记密码",
         headerStyle: styles.header
     })
 
@@ -153,7 +153,7 @@ export default class IdentificationScreen extends React.Component<any, any> {
                 Toast.success({
                     text: "验证成功"
                 });
-                if (nextRoute === Constants.ROUTES_REGISTER) {
+                if (nextRoute === Routes.ROUTES_REGISTER) {
                     Store.update("user.account", this.state.mobile);
                 }
                 Navigator.to(nextRoute);

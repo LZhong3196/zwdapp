@@ -35,7 +35,7 @@ module.exports = function generate(params, argv) {
                         stdio: ['ignore', 'pipe', 'ignore']
                     }).toString("utf8");
                 } catch(e) {
-                    /** Cannot find yarn in global, search dts file from registry with npm */
+                    /** Cannot find yarn in global, field-search dts file from registry with npm */
                 }
                 targets.forEach((target) => {
                     var targetVersion = getTargetModuleVersion(target);

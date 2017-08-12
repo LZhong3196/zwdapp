@@ -62,7 +62,8 @@ export class ToastContainer extends React.Component<ViewProperties, any> {
     };
     static loading(config: ToastConfiguration = {}) {
         this.instance.showToast({
-            type: "loading"
+            type: "loading",
+            ...config
         });
     };
     static success(config: ToastConfiguration = {}) {
@@ -118,8 +119,8 @@ export class ToastContainer extends React.Component<ViewProperties, any> {
         return {
             position: "absolute",
             left: 0,
-            top: this.getTop(),
-            bottom: this.getTop(),
+            top: 0,
+            bottom: 0,
             right: 0,
             opacity: fadeAnim,
             elevation: 9,
@@ -205,7 +206,7 @@ export class ToastContainer extends React.Component<ViewProperties, any> {
             ...style,
             backgroundColor: maskHidden ? "transparent" : (toastStyle.toast.backgroundColor || style.backgroundColor)
         };
-        
+
         return modalVisible ? (
             <Animated.View style={this.getToastStyle()}>
                 <View
