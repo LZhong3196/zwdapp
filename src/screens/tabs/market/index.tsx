@@ -11,15 +11,11 @@ import {
     ListItem,
     Thumbnail,
     Text,
-    Body,
-    Input,
-    Item,
-    Header,
-    Icon
+    Body
 } from "native-base";
 import { styles } from "./style";
 
-@Decorators.connect("user", "market")
+@Decorators.connect("user", "market", "data")
 export default class MarketScreen extends React.Component<any, any> {
     private flatList: any;
     private scrollToTopButtom: any;
