@@ -110,7 +110,6 @@ export default class UserScreen extends React.Component<any, any> {
                             <Row style={headerStyle.caption}>
                                 <Col style={headerStyle.avatarContainer}>
                                     <Thumbnail
-                                        style={headerStyle.avatar}
                                         source={{ uri: userInfo.avatar }} />
                                 </Col>
                                 <Col size={1}>

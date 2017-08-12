@@ -53,7 +53,7 @@ export default class ProfileScreen extends React.Component<any, any> {
                             <Text>头像</Text>
                         </Left>
                         <Right style={styles.itemRight}>
-                            <Thumbnail style={{ backgroundColor: "#EFEFEF" }} source={{ uri: profile.avatar }} />
+                            <Thumbnail source={{ uri: profile.avatar }} />
                             <Icon type="&#xea54;" color={theme.color_base} size="xs" />
                         </Right>
                     </ListItem>

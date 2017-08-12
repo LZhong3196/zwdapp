@@ -83,22 +83,6 @@ export const thirdParty: any = {
         justifyContent: "center",
         alignItems: "center"
     },
-    titleContainer: {
-        width: 200,
-        borderBottomWidth: border_width_sm,
-        borderColor: color_grey,
-        justifyContent: "center",
-        marginLeft: 0,
-    },
-    title: {
-        fontSize: font_size_caption_sm,
-        color: color_grey,
-        backgroundColor: color_background,
-        lineHeight: font_size_display_lg,
-        borderBottomWidth: 0,
-        paddingHorizontal: h_spacing_sm,
-        marginBottom: - font_size_display_lg / 2
-    },
     optionContainer: {
         width: "60%",
         minWidth: 240,
