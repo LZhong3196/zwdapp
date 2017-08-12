@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Lodash from "lodash";
-import { Store, Constants, APIs, Widgets, Decorators, Navigator } from "summer";
+import { Store, Constants, APIs, Widgets, Decorators, Navigator, Routes } from "summer";
 import {
     StyleSheet,
     Image,
@@ -175,7 +175,7 @@ export default class GoodsScreen extends React.Component<any, any> {
         />
     )
     openShopPage = (id: string) => {
-        Navigator.to(Constants.ROUTES_SHOP, { id });
+        Navigator.to(Routes.ROUTES_SHOP, { id });
     }
 
     setFav = async () => {

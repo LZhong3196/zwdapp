@@ -3,9 +3,12 @@ import {
     Image,
     StatusBar,
     Switch,
-    Alert
+    Alert,
+    Platform,
+    NativeModules,
+    ViewProperties,
+    DeviceEventEmitter
 } from "react-native";
-import { Store, Constants, Widgets, APIs, Decorators, Navigator } from "summer";
 import {
     Container,
     Content,
@@ -20,131 +23,51 @@ import {
     ActionSheet
 } from "native-base";
 import ImagePicker from "react-native-image-crop-picker";
+import { Store, Constants, Widgets, APIs, Decorators, Navigator, Routes } from "summer";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { Picker as DatePicker } from "./datepicker";
 import { styles } from "./style";
 
 let { Icon, theme, Toast } = Widgets;
+let RNUploader = NativeModules.RNUploader;
 
-@Decorators.connect("user")
-export default class ProfileScreen extends React.Component<any, any> {
-    static navigationOptions = {
-        headerBackTitle: null as any,
-        headerTitle: "个人资料",
-        headerStyle: styles.header
-    };
 
-    constructor(props: any, context: any) {
+interface AvatarPickerProps extends ViewProperties {
+    avatar: string;
+}
+
+class AvatarPicker extends React.Component<AvatarPickerProps, any> {
+    private unmount: boolean = false;
+    constructor(props: AvatarPickerProps, context: any) {
         super(props, context);
         this.state = {
-            date: undefined
+            file: {} as Object,
+            isUploading: false,
+            progress: undefined
         };
     }
 
+
+    componentWillUnmount() {
+        this.unmount = true;
+    }
+
     render() {
-        const profile: any = Store.get("user.profile") || {};
 
         return (
-            <Container>
-                <StatusBar barStyle="default" />
-                <List style={styles.listContainer}>
-                    <ListItem onPress={this.handleAvatarChange}>
-                        <Left>
-                            <Text>头像</Text>
-                        </Left>
-                        <Right style={styles.itemRight}>
-                            <Thumbnail style={{ backgroundColor: "#EFEFEF" }} source={{ uri: profile.avatar }} />
-                            <Icon type="&#xea54;" color={theme.color_base} size="xs" />
-                        </Right>
-                    </ListItem>
-                    <ListItem
-                        style={styles.listItem}
-                        onPress={() => this.handleItemEdit("name", profile.name)}>
-                        <Left>
-                            <Text>真实姓名</Text>
-                        </Left>
-                        <Right style={styles.itemRight}>
-                            <Text style={styles.rightText}>{profile.name || "未设置"}</Text>
-                            <Icon type="&#xea54;" color={theme.color_base} size="xs" />
-                        </Right>
-                    </ListItem>
-                    <ListItem
-                        style={styles.listItem}
-                        onPress={() => this.handleItemEdit("account", profile.account)}>
-                        <Left>
-                            <Text>昵称</Text>
-                        </Left>
-                        <Right style={styles.itemRight}>
-                            <Text style={styles.rightText}>{profile.account || "未设置"}</Text>
-                            <Icon type="&#xea54;" color={theme.color_base} size="xs" />
-                        </Right>
-                    </ListItem>
-                    <ListItem style={{ ...styles.listItem, ...styles.lastItem }}>
-                        <Left>
-                            <Text>我的二维码名片</Text>
-                        </Left>
-                        <Right style={styles.itemRight}>
-                            <Icon type="&#xe685;" color={theme.color_base} size="xs" />
-                            <Icon type="&#xea54;" color={theme.color_base} size="xs" />
-                        </Right>
-                    </ListItem>
-                </List>
-                <List style={styles.listContainer}>
-                    <ListItem
-                        style={styles.listItem}
-                        onPress={() => this.handleItemEdit("taobao_account", profile.taobao_account)}>
-                        <Left>
-                            <Text>旺旺</Text>
-                        </Left>
-                        <Right style={styles.itemRight}>
-                            <Text style={styles.rightText}>{profile.taobao_account || "未设置"}</Text>
-                            <Icon type="&#xea54;" color={theme.color_base} size="xs" />
-                        </Right>
-                    </ListItem>
-                    <ListItem
-                        onPress={() => this.handleItemEdit("wechat", profile.wechat)}
-                        style={{ ...styles.listItem, ...styles.lastItem }}>
-                        <Left>
-                            <Text>微信</Text>
-                        </Left>
-                        <Right style={styles.itemRight}>
-                            <Text style={styles.rightText}>{profile.wechat || "未设置"}</Text>
-                            <Icon type="&#xea54;" color={theme.color_base} size="xs" />
-                        </Right>
-                    </ListItem>
-                    <ListItem
-                        onPress={() => this.handleItemEdit("qq", profile.qq)}
-                        style={{ ...styles.listItem, ...styles.lastItem }}>
-                        <Left>
-                            <Text>QQ</Text>
-                        </Left>
-                        <Right style={styles.itemRight}>
-                            <Text style={styles.rightText}>{profile.qq || "未设置"}</Text>
-                            <Icon type="&#xea54;" color={theme.color_base} size="xs" />
-                        </Right>
-                    </ListItem>
-                </List>
-                <List style={styles.listContainer}>
-                    <ListItem style={{ ...styles.listItem, ...styles.lastItem }}>
-                        <Left>
-                            <Text>生日</Text>
-                        </Left>
-                        <Right style={styles.itemRight}>
-                            <DatePicker value={profile.birthday} />
-                            <Icon type="&#xea54;" color={theme.color_base} size="xs" />
-                        </Right>
-                    </ListItem>
-                </List>
-            </Container>
-        );
+            <ListItem onPress={this.handleAvatarChange} >
+                <Left>
+                    <Text>头像</Text>
+                </Left>
+                <Right style={styles.itemRight}>
+                    <Thumbnail source={{ uri: this.props.avatar }} />
+                    <Icon type="&#xea54;" color={theme.color_base} size="xs" />
+                </Right>
+            </ListItem>
+
+        )
     }
 
-    handleItemEdit = (key: string, value: any) => {
-        Navigator.to(Constants.ROUTES_PROFILE_EDIT, {
-            key: key,
-            value: value
-        });
-    }
 
     handleAvatarChange = () => {
         const options: Array<string> = ["拍照", "从相册选择", "取消"];
@@ -170,20 +93,30 @@ export default class ProfileScreen extends React.Component<any, any> {
     }
 
     openAlbum = async () => {
+        const profile: any = Store.get("user.profile");
         try {
-            let source = await ImagePicker.openPicker({
-                width: 400,
-                height: 400,
-                cropping: true
+            Toast.loading();
+            let image = await ImagePicker.openPicker({
+                loadingLabelText: "加载中...",
+                cropping: true,
+                width: 300,
+                height: 300,
+                compressImageMaxWidth: 300,
+                compressImageMaxHeight: 300
             }) as ImagePicker.Image;
-            console.log("%c image : ", "color: #4BBAEA", source);
-            Toast.loading({ duration: -1 });
-            let res: any = APIs.user.postUserInfo({
+            Toast.close();
+            let res: any = await APIs.user.uploadAvatar({
+                files: [{
+                    name: `avatar_${profile.account}`,
+                    filepath: image.data,
+                    filetype: image.mime,
+                    filename: `avatar_${profile.account}`
+                }],
+                params: { type: "avatar" }
             });
-            Toast.success();
         }
         catch (e) {
-
+            Toast.close();
         }
     }
 
@@ -199,27 +132,98 @@ export default class ProfileScreen extends React.Component<any, any> {
 
         }
     }
+}
 
-    handleLogout = () => {
-        try {
-            let res: any = APIs.account.getLogout({});
-        }
-        catch (e) {
-        }
 
-        const user: any = Store.get("user");
-        const account: any = user.account;
-        const userState: any = {
-            ...user,
-            profile: {},
-            account: {
-                ...account,
-                isLoggedIn: false,
-                token: ""
-            }
+interface ProfileItemProps extends ViewProperties {
+    title: string;
+    name: string;
+    value?: string;
+    valueContent?: React.ReactNode;
+    onClick?: Function;
+    lastItem?: boolean;
+}
+
+@Decorators.pureRender()
+class ProfileItem extends React.Component<ProfileItemProps, any> {
+    render() {
+        let {
+            title,
+            value,
+            valueContent,
+            onClick,
+            lastItem
+        } = this.props;
+        const itemStyle: any = lastItem ? {
+            ...styles.listItem,
+            ...styles.lastItem
+        } : styles.listItem;
+        return (
+            <ListItem
+                style={itemStyle}
+                onPress={!!onClick ? () => onClick() : this.handleEdit}>
+                <Left>
+                    <Text>{title}</Text>
+                </Left>
+                <Right style={styles.itemRight}>
+                    {!!valueContent ? valueContent : (
+                        <Text style={styles.rightText}>{value || "未设置"}</Text>
+                    )}
+                    <Icon type="&#xea54;" color={theme.color_base} size="xs" />
+                </Right>
+            </ListItem>
+        );
+    }
+
+    handleEdit = () => {
+        Navigator.to(Routes.ROUTES_PROFILE_EDIT, {
+            name: this.props.name,
+            value: this.props.value
+        });
+    }
+}
+
+@Decorators.connect("user")
+export default class ProfileScreen extends React.Component<any, any> {
+    static navigationOptions = {
+        headerBackTitle: null as any,
+        headerTitle: "个人资料",
+        headerStyle: styles.header
+    };
+
+    constructor(props: any, context: any) {
+        super(props, context);
+        this.state = {
+            date: undefined
         };
-        Navigator.back();
-        Store.update("user", userState);
+    }
+
+    render() {
+        const profile: any = Store.get("user.profile") || {};
+
+        return (
+            <Container>
+                <StatusBar barStyle="default" />
+                <List style={styles.listContainer}>
+                    <AvatarPicker avatar={profile.avatar} />
+                    <ProfileItem title="真实姓名" name="name" value={profile.name} />
+                    <ProfileItem title="昵称" name="account" value={profile.account} />
+                    <ProfileItem title="我的二维码名片" name="qrcode" value={profile.qrcode} lastItem />
+                </List>
+                <List style={styles.listContainer}>
+                    <ProfileItem title="旺旺" name="taobao_account" value={profile.taobao_account} />
+                    <ProfileItem title="微信" name="wechat" value={profile.wechat} />
+                    <ProfileItem title="QQ" name="qq" value={profile.qq} lastItem />
+                </List>
+                <List style={styles.listContainer}>
+                    <ProfileItem title="生日" name="birthday" valueContent={<DatePicker value={profile.birthday} />} lastItem />
+                </List>
+            </Container>
+        );
+    }
+
+    handleQRcodeEdit = () => {
+
     }
 
 }

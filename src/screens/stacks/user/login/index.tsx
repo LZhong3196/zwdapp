@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Image } from "react-native";
-import { Store, Constants, APIs, Widgets, Decorators, Navigator } from "summer";
+import { Store, Constants, APIs, Widgets, Decorators, Navigator, Routes } from "summer";
 import {
     Container,
     Content,
@@ -18,7 +18,6 @@ import { Row, Grid, Col } from "react-native-easy-grid";
 import { styles, thirdParty } from "./style";
 
 let { Icon, Toast, theme } = Widgets;
-
 
 const accountLimit: number = 22;
 const passwordLimit: number = 22;
@@ -45,7 +44,8 @@ class EditForm extends React.Component<any, any> {
 
     componentWillReceiveProps(nextProps: any) {
         const accountInfo: any = Store.get("user.account") || {};
-        if (accountInfo.account !== this.state.account || accountInfo.password !== this.state.password) {
+        const shouldUpdate: boolean = accountInfo.account !== this.state.account || accountInfo.password !== this.state.password;
+        if (shouldUpdate) {
             this.setState({
                 account: accountInfo.account,
                 password: accountInfo.password
@@ -196,14 +196,14 @@ class EditForm extends React.Component<any, any> {
     };
 
     register = () => {
-        Navigator.to(Constants.ROUTES_IDENTIFICATION, {
-            nextRoute: Constants.ROUTES_REGISTER
+        Navigator.to(Routes.ROUTES_IDENTIFICATION, {
+            nextRoute: Routes.ROUTES_REGISTER
         });
     };
 
     retrievePassword = () => {
-        Navigator.to(Constants.ROUTES_IDENTIFICATION, {
-            nextRoute: Constants.ROUTES_RESET_PASSWORD
+        Navigator.to(Routes.ROUTES_IDENTIFICATION, {
+            nextRoute: Routes.ROUTES_RESET_PASSWORD
         });
     };
 

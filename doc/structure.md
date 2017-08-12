@@ -29,15 +29,17 @@ framework
 ├── cacher                      
 ├── components                  # 通用组件
 ├── decorators                  # 装饰器
+│    ├── connect					  # connect
 │    ├── pure-render            # pure render装饰器
 │    └── ...
 ├── libs                        # 接口工具
+│    ├── networking.ts          # 网络管理工具
 │    ├── rap.ts                 # RAP适配
+│    ├── request-extra.ts       # 请求工具扩展
 │    └── request.ts             # 请求工具
 ├── navigators                  # 导航器
 ├── reducers                    # reducer
-├── store                       # store
-├── utils                      
+├── store                       # store                   
 ├── constants.ts                # 常量定义 [ ActionTypes | Navigation Route | ... ]
 ├── index.tsx                   # 框架层入口
 ├── packager.json               
