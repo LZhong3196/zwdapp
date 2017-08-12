@@ -29,7 +29,7 @@ framework
 ├── cacher                      
 ├── components                  # 通用组件
 ├── decorators                  # 装饰器
-│    ├── connect					  # connect
+│    ├── connect                # connect
 │    ├── pure-render            # pure render装饰器
 │    └── ...
 ├── libs                        # 接口工具
