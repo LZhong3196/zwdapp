@@ -50,7 +50,11 @@ export const initialState: State = Immutable.fromJS({
     market: {},
     search: {},
     notification: {},
-    order: {},
+    order: {
+        workingList: [],
+        finishedList: [],
+        cancelList: []
+    },
 });
 
 
@@ -58,7 +62,7 @@ export default class Store {
     static instance: Store;
     private appStore: Redux.Store<any>;
 
-    static get<T>(keys: string): T{
+    static get<T>(keys: string): T {
         if (!this.instance) {
             return undefined;
         };
@@ -124,7 +128,7 @@ export default class Store {
             // devtools
         );
 
-        const store: Redux.Store<any> = createStore( appReducer, initialState, enhancer );
+        const store: Redux.Store<any> = createStore(appReducer, initialState, enhancer);
 
         const rehydrationCompleted: any = compose(
             initConnectivityInfo

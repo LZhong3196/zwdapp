@@ -5,8 +5,10 @@ export default function connect(...stateKeys: Array<string>): ClassDecorator {
     return (DecoratorComponent: any) => {
         const mapStateToProps = (state: any) => {
             let stateMap: Dictionary<any> = {};
-            stateKeys.forEach((key: string) => {
-                stateMap[key] = state.get(key);
+            stateKeys.forEach((keys: string) => {
+                let keyPath: Array<any> = keys.trim().split(".");
+                let key = keyPath[keyPath.length-1];
+                stateMap[key] = state.getIn(keyPath);
                 try {
                     stateMap[key] = stateMap[key].toJS();
                 }
