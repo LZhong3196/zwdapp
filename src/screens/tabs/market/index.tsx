@@ -2,7 +2,7 @@ import * as React from "react";
 import {
     View
 } from "react-native";
-import { APIs, Widgets, Store, Navigator, Constants, Decorators } from "summer";
+import { APIs, Widgets, Store, Navigator, Constants, Decorators, Routes } from "summer";
 import RefreshList, { RefreshState } from "../../../components/refresh-list";
 import ScrollToTop from "../../../components/scroll-to-top";
 import SearchBar from "../../../components/search-bar";
@@ -20,7 +20,7 @@ export default class MarketScreen extends React.Component<any, any> {
     private flatList: any;
     private scrollToTopButtom: any;
     static navigationOptions = {
-        title: Constants.ROUTES_MARKET,
+        title: "Routes.ROUTES_MARKET",
         tabBarLabel: "逛市场",
         tabBarIcon: (options: any) => (
             <TabBarIcon
@@ -51,7 +51,6 @@ export default class MarketScreen extends React.Component<any, any> {
                 <Thumbnail
                     large
                     square
-                    style={styles.itemImage}
                     source={{ uri: item.image }}>
                 </Thumbnail>
                 <Body>
@@ -94,7 +93,7 @@ export default class MarketScreen extends React.Component<any, any> {
         scrollTop ? this.scrollToTopButtom.hideButton() : this.scrollToTopButtom.showButton();
     }
     openShopPage = (id: string) => {
-        Navigator.to(Constants.ROUTES_SHOP, { id });
+        Navigator.to(Routes.ROUTES_SHOP, { id });
     }
 
     fetchList = async (isRefresh?: boolean) => {

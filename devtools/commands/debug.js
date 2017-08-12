@@ -17,13 +17,15 @@ var compile = require("./compile");
 
 var filesSynchronizer = require('../helpers/files-synchronizer');
 var apiSynchronizer = require('../helpers/api-synchronizer');
+var routeSynchronizer = require('../helpers/route-synchronizer');
 
 var Constants = require("../constants");
 
 function debugApp(cp, params) {
     var appConfig = {
         appName: 'app',
-        config: './config.json'
+        config: './config.json',
+        router: './router'
     };
     try {
         Object.assign(appConfig, require(Constants.APP_ENTRY));
@@ -36,7 +38,8 @@ function debugApp(cp, params) {
     return Promise
         .all([
             filesSynchronizer(appConfig),
-            apiSynchronizer(appConfig)
+            apiSynchronizer(appConfig),
+            routeSynchronizer()
         ])
         .then(() =>  tsc(Constants.SOURCE_DIR, {
             watch: true

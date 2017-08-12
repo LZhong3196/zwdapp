@@ -7,7 +7,7 @@ import {
     TouchableWithoutFeedback,
     Modal
 } from "react-native";
-import { Constants, APIs, Store, Decorators, Widgets, Navigator } from "summer";
+import { Constants, APIs, Store, Decorators, Widgets, Navigator, Routes } from "summer";
 import { styles } from "./style";
 const { Icon, theme: {
     color_base,
@@ -100,10 +100,10 @@ export default class SearchBar extends React.Component<SearchBarProps, any> {
         }
     }
     openFilterSearchPage = () => {
-        Navigator.to(Constants.ROUTES_FIELD_SEARCH);
+        Navigator.to(Routes.ROUTES_FIELD_SEARCH);
     }
     openQRScanner = () => {
-        Navigator.to(Constants.ROUTES_SCANNER);
+        Navigator.to(Routes.ROUTES_SCANNER);
     }
     changeCity = (city: string) => {
         this.citySelectToggle();

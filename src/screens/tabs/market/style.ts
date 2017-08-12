@@ -19,9 +19,6 @@ export const styles: any = {
         paddingLeft: 8,
         zIndex: 10
     },
-    itemImage: {
-        backgroundColor: color_base,
-    },
     itemTitle: {
         fontSize: font_size_heading,
         backgroundColor: color_background,

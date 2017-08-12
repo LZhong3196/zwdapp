@@ -5,14 +5,14 @@ import {
     Text,
     Button
 } from "react-native";
-import { Constants, Widgets } from "summer";
+import { Routes, Widgets } from "summer";
 
 let { TabBarIcon } = Widgets;
 
 
 export default class OrderScreen extends React.Component<any, any> {
     static navigationOptions = {
-        title: Constants.ROUTES_ORDER,
+        title: "ROUTES_ORDER",
         tabBarLabel: "采购单",
         tabBarIcon: (options: any) => (
             <TabBarIcon

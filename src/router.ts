@@ -16,51 +16,23 @@ import NotificationScreen from "./screens/stacks/notification";
 import ScannerScreen from "./screens/stacks/scanner";
 import FieldSearchScreen from "./screens/stacks/field-search";
 
-let {
-    ROUTES_LOGIN,
-    ROUTES_REGISTER,
-    ROUTES_PROFILE,
-    ROUTES_PROFILE_EDIT,
-    ROUTES_RESET_PASSWORD,
-    ROUTES_IDENTIFICATION,
-    ROUTES_MAIN,
-    ROUTES_GOODS,
-    ROUTES_SHOP,
-    ROUTES_SETTING,
-    ROUTES_NOTIFICATION,
-    ROUTES_SCANNER,
-    ROUTES_FIELD_SEARCH
-} = Constants;
-
-
-export const routeConfigMap = {
-    [ROUTES_MAIN]: { screen: MainScreen },
-    [ROUTES_LOGIN]: { screen: LoginScreen },
-    [ROUTES_SETTING]: { screen: SettingScreen },
-    [ROUTES_PROFILE]: { screen: ProfileScreen },
-    [ROUTES_REGISTER]: { screen: PasswordSettingScreen },
-    [ROUTES_PROFILE_EDIT]: { screen: ProfileEditScreen },
-    [ROUTES_IDENTIFICATION]: { screen: IdentificationScreen },
-    [ROUTES_RESET_PASSWORD]: { screen: PasswordSettingScreen },
-    [ROUTES_SHOP]: { screen: ShopPageScreen },
-    [ROUTES_GOODS]: { screen: GoodsPageScreen },
-    [ROUTES_SETTING]: { screen: SettingScreen },
-    [ROUTES_NOTIFICATION]: { screen: NotificationScreen },
-    [ROUTES_SCANNER]: { screen: ScannerScreen },
-    [ROUTES_FIELD_SEARCH]: { screen: FieldSearchScreen }
+/** Adding route name follow the template - ROUTES_[NEW_ROUTE_NAME]  */
+export const routeConfigMap: HashMap<any> = {
+    "ROUTES_MAIN": { screen: MainScreen },
+    "ROUTES_LOGIN": { screen: LoginScreen },
+    "ROUTES_SETTING": { screen: SettingScreen },
+    "ROUTES_PROFILE": { screen: ProfileScreen },
+    "ROUTES_REGISTER": { screen: PasswordSettingScreen },
+    "ROUTES_PROFILE_EDIT": { screen: ProfileEditScreen },
+    "ROUTES_IDENTIFICATION": { screen: IdentificationScreen },
+    "ROUTES_RESET_PASSWORD": { screen: PasswordSettingScreen },
+    "ROUTES_SHOP": { screen: ShopPageScreen },
+    "ROUTES_GOODS": { screen: GoodsPageScreen },
+    "ROUTES_NOTIFICATION": { screen: NotificationScreen },
+    "ROUTES_SCANNER": { screen: ScannerScreen },
+    "ROUTES_FIELD_SEARCH": { screen: FieldSearchScreen }
 };
 
 export const stackConfig: any = {
-    // transitionConfig: () => ({
-    //     screenInterpolator(sceneProps: any) {
-    //         const { position, scene } = sceneProps;
-    //         const { index } = scene;
 
-    //         const opacity = position.interpolate({
-    //             inputRange: [index - 1, index, index + 1],
-    //             outputRange: [0, 1, 0]
-    //         });
-    //         return { opacity };
-    //     }
-    // }),
 };

@@ -7,27 +7,17 @@ import {
     ROUTES_LOGIN
 } from "./../constants";
 import Store from "./../store/index";
+import Navigator from "./../navigator/index";
 import { Toast } from "./../components/index";
+
 
 /** Request error handler */
 export async function resolveError(error: any): Promise<any> {
     switch (error.code) {
         case REQUEST_ERROR_UNAUTH: {
-            /**  */
-            Store.dispatch({
-                type: ACTIONTYPES_NAVIGATION_TO,
-                meta: {
-                    routeName: ROUTES_LOGIN
-                }
-            });
+            Navigator.to(ROUTES_LOGIN);
             return new Promise((resolve: Function) => {
-                Store.dispatch({
-                    type: ACTIONTYPES_DATA_UPDATE,
-                    meta: {
-                        storeKey: "resolveTodo"
-                    },
-                    payload: resolve
-                });
+                Store.update("data.resolveTodo", resolve);
             });
         }
         case REQUEST_ERROR_NETINFO_NONE: {

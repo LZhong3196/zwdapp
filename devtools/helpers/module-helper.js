@@ -47,12 +47,16 @@ function fixModuleExport() {
 module.exports.replaceDts = replaceDts;
 
 module.exports.moduleInit = function moduleInit() {
-    var targetModules = [
-        "native-base"
-    ];
     console.log(Chalk.gray('🚙 适配项目依赖模块...'))
     return new Promise
         .then(() => {
+            const path = Path.join(Constants.DTS_OUTPUT_DIR, "third-party");
+            var targetModules = [];
+            FS.readdirSync(path).forEach(file => {
+                if (/\.d.ts/.test(file)) {
+                    targetModules.push(file.replace(/\.d.ts/, ""));
+                }
+            });
             targetModules.forEach(target => {
                 console.log(Chalk.gray('🚗 适配模块d.ts文件'));
                 replaceDts(target);

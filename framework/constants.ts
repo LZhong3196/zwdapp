@@ -50,54 +50,10 @@ export const ACTIONTYPES_NOTIFICATION_UPDATE: string = "Notification/UPDATE";
 
 
 /** -------  NAVIGATION ROUTES DEFINITION   ------- */
-
-/** ROUTES - MainScreen - tabs screens */
-/** ROUTES - tab - 主页 */
-export const ROUTES_HOME: string = "Home";
-/** ROUTES - tab - 逛市场 */
-export const ROUTES_MARKET: string = "Market";
-/** ROUTES - tab - 搜款式 */
-export const ROUTES_SEARCH: string = "Search";
-/** ROUTES - tab - 采购单 */
-export const ROUTES_ORDER: string = "Order";
-/** ROUTES - tab - 我的 */
-export const ROUTES_USER: string = "User";
-
-/** ROUTES - Stacks screens */
 /** ROUTES - Stacks - 主页 */
-export const ROUTES_MAIN: string = "Main";
+export const ROUTES_MAIN: string = "ROUTES_MAIN";
 /** ROUTES - Stacks - 登录页 */
-
-export const ROUTES_LOGIN: string = "Login";
-/** ROUTES - Stacks - 店铺详情页 */
-export const ROUTES_SHOP: string = "Shop";
-/** ROUTES - Stacks - 宝贝详情页 */
-export const ROUTES_GOODS: string = "Goods";
-/** ROUTES - Stacks - 宝贝列表页 */
-export const ROUTES_GOODS_LIST: string = "GoodsList";
-/** ROUTES - Stacks - 消息列表页 */
-export const ROUTES_NOTIFICATION: string = "Notification";
-/** ROUTES - Stacks - 消息详情页 */
-export const ROUTES_CHAT: string = "Notification";
-/** ROUTES - Stacks - 消息列表页 */
-export const ROUTES_SCANNER: string = "Scanner";
-/** ROUTES - Stacks - 条件搜索页 */
-export const ROUTES_FIELD_SEARCH: string = "FieldSearch";
-
-
-/** ROUTES - Stacks - 用户设置 */
-export const ROUTES_SETTING: string = "Setting";
-/** ROUTES - Stacks - 用户注册 */
-export const ROUTES_REGISTER: string = "Register";
-/** ROUTES - Stacks - 用户找回密码 */
-export const ROUTES_RESET_PASSWORD: string = "ResetPassword";
-/** ROUTES - Stacks - 用户短信验证 */
-export const ROUTES_IDENTIFICATION: string = "Identification";
-/** ROUTES - Stacks - 用户个人资料设置 */
-export const ROUTES_PROFILE: string = "Profile";
-/** ROUTES - Stacks - 用户个人资料修改编辑页 */
-export const ROUTES_PROFILE_EDIT: string = "ProfileEdit";
-
+export const ROUTES_LOGIN: string = "ROUTES_LOGIN";
 
 /** -------  REQUEST ERROR STATUS DEFINITION   ------- */
 

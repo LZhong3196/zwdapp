@@ -1,6 +1,6 @@
 {
     "env": "dev",
-    "apiHost" : "http://qmin91.com",
+    "apiHost" : "http://17zwd.com",
     "RAP" : {
         "host" : "http://rap.qmin91.com",
         "projectId": 16

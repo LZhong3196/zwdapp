@@ -35,7 +35,6 @@ export const styles: any = {
         alignItems: "center"
     },
     marketAvatar: {
-        backgroundColor: "#FFF",
         borderWidth: 2,
         borderColor: "#FFF"
     },

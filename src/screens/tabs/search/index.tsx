@@ -18,7 +18,7 @@ import {
 import RefreshList, { RefreshState } from "../../../components/refresh-list";
 import ScrollToTop from "../../../components/scroll-to-top";
 import SearchBar from "../../../components/search-bar";
-import { Constants, Widgets, Store, Navigator, APIs, Decorators } from "summer";
+import { Constants, Widgets, Store, Navigator, APIs, Decorators, Routes } from "summer";
 import { styles } from "./style";
 import { connect } from "react-redux";
 
@@ -29,7 +29,7 @@ export default class SearchScreen extends React.Component<any, any> {
     private flatList: any;
     private scrollToTopButtom: any;
     static navigationOptions = {
-        title: Constants.ROUTES_SEARCH,
+        title: "ROUTES_SEARCH",
         tabBarLabel: "搜款式",
         tabBarIcon: (options: any) => (
             <TabBarIcon
@@ -101,7 +101,7 @@ export default class SearchScreen extends React.Component<any, any> {
     }
 
     openGoodsPage = (id: string) => {
-        Navigator.to(Constants.ROUTES_GOODS, { id });
+        Navigator.to(Routes.ROUTES_GOODS, { id });
     }
     openClassification = () => {
 
