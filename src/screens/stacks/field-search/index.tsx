@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Store, Constants, APIs, Widgets, Decorators, Navigator } from "summer";
+import { Store, Constants, APIs, Widgets, Decorators, Navigator, Routes } from "summer";
 import { TouchableOpacity, View } from "react-native";
 import {
     Text,
@@ -84,7 +84,7 @@ export default class FiledSearchScreen extends React.Component {
     }
     search = (filed: string) => {
         Store.update("data.search.searchField", filed);
-        Navigator.to(Constants.ROUTES_SEARCH);
+        Navigator.to(Routes.ROUTES_FIELD_SEARCH);
     }
     getHotSearchList = async () => {
         try {
