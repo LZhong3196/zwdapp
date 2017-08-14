@@ -55,8 +55,8 @@ Navigator.to("Login");
 /** 返回上一页 */
 Navigator.back();
 
-/** 回退至主页 */
-Navigator.reset("Main");
+/** 回退至主页搜索页 */
+Navigator.backToTab("Search");
 
 ```
 ### to()
@@ -70,11 +70,27 @@ Navigator.reset("Main");
 | params | any | / | 传递给下一路由的参数 |
 
 ### back()
-> `back()`
+> `back(routeName?: string)`
 
-回退至上一路由
+回退至目标路由
 
-### reset()
+| 参数 | 类型 | 必需 | 说明 |
+| --- | --- | --- | --- |
+|  routeName | string | / | 目标路由 Default - `main` |
+
+### backToTab()
+> `backToTab(target: string, params?: any)`
+
+回退至主页特定标签页
+
+| 参数 | 类型 | 必需 | 说明 |
+| --- | --- | --- | --- |
+|  target | string | / | 目标标签页 |
+| params | any | / | 传递给目标标签页的参数 |
+
+
+### ~~reset()~~
+> 弃用中, 请用 **back(routeName)** 代替
 > `reset(routeName?: string, params?: any)`
 
 回退至目标路由

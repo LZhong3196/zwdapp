@@ -104,7 +104,7 @@ export const headerStyle: any = {
     avatar: {
         borderWidth: border_width_lg,
         borderColor: color_background,
-        backgroundColor: color_background
+        backgroundColor: "transparent"
     },
     userName: {
         color: color_background,

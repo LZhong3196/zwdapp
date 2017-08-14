@@ -24,7 +24,7 @@ function routeSynchronizer() {
         return Promise
             .invoke(FS.readFile, ROUTE_CONFIG_PATH, 'utf8')
             .then(result => {
-                var routeReg = /("|')ROUTES_.*("|')/g;
+                var routeReg = /ROUTES_[a-zA-Z|\d|_]{1,}/g;
                 var routesMap = new Set(result.match(routeReg));
                 var routes = Array.from(routesMap);
                 var content =
@@ -32,7 +32,7 @@ function routeSynchronizer() {
                     `   export namespace Routes {\n` +
                     routes.map(routeName => {
                         var definition = `   export const ${routeName.toUpperCase()}: string;`;
-                        return definition.replace(/'|"/g, "");
+                        return definition;
                     }).join('\n') +
                     `   }\n` +
                     '}\n'
