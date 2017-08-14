@@ -114,7 +114,7 @@ export default class PasswordSettingScreen extends React.Component<any, any> {
                 text: "修改成功"
             });
 
-            Navigator.reset(Routes.ROUTES_LOGIN);
+            Navigator.back(Routes.ROUTES_LOGIN);
 
             let account: any = Store.get("user.account") || {};
             Store.update("user.account", {
