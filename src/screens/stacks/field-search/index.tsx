@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Store, Constants, APIs, Widgets, Decorators, Navigator } from "summer";
+import { Store, Constants, APIs, Widgets, Decorators, Navigator, Routes } from "summer";
 import { TouchableOpacity, View, TextInput } from "react-native";
 import {
     Text,
@@ -117,7 +117,7 @@ export default class FiledSearchScreen extends React.Component<any, any> {
         Store.update("data.search.searchField", filed);
         const historyList: string[] = Store.get("data.search.historyList") || [];
         Store.update("data.search.historyList", [ ...new Set(historyList.concat([filed])) ]);
-        Navigator.to(Constants.ROUTES_SEARCH);
+        Navigator.backToTab(Routes.ROUTES_TAB_SEARCH);
         /**TODO 从stack页跳转到具体tab页路由实现*/
     }
     getHotSearchList = async () => {

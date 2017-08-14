@@ -105,7 +105,7 @@ class ImageCacheItem extends React.Component<any, any> {
         return (
             <SettingItem
                 title="清除缓存"
-                name="contact_us"
+                name="cache"
                 value={!cacheSize ? `` : `${cacheSize} MB` }
                 onPress={this.clearCache} />
         )

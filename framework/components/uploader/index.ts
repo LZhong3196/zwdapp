@@ -10,7 +10,6 @@ import { getToken } from "./../../libs/request-extra";
 const IS_DEV = (global as any).__DEV__;
 const IS_DEBUG = (global as any).__DEBUG__;
 
-
 let RNUploader = NativeModules.RNUploader;
 
 class ProgressInfo {

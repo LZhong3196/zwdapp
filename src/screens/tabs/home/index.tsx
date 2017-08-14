@@ -39,12 +39,23 @@ export default class HomeScreen extends React.Component<any, any> {
             showSwiper: false
         };
     }
+
+    componentWillMount() {
+        if (!Navigator.tabNavigation) {
+            Navigator.tabNavigation = this.props.navigation;
+        }
+    }
+
+    componentWillUnmount() {
+        Navigator.tabNavigation = undefined;
+    }
+
     componentDidMount() {
         this.fetchAdvert();
         setTimeout(()=> {
             this.setState({
                 showSwiper: true
-            })
+            });
         }, 0);
     }
 
