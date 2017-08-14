@@ -10,11 +10,7 @@ import {
 import { Constants, APIs, Store, Decorators, Widgets, Navigator, Routes } from "summer";
 import { styles } from "./style";
 const { Icon, theme: {
-    color_base,
-    color_theme,
-    color_background,
-    color_grey,
-    mask_color
+    color_base
 } } = Widgets;
 
 interface SearchBarProps {
@@ -91,6 +87,7 @@ export default class SearchBar extends React.Component<SearchBarProps, any> {
     }
     getCityList = async () => {
         try {
+            /**TODO 使用第三方定位 , 更新当前位置*/
             Store.update("data.city.city", "广州");
             const res: any = await APIs.data.getCityList();
             const cityList: any[] = res.data;

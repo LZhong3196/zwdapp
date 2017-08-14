@@ -1,12 +1,15 @@
-import { Widgets } from "summer";
+import { Widgets, Constants } from "summer";
 const { theme: {
     color_grey,
     color_theme
 } } = Widgets;
+const { ios } = Constants;
 export const styles: any = {
     header: {
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        position: "relative",
+        zIndex: 1
     },
     inputWrap: {
         flexDirection: "row",
@@ -33,11 +36,20 @@ export const styles: any = {
         borderRightColor: "gray",
         marginRight: 5
     },
+    searchOptions: {
+        position: "absolute",
+        top: ios ? 55 : 35,
+        left: 32,
+        backgroundColor: "#f1f1f1"
+    },
     searchButton: {
         height: 30,
         marginLeft: 5,
         marginRight: 5,
         backgroundColor: color_theme
+    },
+    hotSearch: {
+
     },
     hotSearchList: {
         flexDirection: "row",
@@ -54,11 +66,5 @@ export const styles: any = {
     },
     titleIcon: {
         paddingTop: 10
-    },
-    clearSearchHistory: {
-        height: 50,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#fff"
     }
 };

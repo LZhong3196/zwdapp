@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Store, Constants, APIs, Widgets, Decorators, Navigator } from "summer";
-import { TouchableOpacity, View, TextInput } from "react-native";
+import { TouchableOpacity, View, TextInput, TouchableHighlight } from "react-native";
 import {
     Text,
     Container,
@@ -43,12 +43,10 @@ export default class FiledSearchScreen extends React.Component<any, any> {
     )
     renderFooter = () => {
         return (
-            <TouchableOpacity
-               onPress={this.clearHistorySearch}>
-                <View style={styles.clearSearchHistory}>
+            <Button full light
+                onPress={this.clearHistorySearch}>
                     <Text>清除历史记录</Text>
-                </View>
-            </TouchableOpacity>
+            </Button>
         );
     }
     render() {
@@ -96,6 +94,10 @@ export default class FiledSearchScreen extends React.Component<any, any> {
                         renderFooter={this.renderFooter}
                     />
                 </Content>
+                {/*<View style={styles.searchOptions}>*/}
+                    {/*<Button dark><Text>宝贝</Text></Button>*/}
+                    {/*<Button dark><Text>店铺</Text></Button>*/}
+                {/*</View>*/}
             </Container>
         );
     }
