@@ -140,12 +140,6 @@ export default class UserScreen extends React.Component<any, any> {
         };
     }
 
-    componentWillMount() {
-        if (!Navigator.tabNavigation) {
-            Navigator.initTabNavigation(this.props.navigation);
-        }
-    }
-
     componentWillUnmount() {
         this.unmount = true;
     }

@@ -42,10 +42,6 @@ export default class Navigator {
         }
     }
 
-    static initTabNavigation(instance: TabNavigation) {
-        this.tabNavigation = instance;
-    }
-
     /** 转入对应路由 */
     static to(routeName: string, params?: any) {
         Store.dispatch({
@@ -89,9 +85,6 @@ export default class Navigator {
                     params: params
                 })
             );
-            if (!res) {
-                this.tabNavigation = undefined;
-            }
         }
     }
 

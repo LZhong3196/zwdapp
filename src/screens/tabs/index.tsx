@@ -42,7 +42,8 @@ export default class MainScreen extends React.Component<any, any> {
             swipeEnabled: false,
             tabBarPosition: "bottom",
             lazy: true,
-            animationEnabled: false
+            animationEnabled: false,
+            initialRouteName: TabRouteMap.ROUTES_TAB_HOME
         };
         this.AppTabNavigator = TabNavigator(this.routeConfigs, this.config);
     }
