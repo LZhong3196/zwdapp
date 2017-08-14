@@ -76,7 +76,7 @@ Navigator.backToTab("Search");
 
 | 参数 | 类型 | 必需 | 说明 |
 | --- | --- | --- | --- |
-|  routeName | string | / | 目标路由 Default - `main` |
+|  routeName | string | / | 目标路由 Default - 当前路由的上一层路由 |
 
 ### backToTab()
 > `backToTab(target: string, params?: any)`
@@ -85,12 +85,13 @@ Navigator.backToTab("Search");
 
 | 参数 | 类型 | 必需 | 说明 |
 | --- | --- | --- | --- |
-|  target | string | / | 目标标签页 |
+|  target | string | √ | 目标标签页 |
 | params | any | / | 传递给目标标签页的参数 |
 
 
 ### ~~reset()~~
 > 弃用中, 请用 **back(routeName)** 代替
+
 > `reset(routeName?: string, params?: any)`
 
 回退至目标路由
