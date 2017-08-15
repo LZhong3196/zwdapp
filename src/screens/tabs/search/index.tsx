@@ -24,7 +24,6 @@ import { connect } from "react-redux";
 
 let { TabBarIcon } = Widgets;
 
-@Decorators.pureRender()
 @Decorators.connect("user", "search", "data.city.currentCity")
 class Search extends React.Component<any, any> {
     private flatList: any;

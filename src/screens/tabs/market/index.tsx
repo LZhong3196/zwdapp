@@ -15,7 +15,6 @@ import {
 } from "native-base";
 import { styles } from "./style";
 
-@Decorators.pureRender()
 @Decorators.connect("user", "market", "data")
 class Market extends React.Component<any, any> {
     private flatList: any;

@@ -119,7 +119,6 @@ class MenuItem extends React.Component<MenuItemProps, any> {
     }
 }
 
-@Decorators.pureRender()
 @Decorators.connect("user")
 class User extends React.Component<any, any> {
     private unmount: boolean = false;

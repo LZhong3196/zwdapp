@@ -19,7 +19,7 @@ import Swiper from "react-native-swiper";
 import HomeNav from "./home-nav";
 import SearchHeader from "../../../components/search-bar";
 
-@Decorators.pureRender()
+// @Decorators.pureRender()
 @Decorators.connect("user", "home", "data")
 class Home extends React.Component<any, any> {
     constructor(props: any, context: any) {
