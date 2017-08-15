@@ -24,21 +24,11 @@ import { connect } from "react-redux";
 
 let { TabBarIcon } = Widgets;
 
+@Decorators.pureRender()
 @Decorators.connect("user", "search", "data.city.currentCity")
-export default class SearchScreen extends React.Component<any, any> {
+class Search extends React.Component<any, any> {
     private flatList: any;
     private scrollToTopButtom: any;
-    static navigationOptions = {
-        title: "ROUTES_SEARCH",
-        tabBarLabel: "搜款式",
-        tabBarIcon: (options: any) => (
-            <TabBarIcon
-                type="&#xe620;"
-                activeType="&#xe608;"
-                size={options.focused ? "lg" : "md"}
-                focused={options.focused} />
-        ),
-    };
 
     constructor(props: any, context: any) {
         super(props, context);
@@ -147,5 +137,25 @@ export default class SearchScreen extends React.Component<any, any> {
         catch (e) {
 
         }
+    }
+}
+
+export default class SearchScreen extends React.Component<any, any> {
+    static navigationOptions = {
+        title: "ROUTES_SEARCH",
+        tabBarLabel: "搜款式",
+        tabBarIcon: (options: any) => (
+            <TabBarIcon
+                type="&#xe620;"
+                activeType="&#xe608;"
+                size={options.focused ? "lg" : "md"}
+                focused={options.focused} />
+        ),
+    };
+
+    render() {
+        return (
+            <Search />
+        );
     }
 }

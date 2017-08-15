@@ -19,35 +19,15 @@ import Swiper from "react-native-swiper";
 import HomeNav from "./home-nav";
 import SearchHeader from "../../../components/search-bar";
 
+@Decorators.pureRender()
 @Decorators.connect("user", "home", "data")
-export default class HomeScreen extends React.Component<any, any> {
-    static navigationOptions = {
-        title: "Routes.ROUTES_HOME",
-        tabBarLabel: "首页",
-        tabBarIcon: (options: any) => (
-            <TabBarIcon
-                type="&#xe6d9;"
-                activeType="&#xe603;"
-                focused={options.focused} />
-        )
-
-    };
+class Home extends React.Component<any, any> {
     constructor(props: any, context: any) {
         super(props, context);
         this.state = {
             loading: false,
             showSwiper: false
         };
-    }
-
-    componentWillMount() {
-        if (!Navigator.tabNavigation) {
-            Navigator.tabNavigation = this.props.navigation;
-        }
-    }
-
-    componentWillUnmount() {
-        Navigator.tabNavigation = undefined;
     }
 
     componentDidMount() {
@@ -275,5 +255,34 @@ export default class HomeScreen extends React.Component<any, any> {
         catch (e) {
 
         }
+    }
+}
+
+export default class HomeScreen extends React.Component<any, any> {
+    static navigationOptions = {
+        title: "Routes.ROUTES_HOME",
+        tabBarLabel: "首页",
+        tabBarIcon: (options: any) => (
+            <TabBarIcon
+                type="&#xe6d9;"
+                activeType="&#xe603;"
+                focused={options.focused} />
+        )
+
+    };
+
+    componentWillMount() {
+        if (!Navigator.tabNavigation) {
+            Navigator.tabNavigation = this.props.navigation;
+        }
+    }
+
+    componentWillUnmount() {
+        Navigator.tabNavigation = undefined;
+    }
+    render() {
+        return (
+            <Home />
+        );
     }
 }

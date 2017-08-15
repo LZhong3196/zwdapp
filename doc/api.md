@@ -198,7 +198,19 @@ Example:
 this.state.value = newValue;
 `
 
+### connect 与 pureRender 结合使用
 
+`pureRender` 需在 `connect` 之前
+
+```
+@Decorators.pureRender()
+@Decorators.connect("statekey")
+class User extends React.Component<any, any> {
+	...
+	
+}
+
+```
 
 ## APIs - 接口工具
 

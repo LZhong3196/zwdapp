@@ -10,7 +10,7 @@ export default function pureRender(): ClassDecorator {
                 || constructor && constructor.name
                 || `component` ;
 
-            console.warn(`You are decorating ${componentName} with @pureRender().\n Check the component - '${componentName}' because it already implements 'shouldComponentUpdate'.`);
+            componentName !== "Connect" && console.warn(`You are decorating ${componentName} with @pureRender().\n Check the component - '${componentName}' because it already implements 'shouldComponentUpdate'.`);
         }
 
         function equal(objectA: any, objectB: any): boolean {
