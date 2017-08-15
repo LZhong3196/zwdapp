@@ -1,6 +1,6 @@
 import { Dimensions, PixelRatio, Platform } from "react-native";
 
-let {height, width} = Dimensions.get("window");
+let { height, width } = Dimensions.get("window");
 
 /** 当前设备系统是ios */
 export const ios = (Platform.OS === "ios");
@@ -95,6 +95,9 @@ export const ROUTES_PROFILE: string = "Profile";
 /** ROUTES - Stacks - 用户个人资料修改编辑页 */
 export const ROUTES_PROFILE_EDIT: string = "ProfileEdit";
 
+
+/** ROUTES - Stacks - 订单详情 */
+export const ROUTES_ORDER_DETAIL: string = "OrderDetail"
 
 /** -------  REQUEST ERROR STATUS DEFINITION   ------- */
 

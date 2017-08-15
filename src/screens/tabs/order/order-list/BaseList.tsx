@@ -7,7 +7,7 @@ import {
   Icon
 } from 'native-base';
 import RefreshList, { RefreshState } from '../../../../components/refresh-list';
-import { APIs, Store, Constants, Widgets } from 'summer';
+import { APIs, Store, Constants, Widgets, Navigator } from 'summer';
 
 let { theme } = Widgets;
 
@@ -35,42 +35,12 @@ interface OrderListProps {
 class BaseList extends Component<OrderListProps, any> {
   private flatList: any;
 
-  static defaultProps: {
+  static defaultProps = {
     status: 0
   }
 
-  constructor(props: any) {
-    super(props);
-
-    this.state = {
-      loading: false
-    }
-  }
-
-  private renderRow(info: any) {
-    const item = info.item
-    return (
-      <ListItem>
-        <Body>
-          <Text numberOfLines={ 1 }>[{ item.city }] { item.title }</Text>
-        </Body>
-        <Right style={ {
-          flexDirection: 'row',
-          alignItems: 'center',
-          flex: 0
-        } }>
-          <Text
-            style={ {
-              paddingRight: 10,
-              color: theme.color_grey
-            } }
-          >已完成<Text style={ {
-            color: theme.color_theme
-          } }>{ item.completed }</Text>款</Text>
-          <Icon name="arrow-forward"></Icon>
-        </Right>
-      </ListItem>
-    )
+  constructor(props: any, context: any) {
+    super(props, context);
   }
 
   componentDidMount() {
@@ -90,6 +60,36 @@ class BaseList extends Component<OrderListProps, any> {
         onFooterRefresh={ () => this.fetchList(false) }
       />
     );
+  }
+
+  private renderRow = (info: any) => {
+    const item = info.item
+    return (
+      <ListItem onPress={ () => this.goToDetail(item.u_id) }>
+        <Body>
+          <Text numberOfLines={ 1 }>[{ item.city }] { item.title }</Text>
+        </Body>
+        <Right style={ {
+          flexDirection: 'row',
+          alignItems: 'center',
+          flex: 0
+        } }>
+          <Text
+            style={ {
+              paddingRight: 10,
+              color: theme.color_grey
+            } }
+          >已完成<Text style={ {
+            color: theme.color_theme
+          } }>{ item.completed }</Text>款</Text>
+          <Icon name="arrow-forward"></Icon>
+        </Right>
+      </ListItem >
+    )
+  }
+
+  goToDetail = (id: string) => {
+    Navigator.to(Constants.ROUTES_ORDER_DETAIL, { id })
   }
 
   fetchList = async (isRefresh: boolean) => {

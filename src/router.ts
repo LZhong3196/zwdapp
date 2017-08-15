@@ -14,6 +14,7 @@ import GoodsPageScreen from "./screens/stacks/goods";
 import MainScreen from "./screens/tabs";
 import NotificationScreen from "./screens/stacks/notification";
 import ScannerScreen from "./screens/stacks/scanner/index";
+import OrderDetailScreen from './screens/stacks/order-detail';
 
 let {
     ROUTES_LOGIN,
@@ -27,7 +28,8 @@ let {
     ROUTES_SHOP,
     ROUTES_SETTING,
     ROUTES_NOTIFICATION,
-    ROUTES_SCANNER
+    ROUTES_SCANNER,
+    ROUTES_ORDER_DETAIL
 } = Constants;
 
 
@@ -44,7 +46,8 @@ export const routeConfigMap = {
     [ROUTES_GOODS]: { screen: GoodsPageScreen },
     [ROUTES_SETTING]: { screen: SettingScreen },
     [ROUTES_NOTIFICATION]: { screen: NotificationScreen },
-    [ROUTES_SCANNER]: { screen: ScannerScreen }
+    [ROUTES_SCANNER]: { screen: ScannerScreen },
+    [ROUTES_ORDER_DETAIL]: { screen: OrderDetailScreen }
 };
 
 export const stackConfig: any = {

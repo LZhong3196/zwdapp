@@ -94,7 +94,6 @@ class CollapsiblePanel extends Component<CollapsiblePanelProps, any> {
 
   setBodyHeight = (event: any) => {
     if (!this.state.calculatedHeight) {
-      console.log(event.nativeEvent.layout)
       this.setState({
         bodyHeight: event.nativeEvent.layout.height,
         calculatedHeight: true
