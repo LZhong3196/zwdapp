@@ -3,16 +3,18 @@ import {
   View,
   Animated,
   TouchableWithoutFeedback,
-  StyleSheet
+  StyleSheet,
+  ViewStyle
 } from 'react-native';
-import { Icon, Text } from 'native-base';
+import { Text } from 'native-base';
 
 import { Widgets } from 'summer';
 
-let { theme } = Widgets
+let { theme, Icon } = Widgets
 
 interface CollapsiblePanelProps {
   title: string,
+  style?: ViewStyle
 }
 
 class CollapsiblePanel extends Component<CollapsiblePanelProps, any> {
@@ -28,7 +30,7 @@ class CollapsiblePanel extends Component<CollapsiblePanelProps, any> {
     }
   }
   render() {
-    const { title, children } = this.props;
+    const { title, children, style } = this.props;
     const initialHeight = this.state.expanded ? this.state.bodyHeight : 0;
     const finialHeight = this.state.expanded ? 0 : this.state.bodyHeight;
 
@@ -46,7 +48,7 @@ class CollapsiblePanel extends Component<CollapsiblePanelProps, any> {
     });
 
     return (
-      <View style={ styles.container }>
+      <View style={ [styles.container, style] }>
         <TouchableWithoutFeedback onPress={ () => this.toggle() }>
           <View style={ styles.titleContainer }>
             <Text style={ {
@@ -54,7 +56,7 @@ class CollapsiblePanel extends Component<CollapsiblePanelProps, any> {
               fontSize: theme.font_size_caption
             } }>{ title }</Text>
             <Animated.View style={ { transform: [{ rotate: iconRotate }] } }>
-              <Icon name="arrow-down" style={ {
+              <Icon type="&#xe61a;" style={ {
                 color: theme.color_grey,
                 fontSize: 22,
               } } />
@@ -85,14 +87,14 @@ class CollapsiblePanel extends Component<CollapsiblePanelProps, any> {
       this.state.animatedValue,
       {
         toValue: 1,
-        duration: 300
+        duration: 200
       }
     ).start()
   }
 
   setBodyHeight = (event: any) => {
     if (!this.state.calculatedHeight) {
-
+      console.log(event.nativeEvent.layout)
       this.setState({
         bodyHeight: event.nativeEvent.layout.height,
         calculatedHeight: true
@@ -106,16 +108,16 @@ class CollapsiblePanel extends Component<CollapsiblePanelProps, any> {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
-    overflow: 'hidden',
-    borderTopWidth: theme.border_width_sm,
-    borderBottomWidth: theme.border_width_sm
+    overflow: 'hidden'
   },
   titleContainer: {
     flexDirection: 'row',
+    borderTopWidth: theme.border_width_sm,
     borderBottomWidth: theme.border_width_sm,
     paddingHorizontal: 10,
     height: 48,
-    alignItems: 'center'
+    alignItems: 'center',
+    borderColor: theme.color_grey
   },
 })
 
