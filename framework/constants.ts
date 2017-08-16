@@ -28,6 +28,7 @@ export const ACTIONTYPES_LOGGED_OUT: string = "Navigation/LOGGED_OUT";
 export const ACTIONTYPES_NAVIGATION_TO: string = "Navigation/NAVIGATE";
 export const ACTIONTYPES_NAVIGATION_BACK: string = "Navigation/BACK";
 export const ACTIONTYPES_NAVIGATION_RESET: string = "Navigation/RESET";
+export const ACTIONTYPES_NAVIGATION_SET_PARAMS: string = "Navigation/SET_PARAMS";
 
 /** Action type - User */
 export const ACTIONTYPES_USER_UPDATE: string = "User/UPDATE";
