@@ -87,7 +87,7 @@ class CollapsiblePanel extends Component<CollapsiblePanelProps, any> {
       this.state.animatedValue,
       {
         toValue: 1,
-        duration: 200
+        duration: 300
       }
     ).start()
   }

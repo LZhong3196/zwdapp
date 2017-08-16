@@ -20,8 +20,6 @@ interface GoodsCardProps {
 class GoodsCard extends Component<GoodsCardProps, any> {
   render() {
     const { goods, shop, style } = this.props;
-    const goodsCompleted: number = goods.filter((item: any) => item.completed).length
-    const shouldPay: number = goods.reduce((prev: any, next: any) => (prev.price * prev.num) + (next.price * next.num))
 
     return (
       <View style={ style }>
@@ -45,14 +43,41 @@ class GoodsCard extends Component<GoodsCardProps, any> {
           }
         </CollapsiblePanel>
         <View style={ styles.footer }>
-          <View>
-            <Text style={ styles.infoGroup }>共计<Text style={ styles.highlightText }>{ goods.length }</Text>款</Text>
-            <Text style={ styles.infoGroup }>已采购<Text style={ styles.highlightText }>{ goodsCompleted }</Text></Text>
-            <Text style={ styles.infoGroup }>应付：<Text style={ styles.highlightText }>￥{ shouldPay }</Text></Text>
+          <View style={ styles.infoGroup }>
+            <Text>共计<Text style={ styles.highlightText }>{ goods.length }</Text>款</Text>
+          </View>
+          <View style={ styles.infoGroup }>
+            <Text>已采购<Text style={ styles.highlightText }>{ this.calculateCompletedGoods() }</Text>款</Text>
+          </View>
+          <View style={ styles.infoGroup }>
+            <Text>应付：<Text style={ styles.highlightText }>￥{ this.calculateShouldPay().toFixed(2) }</Text></Text>
           </View>
         </View>
       </View>
     );
+  }
+
+  calculateShouldPay(): number {
+    const { goods } = this.props;
+
+    let shouldPay: number;
+    if (goods.length == 1) {
+      shouldPay = goods[0].price * goods[0].num;
+    } else {
+      shouldPay = goods.reduce((prev: any, next: any) => {
+        if (typeof prev === 'number') {
+          return prev + (next.price * next.num)
+        } else {
+          return (prev.price * prev.num) + (next.price * next.num)
+        }
+      })
+    }
+    return shouldPay
+  }
+
+  calculateCompletedGoods(): number {
+    const { goods } = this.props
+    return goods.filter((item: any) => item.completed).length
   }
 }
 
@@ -60,15 +85,18 @@ const styles = StyleSheet.create({
   footer: {
     height: 48,
     backgroundColor: '#fff',
-    justifyContent: 'center',
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
+    borderBottomWidth: theme.border_width_sm,
+    borderColor: theme.color_grey,
+    flexDirection: 'row',
   },
   highlightText: {
     color: theme.color_theme
   },
   infoGroup: {
-    marginLeft: 20,
-    position: 'absolute'
+    marginRight: 15,
+    flex: 0,
+    justifyContent: 'center'
   }
 })
 
