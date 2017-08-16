@@ -24,7 +24,7 @@ import {
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { styles, headerStyle, menuStyle } from "./style";
 let { TabBarIcon, Icon, Toast, theme, ImageExtra } = Widgets;
-
+import { is, Map } from "immutable";
 /** replace  */
 const headerBgStatic = require("./images/header.png");
 const backgroundImageStatic = require("./images/background.png");
@@ -36,7 +36,9 @@ interface UserHeaderProps extends ViewProperties {
 
 @Decorators.pureRender()
 class UserHeader extends React.Component<UserHeaderProps, any> {
+
     render() {
+
         const { userInfo } = this.props;
         const bannerImageSource: any = !!userInfo.banner ? {
             uri: userInfo.banner
@@ -119,20 +121,9 @@ class MenuItem extends React.Component<MenuItemProps, any> {
     }
 }
 
-@Decorators.connect("user")
-export default class UserScreen extends React.Component<any, any> {
+@Decorators.connect("user.profile")
+class User extends React.Component<any, any> {
     private unmount: boolean = false;
-    static navigationOptions = {
-        title: "个人中心",
-        tabBarLabel: "我的",
-        tabBarIcon: (options: any) => (
-            <TabBarIcon
-                type="&#xe600;"
-                activeType="&#xe765;"
-                focused={options.focused} />
-        )
-    };
-
     constructor(props: any, context: any) {
         super(props, context);
         this.state = {
@@ -157,6 +148,7 @@ export default class UserScreen extends React.Component<any, any> {
         const backgroundImageSource: any = !!userInfo.refreshBackground ? {
             uri: userInfo.refreshBackground
         } : backgroundImageStatic;
+
 
         return (
             <View style={styles.view}>
@@ -195,9 +187,8 @@ export default class UserScreen extends React.Component<any, any> {
                     </Grid>
                 </ScrollView>
             </View>
-        );
+        )
     }
-
     showToast = () => {
         Toast.show({
             text: "处理中"
@@ -205,8 +196,9 @@ export default class UserScreen extends React.Component<any, any> {
     }
 
     fetchUserInfo = async () => {
-        this.state.loading = true;
-        this.setState(this.state);
+        this.setState({
+            loading: true
+        });
         try {
             const res: any = await APIs.user.getUserInfo({});
             Store.update("user.profile", res.data);
@@ -219,6 +211,25 @@ export default class UserScreen extends React.Component<any, any> {
         this.setState({
             loading: false
         });
+    }
+}
+
+export default class UserScreen extends React.Component<any, any> {
+    static navigationOptions = {
+        title: "个人中心",
+        tabBarLabel: "我的",
+        tabBarIcon: (options: any) => (
+            <TabBarIcon
+                type="&#xe600;"
+                activeType="&#xe765;"
+                focused={options.focused} />
+        )
+    };
+
+    render() {
+        return (
+            <User />
+        );
     }
 }
 

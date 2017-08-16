@@ -16,19 +16,10 @@ import {
 import { styles } from "./style";
 
 @Decorators.connect("market", "data")
-export default class MarketScreen extends React.Component<any, any> {
+class Market extends React.Component<any, any> {
     private flatList: any;
     private scrollToTopButtom: any;
-    static navigationOptions = {
-        title: "Routes.ROUTES_MARKET",
-        tabBarLabel: "逛市场",
-        tabBarIcon: (options: any) => (
-            <TabBarIcon
-                type="&#xe61e;"
-                activeType="&#xe605;"
-                focused={options.focused} />
-        )
-    };
+
     constructor(props: any, context: any) {
         super(props, context);
         this.state = {
@@ -76,7 +67,6 @@ export default class MarketScreen extends React.Component<any, any> {
         return (
             <View style={styles.view}>
                 <SearchBar
-                    onFocus={this.openFilterSearchPage}
                     placeholder="请输入档口名/档口号/旺旺号"/>
                 <RefreshList
                     ref={ (e) => this.flatList = e }
@@ -95,9 +85,6 @@ export default class MarketScreen extends React.Component<any, any> {
     }
     openShopPage = (id: string) => {
         Navigator.to(Routes.ROUTES_SHOP, { id });
-    }
-    openFilterSearchPage = () => {
-        Navigator.to(Routes.ROUTES_FIELD_SEARCH, { origin: Routes.ROUTES_TAB_MARKET });
     }
 
     fetchList = async (isRefresh?: boolean) => {
@@ -153,3 +140,22 @@ export default class MarketScreen extends React.Component<any, any> {
 }
 
 
+
+export default class MarketScreen extends React.Component<any, any> {
+    static navigationOptions = {
+        title: "Routes.ROUTES_MARKET",
+        tabBarLabel: "逛市场",
+        tabBarIcon: (options: any) => (
+            <TabBarIcon
+                type="&#xe61e;"
+                activeType="&#xe605;"
+                focused={options.focused} />
+        )
+    };
+
+    render() {
+        return (
+            <Market />
+        );
+    }
+}
