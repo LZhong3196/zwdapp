@@ -24,7 +24,7 @@ import { connect } from "react-redux";
 
 let { TabBarIcon } = Widgets;
 
-@Decorators.connect("user", "search", "data.city.currentCity")
+@Decorators.connect("search", "data.city.currentCity")
 export default class SearchScreen extends React.Component<any, any> {
     private flatList: any;
     private scrollToTopButtom: any;
@@ -78,6 +78,7 @@ export default class SearchScreen extends React.Component<any, any> {
         return (
             <View style={ styles.container }>
                 <SearchBar
+                    onFocus={this.openFilterSearchPage}
                     placeholder="搜索当季爆款"
                     rightButton={
                         <Text style={styles.headerRightButton} onPress={this.openClassification}>分类</Text>
@@ -99,7 +100,9 @@ export default class SearchScreen extends React.Component<any, any> {
     flatListScrollTop = (scrollTop: boolean) => {
         scrollTop ? this.scrollToTopButtom.hideButton() : this.scrollToTopButtom.showButton();
     }
-
+    openFilterSearchPage = () => {
+        Navigator.to(Routes.ROUTES_FIELD_SEARCH, { origin: Routes.ROUTES_TAB_SEARCH });
+    }
     openGoodsPage = (id: string) => {
         Navigator.to(Routes.ROUTES_GOODS, { id });
     }

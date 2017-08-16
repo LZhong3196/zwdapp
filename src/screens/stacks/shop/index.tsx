@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Lodash from "lodash";
-import { Store, Constants, APIs, Widgets } from "summer";
+import { Store, Constants, APIs, Widgets, Decorators } from "summer";
 import { Image, View, StatusBar } from "react-native";
 import {
     Button,
@@ -24,6 +24,7 @@ import { styles } from "./style";
 
 let { Icon, Toast } = Widgets;
 
+@Decorators.connect("user")
 export default class ShopScreen extends React.Component<any, any> {
     static navigationOptions = {
         headerBackTitle: "",

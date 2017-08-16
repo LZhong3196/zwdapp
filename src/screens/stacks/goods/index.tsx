@@ -35,21 +35,21 @@ export default class GoodsScreen extends React.Component<any, any> {
         headerStyle: styles.header
     };
 
-    constructor(props:any) {
+    constructor(props: any) {
         super(props);
 
         this.state = {
             showSwiper: false
-        }
+        };
     }
 
     componentWillMount() {
         this.fetchData();
 
-        setTimeout(()=> {
+        setTimeout(() => {
             this.setState({
                 showSwiper: true
-            })
+            });
         }, 1000);
     }
 
@@ -173,8 +173,8 @@ export default class GoodsScreen extends React.Component<any, any> {
             );
         }
     }
-    renderSwiper(banner:string[]) {
-        if(this.state.showSwiper) {
+    renderSwiper(banner: string[]) {
+        if (this.state.showSwiper) {
             return(
                 <Swiper
                         showsButtons={false}
@@ -185,9 +185,9 @@ export default class GoodsScreen extends React.Component<any, any> {
                         dotColor={"#fff"}>
                         { banner.map(this.createSwiperList) }
                     </Swiper>
-            )
+            );
         } else {
-            return <View style={{height: 400}}></View>
+            return <View style={{height: 400}}></View>;
         }
     }
     createSwiperList = (image: string, index: number) => (

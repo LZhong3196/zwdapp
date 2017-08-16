@@ -21,7 +21,8 @@ import { styles } from "./style";
 
 let { Icon } = Widgets;
 
-class NotificationScreen extends React.Component<any, any> {
+@Decorators.connect("user")
+export  default class NotificationScreen extends React.Component<any, any> {
     static navigationOptions = {
         headerStyle: styles.header,
         title: "通知"
@@ -63,10 +64,4 @@ class NotificationScreen extends React.Component<any, any> {
         // });
     }
 }
-
-const mapStateToProps = (state: any) => ({
-    user: state.get("user").toJS()
-});
-
-export default connect(mapStateToProps)(NotificationScreen);
 

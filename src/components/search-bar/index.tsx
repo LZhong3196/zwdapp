@@ -16,6 +16,7 @@ const { Icon, theme: {
 interface SearchBarProps {
     rightButton?: any;
     placeholder?: string;
+    onFocus?: () => void;
 }
 
 @Decorators.connect("data")
@@ -26,13 +27,29 @@ export default class SearchBar extends React.Component<SearchBarProps, any> {
             isShowSelect: false
         };
     }
+
     componentDidMount() {
         this.getCityList();
+    }
+    getCityList = async () => {
+        try {
+            /**TODO 使用第三方定位 , 获取当前位置 , 应该判断是否有初始值调用 , 只调用一次*/
+            /**不能放在持久化数据中*/
+            const city = "广州";
+            const res: any = await APIs.data.getCityList();
+            const cityList: any[] = res.data;
+            Store.update("data.city", {
+                city,
+                list: cityList
+            });
+        }
+        catch (e) {
+        }
     }
     render() {
         const cityList: any[] = Store.get("data.city.list") || [];
         const currentCity: string = Store.get("data.city.city") || "定位中";
-       const createCitys =  (cityInfo: any) => (
+        const createCitys =  (cityInfo: any) => (
             <TouchableOpacity
                 key={cityInfo.cid}
                 onPress={ () => this.changeCity(cityInfo.name)}>
@@ -55,10 +72,10 @@ export default class SearchBar extends React.Component<SearchBarProps, any> {
                 <View style={ styles.inputWrap }>
                     <Icon color={ color_base } type="&#xe655;" />
                     <TextInput
-                        onFocus={ this.openFilterSearchPage }
                         style={ styles.input }
                         underlineColorAndroid="transparent"
-                        placeholder={ this.props.placeholder } />
+                        placeholder={ this.props.placeholder }
+                        onFocus={ this.props.onFocus }/>
                     <TouchableOpacity
                         onPress={ this.openQRScanner }>
                         <Icon color={ color_base } type="&#xe645;"/>
@@ -84,20 +101,6 @@ export default class SearchBar extends React.Component<SearchBarProps, any> {
                 </Modal>
             </View>
         );
-    }
-    getCityList = async () => {
-        try {
-            /**TODO 使用第三方定位 , 更新当前位置*/
-            Store.update("data.city.city", "广州");
-            const res: any = await APIs.data.getCityList();
-            const cityList: any[] = res.data;
-            Store.update("data.city.list", cityList);
-        }
-        catch (e) {
-        }
-    }
-    openFilterSearchPage = () => {
-        Navigator.to(Routes.ROUTES_FIELD_SEARCH);
     }
     openQRScanner = () => {
         Navigator.to(Routes.ROUTES_SCANNER);

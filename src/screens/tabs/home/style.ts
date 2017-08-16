@@ -54,13 +54,17 @@ export const styles: any = {
         height: 400,
         marginLeft: 10
     },
+    advertItem: {
+        marginTop: 10
+    },
     advertListContainer: {
-        marginTop: 10,
-        height: 600,
         flexDirection: "row",
-        flexWrap: "wrap"
+        flexWrap: "wrap",
+        height: 600,
+        marginTop: 10
     },
     advertListItem: {
+        width:  SCREEN_WIDTH / 2,
         height: 300,
         padding: 5
     },
@@ -70,11 +74,5 @@ export const styles: any = {
     },
     price: {
         color: "red"
-    },
-    headerBtnLeft: {
-        width: 'auto'
-    },
-    headerBtnRight: {
-        width: 40
     }
 };
