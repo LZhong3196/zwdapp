@@ -22,6 +22,7 @@ class OrderDetailScreen extends Component<any, any> {
                 key={ item.shop_id }
                 shop={ item.shop_name }
                 goods={ item.goods }
+                showPurchaseStatus={ true }
                 style={ {
                   marginTop: 10
                 } }

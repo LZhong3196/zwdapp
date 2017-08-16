@@ -4,7 +4,8 @@ import {
   Text,
   TouchableHighlight,
   StyleSheet,
-  Image
+  Image,
+  Alert
 } from 'react-native';
 import { Button } from 'native-base';
 import { Widgets } from 'summer';
@@ -20,10 +21,17 @@ interface GoodsItemProps {
   price: number,
   thumbnail: string,
   completed: boolean,
-  onConfirmedPurchase?: any
+  onConfirmedPurchase?: any,
+  showPurchaseStatus?: boolean
 }
 
 class GoodsItem extends Component<GoodsItemProps, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      completed: this.props.completed
+    }
+  }
   render() {
     const { title, color, size, num, price, thumbnail } = this.props;
     return (
@@ -38,20 +46,60 @@ class GoodsItem extends Component<GoodsItemProps, any> {
             </View>
             <View style={ styles.infoItem }>
               <Text style={ [styles.infoLeft, styles.colorGrey] }>尺寸：{ size }</Text>
-              <Button bordered style={ {
-                paddingRight: 6,
-                paddingLeft: 6,
-                height: 20,
-                borderColor: theme.color_grey
-              } }>
-                <Text style={ styles.btnConfirmPurchaseText }>确认收货</Text>
-              </Button>
+              { this.renderPurchase() }
             </View>
             <Text style={ styles.price }>￥{ price }</Text>
           </View>
         </View>
       </TouchableHighlight>
     );
+  }
+
+  renderPurchase(): any {
+    const { completed } = this.state;
+    const { showPurchaseStatus } = this.props;
+
+    if (!showPurchaseStatus) {
+      return null
+    }
+
+    if (completed) {
+      return <Text style={ styles.purchasedText }>已拿货</Text>;
+    } else {
+      return (
+        <Button bordered style={ {
+          paddingRight: 6,
+          paddingLeft: 6,
+          height: 20,
+          borderColor: theme.color_grey
+        } }
+          onPress={ this.onConfirmPurchaseBtnClick }
+        >
+          <Text style={ styles.btnConfirmPurchaseText }>确认收货</Text>
+        </Button>)
+    }
+  }
+
+  onConfirmPurchaseBtnClick = () => {
+    Alert.alert(
+      '确认已拿货吗？',
+      null,
+      [
+        { text: '取消' },
+        {
+          text: '确认', onPress: () => {
+            this.setState({
+              completed: true
+            })
+            const { onConfirmedPurchase } = this.props;
+
+            if (typeof (onConfirmedPurchase) === 'function') {
+              onConfirmedPurchase();
+            }
+          }
+        }
+      ]
+    )
   }
 }
 
@@ -98,6 +146,10 @@ const styles = StyleSheet.create({
   btnConfirmPurchaseText: {
     color: theme.color_grey,
     fontSize: 12
+  },
+  purchasedText: {
+    color: '#34b704',
+    fontSize: theme.font_size_caption_sm
   }
 })
 

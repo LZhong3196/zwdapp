@@ -14,12 +14,20 @@ let { theme } = Widgets;
 interface GoodsCardProps {
   goods: any,
   shop: string,
-  style?: ViewStyle
+  style?: ViewStyle,
+  showPurchaseStatus?: boolean
 }
 
 class GoodsCard extends Component<GoodsCardProps, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      completedGoods: this.calculateCompletedGoods()
+    }
+  }
   render() {
-    const { goods, shop, style } = this.props;
+    const { goods, shop, style, showPurchaseStatus } = this.props;
+    const { completedGoods } = this.state;
 
     return (
       <View style={ style }>
@@ -37,6 +45,8 @@ class GoodsCard extends Component<GoodsCardProps, any> {
                   num={ item.num }
                   price={ item.price }
                   completed={ item.completed }
+                  onConfirmedPurchase={ this.updateCompletedGoods }
+                  showPurchaseStatus={ showPurchaseStatus }
                 />
               )
             })
@@ -47,7 +57,7 @@ class GoodsCard extends Component<GoodsCardProps, any> {
             <Text>共计<Text style={ styles.highlightText }>{ goods.length }</Text>款</Text>
           </View>
           <View style={ styles.infoGroup }>
-            <Text>已采购<Text style={ styles.highlightText }>{ this.calculateCompletedGoods() }</Text>款</Text>
+            <Text>已采购<Text style={ styles.highlightText }>{ completedGoods }</Text>款</Text>
           </View>
           <View style={ styles.infoGroup }>
             <Text>应付：<Text style={ styles.highlightText }>￥{ this.calculateShouldPay().toFixed(2) }</Text></Text>
@@ -55,6 +65,12 @@ class GoodsCard extends Component<GoodsCardProps, any> {
         </View>
       </View>
     );
+  }
+
+  updateCompletedGoods = () => {
+    this.setState({
+      completedGoods: this.state.completedGoods + 1
+    });
   }
 
   calculateShouldPay(): number {
