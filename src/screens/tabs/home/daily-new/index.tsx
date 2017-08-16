@@ -10,7 +10,6 @@ import { Store, Navigator, Constants, Widgets, Decorators, Routes } from "summer
 const { ImageExtra } = Widgets;
 
 @Decorators.connect("home")
-@Decorators.pureRender()
 export default class RecommendGoods extends React.Component<any, any> {
     constructor(props: any, context: any) {
         super(props, context);

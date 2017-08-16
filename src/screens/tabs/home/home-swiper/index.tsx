@@ -11,7 +11,6 @@ import Swiper from "react-native-swiper";
 const { ImageExtra } = Widgets;
 
 @Decorators.connect("home")
-@Decorators.pureRender()
 export default class HomeSwiper extends React.Component<any, any> {
     constructor(props: any, context: any) {
         super(props, context);

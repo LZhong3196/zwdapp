@@ -9,7 +9,6 @@ import { Store, Navigator, Constants, Widgets, Decorators } from "summer";
 const { ImageExtra } = Widgets;
 
 @Decorators.connect("user")
-@Decorators.pureRender()
 export default class HomeNav extends React.Component<any, any> {
     constructor(props: any, context: any) {
         super(props, context);
