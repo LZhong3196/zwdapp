@@ -37,7 +37,7 @@ export default class SearchBar extends React.Component<SearchBarProps, any> {
             /**不能放在持久化数据中*/
             const city = "广州";
             const res: any = await APIs.data.getCityList();
-            const cityList: any[] = res.data;
+            const cityList: any[] = res.data || [];
             Store.update("data.city", {
                 city,
                 list: cityList

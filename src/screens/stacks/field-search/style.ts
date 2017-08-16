@@ -58,7 +58,15 @@ export const styles: any = {
         height: 30,
         marginLeft: 5,
         marginRight: 5,
-        backgroundColor: color_theme
+        backgroundColor: color_theme,
+        alignItems: "center",
+        justifyContent: "center",
+        paddingLeft: 5,
+        paddingRight: 5,
+        borderRadius: 3
+    },
+    searchButtonText: {
+        color: "#fff"
     },
     hotSearch: {
         zIndex: 0

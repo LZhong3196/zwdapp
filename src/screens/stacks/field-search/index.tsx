@@ -24,6 +24,7 @@ export default class FiledSearchScreen extends React.Component<any, any> {
         super(props);
         this.state = {
             filed: "",
+            selectedOption: "",
             showSelectOptions: false
         };
     }
@@ -53,6 +54,7 @@ export default class FiledSearchScreen extends React.Component<any, any> {
     }
     renderSelect = () => {
         let select = undefined;
+        const { searchType } = this.state;
         switch (this.props.navigation.state.params.origin) {
            case Routes.ROUTES_TAB_HOME:
                 select = (
@@ -67,8 +69,8 @@ export default class FiledSearchScreen extends React.Component<any, any> {
                         {
                             this.state.showSelectOptions ?
                                 <View style={styles.searchOptions}>
-                                    <Button dark><Text>宝贝</Text></Button>
-                                    <Button dark><Text>店铺</Text></Button>
+                                    <Button style={searchType === "宝贝" ? styles.selectedOption : {}} onPress={() => this.select("宝贝")} dark><Text>宝贝</Text></Button>
+                                    <Button style={searchType === "店铺" ? styles.selectedOption : {}} onPress={() => this.select("店铺")} dark><Text>店铺</Text></Button>
                                 </View>
                                 : undefined
                         }
@@ -89,9 +91,9 @@ export default class FiledSearchScreen extends React.Component<any, any> {
                         {
                             this.state.showSelectOptions ?
                                 <View style={styles.searchOptions}>
-                                    <Button dark><Text>档口名</Text></Button>
-                                    <Button dark><Text>档口号</Text></Button>
-                                    <Button dark><Text>旺旺号</Text></Button>
+                                    <Button style={searchType === "档口名" ? styles.selectedOption : {}} onPress={() => this.select("档口名")} dark><Text>档口名</Text></Button>
+                                    <Button style={searchType === "档口号" ? styles.selectedOption : {}} onPress={() => this.select("档口号")} dark><Text>档口号</Text></Button>
+                                    <Button style={searchType === "旺旺号" ? styles.selectedOption : {}} onPress={() => this.select("旺旺号")} dark><Text>旺旺号</Text></Button>
                                 </View>
                                 : undefined
                         }
@@ -121,10 +123,12 @@ export default class FiledSearchScreen extends React.Component<any, any> {
                             autoFocus={true}
                             onChangeText={this.textChange}/>
                     </View>
-                    <Button style={styles.searchButton}
-                            onPress={ () => this.search(this.state.filed) }>
-                        <Text>搜索</Text>
-                    </Button>
+                    <TouchableOpacity
+                        onPress={ () => this.search(this.state.filed) }>
+                        <View style={styles.searchButton}>
+                            <Text style={styles.searchButtonText}>搜索</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={ styles.hotSearch }>
                     <View style={ styles.hotSearchTitle }>
@@ -146,6 +150,12 @@ export default class FiledSearchScreen extends React.Component<any, any> {
                 </Content>
             </Container>
         );
+    }
+    select = (selectedOption: string) => {
+        this.setState({
+            selectedOption
+        });
+        this.selectOptionToggle();
     }
     selectOptionToggle = () => {
         this.setState({
@@ -170,19 +180,17 @@ export default class FiledSearchScreen extends React.Component<any, any> {
     }
     search = (filed: string) => {
         if (!filed) return;
-        switch (this.props.navigation.state.params.origin) {
-            case Routes.ROUTES_TAB_HOME:
+        const historyList: string[] = Store.get("data.search.historyList") || [];
+        Store.update("data.searchField.historyList", [ ...new Set(historyList.concat([filed])) ]);
+        if (this.props.navigation.state.params.origin === Routes.ROUTES_TAB_MARKET
+            || this.state.selectedOption === "店铺") {
+            Store.update("market.filterInfo.field", filed);
+            Navigator.backToTab("Market");
 
-                break;
-                case Routes.ROUTES_TAB_MARKET:
-
-                break;
-                case Routes.ROUTES_TAB_SEARCH:
-                    Store.update("data.search.searchField", filed);
-                    const historyList: string[] = Store.get("data.search.historyList") || [];
-                    Store.update("data.search.historyList", [ ...new Set(historyList.concat([filed])) ]);
-                    Navigator.backToTab("Search");
-                break;
+        }
+        else {
+            Store.update("search.filterInfo.field", filed);
+            Navigator.backToTab("Search");
         }
     }
     getHotSearchList = async () => {
