@@ -19,8 +19,7 @@ import Swiper from "react-native-swiper";
 import HomeNav from "./home-nav";
 import SearchHeader from "../../../components/search-bar";
 
-// @Decorators.pureRender()
-@Decorators.connect("user", "home", "data")
+@Decorators.connect("home", "data", "user.account")
 class Home extends React.Component<any, any> {
     constructor(props: any, context: any) {
         super(props, context);
@@ -258,6 +257,7 @@ class Home extends React.Component<any, any> {
     }
 }
 
+
 export default class HomeScreen extends React.Component<any, any> {
     static navigationOptions = {
         title: "Routes.ROUTES_HOME",
@@ -281,6 +281,7 @@ export default class HomeScreen extends React.Component<any, any> {
         Navigator.tabNavigation = undefined;
     }
     render() {
+
         return (
             <Home />
         );

@@ -24,7 +24,7 @@ import {
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { styles, headerStyle, menuStyle } from "./style";
 let { TabBarIcon, Icon, Toast, theme, ImageExtra } = Widgets;
-
+import { is, Map } from "immutable";
 /** replace  */
 const headerBgStatic = require("./images/header.png");
 const backgroundImageStatic = require("./images/background.png");
@@ -36,7 +36,9 @@ interface UserHeaderProps extends ViewProperties {
 
 @Decorators.pureRender()
 class UserHeader extends React.Component<UserHeaderProps, any> {
+
     render() {
+
         const { userInfo } = this.props;
         const bannerImageSource: any = !!userInfo.banner ? {
             uri: userInfo.banner
@@ -119,7 +121,7 @@ class MenuItem extends React.Component<MenuItemProps, any> {
     }
 }
 
-@Decorators.connect("user")
+@Decorators.connect("user.profile")
 class User extends React.Component<any, any> {
     private unmount: boolean = false;
     constructor(props: any, context: any) {
@@ -146,6 +148,7 @@ class User extends React.Component<any, any> {
         const backgroundImageSource: any = !!userInfo.refreshBackground ? {
             uri: userInfo.refreshBackground
         } : backgroundImageStatic;
+
 
         return (
             <View style={styles.view}>
@@ -211,7 +214,6 @@ class User extends React.Component<any, any> {
     }
 }
 
-
 export default class UserScreen extends React.Component<any, any> {
     static navigationOptions = {
         title: "个人中心",
@@ -225,7 +227,9 @@ export default class UserScreen extends React.Component<any, any> {
     };
 
     render() {
-        return ( <User /> );
+        return (
+            <User />
+        );
     }
 }
 

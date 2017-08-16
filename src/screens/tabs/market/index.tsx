@@ -15,7 +15,7 @@ import {
 } from "native-base";
 import { styles } from "./style";
 
-@Decorators.connect("user", "market", "data")
+@Decorators.connect("market", "data")
 class Market extends React.Component<any, any> {
     private flatList: any;
     private scrollToTopButtom: any;
