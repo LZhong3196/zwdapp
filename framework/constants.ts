@@ -16,10 +16,14 @@ export const DEVICE_DENSITY = PixelRatio.get();
 
 
 /** Persist store whitelist - 持久化数据白名单 | 与state对应 */
-export const PERSIST_STORE_WHITE_LIST: Array<string> = [
-    "user",
-    "data"
-];
+/** [reducerKey]: [** subset of the reducer to store **]
+ *  If you want to store the whole reducer, set a empty Array like
+ *  [reducerKey]: []
+*/
+export const PERSIST_STORE_WHITE_LIST: Dictionary<Array<string>> = {
+    user: [],
+    data: ["city"]
+};
 
 /** -------  ACTION TYPES DEFINITION   ------- */
 

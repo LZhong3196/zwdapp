@@ -110,4 +110,15 @@ declare module "react-native-camera" {
     export default class Menu extends Component<any, any> { }
 }
 
+
+declare module "@actra-development-oss/redux-persist-transform-filter-immutable" {
+    import { Transform } from "redux-persist";
+    export function createFilter(reducerName: any, inboundPaths: any, outboundPaths?: any, ...args: any[]): Transform<any, any>;
+    export function createWhitelistFilter(reducerName: any, inboundPaths: any, outboundPaths: any): Transform<any, any>;
+    export function createBlacklistFilter(reducerName: any, inboundPaths: any, outboundPaths: any): Transform<any, any>;
+    export function filterObject(_ref: any, state: any): any
+    export function persistFilter(state: any, ...args: any[]): any;
+    export default createFilter;
+}
+
 declare let module: any;

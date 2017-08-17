@@ -23,7 +23,7 @@ type ReducerConfigs = Dictionary<Array<string>>;
 const reducerConfigs: ReducerConfigs = {
     home: [ ACTIONTYPES_HOME_UPDATE ],
     market: [ ACTIONTYPES_MARKET_UPDATE ],
-    search: [ACTIONTYPES_SEARCH_UPDATE],
+    search: [ ACTIONTYPES_SEARCH_UPDATE ],
     data: [ ACTIONTYPES_DATA_UPDATE ],
     order: [ ACTIONTYPES_ORDER_UPDATE ],
     goods: [ ACTIONTYPES_GOODS_UPDATE ],

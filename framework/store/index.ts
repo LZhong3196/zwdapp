@@ -8,7 +8,9 @@ import {
 import reduxThunk from "redux-thunk";
 import { createLogger } from "redux-logger";
 import { AsyncStorage } from "react-native";
+import { Transform } from "redux-persist";
 import { persistStore, autoRehydrate } from "redux-persist-immutable";
+import createFilter from "@actra-development-oss/redux-persist-transform-filter-immutable";
 import {
     PERSIST_STORE_WHITE_LIST,
     ROUTES_MAIN
@@ -136,10 +138,12 @@ export default class Store {
         const rehydrationCompleted: any = compose(
             initConnectivityInfo
         );
-
+        const persistStoreWhiteList: Array<string> = Object.keys(PERSIST_STORE_WHITE_LIST);
+        const transforms: Array<Transform<any, any>> = createPersistTransform();
         persistStore(store, {
-            whitelist: PERSIST_STORE_WHITE_LIST,
-            storage: AsyncStorage
+            whtielist: persistStoreWhiteList,
+            storage: AsyncStorage,
+            transform: transforms
         }, rehydrationCompleted);
 
         if (isDebuggingInChrome) {
@@ -149,3 +153,21 @@ export default class Store {
     }
 }
 
+
+function createPersistTransform(): Array<Transform<any, any>> {
+    let filterTransforms: Array<Transform<any, any>> = [];
+    for (const key in PERSIST_STORE_WHITE_LIST) {
+        if (!!PERSIST_STORE_WHITE_LIST[key].length) {
+            const subsetFilter: Transform<any, any> = createFilter(
+                [key],
+                PERSIST_STORE_WHITE_LIST[key],
+                PERSIST_STORE_WHITE_LIST[key],
+            );
+            filterTransforms = [
+                ...filterTransforms,
+                subsetFilter
+            ];
+        }
+    }
+    return filterTransforms;
+}
