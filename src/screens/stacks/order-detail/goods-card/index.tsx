@@ -15,7 +15,8 @@ interface GoodsCardProps {
   goods: any,
   shop: string,
   style?: ViewStyle,
-  showPurchaseStatus?: boolean
+  showPurchaseStatus?: boolean,
+  onConfirmedPurchase?: (num: number) => void
 }
 
 class GoodsCard extends Component<GoodsCardProps, any> {
@@ -54,13 +55,13 @@ class GoodsCard extends Component<GoodsCardProps, any> {
         </CollapsiblePanel>
         <View style={ styles.footer }>
           <View style={ styles.infoGroup }>
-            <Text>共计<Text style={ styles.highlightText }>{ goods.length }</Text>款</Text>
+            <Text style={ styles.infoGroupText }>共计<Text style={ styles.highlightText }>{ goods.length }</Text>款</Text>
           </View>
           <View style={ styles.infoGroup }>
-            <Text>已采购<Text style={ styles.highlightText }>{ completedGoods }</Text>款</Text>
+            <Text style={ styles.infoGroupText }>已采购<Text style={ styles.highlightText }>{ completedGoods }</Text>款</Text>
           </View>
           <View style={ styles.infoGroup }>
-            <Text>应付：<Text style={ styles.highlightText }>￥{ this.calculateShouldPay().toFixed(2) }</Text></Text>
+            <Text style={ styles.infoGroupText }>应付：<Text style={ styles.highlightText }>￥{ this.calculateShouldPay().toFixed(2) }</Text></Text>
           </View>
         </View>
       </View>
@@ -71,6 +72,11 @@ class GoodsCard extends Component<GoodsCardProps, any> {
     this.setState({
       completedGoods: this.state.completedGoods + 1
     });
+
+    const { onConfirmedPurchase } = this.props;
+    if (typeof onConfirmedPurchase === 'function') {
+      onConfirmedPurchase(1);
+    }
   }
 
   calculateShouldPay(): number {
@@ -112,7 +118,10 @@ const styles = StyleSheet.create({
   infoGroup: {
     marginRight: 15,
     flex: 0,
-    justifyContent: 'center'
+    justifyContent: 'center',
+  },
+  infoGroupText: {
+    color: theme.color_base
   }
 })
 

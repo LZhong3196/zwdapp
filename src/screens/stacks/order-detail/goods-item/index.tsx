@@ -39,7 +39,7 @@ class GoodsItem extends Component<GoodsItemProps, any> {
         <View style={ styles.container }>
           <Image source={ { uri: thumbnail } } style={ styles.thumbnail } />
           <View style={ styles.infoContainer }>
-            <Text numberOfLines={ 2 }>{ title }</Text>
+            <Text style={ styles.title } numberOfLines={ 2 }>{ title }</Text>
             <View style={ styles.infoItem }>
               <Text style={ [styles.infoLeft, styles.colorGrey] }>颜色：{ color }</Text>
               <Text style={ styles.colorGrey }>x { num }</Text>
@@ -71,7 +71,7 @@ class GoodsItem extends Component<GoodsItemProps, any> {
           paddingRight: 6,
           paddingLeft: 6,
           height: 20,
-          borderColor: theme.color_grey
+          borderColor: theme.color_base
         } }
           onPress={ this.onConfirmPurchaseBtnClick }
         >
@@ -113,8 +113,8 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: theme.font_size_caption_sm,
-    color: theme.color_base
+    fontSize: theme.font_size_base,
+    lineHeight: theme.font_size_base + 2
   },
 
   thumbnail: {
@@ -125,6 +125,7 @@ const styles = StyleSheet.create({
   infoContainer: {
     flex: 1,
     marginLeft: 10,
+    marginVertical: 2,
     justifyContent: "space-between"
   },
 
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
     fontSize: theme.font_size_caption_sm
   },
   btnConfirmPurchaseText: {
-    color: theme.color_grey,
+    color: theme.color_base,
     fontSize: 12
   },
   purchasedText: {

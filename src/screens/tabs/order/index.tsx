@@ -18,6 +18,8 @@ import {
 import { Constants, Widgets } from "summer";
 import { WorkingList, FinishList, CancelList } from './order-list';
 
+export { OrderStatus } from './order-list'
+
 let { TabBarIcon, theme } = Widgets;
 
 const activeTextStyle = {
