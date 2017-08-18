@@ -9,6 +9,9 @@ import {
     ACTIONTYPES_NAVIGATION_RESET
 } from "./../constants";
 
+const IS_DEV = (global as any).__DEV__;
+const IS_DEBUG = (global as any).__DEBUG__;
+
 type appNavigationOptions = {
     dispatch: any;
     nav: any;
@@ -22,8 +25,14 @@ export type routerConfigs = {
 export default class Navigator {
     public appName: string;
     public appNavigator: ReactNavigation.NavigationContainer;
+    static routes: HashMap<string> = {};
     static navigatorInstance: ReactNavigation.NavigationContainer;
 
+    static initRoutes(routeConfigMap: HashMap<any>) {
+        for (const key in routeConfigMap) {
+            this.routes[key.toUpperCase()] = key;
+        }
+    }
     /** 转入对应路由 */
     static to(routeName: string, params?: any) {
         Store.dispatch({

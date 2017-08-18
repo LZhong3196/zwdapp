@@ -28,7 +28,7 @@ const activeTextStyle = {
 
 export default class OrderScreen extends React.Component<any, any> {
     static navigationOptions = {
-        title: Constants.ROUTES_ORDER,
+        title: "ROUTES_ORDER",
         tabBarLabel: "采购单",
         tabBarIcon: (options: any) => (
             <TabBarIcon

@@ -1,5 +1,5 @@
 /**
- *  Networking utils powered by @author lion
+ *  Networking utils extends from [qmjy-app] powered by maolion
  */
 import * as MockJS from "mockjs";
 import * as RFS from "react-native-fs";
@@ -9,6 +9,7 @@ import * as Constants from "../constants";
 
 import { resolveError, getToken } from "./request-extra";
 import { isNetworkConnected } from "./networking";
+import upload from "./../components/uploader/index";
 
 const IS_DEV = (global as any).__DEV__;
 const IS_DEBUG = (global as any).__DEBUG__;
@@ -74,7 +75,6 @@ export default async function request(
     let isFromRAP = false;
     let pathname: string;
 
-
     if (rapConfig && (IS_DEV || IS_DEBUG)) {
         rap = await RAP.getModel(
             rapConfig.host,
@@ -88,7 +88,7 @@ export default async function request(
         isFromRAP = !IS_DEBUG && rap.router(url);
         if (isFromRAP) {
             url = rap.prefix + url;
-            options.method = "GET";
+            // options.method = "GET";
             options.JSONParser = jsTypeJSONParser;
             console.log(`RAP: 请求 ${url} 提交的参数:`, data || {});
         } else {
@@ -99,8 +99,14 @@ export default async function request(
     let isFromRAPCache: boolean;
 
     try {
-        res = await _fetch(url, options);
-    } catch (e) {
+        if (/^UPLOAD/i.test(options.method)) {
+            res = await upload(url, data);
+        }
+        else {
+            res = await _fetch(url, options);
+        }
+    }
+    catch (e) {
         let isConnected = isNetworkConnected();
         if (!isConnected) {
             e.code = Constants.REQUEST_ERROR_NETINFO_NONE;

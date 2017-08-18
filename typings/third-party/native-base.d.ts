@@ -77,7 +77,7 @@ declare module 'native-base@2.2.0' {
              */
 			searchBar?: boolean;
 			/**
-             * Wraps the search bar with predefined border options.
+             * Wraps the field-search bar with predefined border options.
              * Default: regular
              */
 			rounded?: boolean;

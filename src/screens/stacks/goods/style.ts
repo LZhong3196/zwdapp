@@ -1,4 +1,4 @@
-import { Widgets } from "summer";
+import { Widgets,Constants } from "summer";
 const {
     color_theme,
     color_base,
@@ -92,7 +92,6 @@ export const styles: any = {
         alignItems: "center"
     },
     marketImage: {
-        backgroundColor: color_base,
         marginLeft: 10,
         marginRight: 10
     },
@@ -110,10 +109,12 @@ export const styles: any = {
         right: 10,
         borderWidth: 1,
         borderColor: "#a1a1a1",
-        height: 20
+        height: 20,
+        paddingTop: 0,
+        paddingBottom: Constants.ios? 1: 5
     },
     toMarketButtonText: {
         color: "#a1a1a1",
-        fontSize: 10
+        fontSize: 10,
     }
 };

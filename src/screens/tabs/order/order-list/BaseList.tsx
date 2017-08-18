@@ -7,7 +7,7 @@ import {
   Icon
 } from "native-base";
 import RefreshList, { RefreshState } from "../../../../components/refresh-list";
-import { APIs, Store, Constants, Widgets, Navigator } from "summer";
+import { APIs, Store, Constants, Widgets, Navigator, Routes } from "summer";
 
 let { theme } = Widgets;
 
@@ -89,7 +89,7 @@ class BaseList extends Component<OrderListProps, any> {
   }
 
   goToDetail = (id: string) => {
-    Navigator.to(Constants.ROUTES_ORDER_DETAIL, { id });
+    Navigator.to(Routes.ROUTES_ORDER_DETAIL, { id });
   }
 
   fetchList = async (isRefresh: boolean) => {

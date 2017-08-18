@@ -80,7 +80,9 @@ export const headerStyle: any = {
     },
     titleLeftText: {
         color: color_background,
-        fontSize: font_size_caption
+        fontSize: font_size_caption,
+        paddingVertical: 20,
+        paddingRight: 30
     },
     titleText: {
         color: color_background,

@@ -70,5 +70,11 @@ export const styles: any = {
     },
     price: {
         color: "red"
+    },
+    headerBtnLeft: {
+        width: 'auto'
+    },
+    headerBtnRight: {
+        width: 40
     }
 };

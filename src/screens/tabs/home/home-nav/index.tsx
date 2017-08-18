@@ -6,7 +6,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { styles } from "./style";
-import { Store, Constants, Widgets, Decorators } from "summer";
+import { Store, Navigator, Constants, Widgets, Decorators } from "summer";
 const { ImageExtra } = Widgets;
 
 @Decorators.pureRender()
@@ -29,55 +29,50 @@ class HomeNav extends PureComponent<any, any> {
                 showsHorizontalScrollIndicator={false}
             >
                 <TouchableWithoutFeedback
-                    onPress={ () => this.navTo("Login") }
+                    onPress={ () => this.navTo(Constants.ROUTES_LOGIN) }
                 >
                     <Image
                         style={ styles.homeNavImage }
-                        source={ require("./images/HomeNavImage.jpg") }
+                        source={ require("./images/newStyle.png") }
                     />
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback
-                    onPress={ () => this.navTo("Login") }
+                    onPress={ () => this.navTo(Constants.ROUTES_LOGIN) }
                 >
                     <Image
                         style={ styles.homeNavImage }
-                        source={ require("./images/HomeNavImage.jpg") }
+                        source={ require("./images/newStyle.png") }
                     />
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback
-                    onPress={ () => this.navTo("Login") }
+                    onPress={ () => this.navTo(Constants.ROUTES_LOGIN) }
                 >
                     <Image
                         style={ styles.homeNavImage }
-                        source={ require("./images/HomeNavImage.jpg") }
+                        source={ require("./images/newStyle.png") }
                     />
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback
-                    onPress={ () => this.navTo("Login") }
+                    onPress={ () => this.navTo(Constants.ROUTES_LOGIN) }
                 >
                     <Image
                         style={ styles.homeNavImage }
-                        source={ require("./images/HomeNavImage.jpg") }
+                        source={ require("./images/newStyle.png") }
                     />
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback
-                    onPress={ () => this.navTo("Login") }
+                    onPress={ () => this.navTo(Constants.ROUTES_LOGIN) }
                 >
                     <Image
                         style={ styles.homeNavImage }
-                        source={ require("./images/HomeNavImage.jpg") }
+                        source={ require("./images/newStyle.png") }
                     />
                 </TouchableWithoutFeedback>
             </ScrollView>
         );
     }
     navTo = (target: string) => {
-        Store.dispatch({
-            type: Constants.ACTIONTYPES_LOGGED_OUT,
-            meta: {
-
-            }
-        } as any);
+        Navigator.to(target);
     }
 }
 

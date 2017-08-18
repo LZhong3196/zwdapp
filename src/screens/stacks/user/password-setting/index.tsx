@@ -7,13 +7,13 @@ import {
     Input,
     Button
 } from "native-base";
-import { Store, Constants, Widgets, APIs, Navigator } from "summer";
+import { Store, Constants, Widgets, APIs, Navigator, Routes } from "summer";
 import { styles } from "./style";
 let { Icon, theme, Toast } = Widgets;
 
 export default class PasswordSettingScreen extends React.Component<any, any> {
     static navigationOptions = (navigation: any) => ({
-        title: navigation.navigation.state.routeName === Constants.ROUTES_REGISTER ? "注册" : "重设密码",
+        title: navigation.navigation.state.routeName === Routes.ROUTES_REGISTER ? "注册" : "重设密码",
         headerStyle: styles.header
     })
 
@@ -114,7 +114,7 @@ export default class PasswordSettingScreen extends React.Component<any, any> {
                 text: "修改成功"
             });
 
-            Navigator.reset(Constants.ROUTES_LOGIN);
+            Navigator.reset(Routes.ROUTES_LOGIN);
 
             let account: any = Store.get("user.account") || {};
             Store.update("user.account", {

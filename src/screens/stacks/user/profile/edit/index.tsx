@@ -30,7 +30,7 @@ const IconMap: Dictionary<string> = {
 export default class ProfileEditScreen extends React.Component<any, any> {
     private input: any;
     static navigationOptions = (navigation: any) => ({
-        title: TitleMap[navigation.navigation.state.params.key],
+        title: TitleMap[navigation.navigation.state.params.name],
         headerStyle: styles.header
     })
 
@@ -54,7 +54,7 @@ export default class ProfileEditScreen extends React.Component<any, any> {
     }
 
     render() {
-        const key: string = this.props.navigation.state.params.key || undefined;
+        const name: string = this.props.navigation.state.params.name || undefined;
         let {
             value,
         } = this.state;
@@ -64,11 +64,11 @@ export default class ProfileEditScreen extends React.Component<any, any> {
         return (
             <Container style={styles.container}>
                 <Item regular style={styles.item}>
-                    <Icon type={IconMap[key]} color={theme.color_grey} />
+                    <Icon type={IconMap[name]} color={theme.color_grey} />
                     <Input
                         autoFocus
                         ref={(component: any) => this.input = component}
-                        placeholder={`请输入${TitleMap[key]}`}
+                        placeholder={`请输入${TitleMap[name]}`}
                         value={value}
                         style={styles.input}
                         placeholderTextColor={theme.color_grey}
@@ -105,10 +105,10 @@ export default class ProfileEditScreen extends React.Component<any, any> {
         Toast.loading();
         try {
             let profile: any = Store.get("user.profile") || {};
-            const key: string = this.props.navigation.state.params.key || undefined;
+            const name: string = this.props.navigation.state.params.name || undefined;
             const profileUpdate: any = {
                 ...profile,
-                [key]: this.state.value
+                [name]: this.state.value
             };
             const res: any = await APIs.user.postUserInfo(profileUpdate);
             Toast.success({

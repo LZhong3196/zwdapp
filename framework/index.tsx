@@ -5,14 +5,15 @@ import { AppRegistry } from "react-native";
 
 import request from "./libs/request";
 import * as Widgets from "./components/index";
-import * as Utils from "./utils/index";
 import * as Cacher from "./cacher/cacher";
 import * as Constants from "./constants";
 import * as Decorators from "./decorators/index";
 import * as Networking from "./libs/networking";
+import * as ImageCache from "./cacher/image";
 import Store from "./store/index";
 import Navigator from "./navigator/index";
 
+let Routes: HashMap<string> = Navigator.routes;
 
 export interface AppOptions {
 	appName: string;
@@ -57,18 +58,18 @@ function initAPIs(options: AppOptions) {
 	}
 }
 
-
 export function setup(options: AppOptions) {
 	let appStore: Store = new Store();
 	if (!Store.instance) {
 		Store.instance = appStore;
 	}
-	let AppNavigator: Navigator = new Navigator(options.router);
+	let appNavigator: Navigator = new Navigator(options.router);
 	if (!Navigator.navigatorInstance) {
-		Navigator.navigatorInstance = AppNavigator.appNavigator;
+		Navigator.navigatorInstance = appNavigator.appNavigator;
+		Navigator.initRoutes(options.router.routeConfigMap);
 	}
 
-	const AppWithNavigationState = AppNavigator.createApp();
+	const AppWithNavigationState = appNavigator.createApp();
 	class App extends React.Component<any, any> {
 		constructor(props: any, context: any) {
 			super(props, context);
@@ -90,13 +91,14 @@ export function setup(options: AppOptions) {
 	module.exports.APIs = initAPIs(options);
 }
 
+
 export {
 	Widgets,
-	Utils,
 	Decorators,
-	Cacher,
 	Constants,
 	Networking,
 	Store,
-	Navigator
+	Navigator,
+	ImageCache,
+	Routes
 };
