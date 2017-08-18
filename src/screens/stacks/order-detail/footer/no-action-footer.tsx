@@ -1,16 +1,16 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React from "react";
+import { View, Text } from "react-native";
 import {
   Footer,
   FooterTab,
   Button
-} from 'native-base';
-import { Widgets } from 'summer';
+} from "native-base";
+import { Widgets } from "summer";
 
 let { theme } = Widgets;
 
 interface NoActionFooterProps {
-  title: string
+  title: string;
 }
 
 const NoActionFooter: React.SFC<NoActionFooterProps> = (props) => {
@@ -19,10 +19,10 @@ const NoActionFooter: React.SFC<NoActionFooterProps> = (props) => {
   return (
     <Footer>
       <FooterTab style={ {
-        backgroundColor: '#fff',
+        backgroundColor: "#fff",
         borderTopColor: theme.color_grey,
-        justifyContent: 'center',
-        alignItems: 'center'
+        justifyContent: "center",
+        alignItems: "center"
       } }>
         <View>
           <Text>{ title }</Text>

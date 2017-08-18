@@ -1,21 +1,21 @@
-import React from 'react';
-import { Text } from 'react-native';
+import React from "react";
+import { Text } from "react-native";
 import {
   Footer,
   FooterTab,
   Button
-} from 'native-base';
+} from "native-base";
 
-import { OrderStatus } from '../../../tabs/order';
-import WorkingFooter from './working-footer';
-import NoActionFooter from './no-action-footer';
+import { OrderStatus } from "../../../tabs/order";
+import WorkingFooter from "./working-footer";
+import NoActionFooter from "./no-action-footer";
 
 
 interface DetailFooterProps {
-  status: number,
-  completed: number,
-  onCancel: () => void,
-  onComplete: () => void
+  status: number;
+  completed: number;
+  onCancel: () => void;
+  onComplete: () => void;
 }
 
 const DetailFooter: React.SFC<DetailFooterProps> = (props) => {
@@ -23,11 +23,11 @@ const DetailFooter: React.SFC<DetailFooterProps> = (props) => {
 
   switch (status) {
     case OrderStatus.Working:
-      return <WorkingFooter completed={ completed } onCancel={ onCancel } onComplete={ onComplete } />
+      return <WorkingFooter completed={ completed } onCancel={ onCancel } onComplete={ onComplete } />;
     case OrderStatus.Finished:
-      return <NoActionFooter title="已完成" />
+      return <NoActionFooter title="已完成" />;
     case OrderStatus.Cancel:
-      return <NoActionFooter title="已作废" />
+      return <NoActionFooter title="已作废" />;
     default:
       return null;
   }

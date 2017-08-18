@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 import {
     Container,
     Content,
@@ -14,17 +14,17 @@ import {
     Text,
     ListItem,
     Icon as BaseIcon
-} from 'native-base';
+} from "native-base";
 import { Constants, Widgets } from "summer";
-import { WorkingList, FinishList, CancelList } from './order-list';
+import { WorkingList, FinishList, CancelList } from "./order-list";
 
-export { OrderStatus } from './order-list'
+export { OrderStatus } from "./order-list";
 
 let { TabBarIcon, theme } = Widgets;
 
 const activeTextStyle = {
     color: theme.color_theme
-}
+};
 
 export default class OrderScreen extends React.Component<any, any> {
     static navigationOptions = {

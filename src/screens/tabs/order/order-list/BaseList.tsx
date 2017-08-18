@@ -1,35 +1,35 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   ListItem,
   Body,
   Right,
   Text,
   Icon
-} from 'native-base';
-import RefreshList, { RefreshState } from '../../../../components/refresh-list';
-import { APIs, Store, Constants, Widgets, Navigator } from 'summer';
+} from "native-base";
+import RefreshList, { RefreshState } from "../../../../components/refresh-list";
+import { APIs, Store, Constants, Widgets, Navigator } from "summer";
 
 let { theme } = Widgets;
 
 interface OrderStatus {
-  Working: number,
-  Finished: number,
-  Cancel: number
+  Working: number;
+  Finished: number;
+  Cancel: number;
 }
 
 export const OrderStatus: OrderStatus = {
   Working: 0,
   Finished: 1,
   Cancel: 2
-}
+};
 
 let storeKeyMap: Map<number, string> = new Map();
-storeKeyMap.set(OrderStatus.Working, 'workingList');
-storeKeyMap.set(OrderStatus.Finished, 'finishedList');
-storeKeyMap.set(OrderStatus.Cancel, 'cancelList')
+storeKeyMap.set(OrderStatus.Working, "workingList");
+storeKeyMap.set(OrderStatus.Finished, "finishedList");
+storeKeyMap.set(OrderStatus.Cancel, "cancelList");
 
 interface OrderListProps {
-  status?: number
+  status?: number;
 }
 
 class BaseList extends Component<OrderListProps, any> {
@@ -37,7 +37,7 @@ class BaseList extends Component<OrderListProps, any> {
 
   static defaultProps = {
     status: 0
-  }
+  };
 
   constructor(props: any, context: any) {
     super(props, context);
@@ -63,15 +63,15 @@ class BaseList extends Component<OrderListProps, any> {
   }
 
   private renderRow = (info: any) => {
-    const item = info.item
+    const item = info.item;
     return (
       <ListItem onPress={ () => this.goToDetail(item.u_id) }>
         <Body>
           <Text numberOfLines={ 1 }>[{ item.city }] { item.title }</Text>
         </Body>
         <Right style={ {
-          flexDirection: 'row',
-          alignItems: 'center',
+          flexDirection: "row",
+          alignItems: "center",
           flex: 0
         } }>
           <Text
@@ -85,11 +85,11 @@ class BaseList extends Component<OrderListProps, any> {
           <Icon name="arrow-forward"></Icon>
         </Right>
       </ListItem >
-    )
+    );
   }
 
   goToDetail = (id: string) => {
-    Navigator.to(Constants.ROUTES_ORDER_DETAIL, { id })
+    Navigator.to(Constants.ROUTES_ORDER_DETAIL, { id });
   }
 
   fetchList = async (isRefresh: boolean) => {
@@ -106,7 +106,7 @@ class BaseList extends Component<OrderListProps, any> {
       });
 
       if (!response.data.results.length) {
-        this.flatList.endRefreshing(RefreshState.NoMoreData)
+        this.flatList.endRefreshing(RefreshState.NoMoreData);
         return;
       }
 
@@ -124,9 +124,9 @@ class BaseList extends Component<OrderListProps, any> {
           storeKey: storeKeyMap.get(status).toString()
         },
         payload: newList
-      })
+      });
 
-      this.flatList.endRefreshing(RefreshState.Idle)
+      this.flatList.endRefreshing(RefreshState.Idle);
 
     } catch (error) {
 

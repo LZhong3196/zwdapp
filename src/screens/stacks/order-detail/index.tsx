@@ -1,36 +1,38 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   ScrollView,
   Text
-} from 'react-native';
+} from "react-native";
 import {
   Button,
   Icon,
   Container,
-} from 'native-base';
-import { APIs, Store, Constants, Decorators, Navigator } from 'summer';
-import CollapsiblePanel from '../../../components/collapsible-panel';
-import GoodsCard from './goods-card';
-import Footer from './footer';
-import { OrderStatus } from '../../tabs/order';
+} from "native-base";
+import { APIs, Store, Constants, Decorators, Navigator } from "summer";
+import CollapsiblePanel from "../../../components/collapsible-panel";
+import GoodsCard from "./goods-card";
+import Footer from "./footer";
+import { OrderStatus } from "../../tabs/order";
 
 @Decorators.pureRender()
 class OrderDetailScreen extends Component<any, any> {
   static navigationOptions = ({ navigation }: any) => {
     const { params } = navigation.state;
     const btnEditTitle = {
-      backgroundColor: 'transparent',
-      borderColor: '#333',
-      height: 20
-    }
+      backgroundColor: "transparent",
+      height: 30
+    };
 
     return {
       title: params.title,
       headerRight: (
         params.status === OrderStatus.Working ?
-          <Button style={ btnEditTitle }><Icon name="ios-create-outline" style={ { color: '#333' } } /></Button> : null
-      )
-    }
+          <Button style={ btnEditTitle } transparent><Icon name="ios-create-outline" style={ { color: "#333" } } /></Button> : null
+      ),
+      headerStyle: {
+        backgroundColor: "#fff"
+      }
+    };
   }
 
   constructor(props: any) {
@@ -38,20 +40,19 @@ class OrderDetailScreen extends Component<any, any> {
 
     this.state = {
       completedGoods: 0
-    }
+    };
   }
 
   componentDidMount() {
-    this.fetchData()
+    this.fetchData();
   }
 
   render() {
     const { id } = this.props.navigation.state.params;
-    let order: any = Store.get(`order.${id}`) || {}
+    let order: any = Store.get(`order.${id}`) || {};
     const { completedGoods } = this.state;
-    console.log(order)
+    console.log(id, order);
     if (order.items && order.items.length > 0) {
-      console.count('detail')
       return (
         <Container>
           <ScrollView>
@@ -68,7 +69,7 @@ class OrderDetailScreen extends Component<any, any> {
                       marginTop: 10
                     } }
                   />
-                )
+                );
               })
             }
           </ScrollView>
@@ -88,7 +89,7 @@ class OrderDetailScreen extends Component<any, any> {
     try {
       let res: any = await APIs.order.getOrderInfo({
         u_id: id
-      })
+      });
 
       const results = res.data.results;
 
@@ -101,7 +102,7 @@ class OrderDetailScreen extends Component<any, any> {
             status: results.status
           }
         }
-      })
+      });
 
       Store.dispatch({
         type: Constants.ACTIONTYPES_ORDER_UPDATE,
@@ -109,12 +110,12 @@ class OrderDetailScreen extends Component<any, any> {
           storeKey: `${id}`
         },
         payload: results
-      })
+      });
 
       if (results.status === OrderStatus.Working) {
         this.setState({
           completedGoods: this.calculateCompletedGoods(results.items)
-        })
+        });
       }
 
     } catch (error) {
@@ -127,7 +128,7 @@ class OrderDetailScreen extends Component<any, any> {
 
     if (orderItems.length) {
       for (let item of orderItems) {
-        completedGoods += item.goods.filter((goods: any) => goods.completed).length
+        completedGoods += item.goods.filter((goods: any) => goods.completed).length;
       }
     }
 
@@ -137,7 +138,7 @@ class OrderDetailScreen extends Component<any, any> {
   updateCompletedGoods = (num: number) => {
     this.setState({
       completedGoods: this.state.completedGoods + num
-    })
+    });
   }
 
   goBackToList = () => {

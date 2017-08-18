@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   View,
   Animated,
   TouchableWithoutFeedback,
   StyleSheet,
   ViewStyle
-} from 'react-native';
-import { Text } from 'native-base';
+} from "react-native";
+import { Text } from "native-base";
 
-import { Widgets } from 'summer';
+import { Widgets } from "summer";
 
-let { theme, Icon } = Widgets
+let { theme, Icon } = Widgets;
 
 interface CollapsiblePanelProps {
-  title: string,
-  style?: ViewStyle
+  title: string;
+  style?: ViewStyle;
 }
 
 class CollapsiblePanel extends Component<CollapsiblePanelProps, any> {
@@ -27,15 +27,15 @@ class CollapsiblePanel extends Component<CollapsiblePanelProps, any> {
       bodyHeight: -1,
       calculatedHeight: false,
       firstClick: true
-    }
+    };
   }
   render() {
     const { title, children, style } = this.props;
     const initialHeight = this.state.expanded ? this.state.bodyHeight : 0;
     const finialHeight = this.state.expanded ? 0 : this.state.bodyHeight;
 
-    const initialRotate = this.state.expanded ? '0deg' : '180deg';
-    const finialRotate = this.state.expanded ? '180deg' : '360deg';
+    const initialRotate = this.state.expanded ? "0deg" : "180deg";
+    const finialRotate = this.state.expanded ? "180deg" : "360deg";
 
     const bodyHeight = this.state.animatedValue.interpolate({
       inputRange: [0, 1],
@@ -80,7 +80,7 @@ class CollapsiblePanel extends Component<CollapsiblePanelProps, any> {
     } else {
       this.setState({
         firstClick: false
-      })
+      });
     }
 
     Animated.timing(
@@ -89,7 +89,7 @@ class CollapsiblePanel extends Component<CollapsiblePanelProps, any> {
         toValue: 1,
         duration: 300
       }
-    ).start()
+    ).start();
   }
 
   setBodyHeight = (event: any) => {
@@ -106,18 +106,18 @@ class CollapsiblePanel extends Component<CollapsiblePanelProps, any> {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
-    overflow: 'hidden'
+    backgroundColor: "#fff",
+    overflow: "hidden"
   },
   titleContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     borderTopWidth: theme.border_width_sm,
     borderBottomWidth: theme.border_width_sm,
     paddingHorizontal: 10,
     height: 48,
-    alignItems: 'center',
+    alignItems: "center",
     borderColor: theme.color_grey
   },
-})
+});
 
 export default CollapsiblePanel;

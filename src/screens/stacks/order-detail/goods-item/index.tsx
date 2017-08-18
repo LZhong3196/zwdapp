@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from "react";
 import {
   View,
   Text,
@@ -6,31 +6,31 @@ import {
   StyleSheet,
   Image,
   Alert
-} from 'react-native';
-import { Button } from 'native-base';
-import { Widgets } from 'summer';
+} from "react-native";
+import { Button } from "native-base";
+import { Widgets } from "summer";
 
 let { theme } = Widgets;
 
 interface GoodsItemProps {
-  id: string,
-  title: string,
-  color: string,
-  size: string,
-  num: number,
-  price: number,
-  thumbnail: string,
-  completed: boolean,
-  onConfirmedPurchase?: any,
-  showPurchaseStatus?: boolean
+  id: string;
+  title: string;
+  color: string;
+  size: string;
+  num: number;
+  price: number;
+  thumbnail: string;
+  completed: boolean;
+  onConfirmedPurchase?: any;
+  showPurchaseStatus?: boolean;
 }
 
-class GoodsItem extends Component<GoodsItemProps, any> {
+class GoodsItem extends PureComponent<GoodsItemProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {
       completed: this.props.completed
-    }
+    };
   }
   render() {
     const { title, color, size, num, price, thumbnail } = this.props;
@@ -60,7 +60,7 @@ class GoodsItem extends Component<GoodsItemProps, any> {
     const { showPurchaseStatus } = this.props;
 
     if (!showPurchaseStatus) {
-      return null
+      return null;
     }
 
     if (completed) {
@@ -76,30 +76,30 @@ class GoodsItem extends Component<GoodsItemProps, any> {
           onPress={ this.onConfirmPurchaseBtnClick }
         >
           <Text style={ styles.btnConfirmPurchaseText }>确认收货</Text>
-        </Button>)
+        </Button>);
     }
   }
 
   onConfirmPurchaseBtnClick = () => {
     Alert.alert(
-      '确认已拿货吗？',
+      "确认已拿货吗？",
       null,
       [
-        { text: '取消' },
+        { text: "取消" },
         {
-          text: '确认', onPress: () => {
+          text: "确认", onPress: () => {
             this.setState({
               completed: true
-            })
+            });
             const { onConfirmedPurchase } = this.props;
 
-            if (typeof (onConfirmedPurchase) === 'function') {
+            if (typeof (onConfirmedPurchase) === "function") {
               onConfirmedPurchase();
             }
           }
         }
       ]
-    )
+    );
   }
 }
 
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderBottomWidth: theme.border_width_sm,
     borderBottomColor: theme.color_grey,
-    flexDirection: 'row'
+    flexDirection: "row"
   },
 
   title: {
@@ -130,8 +130,8 @@ const styles = StyleSheet.create({
   },
 
   infoItem: {
-    flexDirection: 'row',
-    alignItems: 'center'
+    flexDirection: "row",
+    alignItems: "center"
   },
 
   infoLeft: {
@@ -149,9 +149,9 @@ const styles = StyleSheet.create({
     fontSize: 12
   },
   purchasedText: {
-    color: '#34b704',
+    color: "#34b704",
     fontSize: theme.font_size_caption_sm
   }
-})
+});
 
 export default GoodsItem;

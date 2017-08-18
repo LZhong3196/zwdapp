@@ -1,27 +1,29 @@
-import React, { PureComponent } from 'react';
-import { Text, Alert } from 'react-native';
+import React, { Component } from "react";
+import { Text, Alert } from "react-native";
 import {
   Footer,
   FooterTab,
   Button
-} from 'native-base';
-import { Widgets } from 'summer';
+} from "native-base";
+import { Widgets, Decorators } from "summer";
 let { theme } = Widgets;
 
 interface WorkingFooterProps {
-  completed: number,
-  onCancel: () => void,
-  onComplete: () => void
+  completed: number;
+  onCancel: () => void;
+  onComplete: () => void;
 }
 
 const commonStyle = {
-  backgroundColor: '#fff',
+  backgroundColor: "#fff",
   borderRadius: 0,
   borderTopColor: theme.color_grey,
   borderTopWidth: theme.border_width_sm,
-}
+};
 
-class WorkingFooter extends PureComponent<WorkingFooterProps, any> {
+@Decorators.pureRender()
+class WorkingFooter extends Component<WorkingFooterProps, any> {
+
   render() {
     const { completed } = this.props;
 
@@ -50,7 +52,7 @@ class WorkingFooter extends PureComponent<WorkingFooterProps, any> {
             onPress={ this.onCompleteClick }
           >
             <Text style={ {
-              color: '#fff'
+              color: "#fff"
             } }>完成</Text>
           </Button>
         </FooterTab>
@@ -61,27 +63,27 @@ class WorkingFooter extends PureComponent<WorkingFooterProps, any> {
   onCancelClick = () => {
     const { onCancel } = this.props;
 
-    Alert.alert('确认要完成当前采购单吗？', null, [
-      { text: '取消' },
+    Alert.alert("确认要完成当前采购单吗？", null, [
+      { text: "取消" },
       {
-        text: '确定', onPress: () => {
+        text: "确定", onPress: () => {
           onCancel();
         }
       }
-    ])
+    ]);
   }
 
   onCompleteClick = () => {
     const { onComplete } = this.props;
 
-    Alert.alert('确认要完成当前采购单吗？', null, [
-      { text: '取消' },
+    Alert.alert("确认要完成当前采购单吗？", null, [
+      { text: "取消" },
       {
-        text: '确定', onPress: () => {
+        text: "确定", onPress: () => {
           onComplete();
         }
       }
-    ])
+    ]);
   }
 }
 

@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import { Decorators } from 'summer';
-import BaseList, { OrderStatus } from './BaseList';
+import { Decorators } from "summer";
+import BaseList, { OrderStatus } from "./BaseList";
 
-@Decorators.connect('order.cancelList')
+@Decorators.connect("order.cancelList")
 class WorkingList extends Component {
   render() {
     return (
