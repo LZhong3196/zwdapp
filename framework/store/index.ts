@@ -8,9 +8,9 @@ import {
 import reduxThunk from "redux-thunk";
 import { createLogger } from "redux-logger";
 import { AsyncStorage } from "react-native";
-import { Transform } from "redux-persist";
+import { Transform, Persistor } from "redux-persist";
 import { persistStore, autoRehydrate } from "redux-persist-immutable";
-import createFilter from "@actra-development-oss/redux-persist-transform-filter-immutable";
+import { createWhitelistFilter } from "@actra-development-oss/redux-persist-transform-filter-immutable";
 import {
     PERSIST_STORE_WHITE_LIST,
     ROUTES_MAIN
@@ -65,6 +65,7 @@ export const initialState: State = Immutable.fromJS({
 export default class Store {
     static instance: Store;
     private appStore: Redux.Store<any>;
+    private persistor: Persistor;
 
     static get<T>(keys: string): T{
         if (!this.instance) {
@@ -96,6 +97,10 @@ export default class Store {
             return;
         }
         this.instance.dispatch(action);
+    }
+
+    static getPersistor(): Persistor {
+        return this.instance.persistor;
     }
 
     constructor() {
@@ -140,11 +145,12 @@ export default class Store {
         );
         const persistStoreWhiteList: Array<string> = Object.keys(PERSIST_STORE_WHITE_LIST);
         const transforms: Array<Transform<any, any>> = createPersistTransform();
-        persistStore(store, {
-            whtielist: persistStoreWhiteList,
+        this.persistor = persistStore(store, {
+            whitelist: persistStoreWhiteList,
             storage: AsyncStorage,
-            transform: transforms
+            transforms: transforms,
         }, rehydrationCompleted);
+
 
         if (isDebuggingInChrome) {
             (window as any).store = store;
@@ -158,10 +164,10 @@ function createPersistTransform(): Array<Transform<any, any>> {
     let filterTransforms: Array<Transform<any, any>> = [];
     for (const key in PERSIST_STORE_WHITE_LIST) {
         if (!!PERSIST_STORE_WHITE_LIST[key].length) {
-            const subsetFilter: Transform<any, any> = createFilter(
-                [key],
+            const subsetFilter: Transform<any, any> = createWhitelistFilter(
+                key,
                 PERSIST_STORE_WHITE_LIST[key],
-                PERSIST_STORE_WHITE_LIST[key],
+                PERSIST_STORE_WHITE_LIST[key]
             );
             filterTransforms = [
                 ...filterTransforms,
