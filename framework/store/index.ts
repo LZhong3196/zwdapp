@@ -8,7 +8,9 @@ import {
 import reduxThunk from "redux-thunk";
 import { createLogger } from "redux-logger";
 import { AsyncStorage } from "react-native";
+import { Transform, Persistor } from "redux-persist";
 import { persistStore, autoRehydrate } from "redux-persist-immutable";
+import { createWhitelistFilter } from "@actra-development-oss/redux-persist-transform-filter-immutable";
 import {
     PERSIST_STORE_WHITE_LIST,
     ROUTES_MAIN
@@ -63,6 +65,7 @@ export const initialState: State = Immutable.fromJS({
 export default class Store {
     static instance: Store;
     private appStore: Redux.Store<any>;
+    private persistor: Persistor;
 
     static get<T>(keys: string): T{
         if (!this.instance) {
@@ -94,6 +97,10 @@ export default class Store {
             return;
         }
         this.instance.dispatch(action);
+    }
+
+    static getPersistor(): Persistor {
+        return this.instance.persistor;
     }
 
     constructor() {
@@ -136,11 +143,14 @@ export default class Store {
         const rehydrationCompleted: any = compose(
             initConnectivityInfo
         );
-
-        persistStore(store, {
-            whitelist: PERSIST_STORE_WHITE_LIST,
-            storage: AsyncStorage
+        const persistStoreWhiteList: Array<string> = Object.keys(PERSIST_STORE_WHITE_LIST);
+        const transforms: Array<Transform<any, any>> = createPersistTransform();
+        this.persistor = persistStore(store, {
+            whitelist: persistStoreWhiteList,
+            storage: AsyncStorage,
+            transforms: transforms,
         }, rehydrationCompleted);
+
 
         if (isDebuggingInChrome) {
             (window as any).store = store;
@@ -149,3 +159,21 @@ export default class Store {
     }
 }
 
+
+function createPersistTransform(): Array<Transform<any, any>> {
+    let filterTransforms: Array<Transform<any, any>> = [];
+    for (const key in PERSIST_STORE_WHITE_LIST) {
+        if (!!PERSIST_STORE_WHITE_LIST[key].length) {
+            const subsetFilter: Transform<any, any> = createWhitelistFilter(
+                key,
+                PERSIST_STORE_WHITE_LIST[key],
+                PERSIST_STORE_WHITE_LIST[key]
+            );
+            filterTransforms = [
+                ...filterTransforms,
+                subsetFilter
+            ];
+        }
+    }
+    return filterTransforms;
+}

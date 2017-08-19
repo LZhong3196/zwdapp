@@ -154,7 +154,7 @@ class AvatarPicker extends React.Component<AvatarPickerProps, any> {
             const profile: any = Store.get("user.profile");
             Store.update("user.profile", {
                 ...profile,
-                avatar: ""
+                avatar: src
             });
         }
     }

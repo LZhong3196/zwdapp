@@ -2,6 +2,20 @@
 # yarn lockfile v1
 
 
+"@actra-development-oss/redux-persist-transform-filter-immutable@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@actra-development-oss/redux-persist-transform-filter-immutable/-/redux-persist-transform-filter-immutable-0.1.2.tgz#674ee487da65fada98d556489d1a80f638baf3fb"
+  dependencies:
+    immutable "^3.8.1"
+    lodash.get "^4.4.2"
+    lodash.includes "^4.3.0"
+    lodash.isobject "^3.0.2"
+    lodash.isstring "^4.0.1"
+    lodash.isundefined "^3.0.1"
+    lodash.set "^4.3.2"
+    lodash.unset "^4.5.2"
+    redux-persist "^4.0.1"
+
 "@expo/vector-icons@5.0.0":
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@expo/vector-icons/-/vector-icons-5.0.0.tgz#380d578a58b736b693acdd1aa86f8b6576465ba4"
@@ -2684,6 +2698,14 @@ lodash.escape@^3.0.0:
   dependencies:
     lodash._root "^3.0.0"
 
+lodash.get@^4.4.2:
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
+
+lodash.includes@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/lodash.includes/-/lodash.includes-4.3.0.tgz#60bb98a87cb923c68ca1e51325483314849f553f"
+
 lodash.isarguments@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/lodash.isarguments/-/lodash.isarguments-3.1.0.tgz#2f573d85c6a24289ff00663b491c1d338ff3458a"
@@ -2691,6 +2713,18 @@ lodash.isarguments@^3.0.0:
 lodash.isarray@^3.0.0:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/lodash.isarray/-/lodash.isarray-3.0.4.tgz#79e4eb88c36a8122af86f844aa9bcd851b5fbb55"
+
+lodash.isobject@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/lodash.isobject/-/lodash.isobject-3.0.2.tgz#3c8fb8d5b5bf4bf90ae06e14f2a530a4ed935e1d"
+
+lodash.isstring@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/lodash.isstring/-/lodash.isstring-4.0.1.tgz#d527dfb5456eca7cc9bb95d5daeaf88ba54a5451"
+
+lodash.isundefined@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/lodash.isundefined/-/lodash.isundefined-3.0.1.tgz#23ef3d9535565203a66cefd5b830f848911afb48"
 
 lodash.keys@^3.0.0:
   version "3.1.2"
@@ -2716,6 +2750,10 @@ lodash.restparam@^3.0.0:
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/lodash.restparam/-/lodash.restparam-3.6.1.tgz#936a4e309ef330a7645ed4145986c85ae5b20805"
 
+lodash.set@^4.3.2:
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/lodash.set/-/lodash.set-4.3.2.tgz#d8757b1da807dde24816b0d6a84bea1a76230b23"
+
 lodash.template@^3.0.0:
   version "3.6.2"
   resolved "https://registry.yarnpkg.com/lodash.template/-/lodash.template-3.6.2.tgz#f8cdecc6169a255be9098ae8b0c53d378931d14f"
@@ -2736,6 +2774,10 @@ lodash.templatesettings@^3.0.0:
   dependencies:
     lodash._reinterpolate "^3.0.0"
     lodash.escape "^3.0.0"
+
+lodash.unset@^4.5.2:
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/lodash.unset/-/lodash.unset-4.5.2.tgz#370d1d3e85b72a7e1b0cdf2d272121306f23e4ed"
 
 lodash@4.17.4, lodash@^4.0.0, lodash@^4.10.1, lodash@^4.11.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.16.6, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1:
   version "4.17.4"
@@ -3800,7 +3842,7 @@ redux-persist-transform-immutable@^4.1.0:
     transit-immutable-js "^0.7.0"
     transit-js "^0.8.846"
 
-redux-persist@*, redux-persist@4.8.2, redux-persist@^4.0.0:
+redux-persist@*, redux-persist@4.8.2, redux-persist@^4.0.0, redux-persist@^4.0.1:
   version "4.8.2"
   resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-4.8.2.tgz#7941202e0ce0a9fcc0263d66965f5263d34f43b9"
   dependencies:
