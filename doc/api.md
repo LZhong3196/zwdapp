@@ -55,8 +55,8 @@ Navigator.to("Login");
 /** 返回上一页 */
 Navigator.back();
 
-/** 回退至主页 */
-Navigator.reset("Main");
+/** 回退至主页搜索页 */
+Navigator.backToTab("Search");
 
 ```
 ### to()
@@ -70,11 +70,28 @@ Navigator.reset("Main");
 | params | any | / | 传递给下一路由的参数 |
 
 ### back()
-> `back()`
+> `back(routeName?: string)`
 
-回退至上一路由
+回退至目标路由
 
-### reset()
+| 参数 | 类型 | 必需 | 说明 |
+| --- | --- | --- | --- |
+|  routeName | string | / | 目标路由 Default - 当前路由的上一层路由 |
+
+### backToTab()
+> `backToTab(target: string, params?: any)`
+
+回退至主页特定标签页
+
+| 参数 | 类型 | 必需 | 说明 |
+| --- | --- | --- | --- |
+|  target | string | √ | 目标标签页 |
+| params | any | / | 传递给目标标签页的参数 |
+
+
+### ~~reset()~~
+> 弃用中, 请用 **back(routeName)** 代替
+
 > `reset(routeName?: string, params?: any)`
 
 回退至目标路由
@@ -158,13 +175,19 @@ class MyComponent extends Component {
 ### connect()
 > `connect(...keys: Array<string>)`
 
-将 state 中的数据映射到目标组件
+将 state 中的数据更新映射到目标组件
+
+*	映射到组件的为 Immutable 数据
+* 	用 `connect` 负责触发组件的更新, 数据的获取使用 `Store.get()` 
+*	参数中的 `key` 值数量**越少越好**, 层级**越小越好**
+* 	仅在 `render` 过程中, **涉及数据可能被其他地方更新**的组件中使用
+*  不应与 `pureRender` 装饰器同时用于同一个组件
 
 使用
 ```
 import { Decorators } from "summer";
 
-@Decorators.connect("user", "goods")
+@Decorators.connect("user.profile", "goods")
 class MyComponent extends Component {
 	render() {
 		return (
@@ -175,9 +198,30 @@ class MyComponent extends Component {
 
 ```
 
+以上组件会在 **state** 中 `user.profile` 或 `goods` 发生更新时进行 `re-render`
+
 ### keys
 即 `stateKeys`
 
+
+> 如果想实现一个能获取state更新, 并进行pureRender的组件, 可以抽离出一个父级组件
+
+```
+@pureRender()
+class PureContainer extends Component {
+	...
+}
+
+
+@connect("data")
+class Container extends Component {
+	...
+	render() {
+		return <PureContainer data={this.props.data} />
+	}
+}
+
+```
 
 ### pureRender()
 
@@ -204,6 +248,8 @@ Example:
 `
 this.state.value = newValue;
 `
+
+
 
 
 

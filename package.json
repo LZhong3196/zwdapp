@@ -15,6 +15,7 @@
     "postinstall": "rndebugger-open"
   },
   "dependencies": {
+    "@actra-development-oss/redux-persist-transform-filter-immutable": "^0.1.2",
     "@expo/vector-icons": "5.0.0",
     "events": "1.1.1",
     "immutable": "3.8.1",

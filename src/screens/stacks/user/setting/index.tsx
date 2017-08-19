@@ -31,7 +31,7 @@ interface SettingItemProps extends ViewProperties {
     name: string;
     value?: string;
     valueContent?: React.ReactNode;
-    onClick?: Function;
+    onPress?: Function;
     hideRightArrow?: boolean;
     lastItem?: boolean;
 }
@@ -44,7 +44,7 @@ class SettingItem extends React.Component<SettingItemProps, any> {
             value,
             valueContent,
             hideRightArrow,
-            onClick,
+            onPress,
             lastItem
         } = this.props;
         const itemStyle: any = lastItem ? {
@@ -54,7 +54,7 @@ class SettingItem extends React.Component<SettingItemProps, any> {
         return (
             <ListItem
                 style={itemStyle}
-                onPress={!!onClick ? () => onClick() : this.onPress}>
+                onPress={!!onPress ? (e?: any) => onPress(e) : this.onPress}>
                 <Left>
                     <Text>{title}</Text>
                 </Left>
@@ -105,9 +105,9 @@ class ImageCacheItem extends React.Component<any, any> {
         return (
             <SettingItem
                 title="清除缓存"
-                name="contact_us"
+                name="cache"
                 value={!cacheSize ? `` : `${cacheSize} MB` }
-                onClick={this.clearCache} />
+                onPress={this.clearCache} />
         )
     }
 
@@ -181,7 +181,7 @@ export default class SettingScreen extends React.Component<any, any> {
                         </Right>
                     </ListItem>
                     <SettingItem title="联系我们" name="contact_us" />
-                    <SettingItem title="关于17" name="about_17" lastItem />
+                    <SettingItem title="关于17" name="about_17" lastItem onPress={this.resetMain}/>
                 </List>
                 <List style={styles.listContainer}>
                     <SettingItem title="仅wifi下开启大图" name="connect_limit" valueContent={<ConnectivityControl />} hideRightArrow />
@@ -220,6 +220,9 @@ export default class SettingScreen extends React.Component<any, any> {
         );
     }
 
+    resetMain = () => {
+        Navigator.backToTab(Routes.ROUTES_TAB_MARKET);
+    }
 
     handleLogout = async () => {
         try {

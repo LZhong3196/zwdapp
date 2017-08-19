@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Store, Constants, APIs, Widgets, Decorators, Navigator, Routes } from "summer";
-import { TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View, TextInput, TouchableHighlight } from "react-native";
 import {
     Text,
     Container,
@@ -8,34 +8,25 @@ import {
     Content,
     List,
     ListItem,
-    Item,
-    Input,
     Button,
     Icon as BaseIcon
 } from "native-base";
 import { styles } from "./style";
+import {underline} from "chalk";
 const { Icon } = Widgets;
 
-@Decorators.connect("user", "search")
-export default class FiledSearchScreen extends React.Component {
+@Decorators.connect("search", "data")
+export default class FiledSearchScreen extends React.Component<any, any> {
     static navigationOptions = {
-        header:
-            <Header searchBar rounded>
-                <Button transparent
-                    onPress={
-                        Navigator.back
-                    }>
-                    <Icon type="&#xea53;"/>
-                </Button>
-                <Item>
-                    <BaseIcon name="search"/>
-                    <Input
-                        placeholder="请输入店铺名/档口号/旺旺号"/>
-                </Item>
-            </Header>
+        header: null as any
     };
-    constructor(props: any) {
+    constructor(props: any, context: any) {
         super(props);
+        this.state = {
+            filed: "",
+            selectedOption: "",
+            showSelectOptions: false
+        };
     }
     componentDidMount() {
         this.getHotSearchList();
@@ -48,43 +39,159 @@ export default class FiledSearchScreen extends React.Component {
             <ListItem
                 key={i}>
                 <TouchableOpacity
-                    onPress={() => alert(i)}>
+                    onPress={() => this.historyFiledPress(item)}>
                     <Text>{item}</Text>
                 </TouchableOpacity>
             </ListItem>
-
     )
     renderFooter = () => {
+        return (
+            <Button full light
+                onPress={this.clearHistorySearch}>
+                    <Text>清除历史记录</Text>
+            </Button>
+        );
+    }
+    renderSelect = () => {
+        let select = undefined;
+        const { searchType } = this.state;
+        switch (this.props.navigation.state.params.origin) {
+           case Routes.ROUTES_TAB_HOME:
+                select = (
+                    <View style={styles.searchSelect}>
+                        <TouchableOpacity
+                            onPress={this.selectOptionToggle}>
+                            <View style={styles.selectBotton}>
+                                <Text>宝贝</Text>
+                                <Icon type="&#xe61a;"/>
+                            </View>
+                        </TouchableOpacity>
+                        {
+                            this.state.showSelectOptions ?
+                                <View style={styles.searchOptions}>
+                                    <Button style={searchType === "宝贝" ? styles.selectedOption : {}} onPress={() => this.select("宝贝")} dark><Text>宝贝</Text></Button>
+                                    <Button style={searchType === "店铺" ? styles.selectedOption : {}} onPress={() => this.select("店铺")} dark><Text>店铺</Text></Button>
+                                </View>
+                                : undefined
+                        }
 
+                    </View>
+                );
+                break;
+            case Routes.ROUTES_TAB_MARKET:
+                select = (
+                    <View style={styles.searchSelect}>
+                        <TouchableOpacity
+                            onPress={this.selectOptionToggle}>
+                            <View style={styles.selectBotton}>
+                                <Text>档口名</Text>
+                                <Icon type="&#xe61a;"/>
+                            </View>
+                        </TouchableOpacity>
+                        {
+                            this.state.showSelectOptions ?
+                                <View style={styles.searchOptions}>
+                                    <Button style={searchType === "档口名" ? styles.selectedOption : {}} onPress={() => this.select("档口名")} dark><Text>档口名</Text></Button>
+                                    <Button style={searchType === "档口号" ? styles.selectedOption : {}} onPress={() => this.select("档口号")} dark><Text>档口号</Text></Button>
+                                    <Button style={searchType === "旺旺号" ? styles.selectedOption : {}} onPress={() => this.select("旺旺号")} dark><Text>旺旺号</Text></Button>
+                                </View>
+                                : undefined
+                        }
+                    </View>
+                );
+                break;
+        }
+        return select;
     }
     render() {
-        let data: any[] = ["男装", "女装", "连衣裙"];
+        const data: any[] = Store.get("data.search.historyList") || [];
         const hotSearchList: any[] = Store.get("data.search.hotSearchList") || [];
         return (
             <Container>
+                <View style={styles.header}>
+                    <TouchableOpacity
+                        onPress={this.goback}>
+                        <Icon type="&#xea53;"/>
+                    </TouchableOpacity>
+                    <View style={ styles.inputWrap }>
+                        { this.renderSelect() }
+                        <TextInput
+                            placeholder={"请输入宝贝关键词"}
+                            value={this.state.filed}
+                            style={ styles.input }
+                            underlineColorAndroid="transparent"
+                            autoFocus={true}
+                            onChangeText={this.textChange}/>
+                    </View>
+                    <TouchableOpacity
+                        onPress={ () => this.search(this.state.filed) }>
+                        <View style={styles.searchButton}>
+                            <Text style={styles.searchButtonText}>搜索</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
                 <View style={ styles.hotSearch }>
                     <View style={ styles.hotSearchTitle }>
-                        <Text><Icon type="&#xe729;"/>热门搜索</Text>
+                        <Text><Icon type="&#xe729;" style={styles.titleIcon}/>热门搜索</Text>
                     </View>
                     <View style={ styles.hotSearchList }>
                         {hotSearchList.map(this.createHotList)}
                     </View>
                 </View>
                 <View>
-                    <Text><Icon type="&#xe620;"/>历史搜索</Text>
+                    <Text><Icon type="&#xe620;" style={styles.titleIcon}/>历史搜索</Text>
                 </View>
                 <Content>
                     <List
                         dataArray={ data }
                         renderRow={this.renderHistorySearchRow}
+                        renderFooter={this.renderFooter}
                     />
                 </Content>
             </Container>
         );
     }
+    select = (selectedOption: string) => {
+        this.setState({
+            selectedOption
+        });
+        this.selectOptionToggle();
+    }
+    selectOptionToggle = () => {
+        this.setState({
+            showSelectOptions: !this.state.showSelectOptions
+        });
+    }
+    textChange = (text: string) => {
+        this.setState({
+           filed: text
+        });
+    }
+    clearHistorySearch = () => {
+        Store.update("data.search.historyList", []);
+    }
+    historyFiledPress= (filed: string) => {
+        this.setState({
+            filed
+        });
+    }
+    goback = () => {
+        Navigator.back();
+    }
     search = (filed: string) => {
-        Store.update("data.search.searchField", filed);
-        Navigator.to(Routes.ROUTES_FIELD_SEARCH);
+        if (!filed) return;
+        const historyList: string[] = Store.get("data.search.historyList") || [];
+        Store.update("data.searchField.historyList", [ ...new Set(historyList.concat([filed])) ]);
+        if (this.props.navigation.state.params.origin === Routes.ROUTES_TAB_MARKET
+            || this.state.selectedOption === "店铺") {
+            Store.update("market.filterInfo.field", filed);
+            Navigator.backToTab("Market");
+
+        }
+        else {
+            Store.update("search.filterInfo.field", filed);
+            Navigator.backToTab("Search");
+        }
     }
     getHotSearchList = async () => {
         try {

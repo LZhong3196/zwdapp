@@ -15,7 +15,7 @@ import {
 } from "native-base";
 import { styles } from "./style";
 
-@Decorators.connect("user", "market", "data")
+@Decorators.connect("market", "data")
 export default class MarketScreen extends React.Component<any, any> {
     private flatList: any;
     private scrollToTopButtom: any;
@@ -76,6 +76,7 @@ export default class MarketScreen extends React.Component<any, any> {
         return (
             <View style={styles.view}>
                 <SearchBar
+                    onFocus={this.openFilterSearchPage}
                     placeholder="请输入档口名/档口号/旺旺号"/>
                 <RefreshList
                     ref={ (e) => this.flatList = e }
@@ -94,6 +95,9 @@ export default class MarketScreen extends React.Component<any, any> {
     }
     openShopPage = (id: string) => {
         Navigator.to(Routes.ROUTES_SHOP, { id });
+    }
+    openFilterSearchPage = () => {
+        Navigator.to(Routes.ROUTES_FIELD_SEARCH, { origin: Routes.ROUTES_TAB_MARKET });
     }
 
     fetchList = async (isRefresh?: boolean) => {

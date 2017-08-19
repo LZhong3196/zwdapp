@@ -7,7 +7,7 @@ import {
     Input,
     Button
 } from "native-base";
-import { Store, Constants, Widgets, APIs, Navigator } from "summer";
+import { Store, Constants, Widgets, APIs, Navigator, Routes } from "summer";
 import { styles } from "./style";
 let { Icon, theme, Toast } = Widgets;
 

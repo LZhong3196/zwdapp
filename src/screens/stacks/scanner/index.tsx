@@ -8,7 +8,6 @@ import Camera from "react-native-camera";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { styles } from "./style";
 
-@Decorators.connect("user")
 export default class ScannerScreen extends React.Component {
     static navigationOptions = {
         headerStyle: styles.header,

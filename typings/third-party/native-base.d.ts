@@ -232,6 +232,7 @@ declare module 'native-base@2.2.0' {
 				rowID: string | number,
 				highlightRow?: boolean
 			) => React.ReactElement<any>;
+			renderFooter?: () => React.ReactElement<any>;
 		}
 		/**
          * see Widget ListItem.js
