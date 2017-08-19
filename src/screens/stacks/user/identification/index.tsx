@@ -154,7 +154,9 @@ export default class IdentificationScreen extends React.Component<any, any> {
                     text: "验证成功"
                 });
                 if (nextRoute === Routes.ROUTES_REGISTER) {
-                    Store.update("user.account", this.state.mobile);
+                    Store.update("user.account", {
+                        account: this.state.mobile
+                    });
                 }
                 Navigator.to(nextRoute);
             }

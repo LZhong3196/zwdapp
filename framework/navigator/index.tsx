@@ -1,38 +1,47 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import * as ReactNavigation from "react-navigation";
+import ReactNavigation, { NavigationActions } from "react-navigation";
 import { addNavigationHelpers, StackNavigator } from "react-navigation";
 import Store from "./../store/index";
 import {
     ACTIONTYPES_NAVIGATION_TO,
     ACTIONTYPES_NAVIGATION_BACK,
-    ACTIONTYPES_NAVIGATION_RESET
+    ACTIONTYPES_NAVIGATION_RESET,
+    ACTIONTYPES_NAVIGATION_BACKTO,
+    ROUTES_MAIN
 } from "./../constants";
-
-const IS_DEV = (global as any).__DEV__;
-const IS_DEBUG = (global as any).__DEBUG__;
 
 type appNavigationOptions = {
     dispatch: any;
     nav: any;
 };
 
-export type routerConfigs = {
+export type RouterConfigs = {
     routeConfigMap: ReactNavigation.NavigationRouteConfigMap,
     stackConfig?: ReactNavigation.StackNavigatorConfig,
+    TabRouteMap: HashMap<string>
 };
+
+export type TabNavigation = ReactNavigation.NavigationProp<any, ReactNavigation.NavigationAction>;
 
 export default class Navigator {
     public appName: string;
     public appNavigator: ReactNavigation.NavigationContainer;
     static routes: HashMap<string> = {};
+    static tabs: Array<string> = [];
     static navigatorInstance: ReactNavigation.NavigationContainer;
+    static tabNavigation: TabNavigation;
 
-    static initRoutes(routeConfigMap: HashMap<any>) {
-        for (const key in routeConfigMap) {
+    static initRoutes(config: RouterConfigs) {
+        for (const key in config.TabRouteMap) {
+            this.routes[key] = config.TabRouteMap[key];
+            this.tabs = [ config.TabRouteMap[key], ...this.tabs ];
+        }
+        for (const key in config.routeConfigMap) {
             this.routes[key.toUpperCase()] = key;
         }
     }
+
     /** 转入对应路由 */
     static to(routeName: string, params?: any) {
         Store.dispatch({
@@ -43,24 +52,54 @@ export default class Navigator {
             }
         });
     }
+
     /** 路由回退 */
-    static back() {
-        Store.dispatch({
-            type: ACTIONTYPES_NAVIGATION_BACK
-        });
-    }
-    /** 路由栈往前重置至目标路由 */
-    static reset(routeName?: string, params?: any) {
-        Store.dispatch({
-            type: ACTIONTYPES_NAVIGATION_RESET,
-            meta: {
-                routeName: routeName,
-                params: params
-            }
-        });
+    static back(routeName?: string) {
+        if (!routeName) {
+            Store.dispatch({
+                type: ACTIONTYPES_NAVIGATION_BACK,
+            });
+        }
+        else {
+            Store.dispatch({
+                type: ACTIONTYPES_NAVIGATION_BACKTO,
+                meta: {
+                    routeName: routeName
+                }
+            });
+        }
     }
 
-    constructor(configs: routerConfigs) {
+    /** 回退至首页特定tab页 */
+    static backToTab(target: string, params?: any) {
+        Store.dispatch({
+            type: ACTIONTYPES_NAVIGATION_BACKTO,
+            meta: {
+                routeName: ROUTES_MAIN
+            }
+        });
+        if (!!this.tabNavigation && this.tabs.indexOf(target) !== -1) {
+            let res: any = this.tabNavigation.dispatch(
+                NavigationActions.navigate({
+                    routeName: target,
+                    params: params
+                })
+            );
+        }
+    }
+
+    /** [Deprecated] 路由栈往前重置至目标路由 */
+    static reset(routeName?: string, params?: any) {
+        this.back(ROUTES_MAIN);
+        // Store.dispatch({
+        //     type: ACTIONTYPES_NAVIGATION_RESET,
+        //     meta: {
+        //         params: params
+        //     }
+        // });
+    }
+
+    constructor(configs: RouterConfigs) {
         this.appNavigator = StackNavigator(configs.routeConfigMap, configs.stackConfig);
     }
 

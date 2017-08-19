@@ -172,7 +172,7 @@ class EditForm extends React.Component<any, any> {
                 text: "已登录"
             });
             Store.update("user.account", account);
-            Store.dispatch({ type: Constants.ACTIONTYPES_LOGGED_IN });
+            Navigator.back();
 
             this.handleAuthTodo(true);
             this.updateProfile();

@@ -66,7 +66,7 @@ export function setup(options: AppOptions) {
 	let appNavigator: Navigator = new Navigator(options.router);
 	if (!Navigator.navigatorInstance) {
 		Navigator.navigatorInstance = appNavigator.appNavigator;
-		Navigator.initRoutes(options.router.routeConfigMap);
+		Navigator.initRoutes(options.router);
 	}
 
 	const AppWithNavigationState = appNavigator.createApp();
