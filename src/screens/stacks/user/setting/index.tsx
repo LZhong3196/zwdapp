@@ -34,10 +34,15 @@ interface SettingItemProps extends ViewProperties {
     onPress?: Function;
     hideRightArrow?: boolean;
     lastItem?: boolean;
+    linkTo?: string;
 }
 
 @Decorators.pureRender()
 class SettingItem extends React.Component<SettingItemProps, any> {
+    static defaultProps = {
+        onPress: (e?: any) => { }
+    };
+
     render() {
         let {
             title,
@@ -45,16 +50,18 @@ class SettingItem extends React.Component<SettingItemProps, any> {
             valueContent,
             hideRightArrow,
             onPress,
-            lastItem
+            lastItem,
+            linkTo
         } = this.props;
         const itemStyle: any = lastItem ? {
             ...styles.listItem,
             ...styles.lastItem
         } : styles.listItem;
+
         return (
             <ListItem
                 style={itemStyle}
-                onPress={!!onPress ? (e?: any) => onPress(e) : this.onPress}>
+                onPress={!!linkTo ? () => Navigator.to(linkTo) : (e?: any) => onPress(e)}>
                 <Left>
                     <Text>{title}</Text>
                 </Left>
@@ -68,10 +75,6 @@ class SettingItem extends React.Component<SettingItemProps, any> {
     }
 
     onPress = () => {
-        // Navigator.to(Routes.ROUTES_PROFILE_EDIT, {
-        //     name: this.props.name,
-        //     value: this.props.value
-        // });
     }
 }
 
@@ -106,7 +109,7 @@ class ImageCacheItem extends React.Component<any, any> {
             <SettingItem
                 title="清除缓存"
                 name="cache"
-                value={!cacheSize ? `` : `${cacheSize} MB` }
+                value={!cacheSize ? `` : `${cacheSize} MB`}
                 onPress={this.clearCache} />
         )
     }
@@ -161,6 +164,10 @@ export default class SettingScreen extends React.Component<any, any> {
         };
     }
 
+    componentWillMount() {
+        this.fetchDevelopInfo();
+    }
+
     render() {
         const user: any = Store.get("user") || {};
         const account = user.account || {};
@@ -180,14 +187,14 @@ export default class SettingScreen extends React.Component<any, any> {
                             <Icon type="&#xea54;" color={theme.color_base} size="xs" />
                         </Right>
                     </ListItem>
-                    <SettingItem title="联系我们" name="contact_us" />
-                    <SettingItem title="关于17" name="about_17" lastItem onPress={this.resetMain}/>
+                    <SettingItem title="联系我们" name="contact_us" linkTo={Routes.ROUTES_CONTACT_US} />
+                    <SettingItem title="关于17" name="about_17" linkTo={Routes.ROUTES_ABOUT_US} lastItem />
                 </List>
                 <List style={styles.listContainer}>
                     <SettingItem title="仅wifi下开启大图" name="connect_limit" valueContent={<ConnectivityControl />} hideRightArrow />
                     <ImageCacheItem />
-                    <SettingItem title="点评" name="comment" />
-                    <SettingItem title="分享17客户端" name="share" lastItem />
+                    <SettingItem title="点评" name="comment" onPress={this.comment}/>
+                    <SettingItem title="分享17客户端" name="share" linkTo={Routes.ROUTES_SHARE_17} lastItem />
                 </List>
                 <List style={styles.listContainer}>
                     <ListItem
@@ -220,10 +227,6 @@ export default class SettingScreen extends React.Component<any, any> {
         );
     }
 
-    resetMain = () => {
-        Navigator.backToTab(Routes.ROUTES_TAB_MARKET);
-    }
-
     handleLogout = async () => {
         try {
             Toast.loading({
@@ -248,6 +251,20 @@ export default class SettingScreen extends React.Component<any, any> {
 
         Navigator.back();
         Store.update("user", userState);
+    }
+
+    fetchDevelopInfo = async () => {
+        try {
+            let res: any = await APIs.about.get17info({});
+            Store.update("data.about_17", res.data);
+        }
+        catch (e) { }
+    };
+
+    comment = () => {
+        Toast.info({
+            text: "开发中"
+        })
     }
 }
 

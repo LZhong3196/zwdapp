@@ -1,3 +1,4 @@
+import { StackNavigatorConfig, NavigationRouteConfigMap } from "react-navigation";
 import { Constants } from "summer";
 
 /** 用户相关模块 */
@@ -8,6 +9,12 @@ import ProfileEditScreen from "./screens/stacks/user/profile/edit";
 import IdentificationScreen from "./screens/stacks/user/identification";
 import PasswordSettingScreen from "./screens/stacks/user/password-setting";
 
+/** 关于17 */
+import ContactUs from "./screens/stacks/user/setting/contact-us";
+import AboutUs from "./screens/stacks/user/setting/about";
+import Share17 from "./screens/stacks/user/setting/share";
+
+
 /**  */
 import ShopPageScreen from "./screens/stacks/shop";
 import GoodsPageScreen from "./screens/stacks/goods";
@@ -15,8 +22,9 @@ import MainScreen from "./screens/tabs";
 import NotificationScreen from "./screens/stacks/notification";
 import ScannerScreen from "./screens/stacks/scanner";
 import FieldSearchScreen from "./screens/stacks/field-search";
+import OrderDetailScreen from "./screens/stacks/order-detail";
 
-export const TabRouteMap: HashMap<string> = {
+export const TabRouteMap: RouteMap<string> = {
     ROUTES_TAB_HOME: "Home",
     ROUTES_TAB_MARKET: "Market",
     ROUTES_TAB_SEARCH: "Search",
@@ -25,7 +33,7 @@ export const TabRouteMap: HashMap<string> = {
 };
 
 /** Adding route name follow the template - ROUTES_[NEW_ROUTE_NAME]  */
-export const routeConfigMap: HashMap<any> = {
+export const routeConfigMap: NavigationRouteConfigMap = {
     ROUTES_MAIN: { screen: MainScreen },
     ROUTES_LOGIN: { screen: LoginScreen },
     ROUTES_SETTING: { screen: SettingScreen },
@@ -38,9 +46,13 @@ export const routeConfigMap: HashMap<any> = {
     ROUTES_GOODS: { screen: GoodsPageScreen },
     ROUTES_NOTIFICATION: { screen: NotificationScreen },
     ROUTES_SCANNER: { screen: ScannerScreen },
-    ROUTES_FIELD_SEARCH: { screen: FieldSearchScreen }
+    ROUTES_FIELD_SEARCH: { screen: FieldSearchScreen },
+    ROUTES_ORDER_DETAIL: { screen: OrderDetailScreen },
+    ROUTES_CONTACT_US: { screen: ContactUs },
+    ROUTES_ABOUT_US: { screen: AboutUs },
+    ROUTES_SHARE_17: { screen: Share17 },
 };
 
-export const stackConfig: any = {
+export const stackConfig: StackNavigatorConfig = {
 
 };

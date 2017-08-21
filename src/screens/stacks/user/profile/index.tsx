@@ -154,7 +154,7 @@ class AvatarPicker extends React.Component<AvatarPickerProps, any> {
             const profile: any = Store.get("user.profile");
             Store.update("user.profile", {
                 ...profile,
-                avatar: ""
+                avatar: src
             });
         }
     }
@@ -166,7 +166,7 @@ interface ProfileItemProps extends ViewProperties {
     name: string;
     value?: string;
     valueContent?: React.ReactNode;
-    onClick?: Function;
+    onPress?: Function;
     lastItem?: boolean;
 }
 
@@ -177,7 +177,7 @@ class ProfileItem extends React.Component<ProfileItemProps, any> {
             title,
             value,
             valueContent,
-            onClick,
+            onPress,
             lastItem
         } = this.props;
         const itemStyle: any = lastItem ? {
@@ -187,7 +187,7 @@ class ProfileItem extends React.Component<ProfileItemProps, any> {
         return (
             <ListItem
                 style={itemStyle}
-                onPress={!!onClick ? () => onClick() : this.handleEdit}>
+                onPress={!!onPress ? () => onPress() : this.handleEdit}>
                 <Left>
                     <Text>{title}</Text>
                 </Left>
@@ -234,7 +234,12 @@ export default class ProfileScreen extends React.Component<any, any> {
                     <AvatarPicker avatar={profile.avatar} />
                     <ProfileItem title="真实姓名" name="name" value={profile.name} />
                     <ProfileItem title="昵称" name="account" value={profile.account} />
-                    <ProfileItem title="我的二维码名片" name="qrcode" value={profile.qrcode} lastItem />
+                    <ProfileItem 
+                        title="我的二维码名片"
+                        name="qrcode"
+                        value={profile.qrcode}
+                        onPress={this.handleQRcodeEdit}
+                        lastItem />
                 </List>
                 <List style={styles.listContainer}>
                     <ProfileItem title="旺旺" name="taobao_account" value={profile.taobao_account} />
@@ -249,7 +254,9 @@ export default class ProfileScreen extends React.Component<any, any> {
     }
 
     handleQRcodeEdit = () => {
-
+        Toast.info({
+            text: "开发中"
+        });
     }
 
 }

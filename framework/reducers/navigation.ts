@@ -9,6 +9,7 @@ import {
     ACTIONTYPES_NAVIGATION_BACK,
     ACTIONTYPES_NAVIGATION_BACKTO,
     ACTIONTYPES_NAVIGATION_RESET,
+    ACTIONTYPES_NAVIGATION_SET_PARAMS,
     ROUTES_LOGIN,
     ROUTES_MAIN
 } from "./../constants";
@@ -67,6 +68,15 @@ function navigationReducers(state: State = initialState, action: StoreAction): S
         }
         case ACTIONTYPES_NAVIGATION_RESET: {
             nextState = reset(state, action);
+            break;
+        }
+
+        case ACTIONTYPES_NAVIGATION_SET_PARAMS: {
+            const { key, params } = action.payload
+            nextState = state.merge(navigator.router.getStateForAction(
+                NavigationActions.setParams({ key: key, params: params }),
+                state.toJS()
+            ));
             break;
         }
     }

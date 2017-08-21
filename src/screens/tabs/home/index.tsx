@@ -19,6 +19,7 @@ import HotSell from "./hot-sell";
 import AdvertList from "./advert-list";
 
 @Decorators.connect("home", "data")
+@Navigator.connectTabNavigation()
 export default class HomeScreen extends React.Component<any, any> {
     static navigationOptions = {
         title: "Routes.ROUTES_HOME",
@@ -35,16 +36,6 @@ export default class HomeScreen extends React.Component<any, any> {
         this.state = {
             loading: false
         };
-    }
-
-    componentWillMount() {
-        if (!Navigator.tabNavigation) {
-            Navigator.tabNavigation = this.props.navigation;
-        }
-    }
-
-    componentWillUnmount() {
-        Navigator.tabNavigation = undefined;
     }
 
     componentDidMount() {

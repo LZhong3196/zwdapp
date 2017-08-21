@@ -24,7 +24,6 @@ import {
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { styles, headerStyle, menuStyle } from "./style";
 let { TabBarIcon, Icon, Toast, theme, ImageExtra } = Widgets;
-import { is, Map } from "immutable";
 /** replace  */
 const headerBgStatic = require("./images/header.png");
 const backgroundImageStatic = require("./images/background.png");
@@ -38,7 +37,6 @@ interface UserHeaderProps extends ViewProperties {
 class UserHeader extends React.Component<UserHeaderProps, any> {
 
     render() {
-
         const { userInfo } = this.props;
         const bannerImageSource: any = !!userInfo.banner ? {
             uri: userInfo.banner
@@ -117,7 +115,7 @@ class MenuItem extends React.Component<MenuItemProps, any> {
                     color={iconColor} />
                 <Text style={menuStyle.itemText}>{title}</Text>
             </Button>
-        )
+        );
     }
 }
 

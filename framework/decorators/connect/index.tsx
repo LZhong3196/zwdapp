@@ -9,7 +9,7 @@ export default function connect(...stateKeys: Array<string>): ClassDecorator {
             const constructor: any = DecoratorComponent.prototype && DecoratorComponent.prototype.constructor;
             const componentName: string = DecoratorComponent.name
                 || constructor && constructor.name
-                || `component` ;
+                || `component`;
 
             console.warn(`You are decorating ${componentName} with @connect().\n Check the component - '${componentName}' because it already implements 'shouldComponentUpdate'.`);
         }

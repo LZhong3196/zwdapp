@@ -1,4 +1,9 @@
+
 interface HashMap<T> {
+    [key: string]: T;
+}
+
+interface RouteMap<T> {
     [key: string]: T;
 }
 
@@ -22,7 +27,6 @@ interface StoreAction {
 interface Dictionary<T> {
     [key: string]: T;
 }
-
 
 declare module 'react-native/Libraries/Components/ScrollResponder' {
     export interface ScrollResponderHandles {
@@ -108,6 +112,36 @@ declare module "stream" {
 declare module "react-native-camera" {
     import { Component } from 'react';
     export default class Menu extends Component<any, any> { }
+}
+
+
+declare module "@actra-development-oss/redux-persist-transform-filter-immutable" {
+    import { Transform } from "redux-persist";
+    export function createFilter(reducerName: any, inboundPaths: any, outboundPaths?: any, ...args: any[]): Transform<any, any>;
+    export function createWhitelistFilter(reducerName: any, inboundPaths: any, outboundPaths?: any): Transform<any, any>;
+    export function createBlacklistFilter(reducerName: any, inboundPaths: any, outboundPaths: any): Transform<any, any>;
+    export function filterObject(_ref: any, state: any): any
+    export function persistFilter(state: any, ...args: any[]): any;
+    export default createFilter;
+}
+
+declare module "react-native-share" {
+    import { Component } from "react";
+    export class ShareSheet extends Component<any, any> {}
+    export class Share {
+        static open(options: {
+            /** URL you want to share (you can share a base64 file url only in iOS & Android ) */
+            url: string;
+            /** File mime type (optional) */
+            type: string;
+            message: string;
+            title?: string;
+            subject?: string;
+            excludedActivityTypes?: string;
+        }): void;
+        static shareSingle(options: any): void;
+    }
+    export default Share;
 }
 
 declare let module: any;

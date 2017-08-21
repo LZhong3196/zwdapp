@@ -602,10 +602,16 @@ declare module 'native-base@2.2.0' {
 			edgeHitWidth?: number;
 			springTension?: number;
 			springFriction?: number;
+			initialPage?: number;
+			tabBarUnderlineStyle?: ReactNative.ViewStyle
 		}
 
 		interface Tab {
 			heading: TabHeading | string;
+			tabStyle?: ReactNative.ViewStyle;
+			activeTabStyle?: ReactNative.ViewStyle;
+			textStyle?: ReactNative.TextStyle;
+			activeTextStyle?: ReactNative.TextStyle
 		}
 		interface TabHeading {
 			activeTabStyle?: ReactNative.ViewStyle;

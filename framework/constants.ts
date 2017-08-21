@@ -1,6 +1,6 @@
 import { Dimensions, PixelRatio, Platform } from "react-native";
 
-let {height, width} = Dimensions.get("window");
+let { height, width } = Dimensions.get("window");
 
 /** 当前设备系统是否是ios */
 export const ios = (Platform.OS === "ios");
@@ -16,10 +16,14 @@ export const DEVICE_DENSITY = PixelRatio.get();
 
 
 /** Persist store whitelist - 持久化数据白名单 | 与state对应 */
-export const PERSIST_STORE_WHITE_LIST: Array<string> = [
-    "user",
-    "data"
-];
+/** [reducerKey]: [** subset of the reducer to store **]
+ *  If you want to store the whole reducer, set a empty Array like
+ *  [reducerKey]: []
+*/
+export const PERSIST_STORE_WHITE_LIST: Dictionary<Array<string>> = {
+    user: [],
+    data: ["city"]
+};
 
 /** -------  ACTION TYPES DEFINITION   ------- */
 
@@ -30,6 +34,7 @@ export const ACTIONTYPES_NAVIGATION_TO: string = "Navigation/NAVIGATE";
 export const ACTIONTYPES_NAVIGATION_BACK: string = "Navigation/BACK";
 export const ACTIONTYPES_NAVIGATION_BACKTO: string = "Navigation/BACKTO";
 export const ACTIONTYPES_NAVIGATION_RESET: string = "Navigation/RESET";
+export const ACTIONTYPES_NAVIGATION_SET_PARAMS: string = "Navigation/SET_PARAMS";
 
 /** Action type - User */
 export const ACTIONTYPES_USER_UPDATE: string = "User/UPDATE";
@@ -55,6 +60,9 @@ export const ACTIONTYPES_NOTIFICATION_UPDATE: string = "Notification/UPDATE";
 export const ROUTES_MAIN: string = "ROUTES_MAIN";
 /** ROUTES - Stacks - 登录页 */
 export const ROUTES_LOGIN: string = "ROUTES_LOGIN";
+
+/** ROUTES - Stacks - 订单详情 */
+export const ROUTES_ORDER_DETAIL: string = "OrderDetail"
 
 /** -------  REQUEST ERROR STATUS DEFINITION   ------- */
 
