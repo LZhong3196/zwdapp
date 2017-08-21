@@ -79,18 +79,21 @@ export default class MarketScreen extends React.Component<any, any> {
                     onFocus={this.openFilterSearchPage}
                     placeholder="请输入档口名/档口号/旺旺号"/>
                 <RefreshList
-                    ref={ (e) => this.flatList = e }
+                    ref={ (e: any) => this.flatList = e }
                     data={ data }
                     renderItem={ this.renderRow }
                     onHeaderRefresh={ () => this.fetchList(true) }
                     onFooterRefresh={ () => this.fetchList(false) }
-                    onScrollTop={ this.flatlistScrollTop }
+                    onScrollTop={ this.onFlatlistScrollTop }
                 />
-                <ScrollToTop ref={ (e) => this.scrollToTopButtom = e } bindRef={ this.flatList }/>
+                <ScrollToTop ref={ (e: any) => this.scrollToTopButtom = e } onPress={ this.flatListScrollToTop }/>
             </View>
         );
     }
-    flatlistScrollTop = (scrollTop: boolean) => {
+    flatListScrollToTop = () => {
+        this.flatList.scrollToTop();
+    }
+    onFlatlistScrollTop = (scrollTop: boolean) => {
         scrollTop ? this.scrollToTopButtom.hideButton() : this.scrollToTopButtom.showButton();
     }
     openShopPage = (id: string) => {

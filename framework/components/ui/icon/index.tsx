@@ -16,7 +16,7 @@ export interface IconStyleProps extends ViewStyle {
     color?: string;
     fontSize?: number;
     lineHeight?: number;
-};
+}
 
 export interface IconProps {
     type: string;

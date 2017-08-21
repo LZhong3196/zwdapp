@@ -10,7 +10,7 @@ import { Store, Navigator, Constants, Widgets, Decorators, Routes } from "summer
 const { ImageExtra } = Widgets;
 
 @Decorators.connect("home")
-export default class RecommendGoods extends React.Component<any, any> {
+export default class DailyNew extends React.Component<any, any> {
     constructor(props: any, context: any) {
         super(props, context);
     }
@@ -19,10 +19,6 @@ export default class RecommendGoods extends React.Component<any, any> {
             key={ index }
             onPress={ () => this.openGoodsPage(item.goods_id) }
         >
-            <ImageExtra qualityControl="XL"
-                        style={ styles.dailyNewListImage }
-                        source={{ uri: item.image }}
-            />
         </TouchableOpacity>
     )
     render() {

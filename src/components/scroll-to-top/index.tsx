@@ -11,13 +11,12 @@ const { UIManager } = NativeModules;
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
 interface ScrollToTopProps {
-    bindRef: any;
+    onPress: () => void;
 }
 @Decorators.pureRender()
 export default class ScrollToTop extends React.Component<ScrollToTopProps, any> {
     constructor(props: any, context: any) {
       super(props, context);
-      /** { props.bindRef } is a scroll component ref and it must has function scrollToTop*/
       this.state = {
           width: 0,
           height: 0
@@ -28,13 +27,10 @@ export default class ScrollToTop extends React.Component<ScrollToTopProps, any> 
             <Fab
                 position="bottomRight"
                 style={{ ...styles.scrollToTop, width: this.state.width , height: this.state.height }}
-                onPress={ this.scrollToTop }>
+                onPress={ this.props.onPress }>
                 <Icon type="&#xe60d;" color="#F85E3B" />
             </Fab>
         );
-    }
-    scrollToTop = () => {
-        this.props.bindRef.scrollToTop && this.props.bindRef.scrollToTop();
     }
     showButton = () => {
         LayoutAnimation.configureNext({

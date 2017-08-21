@@ -4,7 +4,6 @@ import { TouchableOpacity, View, TextInput, TouchableHighlight } from "react-nat
 import {
     Text,
     Container,
-    Header,
     Content,
     List,
     ListItem,
@@ -13,9 +12,9 @@ import {
 } from "native-base";
 import { styles } from "./style";
 import {underline} from "chalk";
-const { Icon } = Widgets;
+const { Icon, Header } = Widgets;
 
-@Decorators.connect("search", "data")
+@Decorators.connect("search", "data", "market")
 export default class FiledSearchScreen extends React.Component<any, any> {
     static navigationOptions = {
         header: null as any
@@ -24,7 +23,7 @@ export default class FiledSearchScreen extends React.Component<any, any> {
         super(props);
         this.state = {
             filed: "",
-            selectedOption: "",
+            selectedOption: this.props.navigation.state.params.origin === "Market" ? "档口名" : "宝贝",
             showSelectOptions: false
         };
     }
@@ -54,7 +53,7 @@ export default class FiledSearchScreen extends React.Component<any, any> {
     }
     renderSelect = () => {
         let select = undefined;
-        const { searchType } = this.state;
+        const { selectedOption } = this.state;
         switch (this.props.navigation.state.params.origin) {
            case Routes.ROUTES_TAB_HOME:
                 select = (
@@ -62,15 +61,15 @@ export default class FiledSearchScreen extends React.Component<any, any> {
                         <TouchableOpacity
                             onPress={this.selectOptionToggle}>
                             <View style={styles.selectBotton}>
-                                <Text>宝贝</Text>
+                                <Text>{this.state.selectedOption}</Text>
                                 <Icon type="&#xe61a;"/>
                             </View>
                         </TouchableOpacity>
                         {
                             this.state.showSelectOptions ?
                                 <View style={styles.searchOptions}>
-                                    <Button style={searchType === "宝贝" ? styles.selectedOption : {}} onPress={() => this.select("宝贝")} dark><Text>宝贝</Text></Button>
-                                    <Button style={searchType === "店铺" ? styles.selectedOption : {}} onPress={() => this.select("店铺")} dark><Text>店铺</Text></Button>
+                                    <Button style={selectedOption === "宝贝" ? styles.selectedOption : {}} onPress={() => this.select("宝贝")} dark><Text>宝贝</Text></Button>
+                                    <Button style={selectedOption === "店铺" ? styles.selectedOption : {}} onPress={() => this.select("店铺")} dark><Text>店铺</Text></Button>
                                 </View>
                                 : undefined
                         }
@@ -84,16 +83,16 @@ export default class FiledSearchScreen extends React.Component<any, any> {
                         <TouchableOpacity
                             onPress={this.selectOptionToggle}>
                             <View style={styles.selectBotton}>
-                                <Text>档口名</Text>
+                                <Text>{this.state.selectedOption}</Text>
                                 <Icon type="&#xe61a;"/>
                             </View>
                         </TouchableOpacity>
                         {
                             this.state.showSelectOptions ?
                                 <View style={styles.searchOptions}>
-                                    <Button style={searchType === "档口名" ? styles.selectedOption : {}} onPress={() => this.select("档口名")} dark><Text>档口名</Text></Button>
-                                    <Button style={searchType === "档口号" ? styles.selectedOption : {}} onPress={() => this.select("档口号")} dark><Text>档口号</Text></Button>
-                                    <Button style={searchType === "旺旺号" ? styles.selectedOption : {}} onPress={() => this.select("旺旺号")} dark><Text>旺旺号</Text></Button>
+                                    <Button style={selectedOption === "档口名" ? styles.selectedOption : {}} onPress={() => this.select("档口名")} dark><Text>档口名</Text></Button>
+                                    <Button style={selectedOption === "档口号" ? styles.selectedOption : {}} onPress={() => this.select("档口号")} dark><Text>档口号</Text></Button>
+                                    <Button style={selectedOption === "旺旺号" ? styles.selectedOption : {}} onPress={() => this.select("旺旺号")} dark><Text>旺旺号</Text></Button>
                                 </View>
                                 : undefined
                         }
@@ -108,7 +107,7 @@ export default class FiledSearchScreen extends React.Component<any, any> {
         const hotSearchList: any[] = Store.get("data.search.hotSearchList") || [];
         return (
             <Container>
-                <View style={styles.header}>
+                <Header>
                     <TouchableOpacity
                         onPress={this.goback}>
                         <Icon type="&#xea53;"/>
@@ -129,7 +128,7 @@ export default class FiledSearchScreen extends React.Component<any, any> {
                             <Text style={styles.searchButtonText}>搜索</Text>
                         </View>
                     </TouchableOpacity>
-                </View>
+                </Header>
                 <View style={ styles.hotSearch }>
                     <View style={ styles.hotSearchTitle }>
                         <Text><Icon type="&#xe729;" style={styles.titleIcon}/>热门搜索</Text>
@@ -186,7 +185,6 @@ export default class FiledSearchScreen extends React.Component<any, any> {
             || this.state.selectedOption === "店铺") {
             Store.update("market.filterInfo.field", filed);
             Navigator.backToTab("Market");
-
         }
         else {
             Store.update("search.filterInfo.field", filed);
