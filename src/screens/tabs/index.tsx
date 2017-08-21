@@ -1,5 +1,10 @@
 import * as React from "react";
-import ReactNavigation, { TabNavigator } from "react-navigation";
+import {
+    TabNavigator,
+    NavigationContainer,
+    NavigationRouteConfigMap,
+    TabNavigatorConfig
+} from "react-navigation";
 import { Widgets } from "summer";
 
 import HomeScreen from "./home";
@@ -16,9 +21,9 @@ export default class MainScreen extends React.Component<any, any> {
     static navigationOptions = {
         header: null as any
     };
-    private AppTabNavigator: ReactNavigation.NavigationContainer;
-    private routeConfigs: ReactNavigation.NavigationRouteConfigMap;
-    private config: ReactNavigation.TabNavigatorConfig;
+    private AppTabNavigator: NavigationContainer;
+    private routeConfigs: NavigationRouteConfigMap;
+    private config: TabNavigatorConfig;
     constructor(props: any, context: any) {
         super(props, context);
         this.routeConfigs = {

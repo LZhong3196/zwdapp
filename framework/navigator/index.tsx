@@ -1,7 +1,16 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import ReactNavigation, { NavigationActions } from "react-navigation";
-import { addNavigationHelpers, StackNavigator } from "react-navigation";
+import { compose } from "redux";
+import {
+    NavigationActions,
+    addNavigationHelpers,
+    StackNavigator,
+    NavigationRouteConfigMap,
+    StackNavigatorConfig,
+    NavigationProp,
+    NavigationAction,
+    NavigationContainer
+} from "react-navigation";
 import Store from "./../store/index";
 import {
     ACTIONTYPES_NAVIGATION_TO,
@@ -17,19 +26,19 @@ type appNavigationOptions = {
 };
 
 export type RouterConfigs = {
-    routeConfigMap: ReactNavigation.NavigationRouteConfigMap,
-    stackConfig?: ReactNavigation.StackNavigatorConfig,
-    TabRouteMap: HashMap<string>
+    routeConfigMap: NavigationRouteConfigMap,
+    stackConfig?: StackNavigatorConfig,
+    TabRouteMap: RouteMap<string>
 };
 
-export type TabNavigation = ReactNavigation.NavigationProp<any, ReactNavigation.NavigationAction>;
+export type TabNavigation = NavigationProp<any, NavigationAction>;
 
 export default class Navigator {
     public appName: string;
-    public appNavigator: ReactNavigation.NavigationContainer;
-    static routes: HashMap<string> = {};
+    public appNavigator: NavigationContainer;
+    static routes: RouteMap<string> = {};
     static tabs: Array<string> = [];
-    static navigatorInstance: ReactNavigation.NavigationContainer;
+    static navigatorInstance: NavigationContainer;
     static tabNavigation: TabNavigation;
 
     static initRoutes(config: RouterConfigs) {
@@ -99,11 +108,35 @@ export default class Navigator {
         // });
     }
 
+    static connectTabNavigation(): ClassDecorator {
+        return (DecoratorComponent: any) => {
+            let willMount: () => void = DecoratorComponent.prototype.componentWillMount;
+            let willUnmount: () => void = DecoratorComponent.prototype.componentWillUnmount;
+            let navigator: any = this;
+
+            function setTabNavigationInjector() {
+                if (!navigator.tabNavigation) {
+                    navigator.tabNavigation = this.props.navigation;
+                }
+                willMount && willMount.bind(this)();
+            };
+
+            function clear() {
+                navigator.tabNavigation = undefined;
+                willUnmount && willUnmount.bind(this)();
+            };
+
+            DecoratorComponent.prototype.componentWillMount = setTabNavigationInjector;
+            DecoratorComponent.prototype.componentWillUnmount = clear;
+
+        };
+    }
+
     constructor(configs: RouterConfigs) {
         this.appNavigator = StackNavigator(configs.routeConfigMap, configs.stackConfig);
     }
 
-    public get navigator(): ReactNavigation.NavigationContainer {
+    public get navigator(): NavigationContainer {
         return this.appNavigator;
     }
 
