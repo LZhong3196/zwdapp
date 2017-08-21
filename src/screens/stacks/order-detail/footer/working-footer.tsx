@@ -10,6 +10,7 @@ let { theme } = Widgets;
 
 interface WorkingFooterProps {
   completed: number;
+  disabled?: boolean;
   onCancel: () => void;
   onComplete: () => void;
 }
@@ -25,7 +26,7 @@ const commonStyle = {
 class WorkingFooter extends Component<WorkingFooterProps, any> {
 
   render() {
-    const { completed } = this.props;
+    const { completed, disabled } = this.props;
 
     return (
       <Footer>
@@ -46,9 +47,10 @@ class WorkingFooter extends Component<WorkingFooterProps, any> {
           </Button>
           <Button
             style={ {
-              backgroundColor: theme.color_theme,
+              backgroundColor: disabled? theme.color_grey : theme.color_theme,
               borderRadius: 0
             } }
+            disabled={ disabled }
             onPress={ this.onCompleteClick }
           >
             <Text style={ {

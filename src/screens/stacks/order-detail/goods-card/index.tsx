@@ -38,7 +38,7 @@ class GoodsCard extends Component<GoodsCardProps, any> {
             goods.map((item: any, index: number) => {
               return (
                 <GoodsItem
-                  key={ index }
+                  key={ item.u_id }
                   id={ item.u_id }
                   title={ item.title }
                   thumbnail={ item.thumbnail }

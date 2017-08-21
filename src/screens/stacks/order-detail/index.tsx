@@ -8,11 +8,14 @@ import {
   Icon,
   Container,
 } from "native-base";
-import { APIs, Store, Constants, Decorators, Navigator } from "summer";
+import { APIs, Store, Constants, Decorators, Navigator, Widgets } from "summer";
 import CollapsiblePanel from "../../../components/collapsible-panel";
 import GoodsCard from "./goods-card";
 import Footer from "./footer";
 import { OrderStatus } from "../../tabs/order";
+import EmptyResult from "../../../components/empty-result";
+
+let { Toast } = Widgets;
 
 @Decorators.pureRender()
 class OrderDetailScreen extends Component<any, any> {
@@ -39,11 +42,13 @@ class OrderDetailScreen extends Component<any, any> {
     super(props);
 
     this.state = {
-      completedGoods: 0
+      completedGoods: 0,
+      fetching: true,
     };
   }
 
   componentDidMount() {
+    Toast.loading();
     this.fetchData();
   }
 
@@ -51,7 +56,7 @@ class OrderDetailScreen extends Component<any, any> {
     const { id } = this.props.navigation.state.params;
     let order: any = Store.get(`order.${id}`) || {};
     const { completedGoods } = this.state;
-    console.log(id, order);
+
     if (order.items && order.items.length > 0) {
       return (
         <Container>
@@ -76,6 +81,12 @@ class OrderDetailScreen extends Component<any, any> {
           <Footer status={ order.status } completed={ completedGoods } onCancel={ this.goBackToList } onComplete={ this.goBackToList } />
         </Container>
       );
+    } else if (!this.state.fetching && order.items) {
+      return (
+        <Container>
+          <EmptyResult title="亲，该订单暂无采购信息！" />
+          <Footer status={ order.status } completed={ completedGoods } onCancel={ this.goBackToList } onComplete={ this.goBackToList } disabled/>
+        </Container>);
     } else {
       return null;
     }
@@ -90,6 +101,13 @@ class OrderDetailScreen extends Component<any, any> {
       let res: any = await APIs.order.getOrderInfo({
         u_id: id
       });
+
+      if (this.state.fetching) {
+        Toast.close();
+        this.setState({
+          fetching: false
+        });
+      }
 
       const results = res.data.results;
 
