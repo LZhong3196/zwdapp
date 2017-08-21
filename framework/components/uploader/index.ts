@@ -29,9 +29,6 @@ async function _upload(url: string, headers: any, file: {
     filepath: string;
     filetype?: string;
 }) {
-    if (IS_DEBUG || IS_DEV) {
-        // return request(url, )
-    }
     return RNFetchBlob.fetch("POST", url, headers, [{
         name: file.name,
         filename: file.fileNmae,
@@ -42,7 +39,7 @@ async function _upload(url: string, headers: any, file: {
             ProgressInfo.update(Math.round(written * 100 / total));
         })
         .then((res: any) => {
-            return res;
+            return JSON.parse(res.data);
         })
         .catch((error: any) => {
             throw error;
@@ -96,7 +93,7 @@ export default async function upload(url: string, uploadOptions: UploadOptions) 
             };
         }
         else {
-            throw new Error("all failed")
+            throw new Error("all failed");
         }
     }
     catch (e) {
