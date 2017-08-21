@@ -16,9 +16,14 @@ export const DEVICE_DENSITY = PixelRatio.get();
 
 
 /** Persist store whitelist - 持久化数据白名单 | 与state对应 */
-export const PERSIST_STORE_WHITE_LIST: Array<string> = [
-    "user"
-];
+/** [reducerKey]: [** subset of the reducer to store **]
+ *  If you want to store the whole reducer, set a empty Array like
+ *  [reducerKey]: []
+*/
+export const PERSIST_STORE_WHITE_LIST: Dictionary<Array<string>> = {
+    user: [],
+    data: ["city"]
+};
 
 /** -------  ACTION TYPES DEFINITION   ------- */
 
@@ -27,6 +32,7 @@ export const ACTIONTYPES_LOGGED_IN: string = "Navigation/LOGGED_IN";
 export const ACTIONTYPES_LOGGED_OUT: string = "Navigation/LOGGED_OUT";
 export const ACTIONTYPES_NAVIGATION_TO: string = "Navigation/NAVIGATE";
 export const ACTIONTYPES_NAVIGATION_BACK: string = "Navigation/BACK";
+export const ACTIONTYPES_NAVIGATION_BACKTO: string = "Navigation/BACKTO";
 export const ACTIONTYPES_NAVIGATION_RESET: string = "Navigation/RESET";
 export const ACTIONTYPES_NAVIGATION_SET_PARAMS: string = "Navigation/SET_PARAMS";
 

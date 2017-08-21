@@ -8,7 +8,9 @@ import {
 import reduxThunk from "redux-thunk";
 import { createLogger } from "redux-logger";
 import { AsyncStorage } from "react-native";
+import { Transform, Persistor } from "redux-persist";
 import { persistStore, autoRehydrate } from "redux-persist-immutable";
+import { createWhitelistFilter } from "@actra-development-oss/redux-persist-transform-filter-immutable";
 import {
     PERSIST_STORE_WHITE_LIST,
     ROUTES_MAIN
@@ -17,7 +19,9 @@ import { initConnectivityInfo } from "./../libs/networking";
 import appReducer from "./../reducers/index";
 import * as CONSTANTS from "./../constants";
 
-const isDebuggingInChrome = (global as any).__DEV__ && !!window.navigator.userAgent;
+const IS_DEV = (global as any).__DEV__;
+const IS_DEBUG = (global as any).__DEBUG__;
+const isDebuggingInChrome = (IS_DEV || IS_DEBUG) && !!window.navigator.userAgent;
 
 const logger: Redux.Middleware = createLogger({
     predicate: (getState, action) => isDebuggingInChrome,
@@ -32,6 +36,7 @@ export interface ImmutableMap<T> extends Map<string, any> {
     merge(...iterables: Array<T>[]): this;
     setIn(keyPath: Iterable<any>, value: any): this;
     toJS: any;
+    getIn(searchKeyPath: Iterable<any>, notSetValue?: any): any;
 }
 
 export type State = ImmutableMap<{
@@ -64,6 +69,7 @@ export const initialState: State = Immutable.fromJS({
 export default class Store {
     static instance: Store;
     private appStore: Redux.Store<any>;
+    private persistor: Persistor;
 
     static get<T>(keys: string): T {
         if (!this.instance) {
@@ -80,6 +86,7 @@ export default class Store {
         const storeKey: string = storeKeys.slice(1).join(".");
         const appStore: Store = this.instance;
         const actionType: string = `ACTIONTYPES_${storeKeys[0].toLocaleUpperCase()}_UPDATE`;
+
         appStore.dispatch({
             type: (CONSTANTS as any)[actionType],
             meta: {
@@ -96,6 +103,10 @@ export default class Store {
         this.instance.dispatch(action);
     }
 
+    static getPersistor(): Persistor {
+        return this.instance.persistor;
+    }
+
     constructor() {
         this.appStore = this.createAppStore();
     }
@@ -105,7 +116,7 @@ export default class Store {
     }
 
     public get<T>(keys: string): T {
-        let keyPath: Array<any> = keys.trim().split(".");
+        let keyPath: Array<any> = keys.split(".");
         let data: any = this.appStore.getState().getIn(keyPath);
 
         try {
@@ -136,11 +147,14 @@ export default class Store {
         const rehydrationCompleted: any = compose(
             initConnectivityInfo
         );
-
-        persistStore(store, {
-            whitelist: PERSIST_STORE_WHITE_LIST,
-            storage: AsyncStorage
+        const persistStoreWhiteList: Array<string> = Object.keys(PERSIST_STORE_WHITE_LIST);
+        const transforms: Array<Transform<any, any>> = createPersistTransform();
+        this.persistor = persistStore(store, {
+            whitelist: persistStoreWhiteList,
+            storage: AsyncStorage,
+            transforms: transforms,
         }, rehydrationCompleted);
+
 
         if (isDebuggingInChrome) {
             (window as any).store = store;
@@ -149,3 +163,21 @@ export default class Store {
     }
 }
 
+
+function createPersistTransform(): Array<Transform<any, any>> {
+    let filterTransforms: Array<Transform<any, any>> = [];
+    for (const key in PERSIST_STORE_WHITE_LIST) {
+        if (!!PERSIST_STORE_WHITE_LIST[key].length) {
+            const subsetFilter: Transform<any, any> = createWhitelistFilter(
+                key,
+                PERSIST_STORE_WHITE_LIST[key],
+                PERSIST_STORE_WHITE_LIST[key]
+            );
+            filterTransforms = [
+                ...filterTransforms,
+                subsetFilter
+            ];
+        }
+    }
+    return filterTransforms;
+}

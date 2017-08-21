@@ -67,7 +67,6 @@ class AvatarPicker extends React.Component<AvatarPickerProps, any> {
         )
     }
 
-
     handleAvatarChange = () => {
         const options: Array<string> = ["拍照", "从相册选择", "取消"];
         ActionSheet.show({
@@ -107,12 +106,16 @@ class AvatarPicker extends React.Component<AvatarPickerProps, any> {
             let res: any = await APIs.user.uploadAvatar({
                 files: [{
                     name: `avatar_${profile.account}`,
-                    filepath: image.data,
+                    filepath: image.path,
                     filetype: image.mime,
                     filename: `avatar_${profile.account}`
                 }],
                 params: { type: "avatar" }
             });
+            Toast.success({
+                text: "上传成功"
+            });
+            this.updateAvatar(res.data.list[0].url);
         }
         catch (e) {
             Toast.close();
@@ -120,15 +123,39 @@ class AvatarPicker extends React.Component<AvatarPickerProps, any> {
     }
 
     openCamera = async () => {
+        const profile: any = Store.get("user.profile");
         try {
-            let source = await ImagePicker.openCamera({
+            let image = await ImagePicker.openCamera({
                 width: 300,
                 height: 400,
                 cropping: true
             }) as ImagePicker.Image;
+            let res: any = await APIs.user.uploadAvatar({
+                files: [{
+                    name: `avatar_${profile.account}`,
+                    filepath: image.path,
+                    filetype: image.mime,
+                    filename: `avatar_${profile.account}`
+                }],
+                params: { type: "avatar" }
+            });
+            Toast.success({
+                text: "上传成功"
+            });
+            this.updateAvatar(res.data.list[0].url);
         }
         catch (e) {
 
+        }
+    }
+
+    updateAvatar = (src: string) => {
+        if (!!src) {
+            const profile: any = Store.get("user.profile");
+            Store.update("user.profile", {
+                ...profile,
+                avatar: src
+            });
         }
     }
 }

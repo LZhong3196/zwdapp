@@ -7,13 +7,13 @@ import {
     ACTIONTYPES_LOGGED_OUT,
     ACTIONTYPES_NAVIGATION_TO,
     ACTIONTYPES_NAVIGATION_BACK,
+    ACTIONTYPES_NAVIGATION_BACKTO,
     ACTIONTYPES_NAVIGATION_RESET,
     ACTIONTYPES_NAVIGATION_SET_PARAMS,
     ROUTES_LOGIN,
     ROUTES_MAIN
 } from "./../constants";
 import Navigator from "./../navigator/index";
-
 
 function navigationReducers(state: State = initialState, action: StoreAction): State {
     let nextState: State;
@@ -31,7 +31,7 @@ function navigationReducers(state: State = initialState, action: StoreAction): S
             nextState = state.merge(navigator.router.getStateForAction(
                 NavigationActions.navigate({
                     routeName: ROUTES_LOGIN,
-                    params: action.meta.params
+                    params: action.meta.params || ""
                 }),
                 state.toJS()
             ));
@@ -48,7 +48,7 @@ function navigationReducers(state: State = initialState, action: StoreAction): S
                 nextState = state.merge(navigator.router.getStateForAction(
                     NavigationActions.navigate({
                         routeName: routeName,
-                        params: params
+                        params: params || ""
                     }),
                     state.toJS()
                 ));
@@ -62,31 +62,12 @@ function navigationReducers(state: State = initialState, action: StoreAction): S
             ));
             break;
         }
+        case ACTIONTYPES_NAVIGATION_BACKTO: {
+            nextState = backTo(state, action);
+            break;
+        }
         case ACTIONTYPES_NAVIGATION_RESET: {
-            const resetRouteName: string = action.meta.resetRouteName || ROUTES_MAIN;
-            const routes: Array<string> = state.toJS().routes.map((routes: any) => routes.routeName);
-            let resetIndex: number = 0;
-            let newActions: Array<any> = [
-                NavigationActions.navigate({
-                    routeName: ROUTES_MAIN,
-                    params: action.meta.params
-                })
-            ];
-            if (resetRouteName !== ROUTES_MAIN) {
-                resetIndex = routes.indexOf(resetRouteName);
-                const resetRoutes: Array<string> = routes.slice(0, resetIndex + 1);
-                newActions = resetRoutes.map((routeName: string) => NavigationActions.navigate({
-                    routeName: routeName,
-                    params: action.meta.params
-                }));
-            }
-            nextState = state.merge(navigator.router.getStateForAction(
-                NavigationActions.reset({
-                    index: resetIndex,
-                    actions: newActions
-                }),
-                state.toJS()
-            ));
+            nextState = reset(state, action);
             break;
         }
 
@@ -99,6 +80,56 @@ function navigationReducers(state: State = initialState, action: StoreAction): S
             break;
         }
     }
+    return nextState || state;
+}
+
+function backTo(state: State, action: StoreAction): State {
+    let nextState: State;
+    let navigator: ReactNavigation.NavigationContainer = Navigator.navigatorInstance;
+    const target: string = action.meta.routeName;
+    const routes: Array<any> = state.toJS()!.routes;
+    const routesNameMap: Array<string> = routes.map((route: any) => route.routeName);
+    let routeIndex: number = routesNameMap.indexOf(target) + 1;
+    const routesKey = routes[routeIndex]!.key;
+    nextState = state.merge(navigator.router.getStateForAction(
+        NavigationActions.back({
+            key: routesKey
+        }),
+        state.toJS()
+    ));
+    return nextState || state;
+}
+
+function reset(state: State, action: StoreAction): State {
+    let nextState: State;
+    let navigator: ReactNavigation.NavigationContainer = Navigator.navigatorInstance;
+    const resetRouteName: string = action.meta.resetRouteName || ROUTES_MAIN;
+    const routes: Array<string> = state.toJS().routes.map((routes: any) => routes.routeName);
+    let resetIndex: number = 0;
+    let newActions: Array<any> = [
+        NavigationActions.navigate({
+            routeName: ROUTES_MAIN,
+            params: action.meta.params || ""
+        })
+    ];
+    if (resetRouteName !== ROUTES_MAIN) {
+        resetIndex = routes.indexOf(resetRouteName);
+        if (resetIndex === -1) {
+            return;
+        }
+        const resetRoutes: Array<string> = routes.slice(0, resetIndex + 1);
+        newActions = resetRoutes.map((routeName: string) => NavigationActions.navigate({
+            routeName: routeName,
+            params: action.meta.params || ""
+        }));
+    }
+    nextState = state.merge(navigator.router.getStateForAction(
+        NavigationActions.reset({
+            index: resetIndex,
+            actions: newActions
+        }),
+        state.toJS()
+    ));
     return nextState || state;
 }
 

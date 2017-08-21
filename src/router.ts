@@ -17,22 +17,30 @@ import ScannerScreen from "./screens/stacks/scanner";
 import FieldSearchScreen from "./screens/stacks/field-search";
 import OrderDetailScreen from './screens/stacks/order-detail';
 
+export const TabRouteMap: HashMap<string> = {
+    ROUTES_TAB_HOME: "Home",
+    ROUTES_TAB_MARKET: "Market",
+    ROUTES_TAB_SEARCH: "Search",
+    ROUTES_TAB_ORDER: "Order",
+    ROUTES_TAB_USER: "User"
+};
+
 /** Adding route name follow the template - ROUTES_[NEW_ROUTE_NAME]  */
 export const routeConfigMap: HashMap<any> = {
-    "ROUTES_MAIN": { screen: MainScreen },
-    "ROUTES_LOGIN": { screen: LoginScreen },
-    "ROUTES_SETTING": { screen: SettingScreen },
-    "ROUTES_PROFILE": { screen: ProfileScreen },
-    "ROUTES_REGISTER": { screen: PasswordSettingScreen },
-    "ROUTES_PROFILE_EDIT": { screen: ProfileEditScreen },
-    "ROUTES_IDENTIFICATION": { screen: IdentificationScreen },
-    "ROUTES_RESET_PASSWORD": { screen: PasswordSettingScreen },
-    "ROUTES_SHOP": { screen: ShopPageScreen },
-    "ROUTES_GOODS": { screen: GoodsPageScreen },
-    "ROUTES_NOTIFICATION": { screen: NotificationScreen },
-    "ROUTES_SCANNER": { screen: ScannerScreen },
-    "ROUTES_FIELD_SEARCH": { screen: FieldSearchScreen },
-    "ROUTES_ORDER_DETAIL": { screen: OrderDetailScreen }
+    ROUTES_MAIN: { screen: MainScreen },
+    ROUTES_LOGIN: { screen: LoginScreen },
+    ROUTES_SETTING: { screen: SettingScreen },
+    ROUTES_PROFILE: { screen: ProfileScreen },
+    ROUTES_REGISTER: { screen: PasswordSettingScreen },
+    ROUTES_PROFILE_EDIT: { screen: ProfileEditScreen },
+    ROUTES_IDENTIFICATION: { screen: IdentificationScreen },
+    ROUTES_RESET_PASSWORD: { screen: PasswordSettingScreen },
+    ROUTES_SHOP: { screen: ShopPageScreen },
+    ROUTES_GOODS: { screen: GoodsPageScreen },
+    ROUTES_NOTIFICATION: { screen: NotificationScreen },
+    ROUTES_SCANNER: { screen: ScannerScreen },
+    ROUTES_FIELD_SEARCH: { screen: FieldSearchScreen },
+    ROUTES_ORDER_DETAIL: { screen: OrderDetailScreen }
 };
 
 export const stackConfig: any = {
