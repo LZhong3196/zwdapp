@@ -240,7 +240,7 @@ import { APIs } from "summer";
 
 fetchUserInfo = async () => {
 	try {
-		const res = APIs.user.getUserInfo({});
+		const res = await APIs.user.getUserInfo({});
 		/** do something with res data */
 		...
 	}
