@@ -32,19 +32,18 @@ export default class SearchBar extends React.Component<SearchBarProps, any> {
         this.getCityList();
     }
     getCityList = async () => {
-        if (!Store.get("data.cityInfo.city")) {
-            try {
-                /**TODO 使用第三方定位 , 获取当前位置*/
-                const city = "广州";
-                const res: any = await APIs.data.getCityList();
-                const cityList: any[] = res.data || [];
-                Store.update("data.cityInfo", {
-                    city,
-                    list: cityList
-                });
-            }
-            catch (e) {
-            }
+        try {
+            /**TODO 使用第三方定位 , 获取当前位置 , 应该判断是否有初始值调用 , 只调用一次*/
+            /**不能放在持久化数据中*/
+            const city = "广州";
+            const res: any = await APIs.data.getCityList();
+            const cityList: any[] = res.data || [];
+            Store.update("data.cityInfo", {
+                city,
+                list: cityList
+            });
+        }
+        catch (e) {
         }
     }
     render() {

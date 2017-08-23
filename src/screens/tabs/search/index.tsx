@@ -81,7 +81,7 @@ export default class SearchScreen extends React.Component<any, any> {
                     onFocus={this.openFilterSearchPage}
                     placeholder="搜索当季爆款"
                     rightButton={
-                        <Text style={styles.headerRightButton} onPress={this.openClassificationPage}>分类</Text>
+                        <Text style={styles.headerRightButton} onPress={this.openClassification}>分类</Text>
                     }/>
                 <RefreshList
                     key={this.state.isShowSide ? 1 : 2}
@@ -109,8 +109,8 @@ export default class SearchScreen extends React.Component<any, any> {
     openGoodsPage = (id: string) => {
         Navigator.to(Routes.ROUTES_GOODS, { id });
     }
-    openClassificationPage = () => {
-        Navigator.to(Routes.ROUTES_CLASSIFICATIION);
+    openClassification = () => {
+
     }
     fetchList = async (isRefresh?: boolean) => {
         let blockIndex = isRefresh ? 0 : this.state.blockIndex + 1;

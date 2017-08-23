@@ -22,7 +22,7 @@ export const DEVICE_DENSITY = PixelRatio.get();
 */
 export const PERSIST_STORE_WHITE_LIST: Dictionary<Array<string>> = {
     user: [],
-    data: ["searchField"]
+    data: ["city"]
 };
 
 /** -------  ACTION TYPES DEFINITION   ------- */
@@ -62,7 +62,7 @@ export const ROUTES_MAIN: string = "ROUTES_MAIN";
 export const ROUTES_LOGIN: string = "ROUTES_LOGIN";
 
 /** ROUTES - Stacks - 订单详情 */
-export const ROUTES_ORDER_DETAIL: string = "OrderDetail";
+export const ROUTES_ORDER_DETAIL: string = "OrderDetail"
 
 /** -------  REQUEST ERROR STATUS DEFINITION   ------- */
 
