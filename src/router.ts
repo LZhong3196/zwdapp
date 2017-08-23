@@ -23,6 +23,7 @@ import NotificationScreen from "./screens/stacks/notification";
 import ScannerScreen from "./screens/stacks/scanner";
 import FieldSearchScreen from "./screens/stacks/field-search";
 import OrderDetailScreen from "./screens/stacks/order-detail";
+import ClassificationScreen from "./screens/stacks/classification";
 
 export const TabRouteMap: RouteMap<string> = {
     ROUTES_TAB_HOME: "Home",
@@ -51,6 +52,7 @@ export const routeConfigMap: NavigationRouteConfigMap = {
     ROUTES_CONTACT_US: { screen: ContactUs },
     ROUTES_ABOUT_US: { screen: AboutUs },
     ROUTES_SHARE_17: { screen: Share17 },
+    ROUTES_CLASSIFICATIION: { screen: ClassificationScreen }
 };
 
 export const stackConfig: StackNavigatorConfig = {

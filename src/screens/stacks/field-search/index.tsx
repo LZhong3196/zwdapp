@@ -14,7 +14,7 @@ import { styles } from "./style";
 import {underline} from "chalk";
 const { Icon, Header } = Widgets;
 
-@Decorators.connect("search", "data", "market")
+@Decorators.connect("search", "data.searchField", "market")
 export default class FiledSearchScreen extends React.Component<any, any> {
     static navigationOptions = {
         header: null as any
@@ -103,8 +103,8 @@ export default class FiledSearchScreen extends React.Component<any, any> {
         return select;
     }
     render() {
-        const data: any[] = Store.get("data.search.historyList") || [];
-        const hotSearchList: any[] = Store.get("data.search.hotSearchList") || [];
+        const data: any[] = Store.get("data.searchField.historyList") || [];
+        const hotSearchList: any[] = Store.get("data.searchField.hotSearchList") || [];
         return (
             <Container>
                 <Header>
@@ -167,7 +167,7 @@ export default class FiledSearchScreen extends React.Component<any, any> {
         });
     }
     clearHistorySearch = () => {
-        Store.update("data.search.historyList", []);
+        Store.update("data.searchField.historyList", []);
     }
     historyFiledPress= (filed: string) => {
         this.setState({
@@ -179,7 +179,7 @@ export default class FiledSearchScreen extends React.Component<any, any> {
     }
     search = (filed: string) => {
         if (!filed) return;
-        const historyList: string[] = Store.get("data.search.historyList") || [];
+        const historyList: string[] = Store.get("data.searchField.historyList") || [];
         Store.update("data.searchField.historyList", [ ...new Set(historyList.concat([filed])) ]);
         if (this.props.navigation.state.params.origin === Routes.ROUTES_TAB_MARKET
             || this.state.selectedOption === "店铺") {
@@ -195,7 +195,7 @@ export default class FiledSearchScreen extends React.Component<any, any> {
         try {
             const res: any = await APIs.data.getHotSearchList();
             const hotSearchList: any = res.data;
-            Store.update("data.search.hotSearchList", hotSearchList);
+            Store.update("data.searchField.hotSearchList", hotSearchList);
         }
         catch (e) {
 
