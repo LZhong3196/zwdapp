@@ -13,7 +13,7 @@ import { APIs, Store, Constants, Decorators, Navigator, Widgets } from "summer";
 import CollapsiblePanel from "../../../components/collapsible-panel";
 import GoodsCard from "./goods-card";
 import Footer from "./footer";
-import { OrderStatus } from "../../tabs/order";
+import { OrderStatus, StoreKeyMap } from "../../tabs/order";
 import EmptyResult from "../../../components/empty-result";
 
 let { Toast } = Widgets;
@@ -35,7 +35,8 @@ class OrderDetailScreen extends Component<any, any> {
       ),
       headerStyle: {
         backgroundColor: "#fff"
-      }
+      },
+      headerBackTitle: " "
     };
   }
 
@@ -87,14 +88,14 @@ class OrderDetailScreen extends Component<any, any> {
               })
             }
           </ScrollView>
-          <Footer status={ order.status } completed={ completedGoods } onCancel={ this.goBackToList } onComplete={ this.goBackToList } />
+          <Footer status={ order.status } completed={ completedGoods } onCancel={ this.cancelOrder } onComplete={ this.completeOrder } />
         </Container>
       );
     } else if (!this.state.fetching && order.items) {
       return (
         <Container>
           <EmptyResult title="亲，该订单暂无采购信息！" />
-          <Footer status={ order.status } completed={ completedGoods } onCancel={ this.goBackToList } onComplete={ this.goBackToList } disabled />
+          <Footer status={ order.status } completed={ completedGoods } onCancel={ this.cancelOrder } onComplete={ this.completeOrder } disabled />
         </Container>);
     } else {
       return null;
@@ -170,8 +171,80 @@ class OrderDetailScreen extends Component<any, any> {
     });
   }
 
-  goBackToList = () => {
-    Navigator.back();
+  completeOrder = async () => {
+    Toast.loading({
+      duration: -1
+    });
+
+    const { id } = this.props.navigation.state.params;
+
+    await APIs.order.postCompleteOrder({
+      u_id: id
+    });
+
+    Toast.success({
+      text: "操作成功",
+      duration: 300
+    });
+
+    this.moveOrderToOtherList(id, StoreKeyMap.get(OrderStatus.Finished));
+    this.goBackToList(300);
+  }
+
+  cancelOrder = async () => {
+    Toast.loading({
+      duration: -1
+    });
+
+    const { id } = this.props.navigation.state.params;
+
+    await APIs.order.postCancelOrder({
+      u_id: id
+    });
+
+    Toast.success({
+      text: "操作成功",
+      duration: 300
+    });
+
+    this.moveOrderToOtherList(id, StoreKeyMap.get(OrderStatus.Cancel));
+    this.goBackToList(300);
+  }
+
+  moveOrderToOtherList(id: string, list: string) {
+    const oldList: any[] = Store.get(`order.${list}`);
+    const movingOrder = this.removeOrderFromWorkingList(id);
+
+    Store.dispatch({
+      type: Constants.ACTIONTYPES_ORDER_UPDATE,
+      meta: {
+        storeKey: list
+      },
+      payload: [movingOrder, ...oldList]
+    });
+  }
+
+  removeOrderFromWorkingList(id: string): any {
+    const workingOrders: any[] = Store.get("order.workingList");
+
+    const targetIndex = workingOrders.findIndex((item) => item.u_id === id);
+    const targetOrder = workingOrders.splice(targetIndex, 1)[0];
+
+    Store.dispatch({
+      type: Constants.ACTIONTYPES_ORDER_UPDATE,
+      meta: {
+        storeKey: "workingList"
+      },
+      payload: workingOrders
+    });
+
+    return targetOrder;
+  }
+
+  goBackToList = (delay: number) => {
+    setTimeout(() => {
+      Navigator.back();
+    }, delay);
   }
 
   showUpdatePrompt = () => {

@@ -24,10 +24,7 @@ export const OrderStatus: OrderStatus = {
   Cancel: 2
 };
 
-let storeKeyMap: Map<number, string> = new Map();
-storeKeyMap.set(OrderStatus.Working, "workingList");
-storeKeyMap.set(OrderStatus.Finished, "finishedList");
-storeKeyMap.set(OrderStatus.Cancel, "cancelList");
+export const StoreKeyMap: Map<number, string> = new Map([[OrderStatus.Working, "workingList"], [OrderStatus.Finished, "finishedList"], [OrderStatus.Cancel, "cancelList"]]);
 
 interface OrderListProps {
   status?: number;
@@ -53,8 +50,12 @@ class BaseList extends Component<OrderListProps, any> {
   }
 
   render() {
+    if (this.state.fetching) {
+      return null;
+    }
+
     const { status } = this.props;
-    const data: any = Store.get(`order.${storeKeyMap.get(status)}`) || [];
+    const data: any = Store.get(`order.${StoreKeyMap.get(status)}`) || [];
 
     if (!this.state.fetching && data.length === 0) {
       return (
@@ -124,7 +125,7 @@ class BaseList extends Component<OrderListProps, any> {
       Store.dispatch({
         type: Constants.ACTIONTYPES_ORDER_UPDATE,
         meta: {
-          storeKey: storeKeyMap.get(status).toString()
+          storeKey: StoreKeyMap.get(status).toString()
         },
         payload: response.data.results
       });
@@ -159,7 +160,7 @@ class BaseList extends Component<OrderListProps, any> {
         return;
       }
 
-      let oldList: any = Store.get(`order.${storeKeyMap.get(status)}`) || [];
+      let oldList: any = Store.get(`order.${StoreKeyMap.get(status)}`) || [];
       let newList: any = [];
       if (isRefresh) {
         newList = response.data.results;
@@ -170,7 +171,7 @@ class BaseList extends Component<OrderListProps, any> {
       Store.dispatch({
         type: Constants.ACTIONTYPES_ORDER_UPDATE,
         meta: {
-          storeKey: storeKeyMap.get(status).toString()
+          storeKey: StoreKeyMap.get(status).toString()
         },
         payload: newList
       });

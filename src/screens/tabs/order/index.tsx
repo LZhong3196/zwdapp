@@ -19,7 +19,7 @@ import { Constants, Widgets, Store, APIs } from "summer";
 import { WorkingList, FinishList, CancelList } from "./order-list";
 import prompt from "react-native-prompt-android";
 
-export { OrderStatus } from "./order-list";
+export { OrderStatus, StoreKeyMap } from "./order-list";
 
 let { TabBarIcon, theme, Toast } = Widgets;
 
