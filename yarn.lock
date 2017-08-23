@@ -82,6 +82,10 @@
   version "15.5.1"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.5.1.tgz#1ecf52621299e65b855374337fb11fd2d1066fc1"
 
+"@types/react-native-communications@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@types/react-native-communications/-/react-native-communications-2.2.0.tgz#9fdd4c3706a9164fb64f0b160cae3359289943a0"
+
 "@types/react-native-datepicker@^1.4.2":
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/@types/react-native-datepicker/-/react-native-datepicker-1.4.2.tgz#4c0783d8e6b226063b6f9be31e2ab6116f7494a8"
@@ -3487,6 +3491,10 @@ react-native-camera@^0.9.4:
   dependencies:
     opencollective "^1.0.3"
 
+react-native-communications@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-communications/-/react-native-communications-2.2.1.tgz#7883b56b20a002eeb790c113f8616ea8692ca795"
+
 react-native-datepicker@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/react-native-datepicker/-/react-native-datepicker-1.6.0.tgz#3a40dc9b112023c49d60ba2a0789d440b7e3d97c"
@@ -3562,6 +3570,9 @@ react-native-keyboard-aware-scroll-view@0.2.9:
 react-native-prompt-android@^0.3.0:
   version "0.3.0"
   resolved "http://registry.npm.taobao.org/react-native-prompt-android/download/react-native-prompt-android-0.3.0.tgz#dc435c60de72773337f5f6cebcdc3cb51085e867"
+react-native-share@^1.0.20:
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-1.0.20.tgz#38ba820a4ddfc5afe1dec0e1456ced11f14352bc"
 
 react-native-swiper@^1.5.4:
   version "1.5.4"
