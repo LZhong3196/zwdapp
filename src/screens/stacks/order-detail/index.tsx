@@ -8,6 +8,7 @@ import {
   Icon,
   Container,
 } from "native-base";
+import prompt from "react-native-prompt-android";
 import { APIs, Store, Constants, Decorators, Navigator, Widgets } from "summer";
 import CollapsiblePanel from "../../../components/collapsible-panel";
 import GoodsCard from "./goods-card";
@@ -30,7 +31,7 @@ class OrderDetailScreen extends Component<any, any> {
       title: params.title,
       headerRight: (
         params.status === OrderStatus.Working ?
-          <Button style={ btnEditTitle } transparent><Icon name="ios-create-outline" style={ { color: "#333" } } /></Button> : null
+          <Button style={ btnEditTitle } transparent onPress={ OrderDetailScreen.instance.showUpdatePrompt }><Icon name="ios-create-outline" style={ { color: "#333" } } /></Button> : null
       ),
       headerStyle: {
         backgroundColor: "#fff"
@@ -38,17 +39,25 @@ class OrderDetailScreen extends Component<any, any> {
     };
   }
 
+  static instance: any;
+
   constructor(props: any) {
     super(props);
 
     this.state = {
       completedGoods: 0,
       fetching: true,
+      title: "",
+      city: ""
     };
+
+    OrderDetailScreen.instance = this;
   }
 
   componentDidMount() {
-    Toast.loading();
+    Toast.loading({
+      duration: -1
+    });
     this.fetchData();
   }
 
@@ -85,7 +94,7 @@ class OrderDetailScreen extends Component<any, any> {
       return (
         <Container>
           <EmptyResult title="亲，该订单暂无采购信息！" />
-          <Footer status={ order.status } completed={ completedGoods } onCancel={ this.goBackToList } onComplete={ this.goBackToList } disabled/>
+          <Footer status={ order.status } completed={ completedGoods } onCancel={ this.goBackToList } onComplete={ this.goBackToList } disabled />
         </Container>);
     } else {
       return null;
@@ -116,7 +125,7 @@ class OrderDetailScreen extends Component<any, any> {
         payload: {
           key: routeKey,
           params: {
-            title: results.title,
+            title: `[${results.city}] ${results.title}`,
             status: results.status
           }
         }
@@ -132,7 +141,9 @@ class OrderDetailScreen extends Component<any, any> {
 
       if (results.status === OrderStatus.Working) {
         this.setState({
-          completedGoods: this.calculateCompletedGoods(results.items)
+          completedGoods: this.calculateCompletedGoods(results.items),
+          title: results.title,
+          city: results.city
         });
       }
 
@@ -161,6 +172,46 @@ class OrderDetailScreen extends Component<any, any> {
 
   goBackToList = () => {
     Navigator.back();
+  }
+
+  showUpdatePrompt = () => {
+    prompt(
+      "请输入新标题",
+      null,
+      [
+        { text: "取消" },
+        { text: "确定", onPress: (title: string) => { this.updateOrderTitle(title); } }
+      ],
+      {
+        defaultValue: this.state.title
+      }
+    );
+  }
+
+  updateOrderTitle = async (newTitle: string) => {
+    Toast.loading({
+      duration: -1
+    });
+    const { id } = this.props.navigation.state.params;
+
+    await APIs.order.postUpdateOrderName({
+      u_id: id,
+      name: newTitle
+    });
+
+    Toast.close();
+
+    const routeKey = this.props.navigation.state.key;
+
+    Store.dispatch({
+      type: Constants.ACTIONTYPES_NAVIGATION_SET_PARAMS,
+      payload: {
+        key: routeKey,
+        params: {
+          title: `[${this.state.city}] ${newTitle}`
+        }
+      }
+    });
   }
 }
 

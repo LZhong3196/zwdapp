@@ -64,10 +64,12 @@ class BaseList extends Component<OrderListProps, any> {
 
       return (
         <RefreshList
-          ref={ (e) => this.flatList = e }
+          ref={ (e) => this.flatList = e
+          }
           data={ data }
           renderItem={ this.renderRow }
-          onHeaderRefresh={ () => this.fetchList(true) }
+          onHeaderRefresh={ () => this.fetchList(true)
+          }
           onFooterRefresh={ () => this.fetchList(false) }
         />
       );
@@ -107,7 +109,9 @@ class BaseList extends Component<OrderListProps, any> {
   fetchInitList = async () => {
     const { status } = this.props;
 
-    Toast.loading();
+    Toast.loading({
+      duration: -1
+    });
 
     try {
       const response: any = await APIs.order.getOrderList({
