@@ -110,7 +110,7 @@ export default class SearchScreen extends React.Component<any, any> {
         Navigator.to(Routes.ROUTES_GOODS, { id });
     }
     openClassificationPage = () => {
-        Navigator.to(Routes.ROUTES_CLASSIFICATIION);
+        Navigator.to(Routes.ROUTES_CLASSIFICATION);
     }
     fetchList = async (isRefresh?: boolean) => {
         let blockIndex = isRefresh ? 0 : this.state.blockIndex + 1;

@@ -52,7 +52,7 @@ export const routeConfigMap: NavigationRouteConfigMap = {
     ROUTES_CONTACT_US: { screen: ContactUs },
     ROUTES_ABOUT_US: { screen: AboutUs },
     ROUTES_SHARE_17: { screen: Share17 },
-    ROUTES_CLASSIFICATIION: { screen: ClassificationScreen }
+    ROUTES_CLASSIFICATION: { screen: ClassificationScreen }
 };
 
 export const stackConfig: StackNavigatorConfig = {
