@@ -109,6 +109,13 @@
     "@types/react" "*"
     "@types/react-native" "*"
 
+"@types/react-native-video@^1.0.1":
+  version "1.0.1"
+  resolved "http://registry.npm.taobao.org/@types/react-native-video/download/@types/react-native-video-1.0.1.tgz#1380e3c4f936307121e9ee5f7c233e47f887e98f"
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "*"
+
 "@types/react-native@*", "@types/react-native@^0.44.12":
   version "0.44.19"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.44.19.tgz#e89317e953cfa6594f9c250b74248aa494ccc12f"
@@ -2583,6 +2590,10 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
+keymirror@0.1.1:
+  version "0.1.1"
+  resolved "http://registry.npm.taobao.org/keymirror/download/keymirror-0.1.1.tgz#918889ea13f8d0a42e7c557250eee713adc95c35"
+
 kind-of@^3.0.2:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-3.2.2.tgz#31ea21a734bab9bbb0f32466d893aea51e4a3c64"
@@ -3570,6 +3581,7 @@ react-native-keyboard-aware-scroll-view@0.2.9:
 react-native-prompt-android@^0.3.0:
   version "0.3.0"
   resolved "http://registry.npm.taobao.org/react-native-prompt-android/download/react-native-prompt-android-0.3.0.tgz#dc435c60de72773337f5f6cebcdc3cb51085e867"
+
 react-native-share@^1.0.20:
   version "1.0.20"
   resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-1.0.20.tgz#38ba820a4ddfc5afe1dec0e1456ced11f14352bc"
@@ -3595,6 +3607,13 @@ react-native-vector-icons@4.1.1, react-native-vector-icons@~4.1.1:
     lodash "^4.0.0"
     prop-types "^15.5.8"
     yargs "^6.3.0"
+
+react-native-video@^2.0.0:
+  version "2.0.0"
+  resolved "http://registry.npm.taobao.org/react-native-video/download/react-native-video-2.0.0.tgz#f33fa6fb7e7e3c93ab5787944cefd58bf7355867"
+  dependencies:
+    keymirror "0.1.1"
+    prop-types "^15.5.10"
 
 react-native@0.44.2:
   version "0.44.2"
