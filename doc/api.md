@@ -101,7 +101,31 @@ Navigator.backToTab("Search");
 | routeName | string | / | 目标路由 |
 | params | any | / | 传递给回退路由的参数 |
 
+### 创建一个新路由
 
+* 创建页面组件 `NewScreen.tsx`
+* 以 `ROUTES_[NEW_ROUTE_NAME]` 为模板, 在 `src/router.ts` 中间设置路由名称
+
+```
+...
+import NewScreen from "./screens/../new-screen";
+
+...
+export const routeConfigMap: HashMap<any> = {
+	...
+	...
+	"ROUTES_NEW_SCREEN": { screen: NewScreen }
+};
+
+```
+* 编译 `src` 模块(debug 状态下无需重启)
+* 引用
+
+```
+import { Routes } from "summer";
+
+Routes.ROUTES_NEW_SCREEN;
+```
 
 
 ## Widgets - 通用组件

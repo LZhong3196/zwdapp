@@ -82,7 +82,18 @@ $ ./app debug src
 
 #### Android
 
-> 施工中...
+* 通过命令行启动
+
+	```
+	 $ npm start
+	 $ react-native run-android
+	```
+* 使用 React Native Debugger 进行调试
+
+	```
+	 $ npm run rnd
+	 $ react-native run-android	
+	```
 
 #### [命令帮助手册](./doc/dev.md)
 
