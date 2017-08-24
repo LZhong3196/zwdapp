@@ -12,6 +12,7 @@ UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationE
 
 interface ScrollToTopProps {
     onPress: () => void;
+    ref: any;
 }
 @Decorators.pureRender()
 export default class ScrollToTop extends React.Component<ScrollToTopProps, any> {
