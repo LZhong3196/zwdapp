@@ -114,6 +114,10 @@ declare module "react-native-camera" {
     export default class Menu extends Component<any, any> { }
 }
 
+declare module "react-native-prompt-android" {
+    export default function prompt(title: string, message?: string, button?: any[], props?: any): void;
+}
+
 
 declare module "@actra-development-oss/redux-persist-transform-filter-immutable" {
     import { Transform } from "redux-persist";

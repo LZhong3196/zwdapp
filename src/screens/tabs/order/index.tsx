@@ -15,12 +15,13 @@ import {
     ListItem,
     Icon as BaseIcon
 } from "native-base";
-import { Constants, Widgets } from "summer";
+import { Constants, Widgets, Store, APIs } from "summer";
 import { WorkingList, FinishList, CancelList } from "./order-list";
+import prompt from "react-native-prompt-android";
 
-export { OrderStatus } from "./order-list";
+export { OrderStatus, StoreKeyMap } from "./order-list";
 
-let { TabBarIcon, theme } = Widgets;
+let { TabBarIcon, theme, Toast } = Widgets;
 
 const activeTextStyle = {
     color: theme.color_theme
@@ -37,6 +38,7 @@ export default class OrderScreen extends React.Component<any, any> {
                 focused={ options.focused } />
         )
     };
+
     render() {
 
         return (
@@ -47,7 +49,7 @@ export default class OrderScreen extends React.Component<any, any> {
                         <Title>我的采购单</Title>
                     </Body>
                     <Right>
-                        <Button transparent dark>
+                        <Button transparent dark onPress={ this.onAddOrderClicked }>
                             <BaseIcon name="add"></BaseIcon>
                         </Button>
                     </Right>
@@ -68,5 +70,58 @@ export default class OrderScreen extends React.Component<any, any> {
                 </Tabs>
             </Container>
         );
+    }
+
+    onAddOrderClicked = () => {
+        prompt(
+            "新建采购单",
+            null,
+            [
+                { text: "取消" },
+                { text: "确定", onPress: (title: string) => { this.createOrder(title); } }
+            ],
+            {
+                placeholder: "请输入采购单名称"
+            }
+        );
+    }
+
+    createOrder = async (title: string) => {
+        Toast.loading({
+            duration: -1
+        });
+
+        const cityId = this.getCityId();
+
+        const response: any = await APIs.order.postCreateOrder({
+            c_id: cityId,
+            title: title
+        });
+
+        Toast.close();
+
+        const oldOrders: any[] = Store.get("order.workingList") || [];
+        const newOrder: any = response.data.results;
+
+        const newOrders = [{
+            ...newOrder
+        }, ...oldOrders];
+
+        Store.dispatch({
+            type: Constants.ACTIONTYPES_ORDER_UPDATE,
+            meta: {
+                storeKey: "workingList",
+            },
+            payload: newOrders
+        });
+    }
+
+    getCityId(): string {
+        const citys: any[] = Store.get("data.city.list");
+        const currentCity: string = Store.get("data.city.city");
+
+        return citys.filter((item) => {
+            return item.name === currentCity;
+        })[0].cid;
     }
 }

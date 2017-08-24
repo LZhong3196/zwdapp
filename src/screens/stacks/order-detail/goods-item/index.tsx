@@ -2,13 +2,13 @@ import React, { PureComponent } from "react";
 import {
   View,
   Text,
-  TouchableHighlight,
+  TouchableOpacity,
   StyleSheet,
   Image,
   Alert
 } from "react-native";
 import { Button } from "native-base";
-import { Widgets } from "summer";
+import { Widgets, Constants, Routes, Store } from "summer";
 
 let { theme } = Widgets;
 
@@ -35,7 +35,7 @@ class GoodsItem extends PureComponent<GoodsItemProps, any> {
   render() {
     const { title, color, size, num, price, thumbnail } = this.props;
     return (
-      <TouchableHighlight>
+      <TouchableOpacity onPress={ this.goToDetail }>
         <View style={ styles.container }>
           <Image source={ { uri: thumbnail } } style={ styles.thumbnail } />
           <View style={ styles.infoContainer }>
@@ -51,7 +51,7 @@ class GoodsItem extends PureComponent<GoodsItemProps, any> {
             <Text style={ styles.price }>￥{ price }</Text>
           </View>
         </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
     );
   }
 
@@ -100,6 +100,19 @@ class GoodsItem extends PureComponent<GoodsItemProps, any> {
         }
       ]
     );
+  }
+
+  goToDetail = () => {
+    const { id } = this.props;
+    Store.dispatch({
+      type: Constants.ACTIONTYPES_NAVIGATION_TO,
+      meta: {
+        routeName: Routes.ROUTES_GOODS,
+        params: {
+          id: id
+        }
+      }
+    });
   }
 }
 

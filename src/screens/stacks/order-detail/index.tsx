@@ -8,11 +8,15 @@ import {
   Icon,
   Container,
 } from "native-base";
-import { APIs, Store, Constants, Decorators, Navigator } from "summer";
+import prompt from "react-native-prompt-android";
+import { APIs, Store, Constants, Decorators, Navigator, Widgets } from "summer";
 import CollapsiblePanel from "../../../components/collapsible-panel";
 import GoodsCard from "./goods-card";
 import Footer from "./footer";
-import { OrderStatus } from "../../tabs/order";
+import { OrderStatus, StoreKeyMap } from "../../tabs/order";
+import EmptyResult from "../../../components/empty-result";
+
+let { Toast } = Widgets;
 
 @Decorators.pureRender()
 class OrderDetailScreen extends Component<any, any> {
@@ -27,23 +31,34 @@ class OrderDetailScreen extends Component<any, any> {
       title: params.title,
       headerRight: (
         params.status === OrderStatus.Working ?
-          <Button style={ btnEditTitle } transparent><Icon name="ios-create-outline" style={ { color: "#333" } } /></Button> : null
+          <Button style={ btnEditTitle } transparent onPress={ OrderDetailScreen.instance.showUpdatePrompt }><Icon name="ios-create-outline" style={ { color: "#333" } } /></Button> : null
       ),
       headerStyle: {
         backgroundColor: "#fff"
-      }
+      },
+      headerBackTitle: " "
     };
   }
+
+  static instance: any;
 
   constructor(props: any) {
     super(props);
 
     this.state = {
-      completedGoods: 0
+      completedGoods: 0,
+      fetching: true,
+      title: "",
+      city: ""
     };
+
+    OrderDetailScreen.instance = this;
   }
 
   componentDidMount() {
+    Toast.loading({
+      duration: -1
+    });
     this.fetchData();
   }
 
@@ -51,7 +66,7 @@ class OrderDetailScreen extends Component<any, any> {
     const { id } = this.props.navigation.state.params;
     let order: any = Store.get(`order.${id}`) || {};
     const { completedGoods } = this.state;
-    console.log(id, order);
+
     if (order.items && order.items.length > 0) {
       return (
         <Container>
@@ -73,9 +88,15 @@ class OrderDetailScreen extends Component<any, any> {
               })
             }
           </ScrollView>
-          <Footer status={ order.status } completed={ completedGoods } onCancel={ this.goBackToList } onComplete={ this.goBackToList } />
+          <Footer status={ order.status } completed={ completedGoods } onCancel={ this.cancelOrder } onComplete={ this.completeOrder } />
         </Container>
       );
+    } else if (!this.state.fetching && order.items) {
+      return (
+        <Container>
+          <EmptyResult title="亲，该订单暂无采购信息！" />
+          <Footer status={ order.status } completed={ completedGoods } onCancel={ this.cancelOrder } onComplete={ this.completeOrder } disabled />
+        </Container>);
     } else {
       return null;
     }
@@ -91,6 +112,13 @@ class OrderDetailScreen extends Component<any, any> {
         u_id: id
       });
 
+      if (this.state.fetching) {
+        Toast.close();
+        this.setState({
+          fetching: false
+        });
+      }
+
       const results = res.data.results;
 
       Store.dispatch({
@@ -98,7 +126,7 @@ class OrderDetailScreen extends Component<any, any> {
         payload: {
           key: routeKey,
           params: {
-            title: results.title,
+            title: `[${results.city}] ${results.title}`,
             status: results.status
           }
         }
@@ -114,7 +142,9 @@ class OrderDetailScreen extends Component<any, any> {
 
       if (results.status === OrderStatus.Working) {
         this.setState({
-          completedGoods: this.calculateCompletedGoods(results.items)
+          completedGoods: this.calculateCompletedGoods(results.items),
+          title: results.title,
+          city: results.city
         });
       }
 
@@ -141,8 +171,120 @@ class OrderDetailScreen extends Component<any, any> {
     });
   }
 
-  goBackToList = () => {
-    Navigator.back();
+  completeOrder = async () => {
+    Toast.loading({
+      duration: -1
+    });
+
+    const { id } = this.props.navigation.state.params;
+
+    await APIs.order.postCompleteOrder({
+      u_id: id
+    });
+
+    Toast.success({
+      text: "操作成功",
+      duration: 300
+    });
+
+    this.moveOrderToOtherList(id, StoreKeyMap.get(OrderStatus.Finished));
+    this.goBackToList(300);
+  }
+
+  cancelOrder = async () => {
+    Toast.loading({
+      duration: -1
+    });
+
+    const { id } = this.props.navigation.state.params;
+
+    await APIs.order.postCancelOrder({
+      u_id: id
+    });
+
+    Toast.success({
+      text: "操作成功",
+      duration: 300
+    });
+
+    this.moveOrderToOtherList(id, StoreKeyMap.get(OrderStatus.Cancel));
+    this.goBackToList(300);
+  }
+
+  moveOrderToOtherList(id: string, list: string) {
+    const oldList: any[] = Store.get(`order.${list}`);
+    const movingOrder = this.removeOrderFromWorkingList(id);
+
+    Store.dispatch({
+      type: Constants.ACTIONTYPES_ORDER_UPDATE,
+      meta: {
+        storeKey: list
+      },
+      payload: [movingOrder, ...oldList]
+    });
+  }
+
+  removeOrderFromWorkingList(id: string): any {
+    const workingOrders: any[] = Store.get("order.workingList");
+
+    const targetIndex = workingOrders.findIndex((item) => item.u_id === id);
+    const targetOrder = workingOrders.splice(targetIndex, 1)[0];
+
+    Store.dispatch({
+      type: Constants.ACTIONTYPES_ORDER_UPDATE,
+      meta: {
+        storeKey: "workingList"
+      },
+      payload: workingOrders
+    });
+
+    return targetOrder;
+  }
+
+  goBackToList = (delay: number) => {
+    setTimeout(() => {
+      Navigator.back();
+    }, delay);
+  }
+
+  showUpdatePrompt = () => {
+    prompt(
+      "请输入新标题",
+      null,
+      [
+        { text: "取消" },
+        { text: "确定", onPress: (title: string) => { this.updateOrderTitle(title); } }
+      ],
+      {
+        defaultValue: this.state.title
+      }
+    );
+  }
+
+  updateOrderTitle = async (newTitle: string) => {
+    Toast.loading({
+      duration: -1
+    });
+    const { id } = this.props.navigation.state.params;
+
+    await APIs.order.postUpdateOrderName({
+      u_id: id,
+      name: newTitle
+    });
+
+    Toast.close();
+
+    const routeKey = this.props.navigation.state.key;
+
+    Store.dispatch({
+      type: Constants.ACTIONTYPES_NAVIGATION_SET_PARAMS,
+      payload: {
+        key: routeKey,
+        params: {
+          title: `[${this.state.city}] ${newTitle}`
+        }
+      }
+    });
   }
 }
 

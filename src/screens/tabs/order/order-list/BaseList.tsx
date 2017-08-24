@@ -8,8 +8,9 @@ import {
 } from "native-base";
 import RefreshList, { RefreshState } from "../../../../components/refresh-list";
 import { APIs, Store, Constants, Widgets, Navigator, Routes } from "summer";
+import EmptyResult from "../../../../components/empty-result";
 
-let { theme } = Widgets;
+let { theme, Toast } = Widgets;
 
 interface OrderStatus {
   Working: number;
@@ -23,10 +24,7 @@ export const OrderStatus: OrderStatus = {
   Cancel: 2
 };
 
-let storeKeyMap: Map<number, string> = new Map();
-storeKeyMap.set(OrderStatus.Working, "workingList");
-storeKeyMap.set(OrderStatus.Finished, "finishedList");
-storeKeyMap.set(OrderStatus.Cancel, "cancelList");
+export const StoreKeyMap: Map<number, string> = new Map([[OrderStatus.Working, "workingList"], [OrderStatus.Finished, "finishedList"], [OrderStatus.Cancel, "cancelList"]]);
 
 interface OrderListProps {
   status?: number;
@@ -41,25 +39,42 @@ class BaseList extends Component<OrderListProps, any> {
 
   constructor(props: any, context: any) {
     super(props, context);
+
+    this.state = {
+      fetching: true
+    };
   }
 
   componentDidMount() {
-    this.flatList.startHeaderRefreshing();
+    this.fetchInitList();
   }
 
   render() {
-    const { status } = this.props;
-    const data: any = Store.get(`order.${storeKeyMap.get(status)}`) || [];
+    if (this.state.fetching) {
+      return null;
+    }
 
-    return (
-      <RefreshList
-        ref={ (e) => this.flatList = e }
-        data={ data }
-        renderItem={ this.renderRow }
-        onHeaderRefresh={ () => this.fetchList(true) }
-        onFooterRefresh={ () => this.fetchList(false) }
-      />
-    );
+    const { status } = this.props;
+    const data: any = Store.get(`order.${StoreKeyMap.get(status)}`) || [];
+
+    if (!this.state.fetching && data.length === 0) {
+      return (
+        <EmptyResult title="亲，这里什么都没有哦！" subTitle="快去添加采购单吧。" />
+      );
+    } else {
+
+      return (
+        <RefreshList
+          ref={ (e) => this.flatList = e
+          }
+          data={ data }
+          renderItem={ this.renderRow }
+          onHeaderRefresh={ () => this.fetchList(true)
+          }
+          onFooterRefresh={ () => this.fetchList(false) }
+        />
+      );
+    }
   }
 
   private renderRow = (info: any) => {
@@ -92,6 +107,41 @@ class BaseList extends Component<OrderListProps, any> {
     Navigator.to(Routes.ROUTES_ORDER_DETAIL, { id });
   }
 
+  fetchInitList = async () => {
+    const { status } = this.props;
+
+    Toast.loading({
+      duration: -1
+    });
+
+    try {
+      const response: any = await APIs.order.getOrderList({
+        block_info: {
+          index: 1,
+        },
+        status: status
+      });
+
+      Store.dispatch({
+        type: Constants.ACTIONTYPES_ORDER_UPDATE,
+        meta: {
+          storeKey: StoreKeyMap.get(status).toString()
+        },
+        payload: response.data.results
+      });
+
+      if (this.state.fetching) {
+        Toast.close();
+        this.setState({
+          fetching: false
+        });
+      }
+    } catch (error) {
+
+    }
+
+  }
+
   fetchList = async (isRefresh: boolean) => {
     const { status } = this.props;
 
@@ -110,7 +160,7 @@ class BaseList extends Component<OrderListProps, any> {
         return;
       }
 
-      let oldList: any = Store.get(`order.${storeKeyMap.get(status)}`) || [];
+      let oldList: any = Store.get(`order.${StoreKeyMap.get(status)}`) || [];
       let newList: any = [];
       if (isRefresh) {
         newList = response.data.results;
@@ -121,7 +171,7 @@ class BaseList extends Component<OrderListProps, any> {
       Store.dispatch({
         type: Constants.ACTIONTYPES_ORDER_UPDATE,
         meta: {
-          storeKey: storeKeyMap.get(status).toString()
+          storeKey: StoreKeyMap.get(status).toString()
         },
         payload: newList
       });

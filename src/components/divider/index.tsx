@@ -1,19 +1,19 @@
-import React from 'react';
-import { View, Text,ViewStyle } from 'react-native';
+import React from "react";
+import { View, Text, ViewStyle } from "react-native";
 
 interface DividerProps {
-  width?: number | string,
-  title: string,
-  color?: string,
-  fontSize?: number,
-  style?: ViewStyle
+  width?: number | string;
+  title: string;
+  color?: string;
+  fontSize?: number;
+  style?: ViewStyle;
 }
 
 const Divider: React.SFC<DividerProps> = (props) => {
 
   let { width, title, color, fontSize, style } = props;
 
-  if(style) {
+  if (style) {
     delete style.width;
     delete style.justifyContent;
     delete style.alignItems;
@@ -24,22 +24,22 @@ const Divider: React.SFC<DividerProps> = (props) => {
     justifyContent: "center",
     alignItems: "center",
     ...style
-  }
+  };
 
   const titleStyle: any = {
     fontSize,
     color,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     paddingHorizontal: 5,
-  }
+  };
 
   const lineStyle: any = {
     height: 0.5,
-    position: 'absolute',
+    position: "absolute",
     width,
     zIndex: -1,
     backgroundColor: color
-  }
+  };
 
   return (
     <View style={ containerStyle }>
@@ -50,9 +50,9 @@ const Divider: React.SFC<DividerProps> = (props) => {
 };
 
 Divider.defaultProps = {
-  width: '100%',
-  color: '#bfbfbf',
+  width: "100%",
+  color: "#bfbfbf",
   fontSize: 12
-}
+};
 
 export default Divider;

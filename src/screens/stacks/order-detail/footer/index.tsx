@@ -14,16 +14,17 @@ import NoActionFooter from "./no-action-footer";
 interface DetailFooterProps {
   status: number;
   completed: number;
+  disabled?: boolean;
   onCancel: () => void;
   onComplete: () => void;
 }
 
 const DetailFooter: React.SFC<DetailFooterProps> = (props) => {
-  const { status, completed, onCancel, onComplete } = props;
+  const { status, completed, disabled, onCancel, onComplete } = props;
 
   switch (status) {
     case OrderStatus.Working:
-      return <WorkingFooter completed={ completed } onCancel={ onCancel } onComplete={ onComplete } />;
+      return <WorkingFooter disabled={ disabled } completed={ completed } onCancel={ onCancel } onComplete={ onComplete } />;
     case OrderStatus.Finished:
       return <NoActionFooter title="已完成" />;
     case OrderStatus.Cancel:
