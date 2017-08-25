@@ -13,7 +13,8 @@ const styles: any = {
     top: 0,
     bottom: 0,
     right: 0,
-    left: 0
+    left: 0,
+    backgroundColor: "#000"
   },
   minSeekBar: {
     height: 2,
@@ -37,10 +38,14 @@ const styles: any = {
   },
   controlsItemRight: {
     marginLeft: 10,
-    backgroundColor: "transparent"
+    backgroundColor: "transparent",
+    width: 50,
+    justifyContent: "center"
   },
-  controlsText: {
-    color: "#fff"
+  timerText: {
+    color: "#fff",
+    fontSize: 12,
+    textAlign: "center"
   },
   seekBar: {
     flex: 1,
@@ -57,7 +62,6 @@ const styles: any = {
     top: 0,
     bottom: 0,
     left: 0,
-    width: "20%",
     backgroundColor: "#ff5e29"
   },
   seekHandler: {
@@ -67,7 +71,8 @@ const styles: any = {
     width: 16,
     marginLeft: -8,
     marginBottom: 8,
-    position: "absolute"
+    position: "absolute",
+    transform: [{ scale: 0.8 }]
   }
 };
 
