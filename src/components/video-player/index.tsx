@@ -43,6 +43,7 @@ class VideoPlayer extends Component<VideoPlayerProps, any> {
 
     this.state = {
       playing: this.props.autoPlay,
+      loaded: false,
       duration: 0.0,
       currentTime: 0.0,
       seeking: false,
@@ -50,7 +51,8 @@ class VideoPlayer extends Component<VideoPlayerProps, any> {
       seekerOffset: 0,
       seekerFillWidth: 0,
       seekerPosition: 0,
-      showControls: false
+      showControls: false,
+      playEnd: false
     };
   }
 
@@ -90,6 +92,7 @@ class VideoPlayer extends Component<VideoPlayerProps, any> {
             style={ styles.video } />
           { this.renderControls() }
           { this.renderMinSeekBar() }
+          { this.renderPlayButton() }
         </View >
       </TouchableWithoutFeedback>
     );
@@ -115,51 +118,67 @@ class VideoPlayer extends Component<VideoPlayerProps, any> {
     return (
       <View style={ styles.controls }>
         <TouchableWithoutFeedback onPress={ this.togglePlay }>
-          <View style={ styles.controlsItemLeft }>
+          <View style={ styles.controlsGroup }>
             {
               this.state.playing ? <Icon type="&#xe693;" style={ { color: "#fff" } } /> : <Icon type="&#xe676;" style={ { color: "#fff" } } />
             }
           </View>
         </TouchableWithoutFeedback>
-        <View style={ styles.controlsItemLeft }>
+        <View style={ styles.controlsGroup }>
           <Text style={ styles.timerText }>{ this.formatTime(duration) }</Text>
         </View>
-        <View style={ styles.seekBar } onLayout={ (event) => { this.setState({ seekerWidth: event.nativeEvent.layout.width }); } }>
-          <View style={ styles.seekTrack }>
+        <View style={ styles.seekBar } >
+          <View style={ styles.seekTrack } onLayout={ (event) => { this.setState({ seekerWidth: event.nativeEvent.layout.width }); } }>
             <View style={ [styles.seekFill, { width: seekerFillWidth }] }></View>
           </View>
           <View style={ [styles.seekHandler, { left: seekerPosition }, this.state.seeking && { transform: [{ scale: 1 }] }] } {...this.seekPanResponder.panHandlers}></View>
         </View>
-        <View style={ styles.controlsItemRight }>
-          { <Text style={ styles.timerText }> { this.calculateRemainingTime() }</Text> }
+        <View style={ styles.controlsGroup }>
+          { <Text style={ styles.timerText }>{ this.calculateRemainingTime() }</Text> }
         </View>
       </View >
     );
   }
 
+  renderPlayButton() {
+    if (!this.state.loaded || this.state.playing) {
+      return null;
+    }
+
+    return (
+      <TouchableWithoutFeedback onPress={ this.play }>
+        <View style={ styles.btnPlay }><Icon type="&#xe676;" size="lg" style={ { color: "#fff" } } /></View>
+      </TouchableWithoutFeedback>
+    );
+  }
+
   onLoad = (data: any): void => {
     this.setState({
-      duration: data.duration
+      duration: data.duration,
+      loaded: true
     });
   }
 
-  onProgress = (event: any): void => {
+  onProgress = (data: any): void => {
     if (this.state.seeking) {
       return;
     }
 
-    const position = this.calculateSeekerPosition();
-    this.setSeekerPosition(position);
-
     this.setState({
-      currentTime: event.currentTime,
-    }, );
+      currentTime: data.currentTime,
+    }, () => {
+      const position = this.calculateSeekerPosition();
+      this.setSeekerPosition(position);
+    });
   }
 
   onEnd = () => {
-    if (!this.props.repeat) {
+    if (this.props.repeat) {
+      this.seekTo(0);
+    } else {
       this.setState({
-        playing: false
+        playing: false,
+        playEnd: true
       });
     }
   }
@@ -234,7 +253,7 @@ class VideoPlayer extends Component<VideoPlayerProps, any> {
     return this.state.duration * percent;
   }
 
-  setSeekerPosition(position = 0) {
+  setSeekerPosition(position: number) {
     position = this.constrainToSeekerMinMax(position);
 
     let state = this.state;
@@ -258,10 +277,10 @@ class VideoPlayer extends Component<VideoPlayerProps, any> {
   }
 
   seekTo(time = 0) {
-    this.player.seek(time);
     this.setState({
       currentTime: time
     });
+    this.player.seek(time);
   }
 
   calculateMinSeekBarWidth() {
@@ -283,6 +302,7 @@ class VideoPlayer extends Component<VideoPlayerProps, any> {
 
   autoHideControls() {
     const { showControlsTimeOut } = this.props;
+
     this.clearControlsTimer();
     this.controlsTimer = setTimeout(() => {
       this.setState({
@@ -292,9 +312,29 @@ class VideoPlayer extends Component<VideoPlayerProps, any> {
   }
 
   togglePlay = () => {
-    this.setState({
-      playing: !this.state.playing
-    });
+    let state = this.state;
+
+    state.playing = !state.playing;
+
+    if (state.playing && this.state.playEnd) {
+      state.playEnd = false;
+      this.seekTo(0);
+    }
+
+    this.setState(state);
+  }
+
+  play = () => {
+    let state = this.state;
+
+    state.playing = true;
+
+    if (state.playing && this.state.playEnd) {
+      state.playEnd = false;
+      this.seekTo(0);
+    }
+
+    this.setState(state);
   }
 }
 
