@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 
 const styles: any = {
   playerContainer: {
@@ -44,7 +44,8 @@ const styles: any = {
   timerText: {
     color: "#fff",
     fontSize: 12,
-    textAlign: "center"
+    textAlign: "center",
+    fontFamily: (Platform.OS === "ios") ? "Helvetica Neue" : ""
   },
   seekBar: {
     flex: 1,
@@ -88,6 +89,16 @@ const styles: any = {
     justifyContent: "center",
     alignItems: "center",
     transform: [{ translateY: -30 }, { translateX: -30 }]
+  },
+  buffer: {
+    backgroundColor: "transparent",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: -18,
+    marginTop: -18
   }
 };
 

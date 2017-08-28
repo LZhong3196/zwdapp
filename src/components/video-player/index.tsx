@@ -3,7 +3,11 @@ import {
   View,
   Text,
   TouchableWithoutFeedback,
-  PanResponder
+  PanResponder,
+  Animated,
+  Easing,
+  Image,
+  Platform
 } from "react-native";
 import Video from "react-native-video";
 import { padStart } from "lodash";
@@ -52,7 +56,9 @@ class VideoPlayer extends Component<VideoPlayerProps, any> {
       seekerFillWidth: 0,
       seekerPosition: 0,
       showControls: false,
-      playEnd: false
+      playEnd: false,
+      isBuffering: false,
+      bufferingAnim: new Animated.Value(0)
     };
   }
 
@@ -89,10 +95,13 @@ class VideoPlayer extends Component<VideoPlayerProps, any> {
             onLoad={ this.onLoad }
             onEnd={ this.onEnd }
             onProgress={ this.onProgress }
+            onBuffer={ this.onBuffer }
+            onLoadStart={ this.onloadstart }
             style={ styles.video } />
           { this.renderControls() }
           { this.renderMinSeekBar() }
           { this.renderPlayButton() }
+          { this.renderBufferState() }
         </View >
       </TouchableWithoutFeedback>
     );
@@ -152,10 +161,39 @@ class VideoPlayer extends Component<VideoPlayerProps, any> {
     );
   }
 
+  renderBufferState() {
+    if (this.state.playing && this.state.isBuffering) {
+      return (
+        <Animated.View style={ [styles.buffer,
+        {
+          transform:
+          [{
+            rotate: this.state.bufferingAnim.interpolate({
+              inputRange: [0, 1],
+              outputRange: ["0deg", "360deg"]
+            })
+          }]
+        }] }>
+          <Image source={ require("./img/loading.png") } style={ { width: 36, height: 36 } } />
+        </Animated.View>
+      );
+    }
+
+    return null;
+  }
+
+  onloadstart = (): void => {
+    this.setState({
+      isBuffering: true
+    });
+    this.startBufferAnim();
+  }
+
   onLoad = (data: any): void => {
     this.setState({
       duration: data.duration,
-      loaded: true
+      loaded: true,
+      isBuffering: false
     });
   }
 
@@ -164,12 +202,26 @@ class VideoPlayer extends Component<VideoPlayerProps, any> {
       return;
     }
 
+    // android不会触发onBuffer事件，手动检测是否正在缓冲
+    if (Platform.OS === "android") {
+      this.checkIsBuffering(data.currentTime);
+    }
+
     this.setState({
       currentTime: data.currentTime,
     }, () => {
       const position = this.calculateSeekerPosition();
       this.setSeekerPosition(position);
     });
+
+  }
+
+  checkIsBuffering(currentTime: number) {
+    const isBuffering = currentTime === this.state.currentTime;
+
+    if (isBuffering !== this.state.isBuffering) {
+      this.onBuffer({ isBuffering: isBuffering });
+    }
   }
 
   onEnd = () => {
@@ -181,6 +233,29 @@ class VideoPlayer extends Component<VideoPlayerProps, any> {
         playEnd: true
       });
     }
+  }
+
+  onBuffer = (data: any) => {
+    this.setState({
+      isBuffering: data.isBuffering
+    });
+
+    if (data.isBuffering) {
+      this.startBufferAnim();
+    }
+  }
+
+  startBufferAnim() {
+    this.state.bufferingAnim.setValue(0);
+    Animated.timing(this.state.bufferingAnim, {
+      toValue: 1,
+      duration: 1000,
+      easing: Easing.linear
+    }).start((o) => {
+      if (o.finished) {
+        this.startBufferAnim();
+      }
+    });
   }
 
   calculateRemainingTime() {
@@ -322,6 +397,9 @@ class VideoPlayer extends Component<VideoPlayerProps, any> {
     }
 
     this.setState(state);
+
+    this.clearControlsTimer();
+    this.autoHideControls();
   }
 
   play = () => {
