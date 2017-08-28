@@ -264,7 +264,7 @@ export default class SettingScreen extends React.Component<any, any> {
     comment = () => {
         Toast.info({
             text: "开发中"
-        })
+        });
     }
 }
 

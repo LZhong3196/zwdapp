@@ -11,7 +11,7 @@ import { styles } from "./style";
 export default class ScannerScreen extends React.Component {
     static navigationOptions = {
         headerStyle: styles.header,
-            title: <Text style={ styles.titleStyle }>扫描二维码</Text>
+        title: <Text style={styles.titleStyle}>扫描二维码</Text>
     };
     constructor(props: any) {
         super(props);
@@ -23,42 +23,43 @@ export default class ScannerScreen extends React.Component {
     render() {
         const animatedStyle = {
             transform: [
-                {translateY: this.animatedValue}
+                { translateY: this.animatedValue }
             ],
             backgroundColor: "#fff"
         };
         return (
             <Camera
-                onBarCodeRead={ this.onScanResultReceived }
-                style={ styles.camera }
+                onBarCodeRead={this.onScanResultReceived}
+                style={styles.camera}
             >
-                <View style={ styles.viewfinder }>
+                <View style={styles.viewfinder}>
                     {/**扫描框边线*/}
-                    <View style={ styles.scannerLineWrap }>
+                    <View style={styles.scannerLineWrap}>
                         <Animated.View
-                            style={ animatedStyle }>
-                            <View style={ styles.scannerLine }/>
+                            style={animatedStyle}>
+                            <View style={styles.scannerLine} />
                         </Animated.View>
                     </View>
                     {/**扫描框转角-左上角*/}
-                    <View style={{ ...styles.cornerStyle, ...styles.topLeftCorner }}/>
+                    <View style={{ ...styles.cornerStyle, ...styles.topLeftCorner }} />
                     {/**扫描框转角-右上角*/}
-                    <View style={{ ...styles.cornerStyle, ...styles.topRightCorner }}/>
+                    <View style={{ ...styles.cornerStyle, ...styles.topRightCorner }} />
                     {/**扫描框转角-左下角*/}
-                    <View style={{ ...styles.cornerStyle, ...styles.bottomLeftCorner }}/>
+                    <View style={{ ...styles.cornerStyle, ...styles.bottomLeftCorner }} />
                     {/**扫描框转角-右下角*/}
-                    <View style={{  ...styles.cornerStyle, ...styles.bottomRightCorner }}/>
+                    <View style={{ ...styles.cornerStyle, ...styles.bottomRightCorner }} />
                 </View>
-                <View style={ styles.topMask }/>
-                <View style={ styles.leftMask }/>
-                <View style={ styles.rightMask }/>
-                <View style={ styles.bottomMask }/>
-                <View style={{position: "absolute", bottom: 130}}>
-                    <Text style={{color: "#fff", fontSize: 14, backgroundColor: "transparent"}}>将二维码放入框内可自动扫描</Text>
+                <View style={styles.topMask} />
+                <View style={styles.leftMask} />
+                <View style={styles.rightMask} />
+                <View style={styles.bottomMask} />
+                <View style={{ position: "absolute", bottom: 130 }}>
+                    <Text style={{ color: "#fff", fontSize: 14, backgroundColor: "transparent" }}>将二维码放入框内可自动扫描</Text>
                 </View>
             </Camera>
         );
     }
+
     scannerLineMove() {
         this.animatedValue.setValue(0);
         Animated.timing(this.animatedValue, {
@@ -67,6 +68,7 @@ export default class ScannerScreen extends React.Component {
             easing: Easing.linear
         }).start(() => this.scannerLineMove());
     }
+
     onScanResultReceived = (e: any) => {
         /**TODO 不知道这里该做什么交互*/
         alert("Type: " + e.type + "\nData: " + e.data);

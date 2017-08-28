@@ -170,3 +170,30 @@ declare module "react-native-camera" {
 > 具体声明请根据模块文档或依赖需求进行定义
 
 
+## react-native run-android failed - SDK location not found.
+
+运行 `react-native run-android` 失败, 提示无法找到 SDK 
+
+解决方法: 
+
+* OSX
+
+	在项目 `android/` 目录下创建 `local.properties` 文件, 保存以下内容
+	
+	`sdk.dir = /Users/USERNAME/Library/Android/sdk`
+	
+	> [USERNAME] 为你本机用户名
+	
+* windows
+
+
+	在项目 `android/` 目录下创建 `local.properties` 文件, 保存以下内容
+	
+	`sdk.dir = C:\\Users\\USERNAME\\AppData\\Local\\Android\\sdk`
+	
+	> [USERNAME] 为你本机用户名
+	
+	
+	
+[Ref](https://stackoverflow.com/questions/32634352/react-native-android-build-failed-sdk-location-not-found)
+

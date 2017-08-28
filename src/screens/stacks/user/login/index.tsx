@@ -16,9 +16,9 @@ import {
 } from "native-base";
 import { Row, Grid, Col } from "react-native-easy-grid";
 import { styles, thirdParty } from "./style";
-import Divider from '../../../../components/divider';
 
-let { Icon, Toast, theme } = Widgets;
+
+let { Icon, Toast, theme, Divider } = Widgets;
 
 const accountLimit: number = 22;
 const passwordLimit: number = 22;
@@ -121,23 +121,23 @@ class EditForm extends React.Component<any, any> {
     }
 
     resetAccountValue = () => {
-        this.state.account = undefined;
-        this.setState(this.state);
+        this.setState({
+            account: undefined
+        });
     }
 
     resetPasswordValue = () => {
-        this.state.password = undefined;
-        this.setState(this.state);
+        this.setState({
+            password: undefined
+        });
     }
 
     onAccountChange = (value: any) => {
-        this.state.account = value;
-        this.setState(this.state);
+        this.setState({ account: value });
     }
 
     onPasswordChange = (value: any) => {
-        this.state.password = value;
-        this.setState(this.state);
+        this.setState({ password: value });
     }
 
     onSubmit = async () => {

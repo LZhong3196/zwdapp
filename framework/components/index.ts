@@ -1,6 +1,8 @@
 import Icon from "./ui/icon/index";
 import TabBarIcon from "./ui/tabBarIcon/index";
 import ImageExtra from "./ui/image-extra/index";
+import ShareSheet from "./ui/sharesheet/index";
+import Divider from "./ui/divider/index";
 import { ToastContainer as Toast } from "./ui/toast/index";
 import Root from "./frame/root/index";
 
@@ -12,5 +14,7 @@ export {
     ImageExtra,
     theme,
     Root,
-    Toast
+    Toast,
+    Divider,
+    ShareSheet
 };

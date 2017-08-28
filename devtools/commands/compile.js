@@ -48,6 +48,50 @@ moduleProcess['framework'] = function (params, argv) {
     };
 };
 
+moduleProcess['native'] = function (params, argv) {
+    FS.ensureDirSync(Constants.NATIVE_MODULES_OUPUT_DIR);
+
+    return {
+        compile: function () {
+            return tsc(Constants.NATIVE_MODULES_DIR, {
+                outDir: Constants.NATIVE_MODULES_OUPUT_DIR
+            });
+        },
+        complete: function () {
+            ['package.json'].forEach(fileName => {
+                FS.copySync(
+                    Path.join(Constants.NATIVE_MODULES_DIR, fileName),
+                    Path.join(Constants.NATIVE_MODULES_OUPUT_DIR, fileName)
+                );
+            });
+
+            return new Promise((resolve, reject) => {
+                console.log(Chalk.gray(`🍞 生成 ${Path.join(Constants.NATIVE_MODULES_OUPUT_DIR, 'index.d.ts').slice(Constants.CWD.length)}`));
+                dtsGenerator({
+                    name: 'summer-native-modules',
+                    baseDir: Constants.NATIVE_MODULES_DIR,
+                    main: 'summer-native-modules/index',
+                    exclude: [
+                        'node_modules/**/*',
+                        'typings/**/*'
+                    ],
+                    out: Path.join(Constants.NATIVE_MODULES_OUPUT_DIR, 'index.d.ts')
+                })
+                .then(() => {
+                    return FS.copy(Constants.NATIVE_MODULES_DIR, Constants.NATIVE_MODULES_OUPUT_DIR, {filter: (src, dest) => {
+                        return !(/\.tsx?$/.test(src));
+                    }}, error => {
+                        if (error) {
+                            console.log(Chalk.yellow('💦 native-modules 编译失败'), error)
+                        }
+                    })
+                })
+                .then(resolve)
+            })
+        }
+    }
+}
+
 module.exports = function compile(params, argv) {
     var otarget = params[0];
     var target = params[0];

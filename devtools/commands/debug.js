@@ -30,7 +30,7 @@ function debugApp(cp, params) {
     try {
         Object.assign(appConfig, require(Constants.APP_ENTRY));
     } catch (e) {
-        
+
     }
 
     FS.ensureDir(Constants.SUMMER_TYPINGS_DIR);
@@ -41,17 +41,17 @@ function debugApp(cp, params) {
             apiSynchronizer(appConfig),
             routeSynchronizer()
         ])
-        .then(() =>  tsc(Constants.SOURCE_DIR, {
+        .then(() => tsc(Constants.SOURCE_DIR, {
             watch: true
         }))
         .then(() => {
-            var output = 
+            var output =
                 'const React = global.React = require("react");\n' +
                 'const Summer = require("summer");\n' +
-                `const config = require("${appConfig.config}");\n` + 
-                `const router = require("./router");\n` + 
-                `const apiMap = require("./api-map.json");\n` + 
-                '\n' + 
+                `const config = require("${appConfig.config}");\n` +
+                `const router = require("./router");\n` +
+                `const apiMap = require("./api-map.json");\n` +
+                '\n' +
                 'global.__DEV__ = config.env != "prod" || config.env != "debug";\n' +
                 'global.__DEBUG__ = config.env === "debug";\n' +
                 'global.__PROD__ = config.env === "prod"\n' +
@@ -64,31 +64,41 @@ function debugApp(cp, params) {
                 '    apiMap: apiMap\n' +
                 '});\n' +
                 'export default app;'
-            ;
+                ;
 
             return Promise.invoke(
-                FS.writeFile, 
+                FS.writeFile,
                 Path.join(Constants.OUTPUT_DIR, 'index.js'),
                 output
             );
 
         })
-        
+
+}
+
+function debugNaitveModule(target, params) {
+    return Promise.all(filesSynchronizer("native"))
+        .then(() => {
+            if (!params || !params.ios || !params.android) {
+                return tsc(Constants.NATIVE_MODULES_DIR, {
+                    watch: true,
+                    outDir: Constants.NATIVE_MODULES_OUPUT_DIR
+                });
+            }
+        });
 }
 
 function debugFramework(target, params) {
     return tsc(Constants.FRAMEWORK_DIR, {
         watch: true,
-        outDir: Constants.FRAMEWORK_OUTPUT_DIR 
+        outDir: Constants.FRAMEWORK_OUTPUT_DIR
     });
 }
 
-module.exports = function(params, argv) {
+module.exports = function (params, argv) {
     var target = params[0];
     params = params.slice(1);
-    
-    var tsconfigSynchronizer = null;
-    
+
     return Promise
         .then(() => {
             var recompileFramework = !FS.existsSync(Constants.FRAMEWORK_OUTPUT_DIR) && target != "framework" || argv.init || argv.update;
@@ -97,14 +107,28 @@ module.exports = function(params, argv) {
             }
         })
         .then(() => {
-            if (target != 'framework') {
-                return debugApp(target, params);
-            } else {
-                return debugFramework(target, params);
+            var recompileNaitveModule = !FS.existsSync(Constants.NATIVE_MODULES_OUPUT_DIR) || argv.init;
+            if (recompileNaitveModule) {
+                return compile(['native']);
+            }
+        })
+        .then(() => {
+            switch (target) {
+                case "framework": {
+                    return debugFramework(target, params);
+                    break;
+                }
+                case "native": {
+                    return debugNaitveModule(target, params);
+                    break;
+                }
+                default: {
+                    return debugApp(target, params);
+                }
             }
         })
         .fail(reason => {
-            var message = reason && (reason.stack || reason.message) || reason || '未知错误';
+            var message = reason && (reason.stack || reason.message) || reason  || '未知错误';
             console.error(Chalk.red(`✘ 发生出错:\n${message}`));
             process.exit(-1);
         });

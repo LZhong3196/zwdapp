@@ -84,10 +84,9 @@ export default class Store {
         }
         const storeKeys: Array<string> = keys.split(".");
         const storeKey: string = storeKeys.slice(1).join(".");
-        const appStore: Store = this.instance;
         const actionType: string = `ACTIONTYPES_${storeKeys[0].toLocaleUpperCase()}_UPDATE`;
 
-        appStore.dispatch({
+        this.instance.dispatch({
             type: (CONSTANTS as any)[actionType],
             meta: {
                 storeKey: storeKey
