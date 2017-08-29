@@ -117,8 +117,8 @@ export default class OrderScreen extends React.Component<any, any> {
     }
 
     getCityId(): string {
-        const citys: any[] = Store.get("data.city.list");
-        const currentCity: string = Store.get("data.city.city");
+        const citys: any[] = Store.get("data.cityInfo.list");
+        const currentCity: string = Store.get("data.cityInfo.city");
 
         return citys.filter((item) => {
             return item.name === currentCity;
