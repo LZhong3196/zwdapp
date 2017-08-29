@@ -57,7 +57,7 @@ class VideoPlayer extends Component<VideoPlayerProps, any> {
       seekerPosition: 0,
       showControls: false,
       playEnd: false,
-      isBuffering: false,
+      isBuffering: true,
       bufferingAnim: new Animated.Value(0)
     };
   }
@@ -97,6 +97,7 @@ class VideoPlayer extends Component<VideoPlayerProps, any> {
             onProgress={ this.onProgress }
             onBuffer={ this.onBuffer }
             onLoadStart={ this.onloadstart }
+            onReadyForDisplay={ this.onReadyForDisplay }
             style={ styles.video } />
           { this.renderControls() }
           { this.renderMinSeekBar() }
@@ -162,7 +163,7 @@ class VideoPlayer extends Component<VideoPlayerProps, any> {
   }
 
   renderBufferState() {
-    if (this.state.playing && this.state.isBuffering) {
+    if ((this.state.playing && this.state.isBuffering) || (!this.state.loaded && this.state.isBuffering)) {
       return (
         <Animated.View style={ [styles.buffer,
         {
@@ -192,8 +193,13 @@ class VideoPlayer extends Component<VideoPlayerProps, any> {
   onLoad = (data: any): void => {
     this.setState({
       duration: data.duration,
+    });
+  }
+
+  onReadyForDisplay = () => {
+    this.setState({
+      isBuffering: false,
       loaded: true,
-      isBuffering: false
     });
   }
 
@@ -236,11 +242,16 @@ class VideoPlayer extends Component<VideoPlayerProps, any> {
   }
 
   onBuffer = (data: any) => {
-    this.setState({
-      isBuffering: data.isBuffering
-    });
+    const isBuffering = data.isBuffering;
 
-    if (data.isBuffering) {
+    if (this.state.isBuffering !== isBuffering) {
+      this.setState({
+        isBuffering: isBuffering
+      });
+
+    }
+
+    if (isBuffering) {
       this.startBufferAnim();
     }
   }
