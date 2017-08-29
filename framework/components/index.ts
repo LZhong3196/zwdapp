@@ -3,7 +3,8 @@ import TabBarIcon from "./ui/tabBarIcon/index";
 import ImageExtra from "./ui/image-extra/index";
 import { ToastContainer as Toast } from "./ui/toast/index";
 import Root from "./frame/root/index";
-
+import Header from "./ui/header/index";
+import ImageViewer from "./ui/image-viewer/index";
 import * as theme from "./ui/theme/index";
 
 export {
@@ -12,5 +13,7 @@ export {
     ImageExtra,
     theme,
     Root,
-    Toast
+    Toast,
+    ImageViewer,
+    Header
 };

@@ -81,23 +81,26 @@ export default class SearchScreen extends React.Component<any, any> {
                     onFocus={this.openFilterSearchPage}
                     placeholder="搜索当季爆款"
                     rightButton={
-                        <Text style={styles.headerRightButton} onPress={this.openClassification}>分类</Text>
+                        <Text style={styles.headerRightButton} onPress={this.openClassificationPage}>分类</Text>
                     }/>
                 <RefreshList
                     key={this.state.isShowSide ? 1 : 2}
-                    ref={ (e) => this.flatList = e }
+                    ref={ (e: any) => this.flatList = e }
                     data={ data }
                     renderItem={ this.renderRow }
                     onHeaderRefresh={ () => this.fetchList(true) }
                     onFooterRefresh={ () => this.fetchList(false) }
                     numColumns={this.state.isShowSide ? 2 : 1}
-                    onScrollTop={this.flatListScrollTop}
+                    onScrollTop={this.onFlatlistScrollTop}
                 />
-                <ScrollToTop ref={ (e) => this.scrollToTopButtom = e } bindRef={ this.flatList }/>
+                <ScrollToTop ref={ (e: any) => this.scrollToTopButtom = e } onPress={ this.flatListScrollToTop }/>
             </View>
         );
     }
-    flatListScrollTop = (scrollTop: boolean) => {
+    flatListScrollToTop = () => {
+        this.flatList.scrollToTop();
+    }
+    onFlatlistScrollTop = (scrollTop: boolean) => {
         scrollTop ? this.scrollToTopButtom.hideButton() : this.scrollToTopButtom.showButton();
     }
     openFilterSearchPage = () => {
@@ -106,8 +109,8 @@ export default class SearchScreen extends React.Component<any, any> {
     openGoodsPage = (id: string) => {
         Navigator.to(Routes.ROUTES_GOODS, { id });
     }
-    openClassification = () => {
-
+    openClassificationPage = () => {
+        Navigator.to(Routes.ROUTES_CLASSIFICATION);
     }
     fetchList = async (isRefresh?: boolean) => {
         let blockIndex = isRefresh ? 0 : this.state.blockIndex + 1;

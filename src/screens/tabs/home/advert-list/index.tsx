@@ -20,9 +20,7 @@ export default class RecommendGoods extends React.Component<any, any> {
                     key={ index }
                     onPress={ () => this.openGoodsPage(item.goods_id) }
                 >
-                    <View
-                        style={ styles.advertListItem }
-                    >
+                    <View style={ styles.advertListItem }>
                         <ImageExtra qualityControl="XL"
                                     style={ styles.advertListImage }
                                     source={{ uri: item.image }}

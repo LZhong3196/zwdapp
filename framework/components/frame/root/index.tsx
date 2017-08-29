@@ -5,6 +5,7 @@ import {
 } from "react-native";
 import { Root as RootNB } from "native-base";
 import { ToastContainer as Toast } from "./../../ui/toast/index";
+import ImageViewer from "./../../ui/image-viewer/index";
 
 
 export default class Root extends React.Component<ViewProperties, any> {
@@ -19,6 +20,13 @@ export default class Root extends React.Component<ViewProperties, any> {
                         }
                     }}>
                 </Toast>
+                <ImageViewer
+                    ref={(component: any) => {
+                        if (!ImageViewer.instance) {
+                            ImageViewer.instance = component;
+                        }
+                    }}>
+                </ImageViewer>
             </RootNB>
         );
     }

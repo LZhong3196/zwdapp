@@ -1,4 +1,5 @@
 import { Constants, Widgets } from "summer";
+import { ViewStyle, TextStyle } from "react-native";
 const {
     SCREEN_HEIGHT,
     SCREEN_WIDTH,
@@ -11,8 +12,7 @@ const { theme: {
     color_grey,
     mask_color
 }} = Widgets;
-import { StyleSheet } from "react-native";
-export const styles = StyleSheet.create({
+export const styles: Dictionary<ViewStyle | TextStyle> = {
     header: {
         flexDirection: "row",
         marginTop: ios ? 20 : 0,
@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
         height: 30
     },
     inputText: {
-        lineHeight: 20,
+        lineHeight: 20
     },
     city: {
         color: color_base
@@ -77,4 +77,4 @@ export const styles = StyleSheet.create({
     selectedCity: {
         backgroundColor: color_theme
     },
-});
+};

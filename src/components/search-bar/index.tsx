@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Constants, APIs, Store, Decorators, Widgets, Navigator, Routes } from "summer";
 import { styles } from "./style";
-const { Icon, theme: {
+const { Icon, Header, theme: {
     color_base
 } } = Widgets;
 
@@ -32,34 +32,35 @@ export default class SearchBar extends React.Component<SearchBarProps, any> {
         this.getCityList();
     }
     getCityList = async () => {
-        try {
-            /**TODO 使用第三方定位 , 获取当前位置 , 应该判断是否有初始值调用 , 只调用一次*/
-            /**不能放在持久化数据中*/
-            const city = "广州";
-            const res: any = await APIs.data.getCityList();
-            const cityList: any[] = res.data || [];
-            Store.update("data.city", {
-                city,
-                list: cityList
-            });
-        }
-        catch (e) {
+        if (!Store.get("data.cityInfo.city")) {
+            try {
+                /**TODO 使用第三方定位 , 获取当前位置*/
+                const city = "广州";
+                const res: any = await APIs.data.getCityList();
+                const cityList: any[] = res.data || [];
+                Store.update("data.cityInfo", {
+                    city,
+                    list: cityList
+                });
+            }
+            catch (e) {
+            }
         }
     }
     render() {
-        const cityList: any[] = Store.get("data.city.list") || [];
-        const currentCity: string = Store.get("data.city.city") || "定位中";
+        const cityList: any[] = Store.get("data.cityInfo.list") || [];
+        const currentCity: string = Store.get("data.cityInfo.city") || "定位中";
         const createCitys =  (cityInfo: any) => (
             <TouchableOpacity
                 key={cityInfo.cid}
                 onPress={ () => this.changeCity(cityInfo.name)}>
-                <View style={ currentCity === cityInfo.name ? [styles.cityItem, styles.selectedCity] : styles.cityItem }>
+                <View style={ currentCity === cityInfo.name ? {...styles.cityItem, ...styles.selectedCity} : styles.cityItem }>
                     <Text style={currentCity === cityInfo.name ? {color: "#fff"} : {}}>{cityInfo.name}</Text>
                 </View>
             </TouchableOpacity>
         );
         return (
-            <View style={ styles.header }>
+            <Header>
                 <TouchableOpacity
                     onPress={this.citySelectToggle}>
                     <View style={ styles.cityButton }>
@@ -97,9 +98,8 @@ export default class SearchBar extends React.Component<SearchBarProps, any> {
                             </View>
                         </View>
                     </TouchableWithoutFeedback>
-
                 </Modal>
-            </View>
+            </Header>
         );
     }
     openQRScanner = () => {
@@ -107,7 +107,7 @@ export default class SearchBar extends React.Component<SearchBarProps, any> {
     }
     changeCity = (city: string) => {
         this.citySelectToggle();
-        Store.update("data.city.city", city);
+        Store.update("data.cityInfo.city", city);
     }
     citySelectToggle = () => {
         this.setState({

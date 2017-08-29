@@ -29,6 +29,10 @@
     hoist-non-react-statics "^1.2.0"
     lodash "^4.15.0"
 
+"@types/@remobile/react-native-qrcode-local-image":
+  version "1.0.3"
+  resolved "https://codeload.github.com/remobile/react-native-qrcode-local-image/tar.gz/6647132358b9af784c1edfe20c17b1a0a78230c7"
+
 "@types/babel-core@^6.7.14":
   version "6.25.0"
   resolved "https://registry.yarnpkg.com/@types/babel-core/-/babel-core-6.25.0.tgz#e6439b193c3644cf3fbd24b05620876f76017313"
@@ -3105,6 +3109,10 @@ npmlog@^4.0.2:
     gauge "~2.7.3"
     set-blocking "~2.0.0"
 
+nt-transmit-transparently@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.npmjs.org/nt-transmit-transparently/-/nt-transmit-transparently-1.0.7.tgz#345cf3ffda06ba1bd629935bafac9e7820385076"
+
 number-is-nan@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
@@ -3565,6 +3573,17 @@ react-native-fs@2.3.3:
 react-native-image-crop-picker@^0.14.2:
   version "0.14.4"
   resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.14.4.tgz#3b5c9f9e933ab367c61cf33b46df623f52943e83"
+
+react-native-image-pan-zoom@^2.0.5:
+  version "2.0.6"
+  resolved "https://registry.npmjs.org/react-native-image-pan-zoom/-/react-native-image-pan-zoom-2.0.6.tgz#93117d075dccd2f6b34009d70a4c17ae1a23f572"
+
+react-native-image-zoom-viewer@^2.0.10:
+  version "2.0.10"
+  resolved "https://registry.npmjs.org/react-native-image-zoom-viewer/-/react-native-image-zoom-viewer-2.0.10.tgz#792c4cb7ff0145c36390e4c6703bfe45aa492bd3"
+  dependencies:
+    nt-transmit-transparently "^1.0.7"
+    react-native-image-pan-zoom "^2.0.5"
 
 react-native-img-cache@^1.4.0:
   version "1.4.0"

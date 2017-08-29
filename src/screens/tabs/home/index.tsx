@@ -14,6 +14,7 @@ import SearchHeader from "../../../components/search-bar";
 import HomeNav from "./home-nav";
 import HomeSwiper from "./home-swiper";
 import RecommendGoods from "./recommend-goods";
+import DailyNew from "./daily-new";
 import HotSell from "./hot-sell";
 import AdvertList from "./advert-list";
 
@@ -29,7 +30,6 @@ export default class HomeScreen extends React.Component<any, any> {
                 activeType="&#xe603;"
                 focused={options.focused} />
         )
-
     };
     constructor(props: any, context: any) {
         super(props, context);
@@ -72,6 +72,7 @@ export default class HomeScreen extends React.Component<any, any> {
                     <HomeNav/>
                     <RecommendGoods/>
                     <HotSell/>
+                    <DailyNew/>
                     <AdvertList/>
                 </ScrollView>
             </Container>
