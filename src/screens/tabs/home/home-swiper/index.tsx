@@ -50,7 +50,7 @@ export default class HomeSwiper extends React.Component<any, any> {
     createSwiperList = (item: any, index: number): any => (
         <TouchableOpacity
             key={ index }
-            onPress={ () => this.openShopPage(item.shop_id) }
+            onPress={ () => this.openWebViewPage(item) }
         >
             <ImageExtra qualityControl="XL"
                         style={ styles.swiperItem }
@@ -68,6 +68,12 @@ export default class HomeSwiper extends React.Component<any, any> {
     openShopPage = (id: string) => {
         if (!id) return;
         Navigator.to(Routes.ROUTES_SHOP, { id });
+    }
+    openWebViewPage = (item: any) => {
+        Navigator.to(Routes.ROUTES_WEBVIEW, {
+            url: item.url || "http://gz.17zwd.com/index.htm",
+            title: item.title || "一起做网店"
+        });
     }
     navTo = (target: string) => {
         Navigator.to(target);

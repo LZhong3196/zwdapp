@@ -3,9 +3,9 @@ import * as Lodash from "lodash";
 import { Store, Constants, APIs, Widgets, Decorators, Navigator, Routes } from "summer";
 import {
     StyleSheet,
-    Image,
     View,
-    Slider
+    Slider,
+    TouchableOpacity
 } from "react-native";
 import {
     Button,
@@ -26,7 +26,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import Swiper from "react-native-swiper";
 import { styles } from "./style";
 
-let { Icon } = Widgets;
+let { Icon, ImageExtra, ImageViewer } = Widgets;
 
 @Decorators.connect("user", "goods")
 export default class GoodsScreen extends React.Component<any, any> {
@@ -190,20 +190,31 @@ export default class GoodsScreen extends React.Component<any, any> {
             return <View style={{height: 400}}></View>;
         }
     }
-    createSwiperList = (image: string, index: number) => (
-        <Image
-           key={ index }
-           style={ styles.swiperImage }
-           source={{ uri: image }}
-        />
+    createSwiperList = (image: string, index: number, list: any[]) => (
+        <TouchableOpacity
+            key={ index }
+            onPress={() => this.showLargeImage(list, index)}>
+            <ImageExtra
+            style={ styles.swiperImage }
+            source={{ uri: image }}
+            />
+        </TouchableOpacity>
     )
     openShopPage = (id: string) => {
         Navigator.to(Routes.ROUTES_SHOP, { id });
     }
-
+    showLargeImage = (list: any[], index: number) => {
+        let imageUrls = list.map( (url: string, index: number) => {
+            return {url};
+        });
+        ImageViewer.show({
+            imageUrls,
+            index
+        });
+    }
     setFav = async () => {
         const id: string = this.props.navigation.state.params.id;
-        const item: any = Store.get(`goods..goods.${id}`);
+        const item: any = Store.get(`goods.goods.${id}`);
         if (!id) return;
         let value: boolean = !!item.fav;
         try {
