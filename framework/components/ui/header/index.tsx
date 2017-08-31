@@ -28,14 +28,12 @@ export default class Header extends React.Component<HeaderProps, any> {
             backgroundColor: "#fff",
             borderBottomWidth: 1,
             borderBottomColor: "#aaa",
-            zIndex: 4,
-            elevation: 4,
             ...style
         };
+        const props: any = {...this.props};
+        delete props.style;
         return (
-            <View style={headerStyle}>
-                {this.props.children}
-            </View>
+            <View {...props} style={headerStyle}/>
         );
     }
 }

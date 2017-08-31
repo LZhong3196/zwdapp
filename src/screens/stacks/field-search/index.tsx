@@ -14,7 +14,7 @@ import { styles } from "./style";
 import {underline} from "chalk";
 const { Icon, Header } = Widgets;
 
-@Decorators.connect("search", "data.searchFiled", "market")
+@Decorators.connect("data.searchFiled")
 export default class FiledSearchScreen extends React.Component<any, any> {
     static navigationOptions = {
         header: null as any
@@ -103,11 +103,11 @@ export default class FiledSearchScreen extends React.Component<any, any> {
         return select;
     }
     render() {
-        const data: any[] = Store.get("data.search.historyList") || [];
-        const hotSearchList: any[] = Store.get("data.search.hotSearchList") || [];
+        const data: any[] = Store.get("data.searchFiled.historyList") || [];
+        const hotSearchList: any[] = Store.get("data.searchFiled.hotSearchList") || [];
         return (
             <Container>
-                <Header>
+                <Header style={{elevation: 4, zIndex: 4}}>
                     <TouchableOpacity
                         onPress={this.goback}>
                         <Icon type="&#xea53;"/>
@@ -131,14 +131,14 @@ export default class FiledSearchScreen extends React.Component<any, any> {
                 </Header>
                 <View style={ styles.hotSearch }>
                     <View style={ styles.hotSearchTitle }>
-                        <Text><Icon type="&#xe729;" style={styles.titleIcon}/>热门搜索</Text>
+                        <Icon type="&#xe729;"/><Text>热门搜索</Text>
                     </View>
                     <View style={ styles.hotSearchList }>
                         {hotSearchList.map(this.createHotList)}
                     </View>
                 </View>
-                <View>
-                    <Text><Icon type="&#xe620;" style={styles.titleIcon}/>历史搜索</Text>
+                <View style={ styles.hotSearchTitle } >
+                    <Icon type="&#xe620;"/><Text>历史搜索</Text>
                 </View>
                 <Content>
                     <List

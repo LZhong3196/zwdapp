@@ -29,10 +29,6 @@
     hoist-non-react-statics "^1.2.0"
     lodash "^4.15.0"
 
-"@types/@remobile/react-native-qrcode-local-image":
-  version "1.0.3"
-  resolved "https://codeload.github.com/remobile/react-native-qrcode-local-image/tar.gz/6647132358b9af784c1edfe20c17b1a0a78230c7"
-
 "@types/babel-core@^6.7.14":
   version "6.25.0"
   resolved "https://registry.yarnpkg.com/@types/babel-core/-/babel-core-6.25.0.tgz#e6439b193c3644cf3fbd24b05620876f76017313"
@@ -3629,7 +3625,7 @@ react-native-vector-icons@4.1.1, react-native-vector-icons@~4.1.1:
 
 react-native-video@^2.0.0:
   version "2.0.0"
-  resolved "http://registry.npm.taobao.org/react-native-video/download/react-native-video-2.0.0.tgz#f33fa6fb7e7e3c93ab5787944cefd58bf7355867"
+  resolved "https://registry.npmjs.org/react-native-video/-/react-native-video-2.0.0.tgz#f33fa6fb7e7e3c93ab5787944cefd58bf7355867"
   dependencies:
     keymirror "0.1.1"
     prop-types "^15.5.10"

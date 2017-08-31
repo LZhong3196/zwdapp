@@ -78,13 +78,11 @@ export const styles: any = {
         paddingBottom: 10
     },
     hotSearchTitle: {
-        justifyContent: "center"
+        flexDirection: "row",
+        alignItems: "center"
     },
     hotSearchItem: {
         marginLeft: 10,
         height: 30
-    },
-    titleIcon: {
-        paddingTop: 10
     }
 };
