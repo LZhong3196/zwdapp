@@ -1,11 +1,13 @@
 export const styles: any = {
-    header: {
+    headerContainer: {
         position: "absolute",
         backgroundColor: "transparent",
-        zIndex: 100,
-        top: 0,
-        left: 0,
-        right: 0
+        zIndex: 1,
+        width: "100%"
+    },
+    header: {
+        backgroundColor: "transparent",
+        borderBottomWidth: 0
     },
     container: {
         backgroundColor: "#BFBFBF",
@@ -66,4 +68,9 @@ export const styles: any = {
             borderBottom: 4,
         }
     },
-}
+    btnWidthRightBorder: {
+        borderRightWidth: 0.5,
+        borderColor: "#cbcbcb",
+        borderRadius: 0
+    }
+};

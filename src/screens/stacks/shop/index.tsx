@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Lodash from "lodash";
-import { Store, Constants, APIs, Widgets, Decorators } from "summer";
+import { Store, Constants, APIs, Widgets, Decorators, Navigator } from "summer";
 import { Image, View, StatusBar } from "react-native";
 import {
     Button,
@@ -16,10 +16,13 @@ import {
     Footer,
     FooterTab,
     Tab,
-    Tabs
+    Tabs,
+    Drawer,
+    Header,
 } from "native-base";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import GoodsList from "./goods-list";
+import CategoryList from "./category-list";
 import { styles } from "./style";
 
 let { Icon, Toast } = Widgets;
@@ -27,9 +30,16 @@ let { Icon, Toast } = Widgets;
 @Decorators.connect("user")
 export default class ShopScreen extends React.Component<any, any> {
     static navigationOptions = {
-        headerBackTitle: "",
-        headerStyle: styles.header
+        header: null as any
     };
+
+    constructor(props: any) {
+        super(props);
+
+        this.state = {
+            showDrawer: false
+        };
+    }
 
     componentWillMount() {
         this.fetchData();
@@ -43,53 +53,71 @@ export default class ShopScreen extends React.Component<any, any> {
     componentWillUnmount() {
     }
 
+    drawer: any;
+
     render() {
         const id: string = this.props.navigation.state.params.id;
         const item: any = Store.get(`market.shop.${id}`) || {};
+        const { showDrawer } = this.state;
+
         return (
-            <Container>
-                <StatusBar barStyle="light-content" />
-                <Content style={styles.container}>
-                    <View style={styles.bannerContainer}>
-                        <Image source={{ uri: item.banner }} style={styles.bannerImage} />
-                        <Grid style={styles.marketContainer}>
-                            <Row size={3}>
+            <Drawer
+                ref={ (ref) => { this.drawer = ref; } }
+                content={ <CategoryList categories={ item.categories } onItemPress={ this.onClickCategoryItem } /> }
+                onClose={ this.closeDrawer }
+                type="overlay"
+                side="right"
+            >
+                <View style={ styles.headerContainer }>
+                    <Header style={ styles.header } iosBarStyle={ showDrawer ? "dark-content" : "light-content" }>
+                        <Left>
+                            <Button transparent onPress={ () => { Navigator.back(); } }>
+                                <Icon type="&#xea53;" color="#007aff" />
+                            </Button>
+                        </Left>
+                    </Header>
+                </View>
+                <Content style={ styles.container }>
+                    <View style={ styles.bannerContainer }>
+                        <Image source={ { uri: item.banner } } style={ styles.bannerImage } />
+                        <Grid style={ styles.marketContainer }>
+                            <Row size={ 3 }>
                                 <Thumbnail
-                                    style={styles.marketAvatar}
-                                    source={{ uri: item.avatar }}
+                                    style={ styles.marketAvatar }
+                                    source={ { uri: item.avatar } }
                                     large>
                                 </Thumbnail>
                             </Row>
-                            <Row size={1}>
-                                <Text style={styles.marketTitle}>
-                                    {item.title || ""}
+                            <Row size={ 1 }>
+                                <Text style={ styles.marketTitle }>
+                                    { item.title || "" }
                                 </Text>
                             </Row>
-                            <Row size={1}>
-                                <Text style={styles.marketCategory}>
-                                    {item.category || ""}
+                            <Row size={ 1 }>
+                                <Text style={ styles.marketCategory }>
+                                    { item.address || "" }
                                 </Text>
                             </Row>
-                            <Row size={1}>
+                            <Row size={ 1 }>
                                 <Button
                                     bordered
-                                    light={!item.fav}
-                                    success={!!item.fav}
+                                    light={ !item.fav }
+                                    success={ !!item.fav }
                                     small
-                                    onPress={this.setFav}
-                                    style={styles.favButtonContainer}>
-                                    {!item.fav ? (
+                                    onPress={ this.setFav }
+                                    style={ styles.favButtonContainer }>
+                                    { !item.fav ? (
                                         <Icon
                                             type="&#xe616;"
                                             color="#FFF"
-                                            size={16} />
+                                            size={ 16 } />
                                     ) : (
-                                        <Icon
-                                            type="&#xe62e;"
-                                            color="#1FC15C"
-                                            size={16} />
-                                    )}
-                                    <Text style={styles.favButtonText}>{!item.fav ? "关注" : "已关注"}</Text>
+                                            <Icon
+                                                type="&#xe62e;"
+                                                color="#1FC15C"
+                                                size={ 16 } />
+                                        ) }
+                                    <Text style={ styles.favButtonText }>{ !item.fav ? "关注" : "已关注" }</Text>
                                 </Button>
                             </Row>
                         </Grid>
@@ -108,18 +136,18 @@ export default class ShopScreen extends React.Component<any, any> {
                 </Content>
                 <Footer>
                     <FooterTab>
-                        <Button vertical>
+                        <Button onPress={ this.openDrawer } style={ styles.btnWidthRightBorder }>
                             <Text>宝贝分类</Text>
                         </Button>
-                        <Button vertical>
+                        <Button style={ styles.btnWidthRightBorder }>
                             <Text>档口简介</Text>
                         </Button>
-                        <Button vertical>
+                        <Button>
                             <Text>联系档口</Text>
                         </Button>
                     </FooterTab>
                 </Footer>
-            </Container>
+            </Drawer>
         );
     }
 
@@ -184,6 +212,26 @@ export default class ShopScreen extends React.Component<any, any> {
         catch (e) {
 
         }
+    }
+
+    closeDrawer = () => {
+        this.drawer._root.close();
+
+        this.setState({
+            showDrawer: false
+        });
+    }
+
+    openDrawer = () => {
+        this.drawer._root.open();
+
+        this.setState({
+            showDrawer: true
+        });
+    }
+
+    onClickCategoryItem = (id: string) => {
+        this.closeDrawer();
     }
 
 }

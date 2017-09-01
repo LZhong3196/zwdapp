@@ -9,7 +9,7 @@ declare module 'native-base@2.2.0' {
 			uppercase?: boolean;
 		}
 
-		interface Switch extends ReactNative.SwitchProperties {}
+		interface Switch extends ReactNative.SwitchProperties { }
 
 		interface View extends ReactNative.ViewProperties {
 			padder?: boolean;
@@ -20,15 +20,15 @@ declare module 'native-base@2.2.0' {
 			inlineLabel?: boolean;
 		}
 
-		interface H1 extends ReactNative.TextProperties {}
+		interface H1 extends ReactNative.TextProperties { }
 		/**
          * see Widget Text.js
          */
-		interface H2 extends ReactNative.TextProperties {}
+		interface H2 extends ReactNative.TextProperties { }
 		/**
          * see Widget Text.js
          */
-		interface H3 extends ReactNative.TextProperties {}
+		interface H3 extends ReactNative.TextProperties { }
 		/**
          * see Widget Text.js
          */
@@ -40,11 +40,11 @@ declare module 'native-base@2.2.0' {
 			info?: boolean;
 		}
 
-		interface Badge extends ReactNative.ViewProperties, BsStyle {}
+		interface Badge extends ReactNative.ViewProperties, BsStyle { }
 		/**
          * see Widget CardSwiper.js
          */
-		interface CardSwiper {}
+		interface CardSwiper { }
 		/**
          * see Widget DeckSwiper.js
          */
@@ -86,6 +86,14 @@ declare module 'native-base@2.2.0' {
              * It is advisable to use hasTabs prop with Header while using Tab
              */
 			hasTabs?: boolean;
+
+			backgroundColor?: string;
+
+			iosBarStyle?: "light-content" | "dark-content";
+
+			androidStatusBarColor?: string;
+
+			noShadow?: boolean;
 		}
 
 		interface Left {
@@ -283,7 +291,7 @@ declare module 'native-base@2.2.0' {
          */
 		interface ReactListViewProperties extends ReactNative.ScrollViewProperties, React.Props<
 			ReactNative.ListViewStatic
-		> {
+			> {
 			/**
              * Flag indicating whether empty section headers should be rendered.
              * In the future release empty section headers will be rendered by
@@ -432,7 +440,7 @@ declare module 'native-base@2.2.0' {
 		/**
          * react-native-easy-grid
          */
-		interface Grid extends ReactNative.ViewProperties {}
+		interface Grid extends ReactNative.ViewProperties { }
 		interface Row extends ReactNative.ViewProperties { size?: number }
 		interface Col extends ReactNative.ViewProperties { size?: number }
 		/**
@@ -651,9 +659,9 @@ declare module 'native-base@2.2.0' {
 			style?: ReactNative.ViewStyle;
 		}
 
-		interface Image extends ReactNative.TextProperties {}
+		interface Image extends ReactNative.TextProperties { }
 
-		interface Segment extends ReactNative.TextProperties {}
+		interface Segment extends ReactNative.TextProperties { }
 
 		interface StyleProvider {
 			style?: ReactNative.ViewStyle;
@@ -676,7 +684,7 @@ declare module 'native-base@2.2.0' {
      * Usage of Container's Header component is very similar to your HTML <head>.
      * The Content component of Container is nothing but the body section of your screen.
      */
-	export class Container extends React.Component<NativeBase.Container, any> {}
+	export class Container extends React.Component<NativeBase.Container, any> { }
 	/**
      * NativeBase.Header
      *
@@ -690,7 +698,7 @@ declare module 'native-base@2.2.0' {
      * User can add custom styles while defining <Header> within their app.
      * Replacing Component: React Native <View>
      */
-	export class Header extends React.Component<NativeBase.Header, any> {}
+	export class Header extends React.Component<NativeBase.Header, any> { }
 	/**
      * NativeBase.Content
      *
@@ -704,29 +712,29 @@ declare module 'native-base@2.2.0' {
 	/**
      * NativeBase.Left
      */
-	export class Left extends React.Component<NativeBase.Left, any> {}
+	export class Left extends React.Component<NativeBase.Left, any> { }
 	/**
      * NativeBase.Right
      */
-	export class Right extends React.Component<NativeBase.Right, any> {}
+	export class Right extends React.Component<NativeBase.Right, any> { }
 	/**
      * NativeBase.Body
      */
-	export class Body extends React.Component<NativeBase.Body, any> {}
+	export class Body extends React.Component<NativeBase.Body, any> { }
 
-	export class Content extends React.Component<NativeBase.Content, any> {}
+	export class Content extends React.Component<NativeBase.Content, any> { }
 	/**
      * NativeBase.FooterTab
      */
-	export class FooterTab extends React.Component<NativeBase.FooterTab, any> {}
+	export class FooterTab extends React.Component<NativeBase.FooterTab, any> { }
 	/**
      * NativeBase.Footer
      */
-	export class Footer extends React.Component<NativeBase.Footer, any> {}
+	export class Footer extends React.Component<NativeBase.Footer, any> { }
 	/**
      * NativeBase.Title
      */
-	export class Title extends React.Component<NativeBase.Title, any> {}
+	export class Title extends React.Component<NativeBase.Title, any> { }
 	/**
      * NativeBase.Button
      *
@@ -739,25 +747,25 @@ declare module 'native-base@2.2.0' {
      * NativeBase has provided its users with enormous list of props that can be used with Button.
      * Replacing Component: React Native <TouchableOpacity>
      */
-	export class Button extends React.Component<NativeBase.Button, any> {}
+	export class Button extends React.Component<NativeBase.Button, any> { }
 	/**
      * NativeBase.View
      */
-	export class View extends React.Component<NativeBase.View, any> {}
+	export class View extends React.Component<NativeBase.View, any> { }
 	/**
      * NativeBase.Text
      */
-	export class Text extends React.Component<NativeBase.Text, any> {}
+	export class Text extends React.Component<NativeBase.Text, any> { }
 	/**
      * NativeBase.Switch
      */
-	export class Switch extends React.Component<NativeBase.Switch, any> {}
+	export class Switch extends React.Component<NativeBase.Switch, any> { }
 	/**
      * NativeBase.Picker
      */
-	export class Picker extends React.Component<NativeBase.Picker, any> {}
+	export class Picker extends React.Component<NativeBase.Picker, any> { }
 	namespace Picker {
-		export class Item extends React.Component<ReactNative.PickerItemProperties, any> {}
+		export class Item extends React.Component<ReactNative.PickerItemProperties, any> { }
 	}
 	/**
      * NativeBase.List
@@ -765,7 +773,7 @@ declare module 'native-base@2.2.0' {
      * A base component for specifying lists of information. List must contain one or more list elements.
      * Props provide configurability for several features. Provides a number of attributes that follows styling and interaction guidelines for each platform, so that they are intuitive for users to  interact with.
      */
-	export class List extends React.Component<NativeBase.List, any> {}
+	export class List extends React.Component<NativeBase.List, any> { }
 	/**
      * NativeBase.ListItem
      *
@@ -774,31 +782,31 @@ declare module 'native-base@2.2.0' {
      * • Adds border at bottom of each ListItem.
      * • List takes any number of ListItem.
      */
-	export class ListItem extends React.Component<NativeBase.ListItem, any> {}
+	export class ListItem extends React.Component<NativeBase.ListItem, any> { }
 	/**
      * NativeBase.H1
      */
-	export class H1 extends React.Component<NativeBase.H1, any> {}
+	export class H1 extends React.Component<NativeBase.H1, any> { }
 	/**
      * NativeBase.H2
      */
-	export class H2 extends React.Component<NativeBase.H2, any> {}
+	export class H2 extends React.Component<NativeBase.H2, any> { }
 	/**
      * NativeBase.H3
      */
-	export class H3 extends React.Component<NativeBase.H3, any> {}
+	export class H3 extends React.Component<NativeBase.H3, any> { }
 	/**
      * NativeBase.Row
      */
-	export class Row extends React.Component<NativeBase.Row, any> {}
+	export class Row extends React.Component<NativeBase.Row, any> { }
 	/**
      * NativeBase.Col
      */
-	export class Col extends React.Component<NativeBase.Col, any> {}
+	export class Col extends React.Component<NativeBase.Col, any> { }
 	/**
      * NativeBase.Grid
      */
-	export class Grid extends React.Component<NativeBase.Grid, any> {}
+	export class Grid extends React.Component<NativeBase.Grid, any> { }
 	/**
      * NativeBase.InputGroup
      *
@@ -806,19 +814,19 @@ declare module 'native-base@2.2.0' {
      * Props provide configurability for several features, such as auto-correction, auto-capitalization, placeholder text, and different keyboard types, such as a numeric keypad.
      * Provides a number of attributes that follows styling and interaction guidelines for each platform, so that they are intuitive for users to interact with.
      */
-	export class InputGroup extends React.Component<NativeBase.InputGroup, any> {}
+	export class InputGroup extends React.Component<NativeBase.InputGroup, any> { }
 	/**
      * NativeBase.Input
      */
-	export class Input extends React.Component<NativeBase.Input, any> {}
+	export class Input extends React.Component<NativeBase.Input, any> { }
 	/**
      * NativeBase.Textarea
      */
-	export class Textarea extends React.Component<NativeBase.Textarea, any> {}
+	export class Textarea extends React.Component<NativeBase.Textarea, any> { }
 	/**
      * NativeBase.Icon
      */
-	export class Icon extends React.Component<NativeBase.Icon, any> {}
+	export class Icon extends React.Component<NativeBase.Icon, any> { }
 	/**
      * NativeBase.Thumbnail
      *
@@ -826,7 +834,7 @@ declare module 'native-base@2.2.0' {
      * It helps you to showcase an image with variuos dimensions and shapes.
      * By default, Thumbnail renders an image in circular shape.
      */
-	export class Thumbnail extends React.Component<NativeBase.Thumbnail, any> {}
+	export class Thumbnail extends React.Component<NativeBase.Thumbnail, any> { }
 	/**
      * NativeBase.Card
      *
@@ -835,83 +843,83 @@ declare module 'native-base@2.2.0' {
      * NativeBase Cards support a wide variety of content, including images, text, list groups, links, and more.
      * Mix and match multiple content types to create the card you need.
      */
-	export class Card extends React.Component<NativeBase.Card, any> {}
+	export class Card extends React.Component<NativeBase.Card, any> { }
 	/**
      * NativeBase.CardItem
      *
      * This is the child component of Card. Works very similar to the list items of list. Card takes any number of CardItem.
      * CardItem component takes input such as: Text, Button, Image, Thumbnail, Icon.
      */
-	export class CardItem extends React.Component<NativeBase.CardItem, any> {}
+	export class CardItem extends React.Component<NativeBase.CardItem, any> { }
 	/**
      * NativeBase.CardSwiper
      *
      * Looking at data one piece at a time is more efficient when you consider people you might want to date, restaurants, streaming music, or local events you might want to check out.
      * NativeBase Card Swiper helps you evaluate one option at a time, instead of selecting from a set of options.
      */
-	export class CardSwiper extends React.Component<NativeBase.CardSwiper, any> {}
+	export class CardSwiper extends React.Component<NativeBase.CardSwiper, any> { }
 	/**
      * NativeBase.DeckSwiper
      */
-	export class DeckSwiper extends React.Component<NativeBase.DeckSwiper, any> {}
+	export class DeckSwiper extends React.Component<NativeBase.DeckSwiper, any> { }
 	/**
      * NativeBase.Badge
      *
      * All of us must have seen notification badges somewhere, such as on smart phones or facebook.
      */
-	export class Badge extends React.Component<NativeBase.Badge, any> {}
+	export class Badge extends React.Component<NativeBase.Badge, any> { }
 	/**
      * NativeBase.Spinner
      */
-	export class Spinner extends React.Component<NativeBase.Spinner, any> {}
+	export class Spinner extends React.Component<NativeBase.Spinner, any> { }
 	/**
      * NativeBase.CheckBox
      */
-	export class CheckBox extends React.Component<NativeBase.CheckBox, any> {}
+	export class CheckBox extends React.Component<NativeBase.CheckBox, any> { }
 	/**
      * NativeBase.Radio
      */
-	export class Radio extends React.Component<NativeBase.Radio, any> {}
+	export class Radio extends React.Component<NativeBase.Radio, any> { }
 	/**
      * NativeBase.ProgressBar
      */
-	export class ProgressBar extends React.Component<NativeBase.ProgressBar, any> {}
+	export class ProgressBar extends React.Component<NativeBase.ProgressBar, any> { }
 	/**
      * NativeBase.Drawer
      */
-	export class Drawer extends React.Component<NativeBase.Drawer, any> {}
+	export class Drawer extends React.Component<NativeBase.Drawer, any> { }
 	/**
      * NativeBase.Tabs
      *
      * Tabs are a horizontal region of buttons or links that allow for a consistent navigation experience between screens.
      * It can contain any combination of text and icons, and is a popular method for enabling mobile navigation.
      */
-	export class Tabs extends React.Component<NativeBase.Tabs, any> {}
+	export class Tabs extends React.Component<NativeBase.Tabs, any> { }
 	/**
      * NativeBase.Tab
      */
-	export class Tab extends React.Component<NativeBase.Tab, any> {}
+	export class Tab extends React.Component<NativeBase.Tab, any> { }
 
-	export class TabHeading extends React.Component<NativeBase.TabHeading, any> {}
+	export class TabHeading extends React.Component<NativeBase.TabHeading, any> { }
 	/**
      * NativeBase.Item
      */
-	export class Item extends React.Component<NativeBase.Item, any> {}
+	export class Item extends React.Component<NativeBase.Item, any> { }
 	/**
      * NativeBase.Form
      */
-	export class Form extends React.Component<NativeBase.Form, any> {}
+	export class Form extends React.Component<NativeBase.Form, any> { }
 	/**
      * NativeBase.Fab
      */
 
-	export class Fab extends React.Component<NativeBase.Fab, any> {}
+	export class Fab extends React.Component<NativeBase.Fab, any> { }
 
-	export class Separator extends React.Component<NativeBase.Separator, any> {}
+	export class Separator extends React.Component<NativeBase.Separator, any> { }
 
-	export class Label extends React.Component<NativeBase.Label, any> {}
+	export class Label extends React.Component<NativeBase.Label, any> { }
 
-	export class StyleProvider extends React.Component<NativeBase.StyleProvider, any> {}
+	export class StyleProvider extends React.Component<NativeBase.StyleProvider, any> { }
 
 	export class ActionSheet {
 		static show: (
@@ -925,9 +933,9 @@ declare module 'native-base@2.2.0' {
 		) => void;
 	}
 
-	export class Image extends React.Component<NativeBase.Image, any> {}
+	export class Image extends React.Component<NativeBase.Image, any> { }
 
-	export class Segment extends React.Component<NativeBase.Segment, any> {}
+	export class Segment extends React.Component<NativeBase.Segment, any> { }
 
 	export class Toast {
 		static show(configuration: {
@@ -939,6 +947,6 @@ declare module 'native-base@2.2.0' {
 		}): void;
 	}
 
-	export class Root extends React.Component<NativeBase.Root, any> {}
+	export class Root extends React.Component<NativeBase.Root, any> { }
 
 }
