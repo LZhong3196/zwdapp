@@ -65,7 +65,7 @@ export default class ImageViewer extends React.Component<any, any> {
         }, 500);
     }
 
-    render () {
+    render() {
         let {
             modalVisible,
             config

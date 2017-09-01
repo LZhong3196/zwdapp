@@ -3,24 +3,38 @@ import {
     View,
     ViewProperties,
     Platform,
-    ViewStyle
+    ViewStyle,
+    Animated
 } from "react-native";
 
 export interface HeaderProps {
     style?: ViewStyle;
 }
-
+const ios: boolean = Platform.OS === "ios";
 export default class Header extends React.Component<HeaderProps, any> {
+    private height: number;
+    private animating: boolean = false;
     static defaultProps = {
         style: {}
     };
+    constructor(props: HeaderProps) {
+        super(props);
+        this.state = {
+            marginTop: new Animated.Value(ios ? 20 : 0)
+        };
+    }
+    componentDidMount() {
+        this.state.marginTop.addListener((e: any) => {
+            console.log(e);
+        });
+    }
     render() {
         const {
             style
         } = this.props;
-        const ios = Platform.OS === "ios";
+        this.height = Number(style.height) || 50;
         const headerStyle: ViewStyle = {
-            marginTop: ios ? 20 : 0,
+            marginTop: this.state.marginTop,
             flexDirection: "row",
             height: 50,
             justifyContent: "space-between",
@@ -33,7 +47,33 @@ export default class Header extends React.Component<HeaderProps, any> {
         const props: any = {...this.props};
         delete props.style;
         return (
-            <View {...props} style={headerStyle}/>
+            <Animated.View {...props} style={headerStyle}/>
         );
+    }
+    hide = () => {
+        if (!this.animating) {
+            this.animating = true;
+            Animated.timing(
+                this.state.marginTop,
+                {
+                    toValue: ios ? (- this.height - 20) : (- this.height),
+                }
+            ).start(() => {
+                this.animating = false;
+            });
+        }
+    }
+    show = () => {
+        if (!this.animating) {
+            this.animating = true;
+            Animated.timing(
+                this.state.marginTop,
+                {
+                    toValue: ios ? 20 : 0,
+                }
+            ).start(() => {
+                this.animating = false;
+            });
+        }
     }
 }

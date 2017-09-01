@@ -18,6 +18,7 @@ import { styles } from "./style";
 @Decorators.connect("market", "data")
 export default class MarketScreen extends React.Component<any, any> {
     private flatList: any;
+    private searchBarConnext: any;
     private scrollToTopButtom: any;
     static navigationOptions = {
         title: "Routes.ROUTES_MARKET",
@@ -37,7 +38,9 @@ export default class MarketScreen extends React.Component<any, any> {
             loading: false
         };
     }
+    componentWillMount() {
 
+    }
     componentDidMount() {
         this.flatList.startHeaderRefreshing();
     }
@@ -76,6 +79,7 @@ export default class MarketScreen extends React.Component<any, any> {
         return (
             <View style={styles.view}>
                 <SearchBar
+                    ref={ (e: any) => this.searchBarConnext = e }
                     onFocus={this.openFilterSearchPage}
                     placeholder="请输入档口名/档口号/旺旺号"/>
                 <RefreshList
@@ -85,6 +89,7 @@ export default class MarketScreen extends React.Component<any, any> {
                     onHeaderRefresh={ () => this.fetchList(true) }
                     onFooterRefresh={ () => this.fetchList(false) }
                     onScrollTop={ this.onFlatlistScrollTop }
+                    touchVerticalMove={this.flatListTouchVerticalMove}
                 />
                 <ScrollToTop ref={ (e: any) => this.scrollToTopButtom = e } onPress={ this.flatListScrollToTop }/>
             </View>
@@ -95,6 +100,15 @@ export default class MarketScreen extends React.Component<any, any> {
     }
     onFlatlistScrollTop = (scrollTop: boolean) => {
         scrollTop ? this.scrollToTopButtom.hideButton() : this.scrollToTopButtom.showButton();
+    }
+    flatListTouchVerticalMove = (dy: number) => {
+        const searchBar = this.searchBarConnext.getWrappedInstance();
+        if (dy > 0) {
+            searchBar.show();
+        }
+        else {
+            searchBar.hide();
+        }
     }
     openShopPage = (id: string) => {
         Navigator.to(Routes.ROUTES_SHOP, { id });
@@ -152,7 +166,6 @@ export default class MarketScreen extends React.Component<any, any> {
         }
         this.fetchList(true);
     }
-
 }
 
 
