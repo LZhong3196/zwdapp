@@ -271,6 +271,7 @@ declare module 'native-base@2.2.0' {
 			first?: boolean;
 			selected?: boolean;
 			avatar?: boolean;
+			last?: boolean;
 		}
 
 		interface Separator {

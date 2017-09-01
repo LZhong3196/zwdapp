@@ -17,6 +17,7 @@ import Share17 from "./screens/stacks/user/setting/share";
 
 /**  */
 import ShopPageScreen from "./screens/stacks/shop";
+import ShopProfileScreen from "./screens/stacks/shop/profile";
 import GoodsPageScreen from "./screens/stacks/goods";
 import MainScreen from "./screens/tabs";
 import NotificationScreen from "./screens/stacks/notification";
@@ -53,7 +54,8 @@ export const routeConfigMap: NavigationRouteConfigMap = {
     ROUTES_ABOUT_US: { screen: AboutUs },
     ROUTES_SHARE_17: { screen: Share17 },
     ROUTES_WEBVIEW: { screen: WebViewScreen },
-    ROUTES_CLASSIFICATION: { screen: ClassificationScreen }
+    ROUTES_CLASSIFICATION: { screen: ClassificationScreen },
+    ROUTES_SHOP_PROFILE: { screen: ShopProfileScreen }
 };
 
 export const stackConfig: StackNavigatorConfig = {

@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Lodash from "lodash";
-import { Store, Constants, APIs, Widgets, Decorators, Navigator } from "summer";
+import { Store, Constants, APIs, Widgets, Decorators, Navigator, Routes } from "summer";
 import { Image, View, StatusBar } from "react-native";
 import {
     Button,
@@ -139,7 +139,7 @@ export default class ShopScreen extends React.Component<any, any> {
                         <Button onPress={ this.openDrawer } style={ styles.btnWidthRightBorder }>
                             <Text>宝贝分类</Text>
                         </Button>
-                        <Button style={ styles.btnWidthRightBorder }>
+                        <Button style={ styles.btnWidthRightBorder } onPress={ this.goToProfile }>
                             <Text>档口简介</Text>
                         </Button>
                         <Button>
@@ -232,6 +232,12 @@ export default class ShopScreen extends React.Component<any, any> {
 
     onClickCategoryItem = (id: string) => {
         this.closeDrawer();
+    }
+
+    goToProfile = () => {
+        const id: string = this.props.navigation.state.params.id;
+
+        Navigator.to(Routes.ROUTES_SHOP_PROFILE, { id });
     }
 
 }
