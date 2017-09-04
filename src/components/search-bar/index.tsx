@@ -19,8 +19,9 @@ interface SearchBarProps {
     onFocus?: () => void;
 }
 
-@Decorators.connect("data")
+@Decorators.connectWithRef("data")
 export default class SearchBar extends React.Component<SearchBarProps, any> {
+    private header: any;
     constructor(props: SearchBarProps, context: any) {
         super(props);
         this.state = {
@@ -60,7 +61,7 @@ export default class SearchBar extends React.Component<SearchBarProps, any> {
             </TouchableOpacity>
         );
         return (
-            <Header>
+            <Header ref={(e: any) => this.header = e}>
                 <TouchableOpacity
                     onPress={this.citySelectToggle}>
                     <View style={ styles.cityButton }>
@@ -102,6 +103,8 @@ export default class SearchBar extends React.Component<SearchBarProps, any> {
             </Header>
         );
     }
+    show = () => this.header.show();
+    hide = () => this.header.hide();
     openQRScanner = () => {
         Navigator.to(Routes.ROUTES_SCANNER);
     }

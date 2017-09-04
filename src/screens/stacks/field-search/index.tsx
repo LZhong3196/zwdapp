@@ -14,7 +14,7 @@ import { styles } from "./style";
 import {underline} from "chalk";
 const { Icon, Header } = Widgets;
 
-@Decorators.connect("search", "data.searchFiled", "market")
+@Decorators.connect("data.searchField")
 export default class FiledSearchScreen extends React.Component<any, any> {
     static navigationOptions = {
         header: null as any
@@ -103,11 +103,11 @@ export default class FiledSearchScreen extends React.Component<any, any> {
         return select;
     }
     render() {
-        const data: any[] = Store.get("data.search.historyList") || [];
-        const hotSearchList: any[] = Store.get("data.search.hotSearchList") || [];
+        const historyList: any[] = Store.get("data.searchField.historyList") || [];
+        const hotSearchList: any[] = Store.get("data.searchField.hotSearchList") || [];
         return (
             <Container>
-                <Header>
+                <Header style={{elevation: 4, zIndex: 4}}>
                     <TouchableOpacity
                         onPress={this.goback}>
                         <Icon type="&#xea53;"/>
@@ -131,18 +131,18 @@ export default class FiledSearchScreen extends React.Component<any, any> {
                 </Header>
                 <View style={ styles.hotSearch }>
                     <View style={ styles.hotSearchTitle }>
-                        <Text><Icon type="&#xe729;" style={styles.titleIcon}/>热门搜索</Text>
+                        <Icon type="&#xe729;"/><Text>热门搜索</Text>
                     </View>
                     <View style={ styles.hotSearchList }>
                         {hotSearchList.map(this.createHotList)}
                     </View>
                 </View>
-                <View>
-                    <Text><Icon type="&#xe620;" style={styles.titleIcon}/>历史搜索</Text>
+                <View style={ styles.hotSearchTitle } >
+                    <Icon type="&#xe620;"/><Text>历史搜索</Text>
                 </View>
                 <Content>
                     <List
-                        dataArray={ data }
+                        dataArray={ historyList }
                         renderRow={this.renderHistorySearchRow}
                         renderFooter={this.renderFooter}
                     />
@@ -167,7 +167,7 @@ export default class FiledSearchScreen extends React.Component<any, any> {
         });
     }
     clearHistorySearch = () => {
-        Store.update("data.searchFiled.historyList", []);
+        Store.update("data.searchField.historyList", []);
     }
     historyFiledPress= (filed: string) => {
         this.setState({
@@ -179,7 +179,7 @@ export default class FiledSearchScreen extends React.Component<any, any> {
     }
     search = (filed: string) => {
         if (!filed) return;
-        const historyList: string[] = Store.get("data.searchFiled.historyList") || [];
+        const historyList: string[] = Store.get("data.searchField.historyList") || [];
         Store.update("data.searchField.historyList", [ ...new Set(historyList.concat([filed])) ]);
         if (this.props.navigation.state.params.origin === Routes.ROUTES_TAB_MARKET
             || this.state.selectedOption === "店铺") {
@@ -195,7 +195,7 @@ export default class FiledSearchScreen extends React.Component<any, any> {
         try {
             const res: any = await APIs.data.getHotSearchList();
             const hotSearchList: any = res.data;
-            Store.update("data.searchFiled.hotSearchList", hotSearchList);
+            Store.update("data.searchField.hotSearchList", hotSearchList);
         }
         catch (e) {
 

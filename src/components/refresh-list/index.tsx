@@ -1,5 +1,15 @@
 import React, { PureComponent } from "react";
-import { View, Text, StyleSheet, RefreshControl, FlatList, ActivityIndicator, TouchableOpacity } from "react-native";
+import {
+    View,
+    Text,
+    StyleSheet,
+    RefreshControl,
+    FlatList, ActivityIndicator,
+    TouchableOpacity,
+    PanResponder,
+    PanResponderGestureState,
+    GestureResponderEvent
+} from "react-native";
 
 export interface RefreshState {
     Idle: string;
@@ -26,10 +36,12 @@ export interface RefreshListProps {
     key?: any;
     numColumns?: any;
     onScrollTop?: (scrollTop: boolean) => void;
+    touchVerticalMove?: (dy: number) => void;
 }
 
 class RefreshListView extends PureComponent<RefreshListProps, any> {
     private listRef: any;
+    private panResponder: any;
 
     state: {
         headerState: string,
@@ -49,11 +61,18 @@ class RefreshListView extends PureComponent<RefreshListProps, any> {
             footerState: RefreshState.Idle,
         };
     }
+    componentWillMount() {
+        this.panResponder = PanResponder.create({
+            onStartShouldSetPanResponder: () => true,
+            onMoveShouldSetPanResponder: () => true,
+            onPanResponderMove: (evt: GestureResponderEvent, gestureState: PanResponderGestureState) => {
+                this.props.touchVerticalMove && this.props.touchVerticalMove(gestureState.dy);
+            }
+        });
+    }
 
     startHeaderRefreshing = () => {
-
         this.setState({ headerState: RefreshState.Refreshing });
-
         if (this.props.onHeaderRefresh) {
             this.props.onHeaderRefresh();
         }
@@ -134,6 +153,7 @@ class RefreshListView extends PureComponent<RefreshListProps, any> {
     render() {
         return (
             <FlatList
+                {...this.panResponder.panHandlers}
                 { ...this.props }
                 onEndReachedThreshold={0.3}
                 onEndReached={ (info: any) => this.onEndReached(info) }
