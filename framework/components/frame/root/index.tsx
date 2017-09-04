@@ -6,27 +6,33 @@ import {
 import { Root as RootNB } from "native-base";
 import { ToastContainer as Toast } from "./../../ui/toast/index";
 import ImageViewer from "./../../ui/image-viewer/index";
+import ActionSheet from "./../../ui/actionsheet";
 
 
 export default class Root extends React.Component<ViewProperties, any> {
-    render () {
+    render() {
         return (
             <RootNB>
-                {this.props.children}
+                { this.props.children }
                 <Toast
-                    ref={(component: any) => {
+                    ref={ (component: any) => {
                         if (!Toast.instance) {
                             Toast.instance = component;
                         }
-                    }}>
+                    } }>
                 </Toast>
                 <ImageViewer
-                    ref={(component: any) => {
+                    ref={ (component: any) => {
                         if (!ImageViewer.instance) {
                             ImageViewer.instance = component;
                         }
-                    }}>
+                    } }>
                 </ImageViewer>
+                <ActionSheet ref={ (component: any) => {
+                    if (!ActionSheet.actionsheetInstance) {
+                        ActionSheet.actionsheetInstance = component;
+                    }
+                } } />
             </RootNB>
         );
     }

@@ -5,6 +5,7 @@ import { ToastContainer as Toast } from "./ui/toast/index";
 import Root from "./frame/root/index";
 import Header from "./ui/header/index";
 import ImageViewer from "./ui/image-viewer/index";
+import ActionSheet from "./ui/actionsheet/index";
 import * as theme from "./ui/theme/index";
 
 export {
@@ -15,5 +16,6 @@ export {
     Root,
     Toast,
     ImageViewer,
-    Header
+    Header,
+    ActionSheet
 };
