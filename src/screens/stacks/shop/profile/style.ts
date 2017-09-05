@@ -7,7 +7,15 @@ const styles: any = {
     backgroundColor: "#fff",
     marginTop: 15,
     borderTopWidth: 0.5,
+    borderBottomWidth: 0.5,
     borderColor: "#c9c9c9"
+  },
+  itemHeader: {
+    paddingLeft: 17,
+    marginLeft: 0
+  },
+  itemLast: {
+    borderBottomWidth: 0
   },
   listGroupLast: {
     marginBottom: 20
@@ -51,7 +59,7 @@ const styles: any = {
     flexWrap: "wrap",
   },
   tag: {
-    marginRight: 10,
+    marginRight: 5,
     marginTop: 2,
     padding: 2,
     borderWidth: 1,
@@ -95,6 +103,16 @@ const styles: any = {
   },
   highlight: {
     color: theme.color_theme
+  },
+  avatar: {
+    borderRadius: 2
+  },
+  headerRight: {
+    width: 30,
+    height: 40,
+    marginRight: 10,
+    alignItems: "flex-end",
+    justifyContent: "center"
   }
 };
 

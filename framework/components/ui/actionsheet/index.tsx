@@ -79,10 +79,14 @@ class ActionSheet extends Component<any, any> {
   hide = (index: number) => {
     this._hideSheet(() => {
       this.setState({
-        visible: false
+        visible: false,
+      }, () => {
+        // use setTimeout to fix: UI will be blocked when show Alert while closing Modal, for more information, please refer to https://github.com/facebook/react-native/issues/10471
+        setTimeout(() => {
+          this.state.callback(index);
+        }, 100);
       });
 
-      this.state.callback(index);
     });
   }
 
@@ -187,7 +191,7 @@ class ActionSheet extends Component<any, any> {
       <Modal
         visible={ visible }
         transparent={ true }
-        animationType="fade"
+        animationType="none"
         onRequestClose={ this._cancel }
       >
         <View style={ sheetStyle.wrapper }>

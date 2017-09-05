@@ -25,7 +25,7 @@ import GoodsList from "./goods-list";
 import CategoryList from "./category-list";
 import { styles } from "./style";
 
-let { Icon, Toast } = Widgets;
+let { Icon, Toast, ActionSheet } = Widgets;
 
 @Decorators.connect("user")
 export default class ShopScreen extends React.Component<any, any> {
@@ -41,13 +41,19 @@ export default class ShopScreen extends React.Component<any, any> {
         };
     }
 
+    private shop: any;
+
     componentWillMount() {
         this.fetchData();
         this.fetchGoodsList();
     }
 
     componentWillReceiveProps(nextProps: any) {
-        // this.fetchData();
+        const id: string = this.props.navigation.state.params.id;
+        if (!this.shop || this.shop.u_id !== id) {
+            this.shop = Store.get(`market.shop.${id}`) || {};
+        }
+
     }
 
     componentWillUnmount() {
@@ -57,7 +63,7 @@ export default class ShopScreen extends React.Component<any, any> {
 
     render() {
         const id: string = this.props.navigation.state.params.id;
-        const item: any = Store.get(`market.shop.${id}`) || {};
+        const item: any = this.shop || {};
         const { showDrawer } = this.state;
 
         return (
@@ -142,7 +148,8 @@ export default class ShopScreen extends React.Component<any, any> {
                         <Button style={ styles.btnWidthRightBorder } onPress={ this.goToProfile }>
                             <Text>档口简介</Text>
                         </Button>
-                        <Button>
+                        <Button onPress={ this.showContactInfos }>
+                            <Text style={ styles.footerIcon }><Icon type="&#xe659;" color="#6b6b6b" /></Text>
                             <Text>联系档口</Text>
                         </Button>
                     </FooterTab>
@@ -153,7 +160,7 @@ export default class ShopScreen extends React.Component<any, any> {
 
     setFav = async () => {
         const id: string = this.props.navigation.state.params.id;
-        const item: any = Store.get(`market.shop.${id}`);
+        const item = this.shop;
         if (!id) return;
         let value: boolean = !!item.fav;
         try {
@@ -240,5 +247,20 @@ export default class ShopScreen extends React.Component<any, any> {
         Navigator.to(Routes.ROUTES_SHOP_PROFILE, { id });
     }
 
+    showContactInfos = () => {
+        const options = [
+            `旺旺：${this.shop.taobao_account}`,
+            `QQ：${this.shop.qq}`,
+            ...this.shop.contact.split(","),
+            "取消"
+        ];
+        const cancelButtonIndex = options.length - 1;
+
+        ActionSheet.show({
+            options,
+            cancelButtonIndex: cancelButtonIndex,
+            tintColor: "#333"
+        });
+    }
 }
 

@@ -2,9 +2,12 @@ import React, { Component } from "react";
 import {
   View,
   Text,
-  StatusBar
+  StatusBar,
+  Clipboard,
+  Alert,
+  TouchableHighlight
 } from "react-native";
-import { Decorators, Store, Routes, Widgets } from "summer";
+import { Decorators, Store, Routes, Widgets, Navigator, } from "summer";
 import {
   Container,
   Content,
@@ -17,19 +20,20 @@ import {
   Thumbnail,
   Button,
   Footer,
-  FooterTab
+  FooterTab,
 } from "native-base";
 
 import styles from "./style";
 
-let { Icon } = Widgets;
+let { Icon, Toast, ActionSheet } = Widgets;
 
 class ShopProfileScreen extends Component<any, any> {
   static navigationOptions = {
     title: "档口简介",
     headerStyle: {
       backgroundColor: "#fff"
-    }
+    },
+    headerRight: <TouchableHighlight style={ styles.headerRight }><Text><Icon type="&#xe613;" color="#037aff" /></Text></TouchableHighlight>
   };
 
   render() {
@@ -41,7 +45,7 @@ class ShopProfileScreen extends Component<any, any> {
         <StatusBar barStyle="dark-content" />
         <Content>
           <View style={ [styles.listGroup, styles.summaryGroup] }>
-            <Thumbnail source={ { uri: shop.avatar } } square />
+            <Thumbnail source={ { uri: shop.avatar } } style={ styles.avatar } />
             <View style={ styles.summaryContent }>
               <Text style={ styles.shopTitle }>{ shop.title }</Text>
               <View style={ styles.tagGroup }>
@@ -57,7 +61,7 @@ class ShopProfileScreen extends Component<any, any> {
             { this.renderFavStatus(shop.fav) }
           </View>
           <List style={ styles.listGroup }>
-            <ListItem itemHeader first>
+            <ListItem style={ styles.itemHeader }>
               <Text>档口信息</Text>
             </ListItem>
             <ListItem>
@@ -78,7 +82,7 @@ class ShopProfileScreen extends Component<any, any> {
                 <Text style={ styles.itemContent }>{ shop.main }</Text>
               </Body>
             </ListItem>
-            <ListItem last>
+            <ListItem style={ styles.itemLast }>
               <Body style={ styles.itemLeft }>
                 <Text style={ styles.itemName }>服务</Text>
                 <Text style={ styles.itemContent }>
@@ -88,7 +92,7 @@ class ShopProfileScreen extends Component<any, any> {
             </ListItem>
           </List>
           <List style={ styles.listGroup }>
-            <ListItem itemHeader first>
+            <ListItem style={ styles.itemHeader }>
               <Text>联系方式</Text>
             </ListItem>
             <ListItem>
@@ -105,14 +109,14 @@ class ShopProfileScreen extends Component<any, any> {
               </Body>
               <Right><Icon type="&#xe696;" color="#4285f4" /></Right>
             </ListItem>
-            <ListItem>
+            <ListItem onPress={ this.onClickPhoneItem }>
               <Body style={ styles.itemLeft }>
                 <Text style={ styles.itemName }>手机</Text>
-                <Text style={ styles.itemContent }>{ shop.contact }</Text>
+                <Text style={ styles.itemContent }>{ shop.contact && shop.contact.replace(",", "/") }</Text>
                 <Right><Icon type="&#xe637;" color="#34a853" /></Right>
               </Body>
             </ListItem>
-            <ListItem last>
+            <ListItem style={ styles.itemLast } onPress={ () => { this.copyText(shop.address); } }>
               <Body style={ styles.itemLeft }>
                 <Text style={ styles.itemName }>地址</Text>
                 <Text style={ styles.itemContent }>{ shop.address }</Text>
@@ -121,7 +125,7 @@ class ShopProfileScreen extends Component<any, any> {
             </ListItem>
           </List>
           <List style={ { ...styles.listGroup, ...styles.listGroupLast } }>
-            <ListItem first last>
+            <ListItem first style={ styles.itemLast } onPress={ this.onClickBusinessCard }>
               <Body>
                 <Text style={ { ...styles.itemName, ...styles.highlight } }>档口名片</Text>
               </Body>
@@ -133,7 +137,7 @@ class ShopProfileScreen extends Component<any, any> {
         </Content>
         <Footer style={ styles.footer }>
           <FooterTab>
-            <Button style={ styles.footerBtn }>
+            <Button style={ styles.footerBtn } onPress={ this.gotoTaoBao }>
               <Text style={ styles.footerBtnText }>进入淘宝店</Text>
             </Button>
           </FooterTab>
@@ -162,6 +166,62 @@ class ShopProfileScreen extends Component<any, any> {
         </Text>
       </Button>
     );
+  }
+
+  copyText = (text: string) => {
+    Clipboard.setString(text);
+    Toast.success({
+      text: "复制成功"
+    });
+  }
+
+  onClickPhoneItem = () => {
+
+    const id: string = this.props.navigation.state.params.id;
+    const shop: any = Store.get(`market.shop.${id}`) || {};
+
+    let contacts = shop.contact && shop.contact.split(",");
+
+    if (shop.contact) {
+
+      const buttons: string[] = [
+        ...contacts,
+        "返回",
+      ];
+
+      const cancelButtonIndex = contacts.length;
+
+      ActionSheet.show({
+        options: buttons,
+        cancelButtonIndex: cancelButtonIndex,
+        tintColor: "#333"
+      }, (buttonIndex: number) => {
+        if (buttonIndex !== cancelButtonIndex) {
+          this.confirmCallPhone(contacts[buttonIndex]);
+        }
+
+      });
+    }
+
+  }
+
+  confirmCallPhone(phone: string) {
+    Alert.alert(
+      phone.toString(),
+      null,
+      [
+        { text: "取消" },
+        { text: "拨打", onPress: () => { } }
+      ]
+    );
+  }
+
+  gotoTaoBao = () => {
+    Navigator.to(Routes.ROUTES_WEBVIEW, { url: "http://m.taobao.com" });
+  }
+
+  onClickBusinessCard = () => {
+    Navigator.to(Routes.ROUTES_WEBVIEW, { url: "http://m.taobao.com" });
   }
 
 }

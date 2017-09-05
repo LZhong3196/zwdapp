@@ -72,5 +72,9 @@ export const styles: any = {
         borderRightWidth: 0.5,
         borderColor: "#cbcbcb",
         borderRadius: 0
+    },
+    footerIcon: {
+        position: "absolute",
+        top: 2
     }
 };
