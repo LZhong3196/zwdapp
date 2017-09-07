@@ -7,6 +7,7 @@ import { Root as RootNB } from "native-base";
 import { ToastContainer as Toast } from "./../../ui/toast/index";
 import ImageViewer from "./../../ui/image-viewer/index";
 import ActionSheet from "./../../ui/actionsheet";
+import Popover from "./../../ui/popover";
 
 
 export default class Root extends React.Component<ViewProperties, any> {
@@ -33,6 +34,13 @@ export default class Root extends React.Component<ViewProperties, any> {
                         ActionSheet.actionsheetInstance = component;
                     }
                 } } />
+                <Popover ref={ (ref: any) => {
+                    if (!Popover.instance) {
+                        Popover.instance = ref;
+                    }
+                } }
+                >
+                </Popover>
             </RootNB>
         );
     }

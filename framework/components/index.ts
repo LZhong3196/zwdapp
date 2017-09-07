@@ -6,6 +6,7 @@ import Root from "./frame/root/index";
 import Header from "./ui/header/index";
 import ImageViewer from "./ui/image-viewer/index";
 import ActionSheet from "./ui/actionsheet/index";
+import Popover from "./ui/popover/index";
 import * as theme from "./ui/theme/index";
 
 export {
@@ -17,5 +18,6 @@ export {
     Toast,
     ImageViewer,
     Header,
-    ActionSheet
+    ActionSheet,
+    Popover
 };
