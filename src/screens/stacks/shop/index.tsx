@@ -149,7 +149,7 @@ export default class ShopScreen extends React.Component<any, any> {
                             <Text>档口简介</Text>
                         </Button>
                         <Button onPress={ this.showContactInfos }>
-                            <Text style={ styles.footerIcon }><Icon type="&#xe659;" color="#6b6b6b" /></Text>
+                            <Icon style={ styles.footerIcon } type="&#xe659;" color="#6b6b6b" />
                             <Text>联系档口</Text>
                         </Button>
                     </FooterTab>
