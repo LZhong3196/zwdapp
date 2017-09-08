@@ -59,5 +59,6 @@ fastlane/screenshots
 .cache
 dist/
 typings/summer/
-native-modules/
+native-modules/android
+native-modules/ios
 src/app.json

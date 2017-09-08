@@ -1,0 +1,21 @@
+{
+	"name": "zwdapp-native-modules",
+	"version": "1.0.0",
+	"description": "Native modules for 17zwd react-native app",
+	"main": "index.js",
+	"typings": "index.d.ts",
+	"scripts": {},
+	"license": "ISC",
+	"peerDependencies": {
+		"react-native": "*"
+	},
+	"devDependencies": {
+		"react-native": "0.44.2"
+	},
+	"dependencies": {},
+	"rnpm": {
+		"android": {
+			"sourceDir": "android"
+		}
+	}
+}
