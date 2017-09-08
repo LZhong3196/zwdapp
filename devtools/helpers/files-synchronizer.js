@@ -16,7 +16,7 @@ function filesSynchronizer(target) {
     var watcher = Chokidar.watch(
         ".",
         {
-            ignored: /\/src\/(?:app\.json|config\.json\.sample|(?:x-)?tsconfig\.json|.*\.tsx?)$/i,
+            ignored: onNative ? /\/native-modules\/(?:app\.json|config\.json\.sample|(?:x-)?tsconfig\.json|.*\.tsx?)$/i : /\/src\/(?:app\.json|config\.json\.sample|(?:x-)?tsconfig\.json|.*\.tsx?)$/i,
             cwd: sourceDir
         }
     );

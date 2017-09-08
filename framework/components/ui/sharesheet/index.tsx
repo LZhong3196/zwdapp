@@ -1,15 +1,33 @@
 
 import * as React from "react";
-import { ViewProperties, Platform, Clipboard } from "react-native";
+import {
+    ViewProperties,
+    Platform,
+    Clipboard,
+    Alert
+} from "react-native";
 import {
     Text,
     Button
 } from "native-base";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import Share, { ShareSheet as RNShareSheet } from "react-native-share";
+import {
+    UMSocial,
+    UMShareOptions,
+} from "summer-native-modules";
+import {
+    SOCIAL_PLATFORM_TYPE_ALIPAY,
+    SOCIAL_PLATFORM_TYPE_QQZONE,
+    SOCIAL_PLATFORM_TYPE_QQ,
+    SOCIAL_PLATFORM_TYPE_SINA,
+    SOCIAL_PLATFORM_TYPE_TENCENTWEIBO,
+    SOCIAL_PLATFORM_TYPE_WECHAT,
+    SOCIAL_PLATFORM_TYPE_WECHATTL
+} from "./../../../constants";
+
 import { styles } from "./style";
 import { Toast, Icon, Divider } from "./../../index";
-
 
 interface ItemProps extends ViewProperties {
     title: string;
@@ -57,24 +75,21 @@ export interface ShareSheetProps extends ViewProperties {
         dataType: string;
         value: any;
     };
-    options?: {
-        url: string;
-        type?: string;
-        message: string;
-        title?: string;
-        subject?: string;
-        social?: string;
-    };
+    options?: UMShareOptions;
 }
 
 export default class ShareSheet extends React.Component<ShareSheetProps, any> {
     static defaultProps: ShareSheetProps = {
         visible: false,
-        onCancel: () => {}
+        onCancel: () => { }
     };
 
     constructor(props: ShareSheetProps, context: any) {
         super(props, context);
+    }
+
+    componentWillUnmount() {
+        UMSocial.clearWatch();
     }
 
     render() {
@@ -88,7 +103,7 @@ export default class ShareSheet extends React.Component<ShareSheetProps, any> {
                 style={{ paddingHorizontal: 12 }}
                 visible={visible}
                 onCancel={(e?: any) => onCancel(e)} >
-                <Row style={{...styles.container, ...styles.justifyStart}}>
+                <Row style={{ ...styles.container, ...styles.justifyStart }}>
                     {qrcode && <Item iconType="&#xe7f8;" iconColor="#FF0000" title="二维码" />}
                     <Item
                         iconType="&#xe6a2;" iconColor="#00C806" title="复制链接" onPress={this.onCopy} />
@@ -96,26 +111,26 @@ export default class ShareSheet extends React.Component<ShareSheetProps, any> {
                 <Divider title="其他分享" />
                 <Row style={styles.container}>
                     <Item
+                        onPress={() => this.onShare(SOCIAL_PLATFORM_TYPE_WECHAT)}
                         iconType="&#xe639;" iconColor="#00C806" title="微信好友" />
                     <Item
-                        onPress={() => this.onShare("share")}
+                        onPress={() => this.onShare(SOCIAL_PLATFORM_TYPE_WECHATTL)}
                         iconType="&#xe805;" iconColor="#FF6E51" title="朋友圈" />
                     <Item
-                        onPress={() => this.onShare("share")}
                         iconType="&#xe6c2;" iconColor="#00C806" title="微信收藏" />
                     <Item
-                        onPress={() => this.onShare("share")}
+                        onPress={() => this.onShare(SOCIAL_PLATFORM_TYPE_QQZONE)}
                         iconType="&#xe60c;" iconColor="#FF5A37" title="QQ空间" />
                 </Row>
                 <Row style={styles.container}>
                     <Item
-                        onPress={() => this.onShare("share")}
+                        onPress={() => this.onShare(SOCIAL_PLATFORM_TYPE_TENCENTWEIBO)}
                         iconType="&#xe7c6;" iconColor="#FFA936" title="腾讯微博" />
                     <Item
-                        onPress={() => this.onShare("share")}
+                        onPress={() => this.onShare(SOCIAL_PLATFORM_TYPE_QQ)}
                         iconType="&#xe60c;" iconColor="#4BBAEA" title="QQ好友" />
                     <Item
-                        onPress={() => this.onShare("share")}
+                        onPress={() => this.onShare(SOCIAL_PLATFORM_TYPE_SINA)}
                         iconType="&#xe64b;" iconColor="#FF2A27" title="新浪微博" />
                     <Item
                         onPress={() => this.onShare("share")}
@@ -133,18 +148,28 @@ export default class ShareSheet extends React.Component<ShareSheetProps, any> {
     }
 
     onCopy = () => {
-        Clipboard.setString(this.props.options.url);
+        Clipboard.setString(this.props.options.webpageUrl);
         Toast.success({
             text: "复制成功"
         });
         this.props.onCancel();
     }
 
-    onShare = (value: any) => {
 
-        Toast.loading({
-            text: "开发中"
-        });
-        this.props.onCancel();
+    onShare = async (platform: string) => {
+        const options: UMShareOptions = this.props.options;
+        try {
+            Toast.loading();
+            let res: any = await UMSocial.share({
+                ...options,
+                platform: platform as any
+            });
+            this.props.onCancel();
+        }
+        catch (e) {
+            Toast.error({
+                text: `分享失败, 请重试`
+            });
+        }
     }
 }

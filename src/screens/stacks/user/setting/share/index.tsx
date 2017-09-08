@@ -31,11 +31,14 @@ export default class Share17 extends React.Component<ViewProperties, any> {
     }
 
     render() {
-        const info: any = Store.get("data.about_17");
+        const info: any = Store.get("data.about_17") || {};
         const options: any = {
-            url: Platform.OS === "ios" ? info.download_ios : info.download_android,
-            message: "分享17App"
+            webpageUrl: Platform.OS === "ios" ? info.download_ios : info.download_android,
+            title: info.title,
+            descr: info.intro,
+            thumbURL: info.poster
         };
+       
         return (
             <Container style={styles.container}>
                 <Card style={styles.content}>

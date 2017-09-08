@@ -100,19 +100,19 @@ module.exports = function (params, argv) {
     params = params.slice(1);
 
     return Promise
-        .then(() => {
-            var recompileFramework = !FS.existsSync(Constants.FRAMEWORK_OUTPUT_DIR) && target != "framework" || argv.init || argv.update;
-            if (recompileFramework) {
-                return compile(["framework"], argv);
-            }
-        })
-        .then(() => {
-            var recompileNaitveModule = !FS.existsSync(Constants.NATIVE_MODULES_OUPUT_DIR) || argv.init;
-            if (recompileNaitveModule) {
-                return compile(['native']);
-            }
-        })
-        .then(() => {
+    .then(() => {
+        var recompileNaitveModule = !FS.existsSync(Constants.NATIVE_MODULES_OUPUT_DIR) || argv.init;
+        if (recompileNaitveModule) {
+            return compile(['native'], argv);
+        }
+    })
+    .then(() => {
+        var recompileFramework = !FS.existsSync(Constants.FRAMEWORK_OUTPUT_DIR) && target != "framework" || argv.init || argv.update;
+        if (recompileFramework) {
+            return compile(["framework"], argv);
+        }
+    })
+    .then(() => {
             switch (target) {
                 case "framework": {
                     return debugFramework(target, params);
@@ -122,6 +122,7 @@ module.exports = function (params, argv) {
                     return debugNaitveModule(target, params);
                     break;
                 }
+                case "src":
                 default: {
                     return debugApp(target, params);
                 }

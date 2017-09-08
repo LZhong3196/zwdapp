@@ -4,5 +4,50 @@
     "RAP" : {
         "host" : "http://rap.qmin91.com",
         "projectId": 16
+    },
+    "UMeng": {
+        "iOS": {
+            "appKey": "599ea23065b6d67d1f000019",
+            "appId": "",
+            "url": "",
+            "WeChat": {
+                "appKey": "wxdc1e388c3822c80b",
+                "appSecret": "3baf1193c85774b3fd9d18447d76cab0"
+            },
+            "QQ": {
+                "appKey": "1105821097",
+                "appSecret": "",
+                "url": "http://mobile.umeng.com/social"
+            },
+            "Sina": {
+                "appKey": "3921700954",
+                "appSecret": "04b48b094faeb16683c32669824ebdad",
+                "url": "https://sns.whalecloud.com/sina2/callback"
+            },
+            "Alipay": {
+                "appKey": "2015111700822536"
+            }
+        },
+        "Android": {
+            "appKey": "599ea20eaed17971760010a0",
+            "appId": "",
+            "url": "",
+            "WeChat": {
+                "appKey": "wx967daebe835fbeac",
+                "appSecret": "5bb696d9ccd75a38c8a0bfe0675559b3"
+            },
+            "QQ": {
+                "appKey": "100424468",
+                "appSecret": "c7394704798a158208a74ab60104f0ba"
+            },
+            "Sina": {
+                "appKey": "3921700954",
+                "appSecret": "04b48b094faeb16683c32669824ebdad",
+                "url": "http://sns.whalecloud.com"
+            },
+            "Alipay": {
+                "appKey": ""
+            }
+        }
     }
 }

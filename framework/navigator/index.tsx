@@ -87,7 +87,7 @@ export default class Navigator {
                 routeName: ROUTES_MAIN
             }
         });
-        if (!!this.tabNavigation && this.tabs.indexOf(target) !== -1) {
+        if (this.tabNavigation && ~this.tabs.indexOf(target)) {
             let res: any = this.tabNavigation.dispatch(
                 NavigationActions.navigate({
                     routeName: target,

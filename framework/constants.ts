@@ -68,12 +68,21 @@ export const ROUTES_ORDER_DETAIL: string = "OrderDetail"
 
 /** Request 请求失败 - 用户未登录 */
 export const REQUEST_ERROR_UNAUTH: number = 1;
+/** Request 请求失败 - 用户未注册 */
+export const REQUEST_ERROR_UNREGISTERED: number = 2;
 /** Request 请求失败 - 网络错误 */
-export const REQUEST_ERROR_NETERROR: number = 2;
+export const REQUEST_ERROR_NETERROR: number = 3;
 /** Request 请求失败 - 设备处于离线状态 */
-export const REQUEST_ERROR_NETINFO_NONE: number = 3;
+export const REQUEST_ERROR_NETINFO_NONE: number = 4;
 /** Request 请求失败 - 未知错误 */
 export const REQUEST_ERROR_UNKNOW: number = 10000;
 
 
-
+/** -------  SOCIAL PLATFORM TYPE DEFINITION   ------- */
+export const SOCIAL_PLATFORM_TYPE_WECHAT: string = "WeChat";
+export const SOCIAL_PLATFORM_TYPE_WECHATTL: string = "WeChatTL";
+export const SOCIAL_PLATFORM_TYPE_QQ: string = "QQ";
+export const SOCIAL_PLATFORM_TYPE_SINA: string = "Sina";
+export const SOCIAL_PLATFORM_TYPE_ALIPAY: string = "Alipay";
+export const SOCIAL_PLATFORM_TYPE_TENCENTWEIBO: string = "TencentWeibo";
+export const SOCIAL_PLATFORM_TYPE_QQZONE: string = "QQZone";

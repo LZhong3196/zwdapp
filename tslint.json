@@ -61,6 +61,8 @@
         "src/**/*.ts",
         "src/**/*.tsx",
         "framework/**/*.ts",
-        "framework/**/*.tsx"
+        "framework/**/*.tsx",
+        "naitve-modules/**/*.ts",
+        "native-modules/**/*.tsx"
     ]
 }

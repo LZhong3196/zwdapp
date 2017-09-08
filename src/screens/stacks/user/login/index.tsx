@@ -1,6 +1,14 @@
 import * as React from "react";
-import { Image } from "react-native";
-import { Store, Constants, APIs, Widgets, Decorators, Navigator, Routes } from "summer";
+import { Image, ViewProperties } from "react-native";
+import {
+    Store,
+    Constants,
+    APIs,
+    Widgets,
+    Decorators,
+    Navigator,
+    Routes
+} from "summer";
 import {
     Container,
     Content,
@@ -14,8 +22,10 @@ import {
     Right,
     View
 } from "native-base";
+import { UMSocial, UMUserInfo } from "summer-native-modules";
 import { Row, Grid, Col } from "react-native-easy-grid";
-import { styles, thirdParty } from "./style";
+import SocialLogin from "./social-login";
+import { styles } from "./style";
 
 
 let { Icon, Toast, theme, Divider } = Widgets;
@@ -23,9 +33,13 @@ let { Icon, Toast, theme, Divider } = Widgets;
 const accountLimit: number = 22;
 const passwordLimit: number = 22;
 
-class EditForm extends React.Component<any, any> {
+interface EditFormProps extends ViewProperties {
+    handleAuthTodo: (resolve: boolean | string) => void;
+    updateProfile: () => void;
+}
 
-    constructor(props: any, context: any) {
+class EditForm extends React.Component<EditFormProps, any> {
+    constructor(props: EditFormProps, context: any) {
         super(props, context);
         this.state = {
             account: undefined,
@@ -52,10 +66,6 @@ class EditForm extends React.Component<any, any> {
                 password: accountInfo.password
             });
         }
-    }
-
-    componentWillUnmount() {
-        this.handleAuthTodo(false);
     }
 
     render() {
@@ -174,27 +184,13 @@ class EditForm extends React.Component<any, any> {
             Store.update("user.account", account);
             Navigator.back();
 
-            this.handleAuthTodo(true);
-            this.updateProfile();
+            this.props.handleAuthTodo(res.data.token);
+            this.props.updateProfile();
         }
         catch (e) {
             /** 登录失败 error */
         }
     }
-
-    handleAuthTodo = (resolve: boolean) => {
-        if (!!Store.get("data.resolveTodo")) {
-            const token: string = Store.get(("user.account.token"));
-            let resolveTodo: any = Store.get("data.resolveTodo");
-            let res = resolveTodo(resolve && token);
-            Store.update("data.resolveTodo", "");
-        }
-    }
-
-    updateProfile = async () => {
-        const profileRes: any = await APIs.user.getUserInfo({});
-        Store.update("user.profile", profileRes.data);
-    };
 
     register = () => {
         Navigator.to(Routes.ROUTES_IDENTIFICATION, {
@@ -210,36 +206,16 @@ class EditForm extends React.Component<any, any> {
 
 }
 
-
-class ThirdParty extends React.Component<any, any> {
-    render() {
-        return (
-            <View style={thirdParty.container}>
-                <Divider title="快速登录" width={200}/>
-                <Item style={thirdParty.optionContainer}>
-                    <Col style={thirdParty.optionItem}>
-                        <Icon type="&#xe639;" color="#00C806" size={32} style={thirdParty.itemIcon} />
-                        <Text style={thirdParty.optionText}>微信登录</Text>
-                    </Col>
-                    <Col style={thirdParty.optionItem}>
-                        <Icon type="&#xe60c;" color="#4BBAEA" size={32} style={thirdParty.itemIcon} />
-                        <Text style={thirdParty.optionText}>QQ登录</Text>
-                    </Col>
-                    <Col style={thirdParty.optionItem}>
-                        <Icon type="&#xe696;" size={32} style={thirdParty.itemIcon} />
-                        <Text style={thirdParty.optionText}>旺旺登录</Text>
-                    </Col>
-                </Item>
-            </View>
-        );
-    }
-}
-
 @Decorators.connect("user")
 export default class LoginScreen extends React.Component<any, any> {
     static navigationOptions = {
         headerStyle: styles.header
     };
+
+    componentWillUnmount() {
+        this.handleAuthTodo(false);
+    }
+
     render() {
         return (
             <Grid style={styles.container}>
@@ -247,12 +223,30 @@ export default class LoginScreen extends React.Component<any, any> {
                     source={require("./images/header.png")}
                     style={styles.backgroundImage} />
                 <Row size={3} >
-                    <EditForm />
+                    <EditForm
+                        handleAuthTodo={this.handleAuthTodo}
+                        updateProfile={this.updateProfile}/>
                 </Row>
                 <Row size={2}>
-                    <ThirdParty />
+                    <SocialLogin 
+                        handleAuthTodo={this.handleAuthTodo}
+                        updateProfile={this.updateProfile}/>
                 </Row>
             </Grid>
         );
     }
+
+    handleAuthTodo = (resolve: boolean | string) => {
+        if (!!Store.get("data.resolveTodo")) {
+            let resolveTodo: any = Store.get("data.resolveTodo");
+            let res = resolveTodo(resolve);
+            Store.update("data.resolveTodo", "");
+        }
+    }
+
+    updateProfile = async () => {
+        const profileRes: any = await APIs.user.getUserInfo({});
+        Store.update("user.profile", profileRes.data);
+    };
+
 }

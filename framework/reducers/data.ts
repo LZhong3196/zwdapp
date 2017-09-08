@@ -33,7 +33,7 @@ const reducerConfigs: ReducerConfigs = {
 function createReducer(actionTypes: Array<string>): AppReducerHandler {
     return (state: State = initialState, action: StoreAction): State => {
         let nextState: State;
-        if (actionTypes.indexOf(action.type) !== -1) {
+        if (~actionTypes.indexOf(action.type)) {
             const resetState: boolean = !action.meta || !action.meta.storeKey;
             nextState = resetState ? fromJSFilterNotNull(action.payload) : state.setIn(action.meta.storeKey.split("."), fromJSFilterNotNull(action.payload));
         }

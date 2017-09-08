@@ -3,6 +3,8 @@ package com.zwdapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactnativemodules.umeng.UmengPackage;
+import cl.json.RNSharePackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
@@ -27,6 +29,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new UmengPackage(),
+            new RNSharePackage(),
             new RNFetchBlobPackage(),
             new PickerPackage(),
             new RCTCameraPackage(),

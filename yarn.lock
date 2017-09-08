@@ -3579,9 +3579,9 @@ react-native-qrcode@^0.2.5:
     prop-types "^15.5.10"
     qr.js "0.0.0"
 
-react-native-share@^1.0.20:
-  version "1.0.20"
-  resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-1.0.20.tgz#38ba820a4ddfc5afe1dec0e1456ced11f14352bc"
+react-native-share@^1.0.21:
+  version "1.0.21"
+  resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-1.0.21.tgz#45cc1c7bae5af8e6e88b77c3bfa23fb88521a354"
 
 react-native-swiper@^1.5.4:
   version "1.5.4"
