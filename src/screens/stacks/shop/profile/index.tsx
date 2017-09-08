@@ -5,7 +5,7 @@ import {
   StatusBar,
   Clipboard,
   Alert,
-  TouchableHighlight
+  TouchableOpacity
 } from "react-native";
 import { Decorators, Store, Routes, Widgets, Navigator, } from "summer";
 import {
@@ -24,8 +24,15 @@ import {
 } from "native-base";
 
 import styles from "./style";
+import MenuItem from "../../../../components/popover-menu-item";
 
-let { Icon, Toast, ActionSheet } = Widgets;
+let { Icon, Toast, ActionSheet, Popover } = Widgets;
+
+let moreActionIcon: any;
+
+function onClickMenuItem() {
+  Popover.hide();
+}
 
 class ShopProfileScreen extends Component<any, any> {
   static navigationOptions = {
@@ -33,7 +40,19 @@ class ShopProfileScreen extends Component<any, any> {
     headerStyle: {
       backgroundColor: "#fff"
     },
-    headerRight: <TouchableHighlight style={ styles.headerRight }><Text><Icon type="&#xe613;" color="#037aff" /></Text></TouchableHighlight>
+    headerRight: <TouchableOpacity style={ styles.headerRight } onPress={ () => {
+      moreActionIcon.measure((ox: number, oy: number, width: number, height: number, px: number, py: number) => {
+
+        Popover.show(
+          { x: px, y: py, width: width, height: height },
+          <View>
+            <MenuItem icon="&#xe609;" title="逛市场" onPress={ () => { onClickMenuItem(); } }></MenuItem>
+            <MenuItem icon="&#xe605;" title="搜款式" onPress={ () => { onClickMenuItem(); } }></MenuItem>
+            <MenuItem icon="&#xe600;" title="模特实拍" last onPress={ () => { onClickMenuItem(); } }></MenuItem>
+          </View>
+        );
+      });
+    } }><View ref={ (ref) => { moreActionIcon = ref; } } onLayout={ (e) => { } }><Icon type="&#xe613;" color="#037aff" /></View></TouchableOpacity >
   };
 
   render() {
