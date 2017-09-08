@@ -122,7 +122,10 @@ export default class IdentificationScreen extends React.Component<any, any> {
 
     countDown = () => {
         this.timer = setInterval(() => {
-            if (this.unmount) return;
+            if (this.unmount) {
+                clearInterval(this.timer);
+                return;
+            }
             this.setState({
                 seconds: this.state.seconds - 1
             });

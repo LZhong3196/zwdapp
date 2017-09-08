@@ -5,6 +5,8 @@ import android.app.Application;
 import com.facebook.react.ReactApplication;
 import com.brentvatne.react.ReactVideoPackage;
 import im.shimo.react.prompt.RNPromptPackage;
+import com.reactnativemodules.umeng.UmengPackage;
+import cl.json.RNSharePackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
@@ -31,6 +33,8 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new ReactVideoPackage(),
             new RNPromptPackage(),
+            new UmengPackage(),
+            new RNSharePackage(),
             new RNFetchBlobPackage(),
             new PickerPackage(),
             new RCTCameraPackage(),

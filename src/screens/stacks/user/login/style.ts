@@ -1,4 +1,4 @@
-import { PixelRatio } from "react-native";
+import { PixelRatio, ViewStyle, TextStyle } from "react-native";
 import { Widgets } from "summer";
 let {
     color_background,
@@ -15,7 +15,7 @@ let {
     font_size_display_lg,
     font_size_display_xl
 } = Widgets.theme;
-export const styles: any = {
+export const styles: Dictionary<ViewStyle | TextStyle> = {
     header: {
         position: "absolute",
         backgroundColor: "transparent",

@@ -2,6 +2,7 @@ import * as React from "react";
 import * as ReactNavigation from "react-navigation";
 import { Provider } from "react-redux";
 import { AppRegistry } from "react-native";
+import { UMSocial, UMAppConfigs } from "summer-native-modules";
 
 import request from "./libs/request";
 import * as Widgets from "./components/index";
@@ -31,6 +32,7 @@ export interface AppOptions {
 			host: string;
 			projectId: number;
 		};
+		UMeng: UMAppConfigs
 	};
 }
 
@@ -88,6 +90,8 @@ export function setup(options: AppOptions) {
 	}
 
 	AppRegistry.registerComponent(options.appName, () => App);
+
+	UMSocial.init(options.config.UMeng);
 	module.exports.APIs = initAPIs(options);
 }
 

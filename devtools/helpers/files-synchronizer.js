@@ -7,12 +7,17 @@ var Chalk = require('chalk');
 var Utils = require('./utils');
 var Constants = require("../constants");
 
-function filesSynchronizer() {
+function filesSynchronizer(target) {
+    var onNative = target == "native";
+    var sourceDir = onNative ? Constants.NATIVE_MODULES_DIR : Constants.SOURCE_DIR;
+    var outDir = onNative ? Constants.NATIVE_MODULES_OUPUT_DIR : Constants.OUTPUT_DIR;
+    var androidAssetsDir = Constants.ANDROID_SRC_DIR;
+
     var watcher = Chokidar.watch(
         ".",
         {
-            ignored: /\/src\/(?:app\.json|config\.json\.sample|(?:x-)?tsconfig\.json|.*\.tsx?)$/i,
-            cwd: Constants.SOURCE_DIR
+            ignored: onNative ? /\/native-modules\/(?:app\.json|config\.json\.sample|(?:x-)?tsconfig\.json|.*\.tsx?)$/i : /\/src\/(?:app\.json|config\.json\.sample|(?:x-)?tsconfig\.json|.*\.tsx?)$/i,
+            cwd: sourceDir
         }
     );
     var promise = new Promise();
@@ -66,7 +71,7 @@ function filesSynchronizer() {
     return promise;
 
     function sync(path, type) {
-        var filePath = Path.join(Constants.OUTPUT_DIR, path);
+        var filePath = Path.join(outDir, path);
         var androidAssetsPath = Path.join(Constants.ANDROID_SRC_DIR, path);
         switch (type) {
             case "copy":
@@ -75,7 +80,7 @@ function filesSynchronizer() {
                     .then(() => {
                         return Promise.invoke(
                             FS.copy,
-                            Path.join(Constants.SOURCE_DIR, path),
+                            Path.join(sourceDir, path),
                             filePath,
                             {
                                 clobber: true
@@ -96,7 +101,7 @@ function filesSynchronizer() {
                     .then(() => {
                         return Promise.invoke(
                             FS.copy,
-                            Path.join(Constants.SOURCE_DIR, path),
+                            Path.join(sourceDir, path),
                             androidAssetsPath,
                             {
                                 clobber: true
@@ -129,5 +134,6 @@ function filesSynchronizer() {
         console.error(Chalk.red(`✘ 发生出错:\n${message}`));
     }
 }
+
 
 module.exports = filesSynchronizer;

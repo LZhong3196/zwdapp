@@ -31,6 +31,7 @@ export default class PasswordSettingScreen extends React.Component<any, any> {
         } = this.state;
 
         const submitDisable: boolean = !password || !passwordConfirm;
+        const isRegister: boolean = this.props.navigation.state.routeName === Routes.ROUTES_REGISTER;
 
         return (
             <Container style={styles.container}>
@@ -38,7 +39,7 @@ export default class PasswordSettingScreen extends React.Component<any, any> {
                     <Icon type="&#xe68d;" color={theme.color_grey} />
                     <Input
                         secureTextEntry
-                        placeholder="请输入新密码"
+                        placeholder={isRegister ? "请输入密码" : "请输入新密码"}
                         value={password}
                         style={styles.input}
                         placeholderTextColor={theme.color_grey}
@@ -53,7 +54,7 @@ export default class PasswordSettingScreen extends React.Component<any, any> {
                     <Icon type="&#xe68d;" color={theme.color_grey} />
                     <Input
                         secureTextEntry
-                        placeholder="再次输入新密码"
+                        placeholder={isRegister ? "再次输入密码" : "再次输入新密码"}
                         value={passwordConfirm}
                         style={styles.input}
                         placeholderTextColor={theme.color_grey}

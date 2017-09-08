@@ -5,7 +5,12 @@ let {
     color_background,
     color_theme,
     font_size_caption,
-    font_size_base
+    font_size_base,
+    v_spacing_md,
+    h_spacing_md,
+    font_size_caption_sm,
+    font_size_display_lg,
+    v_spacing_xl
 } = Widgets.theme;
 
 export const styles: Dictionary<ViewStyle | TextStyle> = {
@@ -16,7 +21,7 @@ export const styles: Dictionary<ViewStyle | TextStyle> = {
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        padding: 40
+        padding: "20%"
     },
     content: {
         flexDirection: "row",
@@ -30,7 +35,7 @@ export const styles: Dictionary<ViewStyle | TextStyle> = {
     },
     infoText: {
         color: color_base,
-        fontSize: font_size_base,
+        fontSize: font_size_caption_sm,
         textAlign: "center"
     },
     button: {
@@ -38,4 +43,4 @@ export const styles: Dictionary<ViewStyle | TextStyle> = {
         borderRadius: 0,
         width: "100%"
     }
-}
+};

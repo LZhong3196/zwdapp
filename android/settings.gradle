@@ -3,6 +3,10 @@ include ':react-native-video'
 project(':react-native-video').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-video/android')
 include ':react-native-prompt-android'
 project(':react-native-prompt-android').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-prompt-android/android')
+include ':summer-native-modules'
+project(':summer-native-modules').projectDir = new File(rootProject.projectDir, '../node_modules/summer-native-modules/android')
+include ':react-native-share'
+project(':react-native-share').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-share/android')
 include ':react-native-fetch-blob'
 project(':react-native-fetch-blob').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fetch-blob/android')
 include ':react-native-image-crop-picker'

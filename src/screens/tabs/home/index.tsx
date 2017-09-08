@@ -83,7 +83,9 @@ export default class HomeScreen extends React.Component<any, any> {
         if (this.state.loading) {
             return;
         }
-        this.fetchAdvert();
+        this.setState({
+            loading: false
+        }, this.fetchAdvert);
     }
     openFilterSearchPage = () => {
         Navigator.to(Routes.ROUTES_FIELD_SEARCH, { origin: Routes.ROUTES_TAB_HOME });
@@ -92,9 +94,6 @@ export default class HomeScreen extends React.Component<any, any> {
         Navigator.to(Routes.ROUTES_NOTIFICATION);
     }
     fetchAdvert = async () => {
-        this.setState({
-            loading: false
-        });
         try {
             const res: any = await APIs.home.getAdvertList();
             Store.update("home.advert", res.data);

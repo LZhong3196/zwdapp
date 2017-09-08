@@ -1,5 +1,35 @@
 # 调试与开发
 
+## 项目环境初始化
+
+安装 [Node](https://nodejs.org/en/download/)
+> 安装 [Yarn](https://yarnpkg.com/zh-Hans/docs/install) (推荐)
+
+安装 React Native CLI
+```
+$ npm install -g react-native-cli
+```
+
+安装 Typescript
+```
+$ npm install -g typescript
+```
+
+**iOS**
+
+安装 Xcode 8.3+
+
+
+**Android**
+...
+
+
+* Windows
+
+
+
+
+
 ## 命令行参数
 
 项目开发调试常用指令:

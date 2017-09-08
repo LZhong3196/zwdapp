@@ -181,7 +181,7 @@ class MyComponent extends Component {
 * 	用 `connect` 负责触发组件的更新, 数据的获取使用 `Store.get()` 
 *	参数中的 `key` 值数量**越少越好**, 层级**越小越好**
 * 	仅在 `render` 过程中, **涉及数据可能被其他地方更新**的组件中使用
-*  不应与 `pureRender` 装饰器同时用于同一个组件
+*	不应与 `pureRender` 装饰器同时用于同一个组件
 
 使用
 ```
@@ -242,15 +242,8 @@ class MyPureComponent extends Component {
 
 ```
 
-> 注意: 使用pureRender装饰的组件, 请确保其内部没有直接修改state的赋值语句, 否则可能影响正常使用
-
-Example: 
-`
-this.state.value = newValue;
-`
-
-
-
+## 原生模块API
+> 施工中...
 
 
 ## APIs - 接口工具

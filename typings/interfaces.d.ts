@@ -131,7 +131,8 @@ declare module "@actra-development-oss/redux-persist-transform-filter-immutable"
 
 declare module "react-native-share" {
     import { Component } from "react";
-    export class ShareSheet extends Component<any, any> {}
+    import * as ReactNative from 'react-native';
+    export class ShareSheet extends Component<any, any> { }
     export class Share {
         static open(options: {
             /** URL you want to share (you can share a base64 file url only in iOS & Android ) */
@@ -143,9 +144,35 @@ declare module "react-native-share" {
             subject?: string;
             excludedActivityTypes?: string;
         }): void;
-        static shareSingle(options: any): void;
+        static shareSingle(options: {
+            /** URL you want to share */
+            url: string;
+            /** File mime type (optional) */
+            type: string;
+            message: string;
+            title?: string;
+            subject?: string;
+            social?: string;
+        }): void;
     }
     export default Share;
+}
+
+declare module "react-native-qrcode" {
+    import { Component } from "react";
+    import * as ReactNative from 'react-native';
+    namespace ReactNativeQRCode {
+        interface QRCode extends ReactNative.ViewProperties {
+            value: string;
+            /** Default - 128 */
+            size?: number;
+            /** Default - "#000" */
+            bgColor?: string;
+            /** Default - "#FFF" */
+            fgColor?: string;
+        }
+    }
+    export default class QRCode extends Component<QRCode, any> { }
 }
 
 declare let module: any;
