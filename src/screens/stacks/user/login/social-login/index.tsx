@@ -19,9 +19,9 @@ let {
 } = Constants;
 
 const PlatformDescr: Dictionary<string> = {
-    SOCIAL_PLATFORM_TYPE_WECHAT: "微信",
-    SOCIAL_PLATFORM_TYPE_ALIPAY: "旺旺",
-    SOCIAL_PLATFORM_TYPE_QQ: "QQ",
+    [SOCIAL_PLATFORM_TYPE_WECHAT]: "微信",
+    [SOCIAL_PLATFORM_TYPE_ALIPAY]: "旺旺",
+    [SOCIAL_PLATFORM_TYPE_QQ]: "QQ",
 };
 
 export interface SocialLoginProps extends ViewProperties {
